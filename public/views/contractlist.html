@@ -1,0 +1,37 @@
+<div class="row ">
+    <div class="col-md-12 portlet light">
+        <div class="portlet-body">
+
+            <table class="col-md-6 table">
+                    <thead>
+                            <tr>
+                                <th> TokenName </th>
+                                <th> ContractName </th>
+                                <th> Is Token </th>
+                                <th> Address </th>
+                            </tr>
+                        </thead>
+                <tr ng-repeat="t in contracts track by $index">
+                    <td> <a class="font-green" href="/{{t.ERC==0?'addr':'token'}}/{{t.address}}">{{t.tokenName}} </a></td>
+                    <td> <a class="font-green" href="/{{t.ERC==0?'addr':'token'}}/{{t.address}}">{{t.contractName}} </a></td>
+                    <td> {{t.ERC==0?'No':'Yes'}}</td>
+                    <td > <a href="/{{t.ERC==0?'addr':'token'}}/{{t.address}}">{{t.address}}</a> </td>
+                </tr>
+            </table>
+
+            <div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
+                    <ul class="pagination" style="visibility: visible;">
+                        <li class="prev" ng-click="getInfoList(page-1)"><a href="#"><<</a></li>
+                    </ul>
+                    <ul class="pagination" style="visibility: visible;" ng-repeat="p in pages">
+                        <li class="active" ng-show="p-1==page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                        <li ng-show="p-1!=page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                    </ul>
+                    <ul class="pagination" style="visibility: visible;">
+                        <li class="next" ng-click="getInfoList(page+1)"><a href="#">>></a></li>
+                    </ul>
+            </div>
+
+        </div>
+    </div>
+</div>

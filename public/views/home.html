@@ -1,0 +1,172 @@
+<span style="margin-top:10px;" class="caption-subject font-red bold uppercase">COMMON STATISTICS</span>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <!--div class="icon">
+            <i class="fa fa-cube"></i>
+        </div-->
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>
+                    {{blockHeight}}
+                    </h3>
+                    <small>Block Height</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <!--div class="icon">
+            <i class="fa fa-hourglass-half"></i>
+        </div-->
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>
+                        {{blockTime}} <small>s</small>
+                    </h3>
+                    <small>Block Time</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>{{meanDayRewards}}</h3>
+                    <small>Miners Day Rewards</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <!--div class="icon">
+                <i class="icon-puzzle"></i>
+            </div-->
+            <div class="display">
+                <div class="number">
+                    <h3>
+                    {{TPS}} <small>t/s</small>
+                    </h3>
+                    <small>TPS</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- <hr style="margin-top:10px;margin-bottom:10px;">
+
+<span style="margin-top:10px;" class="caption-subject font-red bold uppercase">MASTER NODE RELAY</span>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>{{meanDayRewards}}</h3>
+                    <small>Mean Day Rewards</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>{{todayRewards}}</h3>
+                    <small>Today Rewards</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>{{totalNodes}}</h3>
+                    <small>Total Master Nodes</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div> -->
+
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="fa fa-cubes font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">Blocks</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn btn-med" ng-click="reloadBlocks()">refresh ↑↓</a>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="todo-tasklist scrollable">
+                    <div ng-repeat="t in latest_blocks track by $index" class="todo-tasklist-item item-border-green row" ng-class="(t.extraData.indexOf('Parity') > -1) ? 'item-border-red': '';(t.extraData.indexOf('Pool') > -1) ? 'item-border-blue': ''">
+                        <!--TODO: color by known miners -->
+                        <div class="col-sm-5">
+                            <span class="todo-tasklist-item-title"><i class="fa fa-cube"></i> <a href="/block/{{t.number}}">{{t.number}}</a></span><br>
+                            <span class="todo-tasklist-date">
+                                <i class="fa fa-hourglass-o"></i>{{t.timestamp | timeDuration }} ago</span>
+                        </div>
+                        <div class="todo-tasklist-controls col-sm-7">
+                            <div class="todo-tasklist-item-text"><a href="/addr/{{t.miner}}">{{t.extraData}}</a><br>
+                            by <a href="/addr/{{t.miner}}">{{t.miner}}</a><br>
+                            transactions: {{t.txs.length}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+    <div class="col-md-6 col-sm-6" >
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">Transactions</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn btn-med" ng-click="reloadTransactions()">refresh ↑↓</a>
+                    </div>
+                </div>                    
+            </div>
+            <div class="portlet-body">
+                <div class="general-item-list scrollable">
+                    <div class="item"  ng-repeat="t in latest_txs track by $index">
+                    <div class="item-head">
+                        <div class="truncate-txhash" style="float:left">
+                            TX <a href="/tx/{{t.hash}}" class="primary-link">{{t.hash}}</a>
+                        </div>
+                        <div class="item-date" style="float:right"><span ng-show="tx.status==0"  alt="transaction fail"><image src="img/FAIL.png"/></span> {{t.timestamp | timeDuration }} ago</div>
+                    </div>
+                    <div class="todo-tasklist-controls"> 
+                      <span class="todo-tasklist-item-text">From <a href="/addr/{{t.from}}">{{t.from.substr(0,24)}}...</a></span> 
+                      <span class="todo-tasklist-item-text">To <a href="/addr/{{t.to}}">{{t.to.substr(0,24)}}...</a></span><br>
+                      <div class="todo-tasklist-item-text" style="margin-top:4px;">{{t.value}} XDC</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+</div>
+

@@ -1,0 +1,8 @@
+{
+    "output":".",
+    "gethPort": 9646,
+    "blocks": [ {"start": 0, "end": "latest"}],
+    "quiet": true,
+    "terminateAtExistingDB": false,
+    "listenOnly": true
+}

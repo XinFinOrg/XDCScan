@@ -1,0 +1,39 @@
+<div class="row ">
+    <div class="col-md-12 portlet light">
+        <div class="portlet-body">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th width="60%"> Address </th>
+                        <th width="15%"> XDC </th>
+                        <th width="15%"> Type </th>
+                    </tr>
+                </thead>
+                <tr ng-repeat="item in list track by $index">
+                    <td height="30"> <a class="font-green" href="/addr/{{item.addr}}">{{item.addr}} </a></td>
+                    <td >{{item.balance}}</td>
+                    <td > 
+                        <a ng-show="item.type==0" href="/addressList/normal">N</a> 
+                        <a ng-show="item.type==1" href="/addressList/contract">C</a> 
+                        <a ng-show="item.type==2" href="/addressList/masternode">M</a> 
+                    </td>
+
+                </tr>
+            </table>
+
+            <div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
+                <ul class="pagination" style="visibility: visible;">
+                    <li class="prev" ng-click="getInfoList(page-1)"><a href="#"><<</a></li>
+                </ul>
+                <ul class="pagination" style="visibility: visible;" ng-repeat="p in pages">
+                    <li class="active" ng-show="p-1==page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                    <li ng-show="p-1!=page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                </ul>
+                <ul class="pagination" style="visibility: visible;">
+                    <li class="next" ng-click="getInfoList(page+1)"><a href="#">>></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

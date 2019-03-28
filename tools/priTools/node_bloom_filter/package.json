@@ -1,0 +1,29 @@
+{
+  "name": "node_bloom_filter",
+  "version": "1.0.3",
+  "description": "The most sophisticated bloom filter for Node, supports counting bloom Filters, deletions and serializations.\r\n The counters are handled to take care of the overflows and dynamically expand the underlying ArrayBuffer when expansion is needed.",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --reporter spec"
+  },
+  "keywords": [
+    "Bloom filter",
+    "Data structure",
+    "Efficient Data structure",
+    "Probabilistic data structure"
+  ],
+  "author": "Raghav Grover <raghavgrover43@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "murmurhash3": "^0.4.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:raghav-grover/node-bloom-filter.git"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "uuid": "^3.1.0"
+  }
+}
