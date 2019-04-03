@@ -7,7 +7,7 @@
  * @return {Boolean}
 */
 var isStrictAddress = function (address) {
-    return /^0x[0-9a-f]{40}$/i.test(address);
+    return /^xdc[0-9a-f]{40}$/i.test(address);
 };
 
 /**
@@ -18,11 +18,14 @@ var isStrictAddress = function (address) {
  * @return {Boolean}
 */
 var isAddress = function (address) {
-    if (!/^(0x)?[0-9a-f]{40}$/i.test(address)) {
-        // check if it has the basic requirements of an address
+    // convert coming xdc prefix to 0x so it can pass all the hex converstion
+    if (address.substring(0,3) === "xdc") {
+        address = "0x" + address.substring(3);
+    }    
+    if (!/^(xdc)?[0-9a-f]{40}$/i.test(address)) {
         return false;
-    } else if (/^(0x)?[0-9a-f]{40}$/.test(address) || /^(0x)?[0-9A-F]{40}$/.test(address)) {
-        // If it's all small caps or all all caps, return true
+        // If it's ALL lowercase or ALL upppercase
+    } else if (/^(xdc|XDC)?[0-9a-f]{40}$/.test(address) || /^(xdc|XDC)?[0-9A-F]{40}$/.test(address)) {
         return true;
     } else {
         // Otherwise check each case

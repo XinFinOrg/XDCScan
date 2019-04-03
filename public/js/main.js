@@ -61,13 +61,12 @@ BlocksApp.controller('HeaderController', ['$scope', '$location', function($scope
         $scope.form.searchInput="";
         $scope.form.searchForm.$setPristine();
         $scope.form.searchForm.$setUntouched();
-        if (isAddress(search)) 
-            $location.path("/addr/" + search);
-        else if(search.length==16)//master node address
+        $location.path("/addr/" + search);
+        if(search.length==16)//master node address
             $location.path("/masternode/" + search);
         else if(search.length==18){//master node address
-            if(search.indexOf("0x")==0){
-                $location.path("/masternode/" + search.substr(2));
+            if(search.indexOf("xdc")==0){
+                $location.path("/masternode/" + search.substr(3));
             }
         }
         else if (isTransaction(search))

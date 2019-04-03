@@ -40,8 +40,8 @@ angular.module('BlocksApp').controller('ContractVerifyController', function($sta
 
       // validate
       
-      if (!isAddress($scope.contract.address)) 
-        $scope.errors.address = "Invalid Address";
+      // if (!isAddress($scope.contract.address)) 
+      //   $scope.errors.address = "Demo Invalid Address";
       if (typeof $scope.contract.name == "undefined")          
         $scope.errors.name = "Contract Name Required";
       if (typeof $scope.contract.version == "undefined")

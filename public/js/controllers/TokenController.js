@@ -9,8 +9,8 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
 
     var contractAddress;
     if($stateParams.hash.length==84){//contain two address
-      contractAddress = $stateParams.hash.substr(0,42);
-      $scope.acc = $stateParams.hash.substr(42,42);
+      contractAddress = $stateParams.hash.substr(0,43);
+      $scope.acc = $stateParams.hash.substr(43,43);
     }else{
       contractAddress = $stateParams.hash;
     }
