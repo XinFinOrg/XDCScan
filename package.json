@@ -6,7 +6,8 @@
   "repository": "",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"nodemon tools/grabber.js \" \"nodemon app.js\" ",
+    "start": "node app.js",
+    "fetch": "node tools/grabber.js",
     "pretest": "copyfiles app.js app/  ",
     "test": "./node_modules/.bin/mocha --reporter spec  "
   },

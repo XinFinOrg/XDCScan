@@ -1,6 +1,6 @@
 {
     "rpc": "https://testnet.xinfin.network",
-    "blocks": [ {"start": 7444859, "end": "latest"}],
+    "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
     "listenOnly": false,
