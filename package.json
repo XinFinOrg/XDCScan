@@ -1,7 +1,7 @@
 {
   "name": "XinFinScan",
   "private": false,
-  "version": "1.1.1",
+  "version": "0.1.1",
   "description": "A lightweight XinFinScan block explorer",
   "repository": "",
   "license": "MIT",
