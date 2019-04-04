@@ -19,7 +19,7 @@
     <div class="col-sm-2">
     <ul class="nav nav-pills nav-stacked">
     <li class="navLi"><a href="#intro" data-toggle="tab" onclick="javascript:updatehash('');" aria-expanded="false"><font size="2">Introduction</font></a></li>
-    <li class="navLi"><a href="#proxy" data-toggle="tab" onclick="javascript:updatehash('proxy');"><font size="2">GETH/Parity Proxy</font></a></li>
+    <li class="navLi"><a href="#proxy" data-toggle="tab" onclick="javascript:updatehash('proxy');"><font size="2">XinFin Proxy</font></a></li>
     <li class="navLi"><a href="#balance" data-toggle="tab" onclick="javascript:updatehash('balance');" aria-expanded="false"><font size="2">Balance</font></a></li>
     <li class="navLi"><a href="#accounts" data-toggle="tab" onclick="javascript:updatehash('accounts');" aria-expanded="false"><font size="2">Accounts</font></a></li>
     <li class="navLi"><a href="#contracts" data-toggle="tab" onclick="javascript:updatehash('contracts');" aria-expanded="false"><font size="2">Contracts</font></a></li>
@@ -100,7 +100,7 @@
     <br>
     <br>[Optional Parameters] pageSize: 1 - 100<br><br>
     <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=txlist&amp;address=0x2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=txlist&amp;address=0x2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
+    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=txlist&amp;address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=txlist&amp;address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <br>
@@ -109,7 +109,7 @@
     <br>
     <br>[Optional Parameters] pageSize: 1 - 100<br><br>
     <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=txlistinternal&amp;address=0x6badcfb3dda5b8f6a394187915715cc02b7361cf&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=txlistinternal&amp;address=0x2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
+    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=txlistinternal&amp;address=xdc6badcfb3dda5b8f6a394187915715cc02b7361cf&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=txlistinternal&amp;address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     <br>
     </ul>
@@ -118,7 +118,7 @@
     <ul style="list-style-type: none">
     <br>[Optional Parameters] pageSize: 1 - 100<br><br>
     <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=getminedblocks&amp;address=0x2e402e5d2eb91c6d464ef5ccd92986d282035b17&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=getminedblocks&amp;address=0x2e402e5d2eb91c6d464ef5ccd92986d282035b17&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
+    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=getminedblocks&amp;address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=getminedblocks&amp;address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <p></p>
@@ -135,7 +135,7 @@
     <strong>Get Contract ABI for <a href="/contractsVerified">Verified Contract Source Codes</a> </strong>
     </p><ul style="list-style-type: none">
     <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=0xc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=0xc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken</a></pre>
+    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <br>
@@ -144,12 +144,12 @@
     var web3 = new Web3(new Web3.providers.HttpProvider());
     var version = web3.version.api;
                 
-    $.getJSON('http://localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=0xc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f', function (data) {
+    $.getJSON('http://localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f', function (data) {
         var contractABI = "";
         contractABI = JSON.parse(data.result);
         if (contractABI != ''){
             var MyContract = web3.eth.contract(contractABI);
-            var myContractInstance = MyContract.at("0xc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f");
+            var myContractInstance = MyContract.at("xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f");
             var result = myContractInstance.getBuyPrice();
             console.log("result : " + result); 
         } else {
@@ -164,7 +164,7 @@
     <br>
     </p><ul style="list-style-type: none">
     <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=contract&amp;action=getsourcecode&amp;address=0xc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&amp;action=getsourcecode&amp;address=0xBB9bc244D798123fDe783fCc1C72d3Bb8C189413&amp;apikey=YourApiKeyToken</a></pre>
+    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=contract&amp;action=getsourcecode&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&amp;action=getsourcecode&amp;address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <p></p>
@@ -245,12 +245,12 @@
     </div>
     <div class="tab-pane fade in table-responsive" id="proxy">
     <div class="headline headline-md">
-    <h4>Geth/Parity Proxy APIs</h4>
+    <h4> XinFin Proxy APIs</h4>
     </div>
     <br>
     <p>
-    The following are the limited list of supported Proxied APIs for Geth available through BlockScan.
-    For the list of the parameters and descriptions please see <a href="//github.com/ethereum/wiki/wiki/JSON-RPC" target="_blank">https://github.com/ethereum/wiki/wiki/JSON-RPC</a>. Parameters provided should be named like in the examples below. For compatibility with Parity, please prefix all hex strings with "0x" </p><hr>
+    The following are the limited list of supported Proxied APIs for XinFin available through xinfinScan.
+    Parameters provided should be named like in the examples below. For compatibility with Parity, please prefix all hex strings with "xdc" </p><hr>
     <strong>eth_blockNumber</strong><br>
     Returns the number of most recent block<br><br>
     <ul style="list-style-type:none">
@@ -289,7 +289,7 @@
     <strong>eth_getTransactionCount</strong><br>
     Returns the number of transactions sent from an address<br><br>
     <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionCount&amp;address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionCount&amp;address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
+    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionCount&amp;address=xdc2910543af39aba0cd09dbb2d50200b3e800a63d2&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionCount&amp;address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <br><br>
@@ -311,21 +311,21 @@
     <strong>eth_call</strong><br>
     Executes a new message call immediately without creating a transaction on the block chain<br><br>
     <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_call&amp;to=0xAEEF46DB4855E25702F8237E8f403FddcaF931C0&amp;data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_call&amp;to=0xAEEF46DB4855E25702F8237E8f403FddcaF931C0&amp;data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&amp;blockNumber=latest&amp;apikey=YourApiKeyToken</a></pre>
+    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_call&amp;to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&amp;data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_call&amp;to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&amp;data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&amp;blockNumber=latest&amp;apikey=YourApiKeyToken</a></pre>
      </li>
     </ul>
     <br><br>
     <strong>eth_getCode</strong><br>
     Returns code at a given address<br><br>
     <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getCode&amp;address=0xf75e354c5edc8efed9b59ee9f67a80845ade7d0c&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getCode&amp;address=0xf75e354c5edc8efed9b59ee9f67a80845ade7d0c&amp;vs=latest&amp;apikey=YourApiKeyToken</a></pre>
+    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getCode&amp;address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getCode&amp;address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&amp;vs=latest&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <br><br>
     <strong>eth_getStorageAt</strong> (**experimental)<br>
     Returns the value from a storage position at a given address.<br><br>
     <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getStorageAt&amp;address=0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&amp;position=0x0&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getStorageAt&amp;address=0x6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&amp;position=0x0&amp;blockNumber=latest&amp;apikey=YourApiKeyToken</a></pre>
+    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getStorageAt&amp;address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&amp;position=0x0&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getStorageAt&amp;address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&amp;position=0x0&amp;blockNumber=latest&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <br><br>
@@ -339,7 +339,7 @@
     <strong>eth_estimateGas</strong><br>
     Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used for estimating the used gas<br><br>
     <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_estimateGas&amp;to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&amp;value=0xff22&amp;gasPrice=0x051da038cc&amp;gas=0xffffff&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_estimateGas&amp;to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&amp;value=0xff22&amp;gasPrice=0x051da038cc&amp;gas=0xffffff&amp;apikey=YourApiKeyToken</a></pre>
+    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_estimateGas&amp;to=xdcf0160428a8552ac9bb7e050d90eeade4ddd52843&amp;value=0xff22&amp;gasPrice=0x051da038cc&amp;gas=0xffffff&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_estimateGas&amp;to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&amp;value=0xff22&amp;gasPrice=0x051da038cc&amp;gas=0xffffff&amp;apikey=YourApiKeyToken</a></pre>
     </li>
     </ul>
     <br><br>
@@ -428,9 +428,9 @@
     </div>
     <p>
     <br>
-    <strong>py-BlockScan-api module (corpetty)</strong><br>
+    <strong>py-XinFinScan-api module (corpetty)</strong><br>
     </p><ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//github.com/corpetty/py-BlockScan-api" target="_blank">https://github.com/corpetty/py-BlockScan-api</a></pre>
+    <li><pre class="wordwrap"><a href="//github.com/corpetty/py-XinFinScan-api" target="_blank">https://github.com/corpetty/py-XinFinScan-api</a></pre>
     </li>
     (A 3rd party localhost:3000 API python bindings module written by Corey Petty)
     </ul>
@@ -440,9 +440,9 @@
     <br>
     <strong>node API (Sebastian Schürmann)</strong><br>
     </p><ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//github.com/sebs/BlockScan-api" target="_blank">https:/github.com/sebs/BlockScan-api</a></pre>
+    <li><pre class="wordwrap"><a href="//github.com/sebs/XinFinScan-api" target="_blank">https:/github.com/sebs/XinFinScan-api</a></pre>
     </li>
-    (A 3rd party Node API for BlockScan)
+    (A 3rd party Node API for XinFinScan)
     </ul>
     <br>
     <p></p>
