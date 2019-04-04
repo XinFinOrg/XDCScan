@@ -68,7 +68,7 @@ module.exports = function(req, res){
     try {
       // createZeroTokenInstance();
         var tokenData;
-        var contractFind = Contract.findOne({address:contractAddress}).lean(true);
+       var contractFind = Contract.findOne({address:contractAddress}).lean(true);
         contractFind.exec(function(err, doc){
           if(!err && doc){
             var dbToken = doc;

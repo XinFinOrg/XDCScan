@@ -40,7 +40,7 @@ angular.module('BlocksApp').controller('DAOController', function($stateParams, $
             $scope.dao.tokens = data.tokens;
           });
         } else 
-            $scope.errors.address = "11 Invalid Address";
+            $scope.errors.address = "Invalid Address";
 
     }
 
