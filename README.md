@@ -1,4 +1,4 @@
-# BlockScan 
+# XinFinScan 
 
 ## Local installation
 
