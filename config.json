@@ -1,5 +1,5 @@
 {
-    "rpc": "https://testnet.xinfin.network",
+    "rpc": "https://rpc.xinfin.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
