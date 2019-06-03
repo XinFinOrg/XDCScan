@@ -10,7 +10,7 @@ var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 var Contract     = mongoose.model( 'Contract' );
-// var providerURL = 'https://rpc.xinfin.network';
+// var providerURL = 'http://0.0.0.0:8545';
 var providerURL = 'http://35.183.62.96:9646';
 
 var startTest = function(config) {

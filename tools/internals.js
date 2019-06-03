@@ -7,7 +7,7 @@ require( '../db-internal.js' );
 var http = require('http');
 var Web3 = require('xdc3');;
 var web3 = new Web3(new Web3.providers.HttpProvider("http://rpc.etherzero.org:9646"));
-// var web3 = new Web3(new Web3.providers.HttpProvider("https://rpc.xinfin.network"));
+// var web3 = new Web3(new Web3.providers.HttpProvider("http://0.0.0.0:8545"));
 
 var mongoose = require( 'mongoose' );
 var InternalTx     = mongoose.model( 'InternalTransaction' );

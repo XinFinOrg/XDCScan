@@ -45,7 +45,7 @@ var dupAddrs = [];
 
 //modify according to your actual situation.
 var config3 = {
-    "httpProvider":"https://rpc.xinfin.network",
+    "httpProvider":"http://0.0.0.0:8545",
     "patchStartBlocks":0,//1
     "patchEndBlocks":4936270+1,//"latest",//5485123,//600
     "quiet": true,
