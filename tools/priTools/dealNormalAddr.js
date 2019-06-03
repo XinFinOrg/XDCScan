@@ -11,7 +11,7 @@ var Contract = mongoose.model('Contract');
 //==================config===============
 var startBlockNumber = -1;//
 var topBlockNumber=3833592+1;//
-var rpc = "https://rpc.xinfin.network";
+var rpc = "https://explorerrpc.xinfin.network";
 
 var contractAddrs =[];
 var masternodeAddrs = [];

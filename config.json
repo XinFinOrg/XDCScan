@@ -1,5 +1,5 @@
 {
-    "rpc": "https://rpc.xinfin.network",
+    "rpc": "https://explorerrpc.xinfin.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
