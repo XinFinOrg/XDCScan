@@ -10,7 +10,7 @@ var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 var Contract     = mongoose.model( 'Contract' );
-// var providerURL = 'http://explorerrpc.apothe.network';
+// var providerURL = 'http://explorerrpc.apothem.network';
 var providerURL = 'http://35.183.62.96:9646';
 
 var startTest = function(config) {

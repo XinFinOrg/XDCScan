@@ -27,7 +27,7 @@ const METHOD_DIC = {
 
 //modify according to your actual situation.
 var config3 = {
-    "httpProvider":"http://explorerrpc.apothe.network",
+    "httpProvider":"http://explorerrpc.apothem.network",
     "patchStartBlocks": 1,//1
     "patchEndBlocks": 394905,//"latest",//5485123,//600
     "quiet": true,

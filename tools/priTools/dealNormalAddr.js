@@ -11,7 +11,7 @@ var Contract = mongoose.model('Contract');
 //==================config===============
 var startBlockNumber = -1;//
 var topBlockNumber=3833592+1;//
-var rpc = "http://explorerrpc.apothe.network";
+var rpc = "http://explorerrpc.apothem.network";
 
 var contractAddrs =[];
 var masternodeAddrs = [];

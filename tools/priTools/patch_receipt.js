@@ -435,7 +435,7 @@ function patchNoReciept(){
 }
 
 // var config = {
-//     "rpc": 'http://explorerrpc.apothe.network',
+//     "rpc": 'http://explorerrpc.apothem.network',
 //     "blocks": [ {"start": 0, "end": "latest"}],
 //     // "blocks": [ {"start": 4936270, "end": "latest"}],//ttt
 //     "quiet": true,

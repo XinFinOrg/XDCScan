@@ -1,5 +1,5 @@
 {
-    "rpc": "http://explorerrpc.apothe.network",
+    "rpc": "http://explorerrpc.apothem.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
