@@ -20,7 +20,7 @@ var InternalTx     = mongoose.model( 'InternalTransaction' );
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
 } else {
-  web3 = new Web3(new Web3.providers.HttpProvider("https://explorerrpc.xinfin.network"));
+  web3 = new Web3(new Web3.providers.HttpProvider("http://explorerrpc.apothe.network"));
 }
 
 if (web3.isConnected()) 

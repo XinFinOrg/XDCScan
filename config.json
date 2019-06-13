@@ -1,5 +1,5 @@
 {
-    "rpc": "https://explorerrpc.xinfin.network",
+    "rpc": "http://explorerrpc.apothe.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
