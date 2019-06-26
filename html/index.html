@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>XinFin Explorer</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- favicon -->
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/favicon/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/favicon/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/favicon/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/favicon/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/favicon/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/favicon/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/favicon/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/favicon/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/favicon/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/images/favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon/favicon-16x16.png">
+    <link rel="manifest" href="assets/images/favicon/manifest.json">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/images/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Css -->
+    <link href="assets/css/normalize.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/style.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet" type="text/css">
+
+    <!-- Menu Css -->
+    <link href="assets/css/menu.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/megamenu.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+
+    <!-- start header -->
+    <header id="header" class="header">
+        <div class="header_section py-1">
+            <div id="logoAndNav" class="container">
+                <nav class="js-mega-menu navbar navbar-expand-md header_navbar header_navbar-no-space">
+                    <div class="logo">
+                        <a class="navbar-brand" href="index.html">
+                            <img id="logo-header" src="assets/images/xinfin-logo.png" class="logo img-fluid" alt="XinFin Logo">
+                        </a>
+                    </div>
+                    <button type="button" class="navbar-toggler btn hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="navBar" data-toggle="collapse" data-target="#navBar">
+                        <span id="hamburgerTrigger" class="hamburger_box"><span class="hamburger_inner"></span></span>
+                    </button>
+                    <div class="navigation d-flex flex-column w-100">
+                        <div id="navBar" class="collapse navbar-collapse header_navbar-collapse order-md-2">
+                            <ul class="navbar-nav header_navbar-nav px-2 px-md-0">
+                                <li id="LI_default" class="nav-item header_nav-item active" data-event="hover">
+                                    <a class="nav-link header_nav-link" href="index.html" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Home</a>
+                                </li>
+                                <li id="LI_blockchain" class="nav-item hs-has-sub-menu header_nav-item" data-event="hover">
+                                    <a id="blockchainMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">Address</a>
+                                    <ul id="blockchainSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="blockchainMegaMenu" style="min-width: 230px;">
+                                        <li><a href="/allAddress" class="nav-link header_sub-menu-nav-link">All Address</a></li>
+                                        <li><a href="/normalAddress" class="nav-link header_sub-menu-nav-link">Normal Address</a></li>
+                                        <li><a href="/contractsAddress" class="nav-link header_sub-menu-nav-link">Contracts Address</a></li>
+                                    </ul>
+                                </li>
+                                <li id="LI_tokens" class="nav-item hs-has-sub-menu header_nav-item" data-event="hover">
+                                    <a id="tokensMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="tokensSubMenu">Contracts</a>
+
+                                    <ul id="tokensSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="tokensMegaMenu" style="min-width: 230px;">
+                                        <li><a href="/tokens" class="nav-link header_sub-menu-nav-link">Tokens</a></li>
+                                        <li><a href="/contracts" class="nav-link header_sub-menu-nav-link">Contracts</a></li>
+                                        <li><a href="/verifyContracts" class="nav-link header_sub-menu-nav-link">Verify Contracts</a></li>
+
+                                    </ul>
+                                </li>
+                                <li id="LI_more" class="nav-item hs-has-sub-menu header_nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut">
+                                    <a id="moreMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="moreSubMenu">More</a>
+                                    <ul id="moreSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer dropdown-menu-md-right" aria-labelledby="moreMegaMenu" style="min-width: 230px;">
+                                        <li><a href="/webWallet" class="nav-link header_sub-menu-nav-link" title="Web Wallet">Web Wallet</a></li>
+                                        <li><a href="/androidWallet" class="nav-link header_sub-menu-nav-link" title="Android Wallet">Android Wallet</a></li>
+                                    </ul>
+                                </li>
+                                <li id="LI_xinfinApi" class="nav-item header_nav-item" data-event="hover">
+                                    <a class="nav-link header_nav-link" href="/XinFinScanAPIs" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">XinFinScan APIs</a>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- end header -->
+
+    <!-- start wrapper -->
+    <div class="wrapper">
+        <section id="searchbox">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="form-group mb-1 row">
+                                    <label class="col-md-12 search-control-label" for="example-input1-group3">XinFin Blockchain Explorer</label>
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            <div class="input-group-prepend d-none d-md-block">
+                                                <select name="f" class="custom-select custom-arrow-select input-group-text font-size-base filterby">
+                                                    <option selected="" value="0">All Filters</option>
+                                                    <option value="1">Addresses</option>
+                                                    <option value="2">Tokens</option>
+                                                    <option value="3">Nametags</option>
+                                                    <option value="4">Labels</option>
+                                                    <option value="5">Websites</option>
+                                                </select>
+                                            </div>
+                                            <input type="text" id="example-input1-group3" name="example-input1-group3" class="form-control search-filter-input" placeholder="Search by Address, Block Number, Transaction ID, Address">
+                                            <span class="input-group-append"><button type="button" class="btn btn-primary">SEARCH</button></span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="mainboxes">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row mx-gutters-md-1">
+                                    <div class="col-sm-12 col-md-4 col-lg-4 ver-divider ver-divider_none-md safari-float-left">
+                                        <div class="media align-items-center">
+                                            <figure class="sm-avatar mr-2">
+                                                <div class="xs-avatar mx-auto">
+                                                    <img src="assets/images/icons/producer-icon.png" class="img-fluid" alt="Producer">
+                                                </div>
+                                            </figure>
+                                            <div class="media-body">
+                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Producer</h2>
+                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-title="View More" href="/producer" data-original-title="" title="">bitfinexeos1</a>
+                                            </div>
+                                        </div>
+                                        <hr class="hr-space-lg">
+                                        <div class="media align-items-center">
+                                            <figure class="sm-avatar mr-2">
+                                                <div class="xs-avatar mx-auto">
+                                                    <img src="assets/images/icons/tps-icon.png" class="img-fluid" alt="Current/Max TPS">
+                                                </div>
+                                            </figure>
+                                            <div class="media-body">
+                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Current/Max TPS</h2>
+                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-title="View More" href="/tps" data-original-title="" title="">2000</a>
+                                            </div>
+                                        </div>
+                                        <hr class="d-block d-md-none hr-space-lg">
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4 ver-divider ver-divider_none-md safari-float-left">
+                                        <div class="media align-items-center">
+                                            <figure class="sm-avatar mr-2">
+                                                <div class="xs-avatar mx-auto">
+                                                    <img src="assets/images/icons/block-height-icon.png" class="img-fluid" alt="Block Height">
+                                                </div>
+                                            </figure>
+                                            <div class="media-body">
+                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Block Height</h2>
+                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-title="View More" href="/blockheight" data-original-title="" title="">49,429,091</a>
+                                            </div>
+                                        </div>
+                                        <hr class="hr-space-lg">
+                                        <div class="media align-items-center">
+                                            <figure class="sm-avatar mr-2">
+                                                <div class="xs-avatar mx-auto">
+                                                    <img src="assets/images/icons/trade-volume-icon.png" class="img-fluid" alt="Trade Volume">
+                                                </div>
+                                            </figure>
+                                            <div class="media-body">
+                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Trade Volume</h2>
+                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-title="View More" href="/tradevolume" data-original-title="" title="">$1,180,368</a>
+                                            </div>
+                                        </div>
+                                        <hr class="d-block d-md-none hr-space-lg">
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 col-lg-4 safari-float-left">
+                                        <div class="media align-items-center">
+                                            <figure class="sm-avatar mr-2">
+                                                <div class="xs-avatar mx-auto">
+                                                    <img src="assets/images/icons/online-nodes-icon.png" class="img-fluid" alt="Online Nodes">
+                                                </div>
+                                            </figure>
+                                            <div class="media-body">
+                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Online Nodes</h2>
+                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-title="View More" href="/onlinenodes" data-original-title="" title="">210</a>
+                                            </div>
+                                        </div>
+                                        <hr class="hr-space-lg">
+                                        <div class="media align-items-center">
+                                            <figure class="sm-avatar mr-2">
+                                                <div class="xs-avatar mx-auto">
+                                                    <img src="assets/images/icons/marketcap-icon.png" class="img-fluid" alt="Market Cap">
+                                                </div>
+                                            </figure>
+                                            <div class="media-body">
+                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Market Cap</h2>
+                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-title="View More" href="/marketcap" data-original-title="" title="">$2,041,434 USD</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="mb-4">
+            <div class="container">
+                <div class="row">
+
+                    <!---------- start Latest Blocks ---------->
+                    <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h2 class="card-header-title">Latest Blocks</h2>
+                            </div>
+
+                            <div id="latest-blocks" class="card-body overflow-hidden">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496178'>7496178</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='60000'>16 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x2a65aca4d5fc5b5c859090a6c34d164135398226'>DwarfPool_1</a></span><a href="/txs?block=7496178" title="Transactions in this Block">192 txns </a> <span class="small text-secondary">in 2 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>16001 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>16001 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496177'>7496177</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='62000'>20 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5'>Nanopool</a></span><a href="/txs?block=7496177" title="Transactions in this Block">76 txns </a> <span class="small text-secondary">in 16 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>0557 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>0557 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496176'>7496176</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='78000'>15 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x005e288d713a5fb3d7c9cf1b43810a98688c7223'>xnpool</a></span><a href="/txs?block=7496176" title="Transactions in this Block">194 txns </a> <span class="small text-secondary">in 3 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>07525 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>07525 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496175'>7496175</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='81000'>19 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c'>SparkPool</a></span><a href="/txs?block=7496175" title="Transactions in this Block">69 txns </a> <span class="small text-secondary">in 22 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>19337 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>19337 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496174'>7496174</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='103000'>22 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c'>SparkPool</a></span><a href="/txs?block=7496174" title="Transactions in this Block">147 txns </a> <span class="small text-secondary">in 11 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>13617 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>13617 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496173'>7496173</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='114000'>30 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x829bd824b016326a401d083b33d092293333a830'>F2Pool 2</a></span><a href="/txs?block=7496173" title="Transactions in this Block">60 txns </a> <span class="small text-secondary">in 18 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>09801 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>09801 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496172'>7496172</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='132000'>37 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x09ab1303d3ccaf5f018cd511146b07a240c70294'>MinerallPool</a></span><a href="/txs?block=7496172" title="Transactions in this Block">187 txns </a> <span class="small text-secondary">in 5 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>11786 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>11786 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496171'>7496171</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='137000'>54 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x52bc44d5378309ee2abf1539bf71de1b7d7be3b5'>Nanopool</a></span><a href="/txs?block=7496171" title="Transactions in this Block">79 txns </a> <span class="small text-secondary">in 4 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>05232 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>05232 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496170'>7496170</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='141000'>1 min 10 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0x5a0b54d5dc17e0aadc383d2db43b0a0d3e029c4c'>SparkPool</a></span><a href="/txs?block=7496170" title="Transactions in this Block">17 txns </a> <span class="small text-secondary">in 12 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>14628 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>14628 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
+                                            </div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href='/block/7496169'>7496169</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown='153000'>1 min 14 secs ago</span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <div class="d-flex justify-content-between">
+                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">Miner <a class="hash-tag text-truncate" href='/address/0xea674fdde714fd979de3edf0f56aa9716b898ec8'>XDCermine</a></span><a href="/txs?block=7496169" title="Transactions in this Block">89 txns </a> <span class="small text-secondary">in 9 secs</span><span class="d-inline-block d-sm-none"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>08092 XDC</span></span>
+                                            </div>
+                                            <div class="d-none d-sm-block"><span class="label label_xs label_secondary text-center text-nowrap" title='Block Reward'>2<b>.</b>08092 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-lg btn-primary text-uppercase" href="/blocks">View All Blocks</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!---------- end Latest Blocks ---------->
+
+                    <!---------- start Transactions ---------->
+                    <div class="col-lg-6 safari-float-left">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h2 class="card-header-title">Transactions</h2>
+                            </div>
+                            <div id="transactions" class="card-body overflow-hidden">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x427c3b4d06376da7ca13b24b90a01b55dd5000661ff077c14a24c276c15384fb'>0x427c3b4d06376da7ca13b24b90a01b55dd5000661ff077c14a24c276c15384fb</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>14 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0x96c67028a39f192aad9f35790f8dd5d15ce44792'>0x96c67028a39f192aad9f35790f8dd5d15ce44792</a></span><span class='d-sm-block'>To <a href='/address/0x51a73051fda3b604cff1aa171e676b294a0c22ad' class="hash-tag text-truncate">0x51a73051fda3b604cff1aa171e676b294a0c22ad</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0<b>.</b>05 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x17e673dd607f72368331dc5856f766475d5683030c144b7b3ad06bc179c24b73'>0x17e673dd607f72368331dc5856f766475d5683030c144b7b3ad06bc179c24b73</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>30 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0x8011fc39b7e596489ac0079db4fc36272baebb8d'>0x8011fc39b7e596489ac0079db4fc36272baebb8d</a></span><span class='d-sm-block'>To <a href='/address/0xc690f7c7fcffa6a82b79fab7508c466fefdfc8c5' class="hash-tag text-truncate">0xc690f7c7fcffa6a82b79fab7508c466fefdfc8c5</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0xcc441b2a07cef2117f386c3a0b06942a2f822eecc6ad9d105d12dc88cffc4d6d'>0xcc441b2a07cef2117f386c3a0b06942a2f822eecc6ad9d105d12dc88cffc4d6d</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>37 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0xbae25a69a6eb7341ee834be7635e247e22a1e57a'>0xbae25a69a6eb7341ee834be7635e247e22a1e57a</a></span><span class='d-sm-block'>To <a href='/address/0x57831a0c76ba6b4fdcbadd6cb48cb26e8fc15e93' class="hash-tag text-truncate">0x57831a0c76ba6b4fdcbadd6cb48cb26e8fc15e93</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0<b>.</b>25937 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0xbb1d09aa31537ce9f3ab108ae3b3da02d387ee8f81c262e8bc7bb4fab7ad7c62'>0xbb1d09aa31537ce9f3ab108ae3b3da02d387ee8f81c262e8bc7bb4fab7ad7c62</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>46 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0xa84e09a110e97cb9112519a506042c6c41505cd5'>0xa84e09a110e97cb9112519a506042c6c41505cd5</a></span><span class='d-sm-block'>To <a href='/address/0x977b0584b50cdd64e2f8185b682a1f256448c7c8' class="hash-tag text-truncate">0x977b0584b50cdd64e2f8185b682a1f256448c7c8</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x3869f177d2a7d0366f2151201571d77375a4321ed6a4af8fb7808086271a0b7d'>0x3869f177d2a7d0366f2151201571d77375a4321ed6a4af8fb7808086271a0b7d</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>57 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0xdc91c419d846f693e466331adb482f092de3d233'>0xdc91c419d846f693e466331adb482f092de3d233</a></span><span class='d-sm-block'>To <a href='/address/0x02b3c88b805f1c6982e38ea1d40a1d83f159c3d4' class="hash-tag text-truncate">0x02b3c88b805f1c6982e38ea1d40a1d83f159c3d4</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x495a98339376419fea9543ab14af8f8f189160f1c9a1d7ab80d93eaef0f132b1'>0x495a98339376419fea9543ab14af8f8f189160f1c9a1d7ab80d93eaef0f132b1</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>1 min 10 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0x5fe901e4b385a643130df458f557f5c82070a654'>0x5fe901e4b385a643130df458f557f5c82070a654</a></span><span class='d-sm-block'>To <a href='/address/0x2cdb31dd47c47577a3c9e401026989f835dd6c77' class="hash-tag text-truncate">0x2cdb31dd47c47577a3c9e401026989f835dd6c77</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x6bb43f618380c9d9d5a5c4c7e2db37a41977203b2607e69098b6e85e9613b29b'>0x6bb43f618380c9d9d5a5c4c7e2db37a41977203b2607e69098b6e85e9613b29b</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>1 min 14 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0xd58585cf86485a59e858fb8e0c3a2df21111cdd8'>0xd58585cf86485a59e858fb8e0c3a2df21111cdd8</a></span><span class='d-sm-block'>To <a href='/address/0xbd73e675e1fa3d60a302c797df5c82e558da7ce1' class="hash-tag text-truncate">0xbd73e675e1fa3d60a302c797df5c82e558da7ce1</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0xdaed364404ce61d11ad11c4d2b9981c24d8d6129b9c3b7ea9f1643e98449d52a'>0xdaed364404ce61d11ad11c4d2b9981c24d8d6129b9c3b7ea9f1643e98449d52a</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>1 min 19 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0xf008e2c7a7f16ac706c2e0ebd3f015d442016420'>0xf008e2c7a7f16ac706c2e0ebd3f015d442016420</a></span><span class='d-sm-block'>To <a href='/address/0x867ffb5a3871b500f65bdfafe0136f9667deae06' class="hash-tag text-truncate">0x867ffb5a3871b500f65bdfafe0136f9667deae06</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x1a6991a2ceae3ab7f3abfbcab69395878fb39fe0024edcf7103d80c950a9ccc0'>0x1a6991a2ceae3ab7f3abfbcab69395878fb39fe0024edcf7103d80c950a9ccc0</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>1 min 22 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0x32a0fcf46554d56ab4193151ac88f847ebd7961d'>0x32a0fcf46554d56ab4193151ac88f847ebd7961d</a></span><span class='d-sm-block'>To <a href='/address/0x8eedd2db1f4811a1adbb9a4e1d08b9588ba6ddad' class="hash-tag text-truncate">0x8eedd2db1f4811a1adbb9a4e1d08b9588ba6ddad</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0<b>.</b>1403 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                                <div class="row">
+                                    <div class="col-sm-5">
+                                        <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
+                                            <div class="d-none d-sm-flex mr-2"><span class='btn btn-icon btn-soft-secondary rounded-circle'><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>
+                                            <div class="media-body"><span class='d-inline-block d-sm-none mr-1'>TX#</span><a class='hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate' href='/tx/0x0d36f51e1206ef1e587d11f8d3d5ebd836f41d8f57df24e96b898815b4f52381'>0x0d36f51e1206ef1e587d11f8d3d5ebd836f41d8f57df24e96b898815b4f52381</a><span class='d-none d-sm-block small text-secondary'><div data-countdown='60000'>1 min 27 secs ago</div></span></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <div class='d-sm-flex justify-content-between'>
+                                            <div class='text-nowrap mr-4 mb-1 mb-sm-0'><span>From <a class="hash-tag text-truncate" href='/address/0xdcd487da623ac282dc8f5c6983d566b2e2045e4b'>0xdcd487da623ac282dc8f5c6983d566b2e2045e4b</a></span><span class='d-sm-block'>To <a href='/address/0x9f16b43990513928bc75596bbba1cf0847f81863' class="hash-tag text-truncate">0x9f16b43990513928bc75596bbba1cf0847f81863</a></span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title='Amount'>0<b>.</b>1 XDC</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="hr-space">
+                            </div>
+                            <div class="card-footer text-center">
+                                <a class="btn btn-lg btn-primary text-uppercase" href="/txs">View All Transactions</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- end wrapper -->
+
+    <!-- start footer -->
+    <footer class="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">© 2019 XinFin. All Rights Reserved.</div>
+            </div>
+        </div>
+    </footer>
+    <!-- end footer -->
+
+    <!-- jQuery  -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/jquery.nicescroll.js"></script>
+
+    <!-- megamenu -->
+    <script src="assets/js/megamenu.js"></script>
+
+    <!-- custom scrollbar plugin -->
+    <script src="assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+
+    <!-- Main js -->
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
