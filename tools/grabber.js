@@ -388,7 +388,7 @@ var writeTransactionsToDB = function(blockData) {
                     var methodCode = txData.input.substr(0,10);
                     if(ERC20_METHOD_DIC[methodCode])
                         logEvent.methodName = ERC20_METHOD_DIC[methodCode];
-                    var eventCode = logItem.topics[0].substr(0,66);
+                    var eventCode = logItem.topics;
                     if(METHOD_DIC[eventCode])
                         logEvent.eventName = METHOD_DIC[eventCode];
                     logEvent.txHash= txData.hash;

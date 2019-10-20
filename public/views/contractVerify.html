@@ -1,3 +1,160 @@
+<!-- <div class="wrapper"> -->
+   
+
+        <!-- start Verify Details -->
+        <section id="verifyDetails" class="mb-4">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-lg-12 safari-float-left">
+                        <div class="block-header d-flex justify-content-between align-items-center">
+                            <h3 class="blockDetails-header-title">Verify Contract</h3>
+                        </div>
+                    </div>
+
+                    <!-- start Verify & Publish -->
+                    <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h2 class="card-header-title">Verify and Publish Contract Source Code</h2>
+                            </div>
+
+                            <div id="block-overview" class="card-body">
+
+                                <div class="row align-items-center mt-1">
+                                    <div class="col-md-12 fw6 mb-1">
+										<div>
+											<div class="bg-light-blue border rounded p-3">
+												<p>Enter Contract Source Code below.</p>
+												<p class="mb-0">If the compiled bytecode matches the Creation Address bytecode, the contract is then Verified and will be published online.</p>
+											</div>
+										</div>
+									</div>
+                                </div>
+								
+								<div class="contract-form mt-4">
+									<div class="row align-items-center">
+            <div class="col-lg-3 col-md-6">
+              <div class="form-group">
+            <label for="contractAddress" class="fw5">Contract Address</label>
+            <input type="text" class="form-control" id="contractAddress" ng-model="contract.address"  placeholder="Contract Address">
+          </div>
+          <span class="help-block font-red-mint">{{errors.address}}</span>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="form-group">
+            <label for="contractName" class="fw5">Contract Name</label>
+            <input type="text" class="form-control" id="contractName"  ng-model="contract.name" placeholder="Contract Name">
+          </div>
+          <span class="help-block font-red-mint">{{errors.name}}</span>
+            </div>
+			
+			<div class="col-lg-3 col-md-6">
+              <div class="form-group">
+            <label for="contractName" class="fw5">Compiler</label>
+            <select name="compilerVersion" class="form-control ng-pristine ng-valid ng-touched" ng-model="contract.version">
+			<option value="">Select Compiler</option>
+      <option ng-repeat="cv in compilerVersions" value="{{cv.value}}">{{cv.name}}</option>
+</select>
+          </div>
+          <span class="help-block font-red-mint">{{errors.version}}</span>
+            </div>
+			
+			<div class="col-lg-3 col-md-6">
+              <div class="form-check mb-2 mr-sm-2">
+        <input class="form-check-input" type="checkbox" id="optimizationEnabled" ng-model="contract.optimization">
+        <label class="form-check-label" for="optimizationEnabled">
+          Optimization Enabled
+        </label>
+      </div>
+            </div>
+          </div>
+		  
+		  <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="form-group">
+            <label for="contractCode" class="fw5">Contract Code</label>
+            <span class="help-block font-red-mint">{{errors.code}}</span>
+			<textarea class="form-control code" rows="4" spellcheck="false" ng-model="contract.code"></textarea>
+          </div>
+            </div>
+          </div>
+		  
+		  <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="form-group">
+            <label for="constructorArguments" class="fw5">Constructor Arguments ABI-encoded <span>(OPTIONAL - Required for certain contracts only)</span></label>
+      <input type="text" class="form-control" id="constructorArguments" placeholder="Constructor Arguments">
+      <span class="help-block font-red-mint">{{errors.abi}}</span>
+      
+          </div>
+            </div>
+          </div>
+		  
+		  <div class="row">
+			  <div class="col-lg-12">
+				  <button type="button" ng-click="submitCode()" class="btn btn-info" id="submitCodeBtn">Validate Code</button>
+				  <button type="button" ng-click="resetCode()" class="btn btn-dark">Reset</button>
+			  </div>
+		  </div>
+								</div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!-- end Verify & Publish -->
+                    <div class="tab-pane" id="tab_contract_2" ng-class="{active: contract.compiled}" ng-show="contract.compiled">
+
+                        <div class="row">
+                          <div class="col-sm-12" ng-show="contract.valid">
+                            <h4>Contract Source Code Verified <i class="fa fa-smile-o"></i></h4>
+                            <p>
+                            <!-- can't get this without custom evm
+                            <i class="fa fa-check-circle-o font-green-sharp"></i> Note: Contract was created by transaction <a href="/tx/{{contract.txHash}}">{{contract.txHash}}</a><br>-->
+                            <i class="fa fa-check-circle-o font-green-sharp"></i> View the verified result at <a href="/addr/{{contract.address}}">{{contract.address}}</a>.
+                            </p>
+                          </div>
+                          <div class="col-sm-12" ng-show="!contract.valid">
+                            <h4>Unable to Verify Code</h4>
+                            <h4>err:{{contract.err}}</h4>
+                            <p>
+                            <!--<i class="fa fa-check-circle-o"></i> Note: Contract was created by transaction <a href="/tx/{{contract.txHash}}">{{contract.txHash}}</a><br>-->
+                            <i class="fa fa-times-circle-o font-red-mint"></i> The compiled result does not match the input creation bytecode located at <a href="/addr/{{contract.address}}">{{contract.address}}</a>.
+                            </p>
+                          </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                          <div class="col-sm-12 code well">
+                            <b>Compiler Version:</b> {{contract.compilerVersion}}<br>
+                            <b>Optimization Enabled:</b> {{contract.optimization}}<br>
+                            
+                            <div ng-repeat="v in contract.verifiedContracts">
+                              <br><b>ContractName:</b><br>
+                              <pre>{{v.name}}</pre>
+                              <b>ContractBytecode:</b><br>
+                              <pre>{{v.bytecode}}</pre>
+                              <b>ContractABI:</b><br>
+                              <pre class="code-js">{{v.abi}}</pre>
+                              <hr>
+                            </div>
+            
+                            <button type="button" class="btn grey-cascade" ng-show="!contract.valid" ng-click="startOver()">Start Over</button>
+                          </div>
+                        </div>
+            
+                        </div>
+                </div>
+            </div>
+        </section>
+        <!-- end Block Details -->
+
+    </div>
+    <!-- end wrapper -->
+
+    <!-- OG Code -->
 <!-- BEGIN PAGE CONTENT-->
 <div class="row">
   <div class="col-md-12 portlet light">
@@ -130,4 +287,4 @@
   </div><!--end portlet-->
 
 
-</div>
+<!-- </div> -->

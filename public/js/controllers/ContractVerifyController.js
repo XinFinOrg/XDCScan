@@ -9,7 +9,7 @@ angular.module('BlocksApp').controller('ContractVerifyController', function($sta
     //fetch compiler options
     $scope.compilerVersions = [];
 
-    $.getJSON('https://ethereum.github.io/solc-bin/bin/list.json').done(function (data) {
+    $.getJSON('/list.json').done(function (data) {
       function buildVersion (build) {
         if (build.prerelease && build.prerelease.length > 0) {
           return build.version + '-' + build.prerelease

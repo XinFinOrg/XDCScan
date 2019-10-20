@@ -58,7 +58,7 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
 
     //fetch all transactions
     var fetchTxs = function(count) {
-      $("#table_txs").DataTable({
+      $("#address-transaction").DataTable({
         processing: true,
         serverSide: true,
         paging: true,
@@ -71,7 +71,7 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
                     [10, 20, 50, 100, 150, -1],
                     [10, 20, 50, 100, 150, "All"] // change per page values here
                 ],
-        "pageLength": 20, 
+        "pageLength": 10, 
         "order": [
             [6, "desc"]
         ],
@@ -87,18 +87,18 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
           {"orderable": false, "targets": [0,2,3]},
           { "render": function(data, type, row) {
                         if (data != $scope.addrHash)
-                          return '<a href="/addr/'+data+'">'+data+'</a>'
+                          return '<a href="/addr/'+data+'">'+data.substr(0,21)+'...</a>'
                         else
-                          return data
+                          return data.substr(0,21)+'...'
                       }, "targets": [2,3]},
           { "render": function(data, type, row) {
                         return '<a href="/block/'+data+'">'+data+'</a>'
                       }, "targets": [1]},
           { "render": function(data, type, row) {
                         if(row[7]==0)
-                          return '<span ng-show="false"  alt="transaction fail"><image src="img/FAIL.png"/></span>'+'<a href="/tx/'+data+'">'+data+'</a>'
+                          return '<span ng-show="false"  alt="transaction fail"><image src="img/FAIL.png"/></span>'+'<a href="/tx/'+data+'">'+data.substr(0,21)+'...</a>'
                         else
-                          return '<a href="/tx/'+data+'">'+data+'</a>'
+                          return '<a href="/tx/'+data+'">'+data.substr(0,21)+'...</a>'
                       }, "targets": [0]},
           { "render": function(data, type, row) {
                         return getDuration(data).toString();
