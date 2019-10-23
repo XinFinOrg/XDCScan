@@ -124,18 +124,18 @@ module.exports = function(req, res){
                 tokenName = result.tokenName;  
                 if(!doc.to){//contract token creation
                   if(isToken)
-                    contractLable = "token creation";
+                    contractLable = "Token Creation";
                   else
-                    contractLable = "contract creation"; 
+                    contractLable = "Contract Creation"; 
                 }else{
                   if(isToken){//token transaction
-                    contractLable = "token transaction";
+                    contractLable = "Token Transaction";
                   }else{//normal contract transaction
-                    contractLable = "contract transaction";
+                    contractLable = "Contract Transaction";
                   }
                 }        
               }else{
-                contractLable = "contract";//need verify
+                contractLable = "Contract";//need verify
                 tokenName = contractAddr;
                 contractLink = "addr/"+contractAddr;
                 doc.needVerify = true;

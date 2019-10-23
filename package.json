@@ -1,12 +1,13 @@
 {
   "name": "XinFinScan",
   "private": false,
-  "version": "0.1.1",
+  "version": "2.0.0",
   "description": "A lightweight XinFinScan block explorer",
   "repository": "",
   "license": "MIT",
   "scripts": {
     "start": "concurrently \"nodemon tools/grabber.js \" \"nodemon app.js\" ",
+    "dev":"nodemon app.js",
     "pretest": "copyfiles app.js app/  ",
     "test": "./node_modules/.bin/mocha --reporter spec  "
   },
