@@ -42,7 +42,7 @@
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The status of the transaction."></i>Transaction Status </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
-                                                            <span ng-show="!(tx.status==0) && tx.blockNumber" class="label label_sm label_success rounded ml-0"><i class="fa fa-check-circle mr-1"></i>Success</span> 
+                                                            <span ng-show="!(tx.status==0) && tx.blockNumber" class="label label_sm label_success ml-0"><i class="fa fa-check-circle mr-1"></i>Success</span> 
                                                             <span ng-show="tx.status==0"  alt="transaction fail"><font color="#ff0000"> Fail (Error encountered during transaction !)</font></span> 
                                                             <span class="label label_sm label_success rounded ml-0"ng-show="tx.hash && tx.blockNumber==null" ><font color="#00ff00"><font color="#0000ff">Pending</font></font></span> 
                                                             <span ng-show="!tx.hash"  alt="transaction fail"><font color="#ff0000"> Not exist</font></span>
@@ -76,9 +76,8 @@
                                                             <a href="/addr/{{tx.from}}">{{tx.from}}</a> </div>
                                                     </div>
                                                 </div>
-                                                
+                                                <hr class="hr-space">
                                                 <div class="row align-items-center" ng-show="tx.to">
-                                                        <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The receiving party of the transaction (could be a contract address)."></i>To </div>
                                                     <div class="col-md-9">
@@ -86,7 +85,7 @@
                                                             <a href="/addr/{{tx.to}}">{{tx.to}}</a> </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr-space">
+                                                
                                                 <div class="row align-items-center" ng-show="tx.createContract">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The receiving party of the transaction (could be a contract address)."></i>Create Contract:  </div>
@@ -104,14 +103,13 @@
                                                             <a href="/{{tx.contractLink}}">{{tx.tokenName}}</a> </div>
                                                     </div>
                                                 </div>
-                                                
+                                                <hr class="hr-space">
                                                 <div  ng-show="tx.needVerify" class="row align-items-center">
-                                                        <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Verify status of contract."></i>Verify </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
-                                                            <a href="/verifycontract/{{tx.contractAddr}}"><span class="label label_sm label_info rounded ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to verify your contract </div>
+                                                            <a href="/verifycontract/{{tx.contractAddr}}"><span class="label label_sm label_info ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to verify your contract </div>
                                                     </div>
                                                 </div>
                                                 <!--  Type of Token
@@ -124,7 +122,6 @@
                                                             {{tx.ERC}} </div>
                                                     </div>
                                                 </div> -->
-                                                <hr class="hr-space">
                                                 <div class="row align-items-center" ng-show="tx.isTransfer">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Token Transfer: </div>

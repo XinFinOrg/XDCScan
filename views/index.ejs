@@ -27,8 +27,7 @@
         <!-- END GLOBAL MANDATORY STYLES -->
         <!-- BEGIN DYNAMICALLY LOADED CSS FILES(all plugin and page related styles must be loaded between GLOBAL and THEME css files ) -->
         <link id="ng_load_plugins_before" />
-    <!-- DataTable Css -->
-        <link rel="stylesheet" href="/datatables/datatables.net-bs4/css/dataTables.bootstrap4.css">
+        
 
         <!-- END DYNAMICALLY LOADED CSS FILES -->
         <!-- BEGIN THEME STYLES -->
@@ -77,7 +76,8 @@
                         <!-- END PAGE HEAD -->
                         <!-- BEGIN PAGE CONTENT -->
                         <div class="page-content">
-                            <div class="container">
+                            <!--<div class="container">-->
+							<div class="">
                                 <!-- BEGIN ACTUAL CONTENT -->
                                 <div ui-view class="fade-in-up"> </div>
                                 <!-- END ACTUAL CONTENT -->
@@ -97,28 +97,26 @@
             </div>
         </div>
         <!-- END FOOTER -->
+		
         <!-- BEGIN CORE JQUERY PLUGINS -->
         <script src="/plugins/jquery.min.js" type="text/javascript"></script>
-                <!-- Page level DataTable Js -->
-                <script src="/datatables/datatables.net/js/jquery.dataTables.js"></script>
-                <script src="/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
-                <script src="/js/datatables-init.js"></script>
         <script src="/js/popper.min.js"></script>
         <script src="/js/jquery.nicescroll.js"></script>
         
-        <script src="/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+        <!-- CORE JQUERY PLUGINS -->
+		<script src="/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
         <script src="/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
         <script src="/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
         <script src="/plugins/jquery.blockui.min.js" type="text/javascript"></script>
         <script src="/plugins/jquery.cokie.min.js" type="text/javascript"></script>
         <script src="/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
         <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
-        <!-- END CORE JQUERY PLUGINS -->
 
         <!-- Page level DataTable Js -->
         <script src="/datatables/datatables.net/js/jquery.dataTables.js"></script>
         <script src="/datatables/datatables.net-bs4/js/dataTables.bootstrap4.js"></script>
         <script src="/js/datatables-init.js"></script>
+		
         <!-- BEGIN CORE ANGULARJS PLUGINS -->
         <script src="/plugins/angularjs/angular.min.js" type="text/javascript"></script>
         <script src="/plugins/angularjs/angular-sanitize.min.js" type="text/javascript"></script>
@@ -127,6 +125,7 @@
         <script src="/plugins/angularjs/plugins/ocLazyLoad.min.js" type="text/javascript"></script>
         <script src="/plugins/angularjs/plugins/ui-bootstrap-tpls.min.js" type="text/javascript"></script>
         <!-- END CORE ANGULARJS PLUGINS -->
+		
         <!-- BEGIN APP LEVEL ANGULARJS SCRIPTS -->
         <script src="/js/app.min.js" type="text/javascript"></script>
         <script src="/js/web3utils.js" type="text/javascript"></script>
@@ -148,8 +147,6 @@
         <script src="/js/megamenu.js"  type="text/javascript"></script>        
         <!-- custom scrollbar plugin -->
         <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
-        
-          
 
     </body>
     <!-- END BODY -->
