@@ -1,8 +1,8 @@
 {
-    "rpc": "https://explorerrpc.xinfin.network",
+    "rpc": "http://explorerrpc.apothem.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": true,
+    "listenOnly": false,
     "out": "."
 }
