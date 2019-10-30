@@ -3,6 +3,6 @@
     "blocks": [ {"start": 0, "end": "latest"}],
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": true,
+    "listenOnly": false,
     "out": "."
 }

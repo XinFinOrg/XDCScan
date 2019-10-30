@@ -12,135 +12,209 @@
     }
 </style>
 
-<div class="container content">
-    <br>
-    
-    <div class="row tab-v3">
-    <div class="col-sm-2">
-    <ul class="nav nav-pills nav-stacked">
-    <li class="navLi"><a href="#intro" data-toggle="tab" onclick="javascript:updatehash('');" aria-expanded="false"><font size="2">Introduction</font></a></li>
-    <li class="navLi"><a href="#proxy" data-toggle="tab" onclick="javascript:updatehash('proxy');"><font size="2">XinFin Proxy</font></a></li>
-    <li class="navLi"><a href="#balance" data-toggle="tab" onclick="javascript:updatehash('balance');" aria-expanded="false"><font size="2">Balance</font></a></li>
-    <li class="navLi"><a href="#accounts" data-toggle="tab" onclick="javascript:updatehash('accounts');" aria-expanded="false"><font size="2">Accounts</font></a></li>
-    <li class="navLi"><a href="#contracts" data-toggle="tab" onclick="javascript:updatehash('contracts');" aria-expanded="false"><font size="2">Contracts</font></a></li>
-    <li class="navLi"><a href="#transactions" data-toggle="tab" onclick="javascript:updatehash('transactions');" aria-expanded="false"><font size="2">Transactions</font></a></li>
-    <li class="active navLi"><a href="#blocks" data-toggle="tab" onclick="javascript:updatehash('blocks');" aria-expanded="true"><font size="2">Blocks</font></a></li>
-    <li class="navLi"><a href="#logs" data-toggle="tab" onclick="javascript:updatehash('logs');"><font size="2">Event Logs</font></a></li>
-    <li class="navLi"><a href="#tokens" data-toggle="tab" onclick="javascript:updatehash('tokens');"><font size="2">Tokens</font></a></li>
-    <!-- <li class="navLi"><a href="#masternode" data-toggle="tab" onclick="javascript:updatehash('masternode');"><font size="2">Masternode</font></a></li> -->
-    <li class="navLi"><a href="#stats" data-toggle="tab" onclick="javascript:updatehash('stats');"><font size="2">Stats</font></a></li>
-    </ul>
-    </div>
-    <div class="col-sm-10">
-    <div class="tab-content">
-
-    <div class="tab-pane fade table-responsive" id="intro">
-    <div class="headline headline-md">
-    <h4>Introduction</h4>
-    </div>
-    
-    <br>
-    We will show all the Public APIs here. <br> <br>
-
-    The APIs support GET/POST requests .<br> <br>
-    You can request by a rate limit of 3 requests/sec , otherwise you will be blocked.<br> <br>
-
-    Each API return data in format like :{"status":1, "message":"OK", "result":""}.  <br>
-    status: 1 mean Success , 0 mean Fail<br>
-    message: OK or fail reason<br>
-    result: json format data about the request result<br>
-
-    <br><br>
-    Both http and https are supported
-    <br>
-    </div>
-
-    <div class="tab-pane fade in table-responsive active" id="balance">
-            <div class="headline headline-md">
-            <h4>Balance APIs</h4>
+    <!-- start Wrapper -->
+    <!-- <div class="wrapper"> -->
+        <!-- start box -->
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 safari-float-left">
+                        <div class="block-header d-flex justify-content-between align-items-center">
+                            <h4 class="blockDetails-header-title text-break text-center text-md-left">XinFin Network Developer APIs</h4>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br>
+        </section>
+        <!-- end Box -->
 
-            <p><strong>Get total XDC  on block chain </strong></p>
-            <ul style="list-style-type: none">
-                <li>
-                <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=balance&amp;action=totalXDC&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=balance&amp;action=totalXDC&amp;apikey=YourApiKeyToken</a></pre>
-                </li>
-            </ul>
-            <br>
-
-            <p><strong>Get XDC Balance for a single Address</strong></p>
-            <ul style="list-style-type: none">
-                    <li>
-                    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=balance&amp;action=balance&amp;address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=balance&amp;address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
-                    </li>
-            </ul>
-            <br>
-
-            <strong>Get XDC Balance for multiple Addresses in a single call</strong>
-                    <ul style="list-style-type: none">
-                    <li>
-                    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=balance&amp;action=balancemulti&amp;address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=balancemulti&amp;address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
-                    </li>
-                    <li>Separate addresses by comma, up to a maxium of 20 accounts in a single batch</li>
-                    </ul>
-            <br>
-            <p></p>
-    </div>
-
-
-    <div class="tab-pane fade table-responsive" id="accounts">
-    <div class="headline headline-md">
-    <h4>Account APIs</h4>
-    </div>
-    <br>
-    
-    <strong>Get a list of 'Normal' Transactions By Address</strong>
-    <ul style="list-style-type: none">
-    <br>
-    <br>[Optional Parameters] pageSize: 1 - 100<br><br>
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=txlist&amp;address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=txlist&amp;address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    <strong>[BETA] Get a list of 'Internal' Transactions by Address</strong>
-    <ul style="list-style-type: none">
-    <br>
-    <br>[Optional Parameters] pageSize: 1 - 100<br><br>
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=txlistinternal&amp;address=xdc6badcfb3dda5b8f6a394187915715cc02b7361cf&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=txlistinternal&amp;address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    <br>
-    </ul>
-    <br>
-    <strong>Get list of Blocks Mined by Address</strong>
-    <ul style="list-style-type: none">
-    <br>[Optional Parameters] pageSize: 1 - 100<br><br>
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=getminedblocks&amp;address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=getminedblocks&amp;address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&amp;page=1&amp;pageSize=10&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <p></p>
-    </div>
-
-    <div class="tab-pane table-responsive" id="contracts">
-    <div class="headline headline-md">
-    <h4>Contract APIs</h4>
-    </div>
-    <br>
-    Newly verified Contracts are synced to the API servers within 5 minutes or less<br>
-    <br>
-    <p>
-    <strong>Get Contract ABI for <a href="/contractsVerified">Verified Contract Source Codes</a> </strong>
-    </p><ul style="list-style-type: none">
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&amp;action=getabi&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract<br><br>
-    <pre>var Web3 = require('xdc3');;
+        <!-- start APIs -->
+        <section id="mainboxes">
+            <div class="container">
+                <div class="row mt-4">
+                    <div class="col-lg-3 col-md-4 col-12 mb-5">
+                        <div class="list-group nav nav-pills nav-stacked" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action active" id="list-intro-list" data-toggle="list" href="#intro" role="tab" onclick="javascript:updatehash('');" >
+                                <h5>Introduction</h5>
+                            </a>
+                            <a onclick="javascript:updatehash('proxy');" class=" navLi list-group-item list-group-item-action"  id="list-proxy-list" data-toggle="list" href="#proxy" role="tab">
+                                <h5>XinFin Proxy</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-AA-list" data-toggle="list" href="#balance" role="tab" onclick="javascript:updatehash('balance');" aria-expanded="false">
+                                <h5>Balance</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-AS-list" data-toggle="list" href="#account" role="tab" onclick="javascript:updatehash('account');" >
+                                <h5>Account</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-V-list" data-toggle="list" href="#contracts" role="tab" onclick="javascript:updatehash('contracts');" >
+                                <h5>Contracts</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-TF-list" data-toggle="list" href="#transaction" role="tab"  onclick="javascript:updatehash('transactions');">
+                                <h5>Transaction</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-API-list" data-toggle="list" href="#blocks" role="tab"  onclick="javascript:updatehash('blocks');" >
+                                <h5>Blocks</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-MA-list" data-toggle="list" href="#logs" role="tab"  onclick="javascript:updatehash('logs');">
+                                <h5>Event Logs</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-BR-list" data-toggle="list" href="#tokens" role="tab"  onclick="javascript:updatehash('tokens');">
+                                <h5>Tokens</h5>
+                            </a>
+                            <a class="navLi list-group-item list-group-item-action" id="list-SC-list" data-toggle="list" href="#stats" role="tab"onclick="javascript:updatehash('stats');">
+                                <h5>Stats</h5>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <div class="tab-content style-2" id="nav-tabContent">
+                            <div class="card tab-pane fade show active" id="intro" role="tabpanel" aria-labelledby="list-intro-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Introduction</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>We will show all the Public APIs here.</p>
+									<p>The APIs support GET/POST requests</p>
+									<p>You can request by a rate limit of 3 requests/sec , otherwise you will be blocked.</p>
+									<p class="mb-1">Each API return data in format like :{"status":1, "message":"OK", "result":""}.</p>
+									<p class="mb-1">status: 1 mean Success , 0 mean Fail</p>
+									<p class="mb-1">message: OK or fail reason</p>
+									<p>result: json format data about the request result</p>
+									<p>Both http and https are supported</p>
+                                </div>
+                            </div>
+							
+                            <div class="card tab-pane fade show" id="proxy" role="tabpanel" aria-labelledby="list-proxy-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">XinFin Proxy APIs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>The following are the limited list of supported Proxied APIs for XinFin available through xinfinScan. Parameters provided should be named like in the examples below. For compatibility with Parity, please prefix all hex strings with "xdc"</p>
+									<hr class="hr-space">
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_blockNumber</strong></p>
+										<p class="mb-2">Returns the number of most recent block</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getBlockByNumber</strong></p>
+										<p class="mb-2">Returns information about a block by block number</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getBlockTransactionCountByNumber</strong></p>
+										<p class="mb-2">Returns the number of transactions in a block from a block matching the given block number</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getTransactionByHash</strong></p>
+										<p class="mb-2">Returns the information about a transaction requested by transaction hash</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getTransactionByBlockNumberAndIndex</strong></p>
+										<p class="mb-2">Returns information about a transaction by block number and transaction index position</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getTransactionCount</strong></p>
+										<p class="mb-2">Returns the number of transactions sent from an address</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_sendRawTransaction</strong></p>
+										<p class="mb-2">Creates new message call transaction or a contract creation for signed transactions</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken</a></pre>
+										<p>(Replace the hex value with your raw hex encoded transaction that you want to send.<br>Send as a POST request, if your hex code is particularly long)</p>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getTransactionReceipt</strong></p>
+										<p class="mb-2">Returns the receipt of a transaction by transaction hash</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_call</strong></p>
+										<p class="mb-2">Executes a new message call immediately without creating a transaction on the block chain</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getCode</strong></p>
+										<p class="mb-2">Returns code at a given address</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_getStorageAt</strong> (**experimental)</p>
+										<p class="mb-2">Returns the value from a storage position at a given address</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_gasPrice</strong></p>
+										<p class="mb-2">Returns the current price per gas in wei</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>eth_estimateGas</strong></p>
+										<p class="mb-2">Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used for estimating the used gas</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="balance" role="tabpanel" aria-labelledby="list-balance-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Balance APIs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+										<p class="mb-2"><strong>Get total XDC on block chain</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-2"><strong>Get XDC Balance for a single Address</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-2"><strong>Get XDC Balance for multiple Addresses in a single call</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken</a></pre>
+										<p>Separate addresses by comma, up to a maxium of 20 accounts in a single batch</p>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="account" role="tabpanel" aria-labelledby="list-account-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Account APIs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+										<p class="mb-0"><strong>Get a list of 'Normal' Transactions By Address</strong></p>
+										<p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>[BETA] Get a list of 'Internal' Transactions by Address</strong></p>
+										<p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>Get list of Blocks Mined by Address</strong></p>
+										<p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="contracts" role="tabpanel" aria-labelledby="list-contracts-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Contract APIs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>Newly verified Contracts are synced to the API servers within 5 minutes or less</p>
+									<div class="mb-4">
+										<p class="mb-2"><strong>Get Contract ABI for <a href="verify-contract.html">Verified Contract Source Codes</a></strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken</a></pre>
+										<p class="mt-4">A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract</p>
+										<pre>var Web3 = require('xdc3');;
     var web3 = new Web3(new Web3.providers.HttpProvider());
     var version = web3.version.api;
                 
@@ -157,301 +231,103 @@
         }            
     });
                                </pre>
-    <br>
-    <p></p>
-    <p>
-    <strong>[Beta] Get Contract Source Code for <a href="/contractsVerified">Verified Contract Source Codes</a> </strong>
-    <br>
-    </p><ul style="list-style-type: none">
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=contract&amp;action=getsourcecode&amp;address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&amp;action=getsourcecode&amp;address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <p></p>
-    </div>
-     <div class="tab-pane fade table-responsive" id="transactions">
-    <div class="headline headline-md">
-    <h4>Transaction APIs</h4>
-    </div>
-    <br>
-    <p>
-    <!--strong>[BETA] Check Contract Execution Status (if there was an error during contract execution) </strong>
-    <br>
-    Note: isError":"0" = Pass , isError":"1" = Error during Contract Execution
-    <br>
-    </p><ul style="list-style-type: none">
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=transaction&amp;action=getstatus&amp;txhash=0x15f8e5ea1079d9a0bb04a4c58ae5fe7654b5b2b4463375ff7ffb490aa0032f3a&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=transaction&amp;action=getstatus&amp;txhash=0x15f8e5ea1079d9a0bb04a4c58ae5fe7654b5b2b4463375ff7ffb490aa0032f3a&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <p></p>
-    <br>
-    <p-->
-    <strong>[BETA] Check Transaction Receipt Status </strong>
-    <br>
-    Note: status: 0 = Fail, 1 = Pass. 
-    <br>
-    </p><ul style="list-style-type: none">
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=transaction&amp;action=gettxreceiptstatus&amp;txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=transaction&amp;action=gettxreceiptstatus&amp;txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <p></p>
-    </div>
-    
-    <div class="tab-pane fade in table-responsive active" id="blocks">
-    <div class="headline headline-md">
-    <h4>Blocks APIs</h4>
-    </div>
-    <br>
-    <p>
-    <strong>[BETA] Get Block Rewards by BlockNo </strong>
-    </p><ul style="list-style-type: none">
-    <li>
-    <pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=block&amp;action=getblockreward&amp;blockno=2165403&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=block&amp;action=getblockreward&amp;blockno=2165403&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <p></p>
-    </div>
+									</div>
+									<div class="mb-4">
+										<p class="mb-0"><strong>[Beta] Get Contract Source Code for <a href="verify-contract.html">Verified Contract Source Codes</a></strong></p>
+										<p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="transaction" role="tabpanel" aria-labelledby="list-transaction-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Transaction APIs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+										<p class="mb-0"><strong>[BETA] Check Transaction Receipt Status</strong></p>
+										<p class="mb-2">Note: status: 0 = Fail, 1 = Pass</p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="blocks" role="tabpanel" aria-labelledby="list-blocks-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Blocks APIs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+										<p class="mb-2"><strong>[BETA] Get Block Rewards by BlockNo</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="logs" role="tabpanel" aria-labelledby="list-logs-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Event Logs</h5>
+                                </div>
+                                <div class="card-body">
+                                    <p>[Beta] The Event Log API was designed to provide an alternative to the native <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs" target="_blank">eth_getLogs</a>. Below are the list of supported filter parameters:</p>
+									<ul>
+										<li>param address: contract address</li>
+										<li>param[option] fromBlock: logs in block is great than or equle fromBlock</li>
+										<li>param[option] toBlock: logs in block is little than or equle toBlock</li>
+										<li>param[option] topics: topics filter. multi topic separate with comma. <br>
+										such as: ...&amp;topics=value0,,value2&amp;... this exprission will fetch logs that topic0 is value0 and topic2 is value2.<br>
+										each value's length is 66(contain:0x)</li>
+										<li>param[option] data: log data(not index param data)</li>
+										<li>param[option] returnFilters: return partial data(full data as default). multi topic separate with comma.<br>
+										such as: ...&amp;returnFilters=address,timestamp,topics,data&amp;...
+										</li>
+									</ul>
+									<p class="mb-2">fromBlock and toBlock accepts the blocknumber (integer, NOT hex) or 'latest' (earliest & pending is NOT supported yet)</p>
+									<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken</a></pre>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="tokens" role="tabpanel" aria-labelledby="list-tokens-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">Token Info</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+										<p class="mb-2"><strong>Get ERC20-Token TotalSupply by ContractAddress</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=stats&action=tokensupply&contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&action=tokensupply&contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
+							
+							<div class="card tab-pane fade show" id="stats" role="tabpanel" aria-labelledby="list-stats-list">
+                                <div class="card-header">
+                                    <h5 class="mt-0 mb-0">General Stats</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="mb-4">
+										<p class="mb-2"><strong>Get Total Supply of Ether</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken</a></pre>
+										<p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)</p>
+									</div>
+									<div class="mb-4">
+										<p class="mb-2"><strong>Get XDC LastPrice Price</strong></p>
+										<pre class="text-break-all"><a href="http://localhost:3000/publicAPI?module=stats&action=ethprice&apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&action=ethprice&apikey=YourApiKeyToken</a></pre>
+									</div>
+                                </div>
+                            </div>
 
-    <div class="tab-pane fade in table-responsive" id="logs">
-    <div class="headline headline-md">
-    <h4>Event Logs</h4>
-    </div>
-    <br>
-    [Beta] The Event Log API was designed to provide an alternative to the native <a href="//github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs" target="_blank">eth_getLogs</a>. Below are the list of supported filter parameters:
-    <br><br>
-    <ul>
-        <li>param address: contract address</li>
-        <li>param[option] fromBlock: logs in block is great than or equle fromBlock</li>
-        <li>param[option] toBlock: logs in block is little than or equle toBlock</li>
-        <li>param[option] topics: topics filter. multi topic separate with comma. <br>
-            such as: ...&topics=value0,,value2&... this exprission will fetch logs that topic0 is value0 and topic2 is value2.<br>
-        each value's length is 66(contain:0x)</li>
-        <li>param[option] data: log data(not index param data)</li>
-        <li>param[option] returnFilters: return partial data(full data as default). multi topic separate with comma.<br>
-            such as: ...&returnFilters=address,timestamp,topics,data&...
-        </li>
-    </ul>
-    fromBlock and toBlock accepts the blocknumber (integer, NOT hex) or 'latest' (earliest &amp; pending is NOT supported yet)<br>
-    <hr>
-    
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    
-    </div>
-    <div class="tab-pane fade in table-responsive" id="proxy">
-    <div class="headline headline-md">
-    <h4> XinFin Proxy APIs</h4>
-    </div>
-    <br>
-    <p>
-    The following are the limited list of supported Proxied APIs for XinFin available through xinfinScan.
-    Parameters provided should be named like in the examples below. For compatibility with Parity, please prefix all hex strings with "xdc" </p><hr>
-    <strong>eth_blockNumber</strong><br>
-    Returns the number of most recent block<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_blockNumber&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_blockNumber&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_getBlockByNumber</strong><br>
-    Returns information about a block by block number.<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getBlockByNumber&amp;blockNumber=666&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getBlockByNumber&amp;blockNumber=666&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_getBlockTransactionCountByNumber</strong><br>
-    Returns the number of transactions in a block from a block matching the given block number<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getBlockTransactionCountByNumber&amp;blockNumber=666&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getBlockTransactionCountByNumber&amp;blockNumber=666&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_getTransactionByHash</strong><br>
-    Returns the information about a transaction requested by transaction hash<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionByHash&amp;txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionByHash&amp;txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_getTransactionByBlockNumberAndIndex</strong><br>
-    Returns information about a transaction by block number and transaction index position<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionByBlockNumberAndIndex&amp;blockNumber=1267471&amp;index=0x0&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionByBlockNumberAndIndex&amp;blockNumber=1267471&amp;index=0x0&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_getTransactionCount</strong><br>
-    Returns the number of transactions sent from an address<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionCount&amp;address=xdc2910543af39aba0cd09dbb2d50200b3e800a63d2&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionCount&amp;address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_sendRawTransaction</strong><br>
-    Creates new message call transaction or a contract creation for signed transactions<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_sendRawTransaction&amp;hex=0xf904808000831cfde080&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_sendRawTransaction&amp;hex=0xf904808000831cfde080&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    (Replace the hex value with your raw hex encoded transaction that you want to send.<br>Send as a POST request, if your hex code is particularly long)
-    </ul>
-    <br><br>
-    <strong>eth_getTransactionReceipt</strong><br>
-    Returns the receipt of a transaction by transaction hash<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionReceipt&amp;txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getTransactionReceipt&amp;txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_call</strong><br>
-    Executes a new message call immediately without creating a transaction on the block chain<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_call&amp;to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&amp;data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_call&amp;to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&amp;data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&amp;blockNumber=latest&amp;apikey=YourApiKeyToken</a></pre>
-     </li>
-    </ul>
-    <br><br>
-    <strong>eth_getCode</strong><br>
-    Returns code at a given address<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getCode&amp;address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getCode&amp;address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&amp;vs=latest&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_getStorageAt</strong> (**experimental)<br>
-    Returns the value from a storage position at a given address.<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_getStorageAt&amp;address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&amp;position=0x0&amp;blockNumber=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_getStorageAt&amp;address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&amp;position=0x0&amp;blockNumber=latest&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_gasPrice</strong><br>
-    Returns the current price per gas in wei.<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_gasPrice&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_gasPrice&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <strong>eth_estimateGas</strong><br>
-    Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used for estimating the used gas<br><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=proxy&amp;action=eth_estimateGas&amp;to=xdcf0160428a8552ac9bb7e050d90eeade4ddd52843&amp;value=0xff22&amp;gasPrice=0x051da038cc&amp;gas=0xffffff&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=proxy&amp;action=eth_estimateGas&amp;to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&amp;value=0xff22&amp;gasPrice=0x051da038cc&amp;gas=0xffffff&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <p></p>
-    <br>
-    </div>
+                            
 
-    <div class="tab-pane fade in table-responsive" id="tokens">
-    <div class="headline headline-md">
-    <h4>Token Info</h4>
-    </div>
-    <p>
-    <br>
-    <strong>Get ERC20-Token TotalSupply by ContractAddress</strong><br>
-    </p><ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=stats&amp;action=tokensupply&amp;contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&amp;action=tokensupply&amp;contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    <!--b><i>[Deprecated]</i></b><i> Get Token TotalSupply by TokenName (<strike>Supported TokenNames: DGD, MKR, FirstBlood, HackerGold, ICONOMI, Pluton, REP, SNGLS</strike>). This has feature been deprecated, instead use the Api above to look up any ERC20 token supply by its contract address</i><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=stats&amp;action=tokensupply&amp;tokenname=DGD&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&amp;action=tokensupply&amp;tokenname=DGD&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    <hr>
-    <strong>Get ERC20-Token Account Balance for TokenContractAddress </strong><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=tokenbalance&amp;contractaddress=0x57d90b64a1a57749b0f932f1a3395792e12e7055&amp;address=0xe04f27eb70e025b78871a2ad7eabe85e61212761&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=tokenbalance&amp;contractaddress=0x57d90b64a1a57749b0f932f1a3395792e12e7055&amp;address=0xe04f27eb70e025b78871a2ad7eabe85e61212761&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    <b><i>[Deprecated]</i></b><i> Get Token Account Balance by known TokenName (<strike>Supported TokenNames: DGD, MKR, FirstBlood, ICONOMI, Pluton, REP, SNGLS</strike>). This feature has been deprecated, instead use the Api above to look up any ERC20 token balance by its contract address</i><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=account&amp;action=tokenbalance&amp;tokenname=DGD&amp;address=0x4366ddc115d8cf213c564da36e64c8ebaa30cdbd&amp;tag=latest&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=account&amp;action=tokenbalance&amp;tokenname=DGD&amp;address=0x4366ddc115d8cf213c564da36e64c8ebaa30cdbd&amp;tag=latest&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br>
-    <br>
-    <p></p>
-    <br-->
-    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- end APIs -->
 
-    <div class="tab-pane fade in table-responsive" id="masternode">
-        <div class="headline headline-md">
-        <h4>masternode</h4>
-        </div>
-        <p>
-        <br>
-        <strong>masternode address</strong><br>
-        </p><ul style="list-style-type:none">
-        <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=masternode&amp;action=masternodeList&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=masternode&amp;action=masternodeList&amp;apikey=YourApiKeyToken</a></pre>
-        </li>
-        </ul>
-        <br>
-    </div>
-
-    <div class="tab-pane fade in table-responsive" id="stats">
-    <div class="headline headline-md">
-    <h4>General Stats</h4>
-    </div>
-    <p>
-    <br>
-    <strong>Get Total Supply of Ether</strong><br>
-    </p><ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=stats&amp;action=ethsupply&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&amp;action=ethsupply&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    (Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)
-    </ul>
-    <br>
-    <strong>Get XDC LastPrice Price</strong><br>
-    <ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//localhost:3000/publicAPI?module=stats&amp;action=ethprice&amp;apikey=YourApiKeyToken">http://localhost:3000/publicAPI?module=stats&amp;action=ethprice&amp;apikey=YourApiKeyToken</a></pre>
-    </li>
-    </ul>
-    <br><br>
-    <p></p>
-    <br>
-    </div>
-    <div class="tab-pane fade in table-responsive" id="misc">
-    <div class="headline headline-md">
-    <h4>Misc Tools and Utilities</h4>
-    <br><br>
-    <i>These are 3rd party tools and utilities created by the community and we do not provide any support or warranties for the solutions listed below</i>
-    <br>
-    </div>
-    <p>
-    <br>
-    <strong>py-XinFinScan-api module (corpetty)</strong><br>
-    </p><ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//github.com/corpetty/py-XinFinScan-api" target="_blank">https://github.com/corpetty/py-XinFinScan-api</a></pre>
-    </li>
-    (A 3rd party localhost:3000 API python bindings module written by Corey Petty)
-    </ul>
-    <br>
-    <p></p>
-    <p>
-    <br>
-    <strong>node API (Sebastian Schürmann)</strong><br>
-    </p><ul style="list-style-type:none">
-    <li><pre class="wordwrap"><a href="//github.com/sebs/XinFinScan-api" target="_blank">https:/github.com/sebs/XinFinScan-api</a></pre>
-    </li>
-    (A 3rd party Node API for XinFinScan)
-    </ul>
-    <br>
-    <p></p>
-    <br>
-    </div>
-    </div>
-    </div>
-    </div>
-    </div>
+    <!-- </div> -->
+    <!-- end wrapper -->
 
     <script type="text/javascript">
         var hash = window.location.hash.substring(1);
