@@ -27,7 +27,7 @@ const METHOD_DIC = {
 
 //modify according to your actual situation.
 var config3 = {
-    "httpProvider":"http://0.0.0.0:8545",
+    "httpProvider":"http://0.0.0.0:8546",
     "patchStartBlocks": 1,//1
     "patchEndBlocks": 394905,//"latest",//5485123,//600
     "quiet": true,

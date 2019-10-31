@@ -27,7 +27,7 @@ var listenBlocks = function(config, web3) {
 
 
 // var config = {
-//     "rpc": 'http://0.0.0.0:8545',
+//     "rpc": 'http://0.0.0.0:8546',
 //     "blocks": [ {"start": 0, "end": "latest"}]
 // };
 
