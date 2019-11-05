@@ -27,7 +27,7 @@ var listenBlocks = function(config, web3) {
 
 
 // var config = {
-//     "rpc": 'https://explorerrpc.xinfin.network',
+//     "rpc": 'http://explorerrpc.apothem.network',
 //     "blocks": [ {"start": 0, "end": "latest"}]
 // };
 

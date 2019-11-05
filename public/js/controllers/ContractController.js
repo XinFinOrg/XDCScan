@@ -9,7 +9,7 @@ angular.module('BlocksApp').controller('ContractController', function($statePara
     //fetch compiler options
     $scope.compilerVersions = [];
 
-    $.getJSON('https://ethereum.github.io/solc-bin/bin/list.json').done(function (data) {
+    $.getJSON('/list.json').done(function (data) {
       function buildVersion (build) {
         if (build.prerelease && build.prerelease.length > 0) {
           return build.version + '-' + build.prerelease
@@ -40,8 +40,8 @@ angular.module('BlocksApp').controller('ContractController', function($statePara
 
       // validate
       
-      if (!isAddress($scope.contract.address)) 
-        $scope.errors.address = "Invalid Address";
+      // if (!isAddress($scope.contract.address)) 
+      //   $scope.errors.address = "Invalid Address";
       if (typeof $scope.contract.name == "undefined")          
         $scope.errors.name = "Contract Name Required";
       if (typeof $scope.contract.version == "undefined")
