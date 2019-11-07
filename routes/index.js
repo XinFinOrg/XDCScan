@@ -64,7 +64,7 @@ module.exports = function(app){
   app.post('/stats', stats);
   app.post('/todayRewards', todayRewards);
   app.post('/totalMasterNodes', totalMasterNodes);
-
+  
 }
 
 var getAddr = function(req, res){
@@ -261,16 +261,16 @@ var totalMasterNodes = function(req, res) {
   // });
   if(!masterNodeContract){
     var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-    var contractAddress = "0x000000000000000000000000000000000000000a";
+    var contractAddress = "0x0000000000000000000000000000000000000088";
     masterNodeContract = contractOBJ.at(contractAddress);
-  }
+    }
   if(masterNodeContract){
-    res.write(String(masterNodeContract.count()));
+    res.write(String(masterNodeContract.getCandidates().length));
   }
   res.end();
 }
 
-var firstDayTime = 1533262389;
+var firstDayTime = 1559211559;
 var oneDaySeconds = 86400;
 /* get blocks from db */
 var sendBlocks = function(lim, res) {
