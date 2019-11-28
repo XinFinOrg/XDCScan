@@ -65,7 +65,7 @@ module.exports = function(req, res){
         case totalXDC:
           totalBlockNum = eth.blockNumber;
           onlyValue = requestParam(req, "onlyValue");
-          value = 196263376+0.45*totalBlockNum;
+          value = 37500000000+5.55*totalBlockNum;
           if(onlyValue){
             res.write(String(value));
             res.end();

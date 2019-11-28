@@ -57,7 +57,7 @@ const METHOD_DIC = {
 
 //modify according to your actual situation.
 var config3 = {
-    "httpProvider":"http://explorerrpc.apothem.network",
+    "httpProvider":"https://explorerrpc.xinfin.network",
     "patchStartBlocks":3840465,//1
     "patchEndBlocks":3840465,//"latest",//5485123,//600
     "quiet": true,
