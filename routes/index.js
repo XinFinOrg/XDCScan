@@ -10,7 +10,7 @@ var filters = require('./filters')
 var contracts = require('../contractTpl/contracts.js');
 var masterNodeContract;
 var web3relay;
-
+var contractAddress = "0x0000000000000000000000000000000000000088";
 module.exports = function(app){
   web3relay = require('./web3relay');
 
@@ -63,6 +63,7 @@ module.exports = function(app){
   app.post('/fiat', fiat);
   app.post('/stats', stats);
   app.post('/todayRewards', todayRewards);
+  app.post('/totalStakedValue', totalStakedValue)
   app.post('/totalMasterNodes', totalMasterNodes);
   
 }
@@ -250,18 +251,8 @@ var todayRewards = function(req, res) {
 }
 
 var totalMasterNodes = function(req, res) {
-  // Witness.count({}).exec(function(err,c){
-  //   if(err){
-  //     console.log(err);
-  //     res.end();
-  //     return;
-  //   }
-  //   res.write(String(c));
-  //   res.end();
-  // });
   if(!masterNodeContract){
     var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-    var contractAddress = "0x0000000000000000000000000000000000000088";
     masterNodeContract = contractOBJ.at(contractAddress);
     }
   if(masterNodeContract){
@@ -270,6 +261,37 @@ var totalMasterNodes = function(req, res) {
   res.end();
 }
 
+function fnum(x) {
+	if(isNaN(x)) return x;
+
+	if(x < 9999) {
+		return x;
+	}
+
+	if(x < 1000000) {
+		return Math.round(x/1000) + " K";
+	}
+	if( x < 10000000) {
+		return (x/1000000).toFixed(2) + " Million XDC";
+	}
+
+	if(x < 1000000000) {
+		return Math.round((x/1000000)) + " Million XDC";
+	}
+
+	if(x < 1000000000000) {
+		return Math.round((x/1000000000)) + " Billion XDC";
+	}
+
+	return "1T+";
+}
+
+var totalStakedValue = function(req, res) {
+  let balace = web3relay.eth.getBalance(contractAddress).toPrecision()/Math.pow(10,18)
+  console.log(' = '+fnum(balace));
+  res.write(fnum(balace));
+  res.end();
+}
 var firstDayTime = 1559211559;
 var oneDaySeconds = 86400;
 /* get blocks from db */

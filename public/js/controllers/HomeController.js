@@ -25,8 +25,9 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.meanDayRewards = data.meanDayRewards;
       });
 
-      todayRewards();
+      // todayRewards();
       totalNodes();
+      totalStakedValue();
     }
 
     function todayRewards(){
@@ -38,7 +39,15 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.todayRewards = data;
       });
     }
-
+    function totalStakedValue(){
+      $http({
+        method: 'POST',
+        url: '/totalStakedValue',
+        data: {}
+      }).success(function(data) {
+        $scope.totalStakedValue = data;
+      });
+    }
     function totalNodes(){
       $http({
         method: 'POST',
