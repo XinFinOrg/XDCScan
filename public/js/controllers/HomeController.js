@@ -27,6 +27,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
 
       // todayRewards();
       totalNodes();
+      totalXDC();
       totalStakedValue();
     }
 
@@ -46,6 +47,15 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         data: {}
       }).success(function(data) {
         $scope.totalStakedValue = data;
+      });
+    }
+    function totalXDC(){
+      $http({
+        method: 'GET',
+        url: '/totalXDCSupply',
+        data: {}
+      }).success(function(data) {
+        $scope.totalXDC = data;
       });
     }
     function totalNodes(){

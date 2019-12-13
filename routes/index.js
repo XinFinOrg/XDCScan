@@ -5,6 +5,7 @@ var Transaction = mongoose.model( 'Transaction' );
 // var Contract = mongoose.model('Contract');
 // var Witness = mongoose.model( 'Witness' );
 var filters = require('./filters')
+var eth = require("./web3relay").eth;
 
 
 var contracts = require('../contractTpl/contracts.js');
@@ -43,6 +44,7 @@ module.exports = function(app){
   app.post('/data', getData);
   app.get('/publicAPI', publicAPI);//all public APIs
   app.get('/totalXDC', publicAPI.getTotalXDC);
+  app.get('/totalXDCSupply', getTotalXDCSupply);
 
   //app.post('/daorelay', DAO);
   app.post('/addressListData', addressListData);
@@ -284,6 +286,12 @@ function fnum(x) {
 	}
 
 	return "1T+";
+}
+var getTotalXDCSupply = function(req, res){
+  totalBlockNum = eth.blockNumber;
+  respData = 37500000000+5.55*totalBlockNum;
+  res.write(String(respData));
+  res.end();
 }
 
 var totalStakedValue = function(req, res) {
