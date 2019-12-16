@@ -1,3 +1,5 @@
+var batchItems = [];
+
 //add timestamp for console.log()
 (function() { //add timestamp to console.log and console.error(from http://yoyo.play175.com)
     var date = new Date();
