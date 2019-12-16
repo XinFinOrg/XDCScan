@@ -12,6 +12,7 @@ var contracts = require('../contractTpl/contracts.js');
 var masterNodeContract;
 var web3relay;
 var contractAddress = "0x0000000000000000000000000000000000000088";
+var burntAddress = "0x0000000000000000000000000000000000000000";
 module.exports = function(app){
   web3relay = require('./web3relay');
 
@@ -66,6 +67,7 @@ module.exports = function(app){
   app.post('/stats', stats);
   app.post('/todayRewards', todayRewards);
   app.post('/totalStakedValue', totalStakedValue)
+  app.post('/totalBurntValue', totalBurntValue)
   app.post('/totalMasterNodes', totalMasterNodes);
   
 }
@@ -271,7 +273,7 @@ function fnum(x) {
 	}
 
 	if(x < 1000000) {
-		return Math.round(x/1000) + " K";
+		return Math.round(x/1000) + " K XDC";
 	}
 	if( x < 10000000) {
 		return (x/1000000).toFixed(2) + " Million XDC";
@@ -296,6 +298,11 @@ var getTotalXDCSupply = function(req, res){
 
 var totalStakedValue = function(req, res) {
   let balace = web3relay.eth.getBalance(contractAddress).toPrecision()/Math.pow(10,18)
+  res.write(fnum(balace));
+  res.end();
+}
+var totalBurntValue = function(req, res) {
+  let balace = web3relay.eth.getBalance(burntAddress).toPrecision()/Math.pow(10,18)
   res.write(fnum(balace));
   res.end();
 }
