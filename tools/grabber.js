@@ -144,6 +144,20 @@ var listenBlocks = function() {
         //console.log("watch log:", log);
         if(error) {
             console.log('Error: ' + error);
+            console.log("Reinitialising filter");
+            newBlocksWatch.stopWatching();
+            newBlocksWatch.once({
+                fromBlock: currentBlock,
+                toBlock: 'latest'
+            } ,function (error, data){
+                console.log("newBlocksWatch -- ListenBlock");
+
+                listenBlocks();
+                
+            }
+            );
+
+
         } else if (log == null) {
             //console.log('Warning: null block hash');
         } else {
@@ -208,7 +222,7 @@ var tryNextBlock = function() {
     sleepFlag++;
     if(currentBlock%1000==0)
         console.log("block number:", currentBlock);
-    if(currentBlock>=config3.patchStartBlocks){
+    if(currentBlock>=config.patchStartBlocks){
         if(sleepFlag>3){
             sleepFlag = 0;
             // setTimeout(grabBlock3, 100);
@@ -547,6 +561,35 @@ setInterval(function(){
         writeTransactionsToDB(_blockData);
     }
 }, 3000);
+var currentBlock;
+function nextInsertBatch(){
+    batchItems.length = 0;
+    batchIdex++;
+    console.log("nextInsertBatch index:", batchIdex);
+    for(var i=0; i<itemBatchSize; i++){
+        itemIndex++;
+        if(itemIndex>=addressItems.length){
+            break;
+        }
+        var addrItem = {"addr":addressItems[itemIndex], "type":0, "balance":0};
+        addrItem.balance = web3.eth.getBalance(addrItem.addr);
+        // if(contractAddrs.indexOf(addrItem.addr)>-1){//contract addr
+        //     addrItem.type = 1;
+        // }
+        if(addrItem.balance>0)
+            batchItems.push(addrItem);
+    }
+    if(batchItems.length>0){
+        insertDB();
+    }else if(itemIndex<addressItems.length){
+        nextInsertBatch();
+    }else{
+        console.log("total items:", addressItems.length);
+        console.log("【insert finish !】");
+        mongoose.disconnect();
+        process.exit(0);
+    }
+}
 
 grabBlocks();
 
