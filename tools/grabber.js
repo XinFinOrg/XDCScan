@@ -186,6 +186,8 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
         web3.eth.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
             if(error) {
                 console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
+                tryNextBlock();
+                setTimeout(restart, 3000);
             }
             else if(blockData == null) {
                 //console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
@@ -200,7 +202,27 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
             setTimeout(restart, 3000);
     }
 }
-    
+var sleepFlag = 0;
+var tryNextBlock = function() {
+    currentBlock--
+    sleepFlag++;
+    if(currentBlock%1000==0)
+        console.log("block number:", currentBlock);
+    if(currentBlock>=config3.patchStartBlocks){
+        if(sleepFlag>3){
+            sleepFlag = 0;
+            // setTimeout(grabBlock3, 100);
+            grabBlock3();
+        }else{
+            grabBlock3();
+        }
+        
+    }else{
+        console.log("【finish address grabber. ready insert db】:");
+        nextInsertBatch();
+    }
+
+}    
 function restart(){
     connectWeb3();
     if(newBlocksWatch)
