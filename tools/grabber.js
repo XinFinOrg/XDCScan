@@ -203,7 +203,7 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
             if(error) {
                 console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
                 // tryNextBlock();
-                setTimeout(restart, 3000);
+                // setTimeout(restart, 3000);
             }
             else if(blockData == null) {
                 //console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
