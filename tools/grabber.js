@@ -202,7 +202,7 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
         web3.eth.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
             if(error) {
                 console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
-                tryNextBlock();
+                // tryNextBlock();
                 setTimeout(restart, 3000);
             }
             else if(blockData == null) {
@@ -564,6 +564,9 @@ setInterval(function(){
     }
 }, 3000);
 var currentBlock;
+var batchIdex = -1;
+var batchItems = [];
+var itemIndex = -1;
 function nextInsertBatch(){
     batchItems.length = 0;
     batchIdex++;
