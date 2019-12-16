@@ -4,6 +4,6 @@
     "patchStartBlocks": 1,
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": false,
+    "listenOnly": true,
     "out": "."
 }
