@@ -296,7 +296,6 @@ var getTotalXDCSupply = function(req, res){
 
 var totalStakedValue = function(req, res) {
   let balace = web3relay.eth.getBalance(contractAddress).toPrecision()/Math.pow(10,18)
-  console.log(' = '+fnum(balace));
   res.write(fnum(balace));
   res.end();
 }
