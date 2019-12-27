@@ -428,7 +428,7 @@ function responseFail(res, respData, msg){
 
 module.exports.getTotalXDC = function(req, res){
   totalBlockNum = eth.blockNumber;
-  respData = 196263376+0.45*totalBlockNum;
+  respData = 37500000000+5.55*totalBlockNum;
   res.write(String(respData));
   res.end();
 }

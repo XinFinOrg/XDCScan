@@ -1,8 +1,9 @@
 {
     "rpc": "https://explorerrpc.xinfin.network",
     "blocks": [ {"start": 0, "end": "latest"}],
+    "patchStartBlocks": 1,
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": false,
+    "listenOnly": true,
     "out": "."
 }
