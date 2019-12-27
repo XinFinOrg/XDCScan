@@ -9,7 +9,7 @@ var BlockStat = require( '../db-stats.js' ).BlockStat;
 
 var updateStats = function() {
     // var web3 = new Web3(new Web3.providers.HttpProvider('http://rpc.etherzero.org:9646')); 
-    var web3 = new Web3(new Web3.providers.HttpProvider('https://explorerrpc.xinfin.network')); 
+    var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.apothem.network')); 
     mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/BlockScanDB');
     mongoose.set('debug', true);
 
