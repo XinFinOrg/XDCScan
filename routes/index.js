@@ -69,6 +69,7 @@ module.exports = function(app){
   app.post('/totalStakedValue', totalStakedValue)
   app.post('/totalBurntValue', totalBurntValue)
   app.post('/totalMasterNodes', totalMasterNodes);
+  app.post('/CMCPrice', totalMasterNodes);
   
 }
 

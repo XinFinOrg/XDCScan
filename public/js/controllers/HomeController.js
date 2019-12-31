@@ -30,6 +30,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       totalXDC();
       totalStakedValue();
       totalBurntValue();
+      FetchUSDPrrice();
     }
 
     function todayRewards(){
@@ -77,7 +78,22 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.totalNodes = data;
       });
     }
-
+    function FetchUSDPrrice(){
+      $http({
+        method: 'get',
+        url: 'https://api.coinmarketcap.com/v1/ticker/xinfin-network/',
+        data: {}
+      }).success(function(data) {
+        $scope.CMCPrice_USD = data[0].price_usd;
+        $scope.CMCPrice_change24h = data[0].percent_change_24h;
+      });
+    }
+    $('td').each(function() {
+      var val = $(this).text(), n = +val;
+      if (!isNaN(n) && /^\s*[+-]/.test(val)) {
+        $(this).addClass(val >= 0 ? 'pos' : 'neg')
+      }
+    })
     $scope.reloadTransactions = function() {
       $scope.txLoading = true;
       $http({
