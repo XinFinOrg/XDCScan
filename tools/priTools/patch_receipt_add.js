@@ -435,7 +435,7 @@ function patchNoReciept(){
 }
 
 // var config = {
-//     "rpc": 'https://rpc.apothem.network',
+//     "rpc": 'https://explorerrpc.xinfin.network',
 //     "blocks": [ {"start": 0, "end": "latest"}],
 //     // "blocks": [ {"start": 4936270, "end": "latest"}],//ttt
 //     "quiet": true,
