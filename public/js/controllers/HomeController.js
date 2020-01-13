@@ -20,6 +20,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
 
         //get latest data
         $scope.blockHeight = data.blockHeight;
+        $scope.epoch = (data.blockHeight / 900).toFixed()
         $scope.blockTime = data.blockTime;
         $scope.TPS = data.TPS;
         $scope.meanDayRewards = data.meanDayRewards;
