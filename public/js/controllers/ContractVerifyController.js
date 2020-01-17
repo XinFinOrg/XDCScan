@@ -34,7 +34,6 @@ angular.module('BlocksApp').controller('ContractVerifyController', function($sta
     $scope.errors = {};
     
     $scope.submitCode = function() {
-      console.log($scope.contract)
       $scope.errors = {};
       $("#submitCodeBtn").button("loading");
 

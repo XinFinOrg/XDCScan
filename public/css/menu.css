@@ -18,6 +18,21 @@
 		transition: none
 	}
 }
+small[text-size-1] {
+	text-align: right;
+	}
+
+	/* make the cells output their value */
+	small[text-size-1]:after {
+	content: attr(text-size-1);
+	color: green;
+	}
+
+	/* make debit amounts show up in red */
+	small[text-size-1^="-"]:after {
+	color: red;
+	}
+
 
 .dropdown,
 .dropleft,

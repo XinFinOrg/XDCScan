@@ -20,13 +20,18 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
 
         //get latest data
         $scope.blockHeight = data.blockHeight;
+        $scope.epoch = (data.blockHeight / 900).toFixed()
         $scope.blockTime = data.blockTime;
         $scope.TPS = data.TPS;
         $scope.meanDayRewards = data.meanDayRewards;
       });
 
-      todayRewards();
+      // todayRewards();
       totalNodes();
+      totalXDC();
+      totalStakedValue();
+      totalBurntValue();
+      FetchUSDPrrice();
     }
 
     function todayRewards(){
@@ -38,7 +43,33 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.todayRewards = data;
       });
     }
-
+    function totalStakedValue(){
+      $http({
+        method: 'POST',
+        url: '/totalStakedValue',
+        data: {}
+      }).success(function(data) {
+        $scope.totalStakedValue = data;
+      });
+    }
+    function totalBurntValue(){
+      $http({
+        method: 'POST',
+        url: '/totalBurntValue',
+        data: {}
+      }).success(function(data) {
+        $scope.totalBurntValue = data;
+      });
+    }
+    function totalXDC(){
+      $http({
+        method: 'GET',
+        url: '/totalXDCSupply',
+        data: {}
+      }).success(function(data) {
+        $scope.totalXDC = data;
+      });
+    }
     function totalNodes(){
       $http({
         method: 'POST',
@@ -48,7 +79,22 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.totalNodes = data;
       });
     }
-
+    function FetchUSDPrrice(){
+      $http({
+        method: 'get',
+        url: 'https://api.coinmarketcap.com/v1/ticker/xinfin-network/',
+        data: {}
+      }).success(function(data) {
+        $scope.CMCPrice_USD = data[0].price_usd;
+        $scope.CMCPrice_change24h = data[0].percent_change_24h;
+      });
+    }
+    $('td').each(function() {
+      var val = $(this).text(), n = +val;
+      if (!isNaN(n) && /^\s*[+-]/.test(val)) {
+        $(this).addClass(val >= 0 ? 'pos' : 'neg')
+      }
+    })
     $scope.reloadTransactions = function() {
       $scope.txLoading = true;
       $http({
