@@ -77,7 +77,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         url: '/totalMasterNodes',
         data: {}
       }).success(function(data) {
-        $scope.totalNodes = data - regisnMNCount ;
+        $scope.totalNodes = data;
       });
     }
     function FetchUSDPrice(){

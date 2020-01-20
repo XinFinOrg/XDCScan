@@ -284,7 +284,7 @@ var totalMasterNodes = function(req, res) {
     masterNodeContract = contractOBJ.at(contractAddress);
     }
   if(masterNodeContract){
-    res.write(String(masterNodeContract.getCandidates().length));
+    res.write(String(masterNodeContract.getCandidates().length - resignMNCount));
   }
   res.end();
 }
