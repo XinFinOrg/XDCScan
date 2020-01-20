@@ -62,15 +62,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.totalBurntValue = data;
       });
     }
-    function totalXDC(){
-      $http({
-        method: 'GET',
-        url: '/totalXDCSupply',
-        data: {}
-      }).success(function(data) {
-        $scope.totalXDC = data;
-      });
-    }
+    
     function totalNodes(){
       $http({
         method: 'POST',
@@ -88,6 +80,16 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       }).success(function(data) {
         $scope.CMCPrice_USD = data[0].price_usd;
         $scope.CMCPrice_change24h = data[0].percent_change_24h;
+      });
+    }
+    function totalXDC(){
+      $http({
+        method: 'GET',
+        url: '/totalXDCSupply',
+        data: {}
+      }).success(function(data) {
+        $scope.totalXDC = data;
+        $scope.totalXDCinUSD = (data * $scope.CMCPrice_USD).toFixed(2);
       });
     }
     function getTotalRewards(){
