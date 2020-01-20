@@ -3,7 +3,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         // initialize core components
         App.initAjax();
     });
-
+    let regisnMNCount = 5;
     var URL = '/data';
 
     $rootScope.isHome = true;
@@ -76,7 +76,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         url: '/totalMasterNodes',
         data: {}
       }).success(function(data) {
-        $scope.totalNodes = data;
+        $scope.totalNodes = data - regisnMNCount ;
       });
     }
     function FetchUSDPrrice(){
