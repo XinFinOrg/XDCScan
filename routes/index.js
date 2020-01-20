@@ -68,6 +68,8 @@ module.exports = function(app){
   app.post('/todayRewards', todayRewards);
   app.post('/totalStakedValue', totalStakedValue)
   app.post('/totalBurntValue', totalBurntValue)
+  app.post('/totalXDCStakedValue', totalXDCStakedValue)
+  app.post('/totalXDCBurntValue', totalXDCBurntValue)
   app.post('/totalMasterNodes', totalMasterNodes);
   app.post('/CMCPrice', totalMasterNodes);
   
@@ -305,6 +307,16 @@ var totalStakedValue = function(req, res) {
 var totalBurntValue = function(req, res) {
   let balace = web3relay.eth.getBalance(burntAddress).toPrecision()/Math.pow(10,18)
   res.write(fnum(balace));
+  res.end();
+}
+var totalXDCStakedValue = function(req, res) {
+  let balace = web3relay.eth.getBalance(contractAddress).toPrecision()/Math.pow(10,18)
+  res.write(balace);
+  res.end();
+}
+var totalXDCBurntValue = function(req, res) {
+  let balace = web3relay.eth.getBalance(burntAddress).toPrecision()/Math.pow(10,18)
+  res.write(balace);
   res.end();
 }
 var firstDayTime = 1559211559;
