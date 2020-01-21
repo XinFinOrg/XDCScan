@@ -26,10 +26,5 @@ var listenBlocks = function(config, web3) {
 }
 
 
-// var config = {
-//     "rpc": 'https://explorerrpc.xinfin.network',
-//     "blocks": [ {"start": 0, "end": "latest"}]
-// };
-
 grabBlocks(config);
 

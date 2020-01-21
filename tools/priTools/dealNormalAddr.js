@@ -1,6 +1,8 @@
 /**
  * get all Address from TX
  */
+var config = require('./../config.json')
+
 require( '../../db.js' );
 var Web3 = require('xdc3');;
 var web3;
@@ -11,7 +13,7 @@ var Contract = mongoose.model('Contract');
 //==================config===============
 var startBlockNumber = -1;//
 var topBlockNumber=3833592+1;//
-var rpc = "https://explorerrpc.xinfin.network";
+var rpc = config.rpc;
 
 var contractAddrs =[];
 var masternodeAddrs = [];

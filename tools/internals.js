@@ -3,11 +3,11 @@
 ***/
 
 require( '../db-internal.js' );
+var config = require('./../config.json')
 
 var http = require('http');
 var Web3 = require('xdc3');;
-var web3 = new Web3(new Web3.providers.HttpProvider("http://rpc.etherzero.org:9646"));
-// var web3 = new Web3(new Web3.providers.HttpProvider("https://explorerrpc.xinfin.network"));
+var web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
 
 var mongoose = require( 'mongoose' );
 var InternalTx     = mongoose.model( 'InternalTransaction' );
@@ -25,7 +25,7 @@ function grabInternalTxs(batchNum, batchSize) {
     "id":' + batchNum + '}';
 
   var post_options = {
-      // host: 'rpc.etherzero.org',
+      // host: 'rpc.xinfin.network',
       host: 'localhost',
       port: '9646',
       path: '/',

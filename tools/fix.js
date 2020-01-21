@@ -11,8 +11,7 @@ var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 
 var grabBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://rpc.etherzero.org:' + 
-        config.gethPort.toString()));
+    var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network:'));
 
 
     if('listenOnly' in config && config.listenOnly === true) 
@@ -194,8 +193,7 @@ var writeTransactionsToDB = function(config, blockData) {
   Patch Missing Blocks
 */
 var patchBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider('http://rpc.etherzero.org:' + 
-        config.gethPort.toString()));
+    var web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));
 
     // number of blocks should equal difference in block numbers
     var firstBlock = 0;

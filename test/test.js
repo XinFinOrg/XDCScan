@@ -1,3 +1,5 @@
+var config = require('./../config.json')
+
 require( '../db.js' );
 var etherUnits = require("../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
@@ -10,8 +12,7 @@ var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 var Contract     = mongoose.model( 'Contract' );
-// var providerURL = 'https://explorerrpc.xinfin.network';
-var providerURL = 'http://35.183.62.96:9646';
+var providerURL = config.rpc;
 
 var startTest = function(config) {
     web3 = new Web3(new Web3.providers.HttpProvider(providerURL));
