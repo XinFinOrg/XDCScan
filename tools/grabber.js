@@ -202,11 +202,11 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
         web3.eth.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
             if(error) {
                 console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
-                // tryNextBlock();
-                // setTimeout(restart, 3000);
+                tryNextBlock();
+                setTimeout(restart, 3000);
             }
             else if(blockData == null) {
-                //console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
+                console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
             }
             else {
                 writeBlockToDB(config, blockData);
