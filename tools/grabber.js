@@ -564,6 +564,7 @@ setInterval(function(){
     }
 }, 3000);
 var currentBlock;
+var itemBatchSize = 100;
 var batchIdex = -1;
 var batchItems = [];
 var itemIndex = -1;
