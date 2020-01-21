@@ -89,7 +89,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         data: {}
       }).success(function(data) {
         $scope.totalXDC = data;
-        $scope.totalXDCinUSD = (data * $scope.CMCPrice_USD).toFixed(2);
+        $scope.totalXDCinUSD = (data * $scope.CMCPrice_USD).toFixed();
       });
     }
     function getTotalRewards(){
