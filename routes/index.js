@@ -13,6 +13,9 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "0x0000000000000000000000000000000000000088";
 var burntAddress = "0x0000000000000000000000000000000000000000";
+let resignMNCount = 5;
+let epochRewards = 5000;
+let epochInDay = 48;
 module.exports = function(app){
   web3relay = require('./web3relay');
 
@@ -68,6 +71,8 @@ module.exports = function(app){
   app.post('/todayRewards', todayRewards);
   app.post('/totalStakedValue', totalStakedValue)
   app.post('/totalBurntValue', totalBurntValue)
+  app.post('/totalXDCStakedValue', totalXDCStakedValue)
+  app.post('/totalXDCBurntValue', totalXDCBurntValue)
   app.post('/totalMasterNodes', totalMasterNodes);
   app.post('/CMCPrice', totalMasterNodes);
   
@@ -240,19 +245,37 @@ var regDecimal = function(nb, decimalNum){
   return integerPart+decimalPart;
 }
 
+// var todayRewards = function(req, res) {
+//   var nowDate = new Date();
+//   var todaySeconds = nowDate.getHours()*3600+nowDate.getMinutes()*60+nowDate.getSeconds();
+//   var fromDayTime = parseInt(nowDate.getTime()/1000)-todaySeconds;
+//   Block.count({'timestamp':{$gt:fromDayTime}}).exec(function(err,c){
+//     if(err){
+//       console.log(err);
+//       res.end();
+//       return;
+//     }
+//     res.write(String(regDecimal(0.3375*c, 4)));
+//     res.end();
+//   });
+// }
+
 var todayRewards = function(req, res) {
-  var nowDate = new Date();
-  var todaySeconds = nowDate.getHours()*3600+nowDate.getMinutes()*60+nowDate.getSeconds();
-  var fromDayTime = parseInt(nowDate.getTime()/1000)-todaySeconds;
-  Block.count({'timestamp':{$gt:fromDayTime}}).exec(function(err,c){
-    if(err){
-      console.log(err);
-      res.end();
-      return;
+   
+  
+  if(!masterNodeContract){
+    var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
+    masterNodeContract = contractOBJ.at(contractAddress);
     }
-    res.write(String(regDecimal(0.3375*c, 4)));
-    res.end();
-  });
+  if(masterNodeContract){
+    let mnCount = masterNodeContract.getCandidates().length - resignMNCount
+    let epoch = (eth.blockNumber / 900).toFixed()
+    let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+    
+    res.write(String(mnDailyRewards)) ;
+  }
+  res.end();
+
 }
 
 var totalMasterNodes = function(req, res) {
@@ -261,7 +284,7 @@ var totalMasterNodes = function(req, res) {
     masterNodeContract = contractOBJ.at(contractAddress);
     }
   if(masterNodeContract){
-    res.write(String(masterNodeContract.getCandidates().length));
+    res.write(String(masterNodeContract.getCandidates().length - resignMNCount));
   }
   res.end();
 }
@@ -305,6 +328,16 @@ var totalStakedValue = function(req, res) {
 var totalBurntValue = function(req, res) {
   let balace = web3relay.eth.getBalance(burntAddress).toPrecision()/Math.pow(10,18)
   res.write(fnum(balace));
+  res.end();
+}
+var totalXDCStakedValue = function(req, res) {
+  let balace = web3relay.eth.getBalance(contractAddress).toPrecision()/Math.pow(10,18)
+  res.write(balace);
+  res.end();
+}
+var totalXDCBurntValue = function(req, res) {
+  let balace = web3relay.eth.getBalance(burntAddress).toPrecision()/Math.pow(10,18)
+  res.write(balace);
   res.end();
 }
 var firstDayTime = 1559211559;

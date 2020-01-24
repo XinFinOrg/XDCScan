@@ -2,6 +2,8 @@
  * collect transactions, Token Contracts info from blockchain . write to db
  */
 require( '../../db.js' );
+var config3 = require('./../config.json')
+
 var etherUnits = require("../../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
 var Web3 = require('xdc3');;
@@ -9,14 +11,6 @@ var web3;
 var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
-
-//modify according to your actual situation.
-var config3 = {
-    "httpProvider":"https://rpc.apothem.network",
-    "patchStartBlocks": 0,//1
-    "patchEndBlocks": 394905,//"latest",//5485123,//600
-    "quiet": true
-};
 
 
 

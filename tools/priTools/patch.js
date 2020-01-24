@@ -35,6 +35,7 @@ require( '../../db.js' );
 var etherUnits = require("../../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
 var fs = require('fs');
+var config3 = require('./../config.json')
 var Web3 = require('xdc3');;
 var web3;
 var mongoose = require( 'mongoose' );
@@ -55,14 +56,6 @@ const METHOD_DIC = {
     "0xb21fb52d5749b80f3182f8c6992236b5e5576681880914484d7f4c9b062e619e":"Released(address indexed, uint indexed)"
 };
 
-//modify according to your actual situation.
-var config3 = {
-    "httpProvider":"https://rpc.apothem.network",
-    "patchStartBlocks":3840465,//1
-    "patchEndBlocks":3840465,//"latest",//5485123,//600
-    "quiet": true,
-    "terminateAtExistingDB": false
-};
 
 
 
@@ -379,9 +372,6 @@ var writeTransactionsToDB3 = function(blockData, eth) {
   Patch Missing Blocks
 */
 var patchBlocks3 = function() {
-    // web3 = new Web3(new Web3.providers.HttpProvider('http://106.14.105.179:9646'));
-    // web3 = new Web3(new Web3.providers.HttpProvider('http://rpc.etherzero.org:80'));
-    // web3 = new Web3(new Web3.providers.HttpProvider('https://rpc.etherzero.org:443'));
     web3 = new Web3(new Web3.providers.HttpProvider(config3.httpProvider));
     var lastBlock = web3.eth.blockNumber;
     if(config3.patchEndBlocks == "latest"){

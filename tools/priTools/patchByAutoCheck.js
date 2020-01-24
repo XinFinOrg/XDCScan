@@ -7,6 +7,7 @@ var BigNumber = require('bignumber.js');
 var fs = require('fs');
 var Web3 = require('xdc3');;
 var web3;
+var config3 = require('./../config.json')
 var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
@@ -23,17 +24,6 @@ const METHOD_DIC = {
     "0xf2fde38b092330466c661fc723d5289b90272a3e580e3187d1d7ef788506c557":"transferOwnership(address)",
     "0x3bc50cfd0fe2c05fb67c0fe4be91fb10eb723ba30ea8f559d533fcd5fe29be7f":"Released(address,uint)",
     "0xb21fb52d5749b80f3182f8c6992236b5e5576681880914484d7f4c9b062e619e":"Released(address indexed, uint indexed)"
-};
-
-//modify according to your actual situation.
-var config3 = {
-    "httpProvider":"https://rpc.apothem.network",
-    "patchStartBlocks": 1,//1
-    "patchEndBlocks": 394905,//"latest",//5485123,//600
-    "quiet": true,
-    "terminateAtExistingDB": false,
-    "checkStartBlockNumber":2900000,
-    "checkEndBlockNumber":'latest'//1006231//1906232
 };
 
 

@@ -3,7 +3,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         // initialize core components
         App.initAjax();
     });
-
+    let regisnMNCount = 5;
     var URL = '/data';
 
     $rootScope.isHome = true;
@@ -31,7 +31,8 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       totalXDC();
       totalStakedValue();
       totalBurntValue();
-      FetchUSDPrrice();
+      FetchUSDPrice();
+      getTotalRewards();
     }
 
     function todayRewards(){
@@ -61,15 +62,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.totalBurntValue = data;
       });
     }
-    function totalXDC(){
-      $http({
-        method: 'GET',
-        url: '/totalXDCSupply',
-        data: {}
-      }).success(function(data) {
-        $scope.totalXDC = data;
-      });
-    }
+    
     function totalNodes(){
       $http({
         method: 'POST',
@@ -79,7 +72,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         $scope.totalNodes = data;
       });
     }
-    function FetchUSDPrrice(){
+    function FetchUSDPrice(){
       $http({
         method: 'get',
         url: 'https://api.coinmarketcap.com/v1/ticker/xinfin-network/',
@@ -87,6 +80,25 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       }).success(function(data) {
         $scope.CMCPrice_USD = data[0].price_usd;
         $scope.CMCPrice_change24h = data[0].percent_change_24h;
+      });
+    }
+    function totalXDC(){
+      $http({
+        method: 'GET',
+        url: '/totalXDCSupply',
+        data: {}
+      }).success(function(data) {
+        $scope.totalXDC = data;
+        $scope.totalXDCinUSD = (data * $scope.CMCPrice_USD).toFixed();
+      });
+    }
+    function getTotalRewards(){
+      $http({
+        method: 'POST',
+        url: '/todayRewards',
+        data: {}
+      }).success(function(data) {
+        $scope.todayDailyRewards = data;
       });
     }
     $('td').each(function() {

@@ -434,15 +434,7 @@ function patchNoReciept(){
 
 }
 
-// var config = {
-//     "rpc": 'https://rpc.apothem.network',
-//     "blocks": [ {"start": 0, "end": "latest"}],
-//     // "blocks": [ {"start": 4936270, "end": "latest"}],//ttt
-//     "quiet": true,
-//     "terminateAtExistingDB": false,
-//     "listenOnly": true,
-//     "out": "."
-// };
+
 web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
 TokenTransferGrabber.Init(web3.eth);
 ContractStruct = web3.eth.contract(ERC20ABI);

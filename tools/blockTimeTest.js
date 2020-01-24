@@ -26,10 +26,5 @@ var listenBlocks = function(config, web3) {
 }
 
 
-// var config = {
-//     "rpc": 'https://rpc.apothem.network',
-//     "blocks": [ {"start": 0, "end": "latest"}]
-// };
-
 grabBlocks(config);
 

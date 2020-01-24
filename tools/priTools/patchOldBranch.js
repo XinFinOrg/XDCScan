@@ -41,16 +41,8 @@ var mongoose = require( 'mongoose' );
 var Address = mongoose.model('Address');
 var addressItems = [];
 var dupAddrs = [];
+var config3 = require('./../config.json')
 
-
-//modify according to your actual situation.
-var config3 = {
-    "httpProvider":"https://rpc.apothem.network",
-    "patchStartBlocks":0,//1
-    "patchEndBlocks":4936270+1,//"latest",//5485123,//600
-    "quiet": true,
-    "terminateAtExistingDB": false
-};
 
 // init bloom filter
 var bloomFilter = require('./node_bloom_filter/bloomfilter');

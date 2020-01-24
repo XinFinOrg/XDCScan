@@ -11,6 +11,7 @@ var async = require('async');
 require( '../../db.js' );
 require( '../../db-dao.js' );
 require( '../../db-internal.js' );
+var config = require('./../config.json')
 var mongoose = require( 'mongoose' );
 var Block = mongoose.model('Block');
 var DAOCreatedToken = mongoose.model('DAOCreatedToken');
@@ -20,7 +21,7 @@ var InternalTx     = mongoose.model( 'InternalTransaction' );
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
 } else {
-  web3 = new Web3(new Web3.providers.HttpProvider("https://rpc.apothem.network"));
+  web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
 }
 
 if (web3.isConnected()) 
