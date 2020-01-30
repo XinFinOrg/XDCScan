@@ -79,6 +79,7 @@ table a{cursor:pointer;}
 svg{width:100%!important;}
 
 /*--------------- searchbox start ---------------*/
+.page-header-menu {display:block!important;}
 #searchbox .card-body {border-radius: .50rem!important;}
 .search-control-label {font-size: .87094rem;color: #77838f;line-height: 15px;}
 .search-filter {background-color:#f8f9fa;border:1px solid #e7eaf3;color:#6c6d6d;}

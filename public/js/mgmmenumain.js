@@ -31,28 +31,4 @@ function(t) {
 }();
 
 
-        // initialization of HSMegaMenu component
-        $(window).on('load', function () {
-            $('.js-mega-menu').HSMegaMenu({
-                event: 'hover',
-                pageContainer: $('.container'),
-                breakpoint: 767.98,
-                hideTimeOut: 0
-            });
-        });
-		
-		
-		// custom scrollbar
-		(function($){
-			$(window).on("load",function(){
-				
-				$("#latest-blocks").mCustomScrollbar({
-					theme:"minimal-dark"
-				});
-				
-				$("#transactions").mCustomScrollbar({
-					theme:"minimal-dark"
-				});
-				
-			});
-		})(jQuery);
+        
