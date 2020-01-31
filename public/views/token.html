@@ -84,7 +84,7 @@
                                     <div class="margin-top-20" ng-show="!acc">
                                             <span class="eth-stat-text"> <span class="help-block"><b>Enter Your Address </b></span> to Get {{ token.name }}  Balance ↓</span>
                                             <div class="row">
-                                            <form class="col-md-10 center" name="form.tokens">
+                                            <form class="col-md-12 center" name="form.tokens">
                                                 
                                                 <div class="input-group">
                                                     <input type="text" class="form-control" name="addrInput" placeholder="{{token.address}}" ng-model="form.addrInput" ng-keyup="$event.keyCode == 13 ? getBalance(form.addrInput) : null">
