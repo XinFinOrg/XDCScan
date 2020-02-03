@@ -196,13 +196,13 @@
                                             </thead>
                                             <tbody>
                                                 <tr ng-repeat="t in internalDatas track by $index">
-                                                    <td class="truncate-txhash"><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a href="/tx/{{t.hash}}?isTransfer=true">{{t.hash}}</a> </td>
+                                                    <td class="truncate-txhash"><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a href="/tx/{{t.hash}}?isTransfer=true" class="hash-tag text-truncate">{{t.hash}}</a> </td>
                                                     <td>{{t.timestamp | timeDuration}} ago</td>
                                                     <td> <a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</a> </td>
                                                     <td ng-show="acc==t.from" class="truncate-addrhash">{{t.from}} </td>
-                                                    <td ng-show="acc!=t.from" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a> </td>
+                                                    <td ng-show="acc!=t.from" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}" class="hash-tag text-truncate">{{t.from}}</a> </td>
                                                     <td ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </td>
-                                                    <td ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}}</a> </td>
+                                                    <td ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}" class="hash-tag text-truncate">{{t.to}}</a> </td>
                                                     <td>{{t.value}}</td>
                                                     <!--td style="text-align:right"> {{t.amount}} </td>
                                                     <td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
