@@ -1,23 +1,26 @@
 <div class="col-md-12">
     <div style="margin-bottom:20px;" ng-show="!contract.valid">
 	  <div class="row align-items-center">
-		<div class="col-md-3 fw6 mb-1">Contract Source Code</div>
-		<div class="col-md-9"><div class="pl-small"><span class="label label_sm label_danger rounded ml-0"><i class="fa fa-exclamation-triangle mr-1"></i>Unverified</span></div></div>
+		<div class="col-md-4 fw6 mb-1">Contract Source Code</div>
+		<div class="col-md-8"><div class="pl-small"><span class="label label_sm label_danger label_rounded ml-0"><i class="fa fa-exclamation-triangle mr-1"></i>Unverified</span></div></div>
 		<!--<span class="eth-stat" ><i style="color: red" class="fa fa-wheelchair"></i> Contract Source Code Unverified</span>
 		<br>-->
 	  </div>
-	  <hr class="hr-space">		
+	  <hr class="hr-space">
 	  <div class="row align-items-center">
-		<div class="col-md-3 fw6 mb-1">Verify </div>
-		<div class="col-md-9"><div class="pl-small eth-stat-text"><a href="/contract/{{addrHash}}"><span class="label label_sm label_info rounded ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to Verify and Publish Source Code</div></div>
+		<div class="col-md-4 fw6 mb-1">Verify </div>
+		<div class="col-md-8"><div class="pl-small eth-stat-text"><a href="/contract/{{addrHash}}"><span class="label label_sm label_info label_rounded ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to Verify and Publish Source Code</div></div>
 		<!--<span class="eth-stat-text"><a href="/contract/{{addrHash}}">Verify And Publish Source Code.</a></span>-->
 	  </div>  
 	</div>
 		
-	  <div class="row align-items-center" ng-show="contract.valid">
-		<div class="col-md-3 fw6 mb-1">Contract Source Code</div>
-		<div class="col-md-9"><div class="pl-small"><span class="label label_sm label_success rounded ml-0"><i class="fa fa-check mr-1"></i>Verified</span></div></div>
+	<div ng-show="contract.valid">
+	  <div class="row align-items-center">
+		<div class="col-md-4 fw6 mb-1">Contract Source Code</div>
+		<div class="col-md-8"><div class="pl-small"><span class="label label_sm label_success rounded ml-0"><i class="fa fa-check mr-1"></i>Verified</span></div></div>
 	  </div>
+	  <hr class="hr-space">
+	</div>
 	  
 	  <!--<div class="row" ng-show="contract.valid">
 	  	<p class="eth-stat"><i style="color: green" class="fa fa-check-circle-o"></i> Contract Source Code Verified</p>
@@ -77,14 +80,14 @@
   
   <div class="row" ng-show="contract.valid">
     Contract Source Code <i class="fa fa-code"></i>
-    <pre class="code-js" ng-model="contract.sourceCode">{{contract.sourceCode}}</pre>
+    <pre class="code-js language-markup scrollable" ng-model="contract.sourceCode">{{contract.sourceCode}}</pre>
     <br>
     Contract ABI <i class="fa fa-cogs"></i>
-    <pre class="code-js" ng-model="contract.abi">{{contract.abi}}</pre><br>
+    <pre class="code-js language-markup scrollable" ng-model="contract.abi">{{contract.abi}}</pre><br>
   </div>
 
   <div class="row">
     Contract Bytecode <i class="fa fa-building-o"></i>
-    <pre class="code-bytecode" ng-class="{verified: contract.valid}">{{addr.bytecode}}</pre>
+    <pre class="code-bytecode language-markup scrollable" ng-class="{verified: contract.valid}">{{addr.bytecode}}</pre>
   </div>
 </div>
