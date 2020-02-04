@@ -2,7 +2,7 @@
     <div style="margin-bottom:20px;" ng-show="!contract.valid">
 	  <div class="row align-items-center">
 		<div class="col-md-4 fw6 mb-1">Contract Source Code</div>
-		<div class="col-md-8"><div class="pl-small"><span class="label label_sm label_danger label_rounded ml-0"><i class="fa fa-exclamation-triangle mr-1"></i>Unverified</span></div></div>
+		<div class="col-md-8"><div><span class="label label_sm label_danger label_rounded ml-0"><i class="fa fa-exclamation-triangle mr-1"></i>Unverified</span></div></div>
 		<!--<span class="eth-stat" ><i style="color: red" class="fa fa-wheelchair"></i> Contract Source Code Unverified</span>
 		<br>-->
 	  </div>
@@ -17,7 +17,7 @@
 	<div ng-show="contract.valid">
 	  <div class="row align-items-center">
 		<div class="col-md-4 fw6 mb-1">Contract Source Code</div>
-		<div class="col-md-8"><div class="pl-small"><span class="label label_sm label_success rounded ml-0"><i class="fa fa-check mr-1"></i>Verified</span></div></div>
+		<div class="col-md-8"><div><span class="label label_sm label_success label-rounded ml-0"><i class="fa fa-check mr-1"></i>Verified</span></div></div>
 	  </div>
 	  <hr class="hr-space">
 	</div>
@@ -79,15 +79,19 @@
   
   
   <div class="row" ng-show="contract.valid">
-    Contract Source Code <i class="fa fa-code"></i>
+    <div class="col-md-12 mt-4">
+	<h4 class="card-header-title">Contract Source Code <i class="fa fa-code"></i></h4>
     <pre class="code-js language-markup scrollable" ng-model="contract.sourceCode">{{contract.sourceCode}}</pre>
     <br>
-    Contract ABI <i class="fa fa-cogs"></i>
+    <h4 class="card-header-title">Contract ABI <i class="fa fa-tasks"></i></h4>
     <pre class="code-js language-markup scrollable" ng-model="contract.abi">{{contract.abi}}</pre><br>
+	</div>
   </div>
 
   <div class="row">
-    Contract Bytecode <i class="fa fa-building-o"></i>
+    <div class="col-md-12">
+	<h4 class="card-header-title">Contract Bytecode <i class="fa fa-file-code"></i></h4>
     <pre class="code-bytecode language-markup scrollable" ng-class="{verified: contract.valid}">{{addr.bytecode}}</pre>
+	</div>
   </div>
 </div>
