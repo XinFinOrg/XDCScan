@@ -98,7 +98,7 @@ module.exports = function(req, res){
             pageSize = 100;
           if(transactionPage<0)
             transactionPage = 0;
-          transactionFind = Transaction.find({$or: [{"from": address}, {"to": address}]}).skip(transactionPage*pageSize).limit(pageSize).lean(true);
+          transactionFind = Transaction.find({$or: [{"from": address}, {"to": address}]}).sort({"timestamp":-1}).skip(transactionPage*pageSize).limit(pageSize).lean(true);
           transactionFind.exec(function (err, docs) {
             if(err)
               responseFail(res, respData, err.toString());
