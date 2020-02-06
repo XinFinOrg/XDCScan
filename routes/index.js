@@ -75,6 +75,7 @@ module.exports = function(app){
   app.post('/totalXDCBurntValue', totalXDCBurntValue)
   app.post('/totalMasterNodes', totalMasterNodes);
   app.post('/CMCPrice', totalMasterNodes);
+  app.post('/getXinFinStats', getXinFinStats)
   
 }
 
@@ -375,6 +376,60 @@ var sendBlocks = function(lim, res) {
     res.write(JSON.stringify(result));
     res.end();
   });
+}
+
+const getXinFinStats = function(lim, res) {
+  console.log("called getXinFinStats");
+  const burntBalance = web3relay.eth.getBalance(burntAddress).toPrecision()/Math.pow(10,18)
+  let totalMasterNodes="";
+  
+  if(!masterNodeContract){
+    var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
+    masterNodeContract = contractOBJ.at(contractAddress);
+    }
+  if(masterNodeContract){
+    totalMasterNodes = (String(masterNodeContract.getCandidates().length - resignMNCount));
+  }
+
+  const totalStakedValue = web3relay.eth.getBalance(contractAddress).toPrecision()/Math.pow(10,18)
+  let mnDailyRewards;
+  if(!masterNodeContract){
+    var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
+    masterNodeContract = contractOBJ.at(contractAddress);
+    }
+  if(masterNodeContract){
+    let mnCount = masterNodeContract.getCandidates().length - resignMNCount
+    let epoch = (eth.blockNumber / 900).toFixed()
+    mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+  }
+
+  totalBlockNum = eth.blockNumber;
+  const totalXDC = 37500000000+5.55*totalBlockNum;
+
+
+  /**
+   * burnTokenValue: burntToken.data,
+      masterNodeCount: masterCount.data,
+      totalStaked: totalStaked.data,
+      totalXdc: totalXdc.data.result,
+      rewards: rewards.data,
+      priceUsd: xdc_price.price_usd,
+      monthlyRewards: parseFloat(rewards.data) * 31,
+      dailyVolume: xdc_price["24h_volume_usd"],
+      monthlyRewardPer: ((parseFloat(rewards.data) * 31) / 10000000) * 100,
+      yearlyRewardPer: ((parseFloat(rewards.data) * 31 * 12) / 10000000) * 100,
+   */
+
+  res.write(JSON.stringify({burntBalance: burntBalance,
+    totalMasterNodes:totalMasterNodes,
+    totalStakedValue:totalStakedValue,
+    mnDailyRewards:mnDailyRewards,
+    totalXDC:totalXDC,       
+    monthlyRewards: parseFloat(mnDailyRewards) * 31,
+    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 31) / 10000000) * 100,
+    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 31 * 12) / 10000000) * 100
+  }));
+  res.end();
 }
 
 var sendTxs = function(lim, res) {
