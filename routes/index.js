@@ -478,9 +478,9 @@ const getXinFinStats = async function(lim, res) {
     burntBalance:burntBalance, 
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
-    monthlyRewards:parseFloat(mnDailyRewards) * 31,
-    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 31) / 10000000) * 100,
-    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 31 * 12) / 10000000) * 100,
+    monthlyRewards:parseFloat(mnDailyRewards) * 30,
+    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 30) / 10000000) * 100,
+    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 365) / 10000000) * 100,
     priceUsd: cmc_xdc_price.price_usd,
     xdcVol24HR: parseFloat(homieExData.data[0].v) + parseFloat(alphaExVol.data.xdcVolume)
   }));
