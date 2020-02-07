@@ -480,10 +480,10 @@ const getXinFinStats = async function(lim, res) {
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
     totalXDCFiat:totalXDC*parseFloat(cmc_xdc_price.price_usd),
-    monthlyRewards:parseFloat(mnDailyRewards) * 31,
-    monthlyRewardsFiat: parseFloat(mnDailyRewards) * 31* parseFloat(cmc_xdc_price.price_usd),
-    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 31) / 10000000) * 100,
-    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 31 * 12) / 10000000) * 100,
+    monthlyRewards:parseFloat(mnDailyRewards) * 30,
+    monthlyRewardsFiat: parseFloat(mnDailyRewards) * 30* parseFloat(cmc_xdc_price.price_usd),
+    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 30) / 10000000) * 100,
+    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 365) / 10000000) * 100,
     priceUsd: cmc_xdc_price.price_usd,
     xdcVol24HR: parseFloat(cmc_xdc_price["24h_volume_usd"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price_usd) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price_usd)
   }));
