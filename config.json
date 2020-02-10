@@ -1,5 +1,5 @@
 {
-    "rpc": "https://explorerrpc.xinfin.network",
+    "rpc": "https://explorerrpc.apothem.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "patchStartBlocks": 1,
     "quiet": true,
