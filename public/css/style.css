@@ -429,13 +429,12 @@ pre {
 .js-accordion .accordion__item {margin-bottom:10px;}
 .js-accordion .accordion__item:last-child {margin-bottom:0px;}
 .accordion__item .accordion__item {border-bottom: 1px solid rgba(0, 0, 0, 0.08);}
-.accordion-header:hover {background: #3498db;color:#FFFFFF;position: relative;z-index: 5;}
 .accordion-body {background: #fcfcfc;color: #353535;display: none;border-bottom: 1px solid rgba(52, 152, 219, 1);border-bottom-left-radius: 4px!important;border-bottom-right-radius: 4px!important;}
 .accordion-body__contents {padding: 1.5em 1.5em;}
 .accordion__item.active:last-child .accordion-header {border-radius: none;}
 .accordion:first-child > .accordion__item > .accordion-header {border-bottom: 1px solid transparent;}
-.accordion__item > .accordion-header:after {content: "\f078";font-family: 'FontAwesome';font-size: 1em;float: right;position: relative;top: 2px;transition: .3s all;transform: rotate(0deg);}
-.accordion__item.active > .accordion-header:after {transform: rotate(-180deg);}
+.accordion__item > .accordion-header span {font-family: 'FontAwesome';font-size: 1em;float: right;position: relative;top: 2px;transition: .3s all;transform: rotate(0deg);}
+.accordion__item.active > .accordion-header span {transform: rotate(-180deg);}
 .accordion__item.active .accordion-header {background: #3498db;color: #FFFFFF;}
 .accordion__item .accordion__item .accordion-header {background: #f1f1f1;color: #353535;}
 @media screen and (max-width: 767px) {
