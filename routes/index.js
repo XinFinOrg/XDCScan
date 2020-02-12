@@ -169,6 +169,7 @@ module.exports = function(app){
   app.post('/totalMasterNodes', totalMasterNodes);
   app.post('/CMCPrice', totalMasterNodes);
   app.post('/getXinFinStats', getXinFinStats)
+  app.get('/getXinFinStats', getXinFinStats)
   
 }
 
@@ -475,17 +476,17 @@ const getXinFinStats = async function(lim, res) {
   res.write(JSON.stringify({
     totalMasterNodes:totalMasterNodesVal, 
     totalStakedValue:totalStakedValueVal,
-    totalStakedValueFiat:totalStakedValueVal*parseFloat(cmc_xdc_price.price_usd),
-    burntBalance:burntBalance, 
+    totalStakedValueFiat:(totalStakedValueVal*parseFloat(cmc_xdc_price.price_usd)).toFixed(),
+    burntBalance:(burntBalance).toFixed(), 
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
-    totalXDCFiat:totalXDC*parseFloat(cmc_xdc_price.price_usd),
-    monthlyRewards:parseFloat(mnDailyRewards) * 365/12,
-    monthlyRewardsFiat: parseFloat(mnDailyRewards) * 365/12* parseFloat(cmc_xdc_price.price_usd),
-    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 365/12) / 10000000) * 100,
-    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 365) / 10000000) * 100,
+    totalXDCFiat:(totalXDC*parseFloat(cmc_xdc_price.price_usd)).toFixed(),
+    monthlyRewards:(parseFloat(mnDailyRewards) * 365/12).toFixed(),
+    monthlyRewardsFiat: (parseFloat(mnDailyRewards) * 365/12* parseFloat(cmc_xdc_price.price_usd)).toFixed(),
+    monthlyRewardPer: (((parseFloat(mnDailyRewards) * 365/12) / 10000000) * 100).toFixed(2),
+    yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
     priceUsd: cmc_xdc_price.price_usd,
-    xdcVol24HR: parseFloat(cmc_xdc_price["24h_volume_usd"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price_usd) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price_usd)
+    xdcVol24HR: (parseFloat(cmc_xdc_price["24h_volume_usd"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price_usd) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price_usd)).toFixed()
   }));
   res.end()
 }
