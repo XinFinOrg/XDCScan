@@ -144,6 +144,7 @@ var listenBlocks = function() {
         //console.log("watch log:", log);
         if(error) {
             console.log('Error: ' + error);
+            setTimeout(restart, 3000);
         } else if (log == null) {
             //console.log('Warning: null block hash');
         } else {
@@ -274,7 +275,8 @@ var upsertAddress=function(miner, addrs){
 /**
     Break transactions out of blocks and write to DB
 **/
-var pingTXAddr = "0x000000000000000000000000000000000000000a";
+var BlockSigners = "xdc0000000000000000000000000000000000000089";
+var RandomizeSMC = "xdc0000000000000000000000000000000000000090";
 var pingTXValue = "0";
 var writeTransactionsToDB = function(blockData) {
     var bulkOps = [];
@@ -423,7 +425,7 @@ var writeTransactionsToDB = function(blockData) {
             }
 
             //drop out masterNode ping transactions
-            if(!(txData.to == pingTXAddr && txData.value == pingTXValue && 
+            if(!(txData.to == BlockSigners || txData.to == RandomizeSMC || txData.value == pingTXValue && 
                 (txData.gasUsed==34957||txData.gasUsed==49957||txData.gasUsed==34755||txData.gasUsed==19755||txData.gasUsed==44550))
                 ){
                 bulkOps.push(txData);
