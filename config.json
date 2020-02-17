@@ -1,9 +1,10 @@
 {
-    "rpc": "https://explorerrpc.xinfin.network",
+    "rpc": "http://localhost:8545",
     "blocks": [ {"start": 0, "end": "latest"}],
     "patchStartBlocks": 1,
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": true,
-    "out": "."
+    "listenOnly": false,
+    "out": ".",
+    "MONGO_URI":"mongodb://localhost/BlockScanDB"
 }

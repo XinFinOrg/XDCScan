@@ -131,7 +131,7 @@ var getLatestBlocks = function(latest, start) {
 }
 
 
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/BlockScanDB');
+mongoose.connect(process.env.MONGO_URI || config.MONGO_URI || 'mongodb://localhost/BlockScanDB');
 mongoose.set('debug', true);
 
 var minutes = 5;

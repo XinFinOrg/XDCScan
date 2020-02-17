@@ -1,4 +1,6 @@
 var mongoose = require( 'mongoose' );
+let config = require('./config.json')
+
 var Schema   = mongoose.Schema;
 
 var Block = new Schema(
@@ -134,5 +136,5 @@ module.exports.Witness = Witness;
 module.exports.LogEvent = mongoose.model('LogEvent');
 module.exports.Address = mongoose.model('Address');
 
-mongoose.connect( 'mongodb://localhost/BlockScanDB' );
+mongoose.connect( process.env.MONGO_URI || config.MONGO_URI || 'mongodb://localhost/BlockScanDB' );
 mongoose.set('debug', false);
