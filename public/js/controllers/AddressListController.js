@@ -15,6 +15,8 @@ angular.module('BlocksApp').controller('AddressListController', function($stateP
         addressType=1;
       }else if(addressType=="masternode"){
         addressType=2;
+      }else if(addressType=="blacklist"){
+        addressType=3;
       }else{
         addressType = -1;
       }
