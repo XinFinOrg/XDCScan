@@ -217,6 +217,11 @@ figure {
     margin-bottom: .75rem;
     opacity: .75;
 }
+.hr-space-sm {
+    margin-top: .25rem;
+    margin-bottom: .25rem;
+    opacity: 0;
+}
 #latest-blocks .hr-space-bottom,
 #transactions .hr-space-bottom {
     border: 0;
