@@ -126,7 +126,7 @@ figure {
     margin-bottom: 0;
 }
 .media-body a {font-size:13px;}
-.media-body h2 {line-height:inherit;margin-top:0px;}
+.media-body h2 {line-height:inherit;margin-top: 5px;}
 .ver-divider {
     position: relative;
 }
@@ -218,8 +218,8 @@ figure {
     opacity: .75;
 }
 .hr-space-sm {
-    margin-top: .25rem;
-    margin-bottom: .25rem;
+    margin-top: .20rem;
+    margin-bottom: .20rem;
     opacity: 0;
 }
 #latest-blocks .hr-space-bottom,
