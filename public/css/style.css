@@ -448,6 +448,7 @@ pre {
 /*---------- labels ----------*/
 
 /*---------- XDC Volume widget ----------*/
+.coinpaprika-currency-widget {border: none!important;}
 .coinpaprika-currency-widget .cp-widget__header,.coinpaprika-currency-widget .cp-widget__footer {display:none!important;}
 /*---------- XDC Volume widget ----------*/
 
