@@ -43,7 +43,7 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "0x0000000000000000000000000000000000000088";
 var burntAddress = "0x0000000000000000000000000000000000000000";
-let resignMNCount = 6;
+let resignMNCount = 7;
 let epochRewards = 5000;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
@@ -66,6 +66,43 @@ module.exports = function(app){
   var publicAPI = require("./publicAPIData");
 
   const cmc = "https://api.coinmarketcap.com/v1/ticker/xinfin-network/";
+  
+  app.post('/addr', getAddr);
+  app.post('/addrTXcounts', addrTXcounts);
+  app.post('/tx', getTx);
+  app.post('/block', getBlock);
+  app.post('/data', getData);
+  app.get('/publicAPI', publicAPI);//all public APIs
+  app.get('/totalXDC', publicAPI.getTotalXDC);
+  app.get('/totalXDCSupply', getTotalXDCSupply);
+
+  //app.post('/daorelay', DAO);
+  app.post('/addressListData', addressListData);
+  app.get('/addressListData', addressListData); 
+  app.post('/tokenrelay', Token);  
+  app.post('/tokenListData', tokenListData); 
+  app.post('/contractListData', contractListData); 
+  app.post('/transactionRelay', transactionData); 
+  app.post('/tokenTransfer', tokenTransfer);
+  app.post('/witnessData', witnessData);
+  app.post('/witnessListData', witnessListData);
+  app.get('/witnessListData', witnessListData);
+  app.post('/eventLog', eventLog);
+  app.post('/web3relay', web3relay.data);
+  app.post('/compile', compile);
+  app.post('/publicAPI', publicAPI);//all public APIs
+
+  app.post('/fiat', fiat);
+  app.post('/stats', stats);
+  app.post('/todayRewards', todayRewards);
+  app.post('/totalStakedValue', totalStakedValue)
+  app.post('/totalBurntValue', totalBurntValue)
+  app.post('/totalXDCStakedValue', totalXDCStakedValue)
+  app.post('/totalXDCBurntValue', totalXDCBurntValue)
+  app.post('/totalMasterNodes', totalMasterNodes);
+  app.post('/CMCPrice', totalMasterNodes);
+  app.post('/getXinFinStats', getXinFinStats)
+  app.get('/getXinFinStats', getXinFinStats)
 
 
   /**
@@ -134,42 +171,7 @@ module.exports = function(app){
     { "tx": "0x1234blah" }
     { "block": "1234" }
   */
-  app.post('/addr', getAddr);
-  app.post('/addrTXcounts', addrTXcounts);
-  app.post('/tx', getTx);
-  app.post('/block', getBlock);
-  app.post('/data', getData);
-  app.get('/publicAPI', publicAPI);//all public APIs
-  app.get('/totalXDC', publicAPI.getTotalXDC);
-  app.get('/totalXDCSupply', getTotalXDCSupply);
 
-  //app.post('/daorelay', DAO);
-  app.post('/addressListData', addressListData);
-  app.get('/addressListData', addressListData); 
-  app.post('/tokenrelay', Token);  
-  app.post('/tokenListData', tokenListData); 
-  app.post('/contractListData', contractListData); 
-  app.post('/transactionRelay', transactionData); 
-  app.post('/tokenTransfer', tokenTransfer);
-  app.post('/witnessData', witnessData);
-  app.post('/witnessListData', witnessListData);
-  app.get('/witnessListData', witnessListData);
-  app.post('/eventLog', eventLog);
-  app.post('/web3relay', web3relay.data);
-  app.post('/compile', compile);
-  app.post('/publicAPI', publicAPI);//all public APIs
-
-  app.post('/fiat', fiat);
-  app.post('/stats', stats);
-  app.post('/todayRewards', todayRewards);
-  app.post('/totalStakedValue', totalStakedValue)
-  app.post('/totalBurntValue', totalBurntValue)
-  app.post('/totalXDCStakedValue', totalXDCStakedValue)
-  app.post('/totalXDCBurntValue', totalXDCBurntValue)
-  app.post('/totalMasterNodes', totalMasterNodes);
-  app.post('/CMCPrice', totalMasterNodes);
-  app.post('/getXinFinStats', getXinFinStats)
-  app.get('/getXinFinStats', getXinFinStats)
   
 }
 

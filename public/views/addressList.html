@@ -38,11 +38,24 @@
                                                             <a ng-show="item.type==0" href="/addressList/normal">N</a> 
                                                             <a ng-show="item.type==1" href="/addressList/contract">C</a> 
                                                             <a ng-show="item.type==2" href="/addressList/masternode">M</a> 
+                                                            <a ng-show="item.type==3" href="/addressList/blacklist">B</a> 
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
 
+                                            <div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
+												<ul class="pagination" style="visibility: visible;">
+													<li class="page-link prev" ng-click="getInfoList(page-1)"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+												</ul>
+												<ul class="pagination" style="visibility: visible;" ng-repeat="p in pages">
+													<li class="page-link active" ng-show="p-1==page" ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+													<li ng-show="p-1!=page" ng-click="getInfoList(p-1)" class="page-link"><a href="#">{{p}}</a></li>
+												</ul>
+												<ul class="pagination" style="visibility: visible;">
+													<li class="page-link next" ng-click="getInfoList(page+1)"><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+												</ul>
+											</div>
                                             <!--<div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
                                                 <ul class="pagination" style="visibility: visible;">
                                                     <li class="prev" ng-click="getInfoList(page-1)"><a href="#"><<</a></li>
@@ -55,7 +68,6 @@
                                                     <li class="next" ng-click="getInfoList(page+1)"><a href="#">>></a></li>
                                                 </ul>
                                             </div>-->
-											
 											
                                     	</div>
                                     </div>
