@@ -8,6 +8,8 @@ var Transaction = mongoose.model( 'Transaction' );
 var filters = require('./filters')
 var eth = require("./web3relay").eth;
 
+const {getCMCData} = require("../helpers/cmc");
+
 const cmc = "https://api.coinmarketcap.com/v1/ticker/xinfin-network/";
 
 const ws = new WebSocket("wss://wsapi.homiex.com/openapi/quote/ws/v1");
@@ -76,7 +78,7 @@ module.exports = function(app){
     monthlyRewards: parseFloat(mnDailyRewards) * 31,
     monthlyRewardPer: ((parseFloat(mnDailyRewards) * 31) / 10000000) * 100,
     yearlyRewardPer: ((parseFloat(mnDailyRewards) * 31 * 12) / 10000000) * 100,
-    priceUsd: cmc_xdc_price.price_usd,
+    priceUsd: cmc_xdc_price.price,
     xdcVol24HR: parseFloat(homieExData.data[0].v) + parseFloat(alphaExVol.data.xdcVolume)
    */
 
@@ -117,8 +119,8 @@ module.exports = function(app){
     
       alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
     
-      const cmc_xdc_data = await axios.get(cmc);
-      cmc_xdc_price = cmc_xdc_data.data[0];       
+      const cmc_xdc_data = await getCMCData();
+      cmc_xdc_price = cmc_xdc_data.data.data["2634"].quote.USD;       
     
 
     }catch(e){
@@ -475,17 +477,17 @@ const getXinFinStats = async function(lim, res) {
   res.write(JSON.stringify({
     totalMasterNodes:totalMasterNodesVal, 
     totalStakedValue:totalStakedValueVal,
-    totalStakedValueFiat:totalStakedValueVal*parseFloat(cmc_xdc_price.price_usd),
+    totalStakedValueFiat:totalStakedValueVal*parseFloat(cmc_xdc_price.price),
     burntBalance:burntBalance, 
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
-    totalXDCFiat:totalXDC*parseFloat(cmc_xdc_price.price_usd),
+    totalXDCFiat:totalXDC*parseFloat(cmc_xdc_price.price),
     monthlyRewards:parseFloat(mnDailyRewards) * 30,
-    monthlyRewardsFiat: parseFloat(mnDailyRewards) * 30* parseFloat(cmc_xdc_price.price_usd),
+    monthlyRewardsFiat: parseFloat(mnDailyRewards) * 30* parseFloat(cmc_xdc_price.price),
     monthlyRewardPer: ((parseFloat(mnDailyRewards) * 30) / 10000000) * 100,
     yearlyRewardPer: ((parseFloat(mnDailyRewards) * 365) / 10000000) * 100,
-    priceUsd: cmc_xdc_price.price_usd,
-    xdcVol24HR: parseFloat(cmc_xdc_price["24h_volume_usd"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price_usd) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price_usd)
+    priceUsd: cmc_xdc_price.price,
+    xdcVol24HR: parseFloat(cmc_xdc_price["volume_24h"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price)
   }));
   res.end()
 }
