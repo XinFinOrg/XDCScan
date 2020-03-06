@@ -4,6 +4,7 @@
     "patchStartBlocks": 1,
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": true,
-    "out": "."
+    "listenOnly": false,
+    "out": ".",
+    "MONGO_URI":"mongodb://localhost/BlockScanDB"
 }

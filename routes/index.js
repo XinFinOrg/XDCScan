@@ -45,7 +45,7 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "0x0000000000000000000000000000000000000088";
 var burntAddress = "0x0000000000000000000000000000000000000000";
-let resignMNCount = 5;
+let resignMNCount = 7;
 let epochRewards = 5000;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
@@ -68,6 +68,43 @@ module.exports = function(app){
   var publicAPI = require("./publicAPIData");
 
   const cmc = "https://api.coinmarketcap.com/v1/ticker/xinfin-network/";
+  
+  app.post('/addr', getAddr);
+  app.post('/addrTXcounts', addrTXcounts);
+  app.post('/tx', getTx);
+  app.post('/block', getBlock);
+  app.post('/data', getData);
+  app.get('/publicAPI', publicAPI);//all public APIs
+  app.get('/totalXDC', publicAPI.getTotalXDC);
+  app.get('/totalXDCSupply', getTotalXDCSupply);
+
+  //app.post('/daorelay', DAO);
+  app.post('/addressListData', addressListData);
+  app.get('/addressListData', addressListData); 
+  app.post('/tokenrelay', Token);  
+  app.post('/tokenListData', tokenListData); 
+  app.post('/contractListData', contractListData); 
+  app.post('/transactionRelay', transactionData); 
+  app.post('/tokenTransfer', tokenTransfer);
+  app.post('/witnessData', witnessData);
+  app.post('/witnessListData', witnessListData);
+  app.get('/witnessListData', witnessListData);
+  app.post('/eventLog', eventLog);
+  app.post('/web3relay', web3relay.data);
+  app.post('/compile', compile);
+  app.post('/publicAPI', publicAPI);//all public APIs
+
+  app.post('/fiat', fiat);
+  app.post('/stats', stats);
+  app.post('/todayRewards', todayRewards);
+  app.post('/totalStakedValue', totalStakedValue)
+  app.post('/totalBurntValue', totalBurntValue)
+  app.post('/totalXDCStakedValue', totalXDCStakedValue)
+  app.post('/totalXDCBurntValue', totalXDCBurntValue)
+  app.post('/totalMasterNodes', totalMasterNodes);
+  app.post('/CMCPrice', totalMasterNodes);
+  app.post('/getXinFinStats', getXinFinStats)
+  app.get('/getXinFinStats', getXinFinStats)
 
 
   /**
@@ -136,41 +173,7 @@ module.exports = function(app){
     { "tx": "0x1234blah" }
     { "block": "1234" }
   */
-  app.post('/addr', getAddr);
-  app.post('/addrTXcounts', addrTXcounts);
-  app.post('/tx', getTx);
-  app.post('/block', getBlock);
-  app.post('/data', getData);
-  app.get('/publicAPI', publicAPI);//all public APIs
-  app.get('/totalXDC', publicAPI.getTotalXDC);
-  app.get('/totalXDCSupply', getTotalXDCSupply);
 
-  //app.post('/daorelay', DAO);
-  app.post('/addressListData', addressListData);
-  app.get('/addressListData', addressListData); 
-  app.post('/tokenrelay', Token);  
-  app.post('/tokenListData', tokenListData); 
-  app.post('/contractListData', contractListData); 
-  app.post('/transactionRelay', transactionData); 
-  app.post('/tokenTransfer', tokenTransfer);
-  app.post('/witnessData', witnessData);
-  app.post('/witnessListData', witnessListData);
-  app.get('/witnessListData', witnessListData);
-  app.post('/eventLog', eventLog);
-  app.post('/web3relay', web3relay.data);
-  app.post('/compile', compile);
-  app.post('/publicAPI', publicAPI);//all public APIs
-
-  app.post('/fiat', fiat);
-  app.post('/stats', stats);
-  app.post('/todayRewards', todayRewards);
-  app.post('/totalStakedValue', totalStakedValue)
-  app.post('/totalBurntValue', totalBurntValue)
-  app.post('/totalXDCStakedValue', totalXDCStakedValue)
-  app.post('/totalXDCBurntValue', totalXDCBurntValue)
-  app.post('/totalMasterNodes', totalMasterNodes);
-  app.post('/CMCPrice', totalMasterNodes);
-  app.post('/getXinFinStats', getXinFinStats)
   
 }
 
@@ -477,17 +480,17 @@ const getXinFinStats = async function(lim, res) {
   res.write(JSON.stringify({
     totalMasterNodes:totalMasterNodesVal, 
     totalStakedValue:totalStakedValueVal,
-    totalStakedValueFiat:totalStakedValueVal*parseFloat(cmc_xdc_price.price),
-    burntBalance:burntBalance, 
+    totalStakedValueFiat:totalStakedValueVal*parseFloat(cmc_xdc_price.price).toFixed(),
+    burntBalance:(burntBalance).toFixed(), 
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
-    totalXDCFiat:totalXDC*parseFloat(cmc_xdc_price.price),
-    monthlyRewards:parseFloat(mnDailyRewards) * 30,
-    monthlyRewardsFiat: parseFloat(mnDailyRewards) * 30* parseFloat(cmc_xdc_price.price),
-    monthlyRewardPer: ((parseFloat(mnDailyRewards) * 30) / 10000000) * 100,
-    yearlyRewardPer: ((parseFloat(mnDailyRewards) * 365) / 10000000) * 100,
+    totalXDCFiat:(totalXDC*parseFloat(cmc_xdc_price.price)).toFixed(),
+    monthlyRewards:(parseFloat(mnDailyRewards) * 30).toFixed(),
+    monthlyRewardsFiat: (parseFloat(mnDailyRewards) * 30* parseFloat(cmc_xdc_price.price)).toFixed(),
+    monthlyRewardPer: (((parseFloat(mnDailyRewards) * 30) / 10000000) * 100).toFixed(2),
+    yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
     priceUsd: cmc_xdc_price.price,
-    xdcVol24HR: parseFloat(cmc_xdc_price["volume_24h"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price)
+    xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"])+parseFloat(homieExData.data[0].v)*parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume)*parseFloat(cmc_xdc_price.price)).toFixed()
   }));
   res.end()
 }
