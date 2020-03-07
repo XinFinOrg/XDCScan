@@ -174,6 +174,40 @@ module.exports = function(app){
     { "block": "1234" }
   */
 
+  //app.post('/daorelay', DAO);
+  app.post('/addressListData', addressListData);
+  app.get('/addressListData', addressListData); 
+  app.post('/tokenrelay', Token);  
+  app.post('/tokenListData', tokenListData); 
+  app.post('/contractListData', contractListData); 
+  app.post('/transactionRelay', transactionData); 
+  app.post('/tokenTransfer', tokenTransfer);
+  app.post('/witnessData', witnessData);
+  app.post('/witnessListData', witnessListData);
+  app.get('/witnessListData', witnessListData);
+  app.post('/eventLog', eventLog);
+  app.post('/web3relay', web3relay.data);
+  app.post('/compile', compile);
+  app.post('/publicAPI', publicAPI);//all public APIs
+
+  app.post('/fiat', fiat);
+  app.post('/stats', stats);
+  app.post('/todayRewards', todayRewards);
+  app.post('/totalStakedValue', totalStakedValue)
+  app.post('/totalBurntValue', totalBurntValue)
+  app.post('/totalXDCStakedValue', totalXDCStakedValue)
+  app.post('/totalXDCBurntValue', totalXDCBurntValue)
+  app.post('/totalMasterNodes', totalMasterNodes);
+  app.post('/CMCPrice', totalMasterNodes);
+  app.post('/getXinFinStats', getXinFinStats);
+  app.post('/getCmcDataUsd', (req,res) => {
+    getCMCData().then(data => {
+      res.status(200).json({data:data.data.data["2634"].quote.USD})
+    }).catch(e=>{
+      console.log("[*] exception at routes.index.getCmcDataUsd: ", e);
+      res.status(500).json({error:"server error"});
+    })
+  });
   
 }
 
