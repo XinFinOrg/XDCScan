@@ -170,7 +170,15 @@ module.exports = function(app){
   app.post('/totalXDCBurntValue', totalXDCBurntValue)
   app.post('/totalMasterNodes', totalMasterNodes);
   app.post('/CMCPrice', totalMasterNodes);
-  app.post('/getXinFinStats', getXinFinStats)
+  app.post('/getXinFinStats', getXinFinStats);
+  app.post('/getCmcDataUsd', (req,res) => {
+    getCMCData().then(data => {
+      res.status(200).json({data:data.data.data["2634"].quote.USD})
+    }).catch(e=>{
+      console.log("[*] exception at routes.index.getCmcDataUsd: ", e);
+      res.status(500).json({error:"server error"});
+    })
+  });
   
 }
 

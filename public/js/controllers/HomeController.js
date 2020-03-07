@@ -28,10 +28,11 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
 
       // todayRewards();
       totalNodes();
-      totalXDC();
       totalStakedValue();
       totalBurntValue();
-      FetchUSDPrice();
+      FetchUSDPrice().then(() => totalXDC()).catch(e => {
+        console.log("[*] exception at HomeController.FetchUSDPrice / totalXDC: ", e)
+      });
       getTotalRewards();
     }
 
@@ -73,14 +74,20 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       });
     }
     function FetchUSDPrice(){
-      $http({
-        method: 'get',
-        url: 'https://api.coinmarketcap.com/v1/ticker/xinfin-network/',
-        data: {}
-      }).success(function(data) {
-        $scope.CMCPrice_USD = data[0].price_usd;
-        $scope.CMCPrice_change24h = data[0].percent_change_24h;
-      });
+      return new Promise((resolve, reject) => {
+        $http({
+          method:"post",        
+          url: '/getCmcDataUsd',  
+        }).then(function(data) {
+          console.log(data);
+          $scope.CMCPrice_USD = data.data.data.price;
+          $scope.CMCPrice_change24h = data.data.data.percent_change_24h;
+          resolve();
+        }).catch(e => {
+          console.log("EXCEPTION: ", e);
+        });
+      })
+      
     }
     function totalXDC(){
       $http({
@@ -89,7 +96,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
         data: {}
       }).success(function(data) {
         $scope.totalXDC = data;
-        $scope.totalXDCinUSD = (data * $scope.CMCPrice_USD).toFixed();
+        $scope.totalXDCinUSD = (data * parseFloat($scope.CMCPrice_USD)).toFixed();
       });
     }
     function getTotalRewards(){
