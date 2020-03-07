@@ -80,8 +80,8 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
           url: '/getCmcDataUsd',  
         }).then(function(data) {
           console.log(data);
-          $scope.CMCPrice_USD = data.data.data.price;
-          $scope.CMCPrice_change24h = data.data.data.percent_change_24h;
+          $scope.CMCPrice_USD = (data.data.data.price).toFixed(5);
+          $scope.CMCPrice_change24h = (data.data.data.percent_change_24h).toFixed(2);
           resolve();
         }).catch(e => {
           console.log("EXCEPTION: ", e);
