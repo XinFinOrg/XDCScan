@@ -9,7 +9,7 @@ var BlockStat = require( '../db-stats.js' ).BlockStat;
 
 var updateStats = function() {
     var web3 = new Web3(new Web3.providers.HttpProvider(config.rpc)); 
-    mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/BlockScanDB');
+    mongoose.connect(process.env.MONGO_URI || config.MONGO_URI || 'mongodb://localhost/BlockScanDB');
     mongoose.set('debug', true);
 
     var latestBlock = web3.eth.blockNumber;

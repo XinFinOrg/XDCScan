@@ -1,5 +1,3 @@
-var batchItems = [];
-
 //add timestamp for console.log()
 (function() { //add timestamp to console.log and console.error(from http://yoyo.play175.com)
     var date = new Date();
@@ -146,20 +144,7 @@ var listenBlocks = function() {
         //console.log("watch log:", log);
         if(error) {
             console.log('Error: ' + error);
-            console.log("Reinitialising filter");
-            newBlocksWatch.stopWatching();
-            newBlocksWatch.once({
-                fromBlock: currentBlock,
-                toBlock: 'latest'
-            } ,function (error, data){
-                console.log("newBlocksWatch -- ListenBlock");
-
-                listenBlocks();
-                
-            }
-            );
-
-
+            setTimeout(restart, 3000);
         } else if (log == null) {
             //console.log('Warning: null block hash');
         } else {
@@ -202,11 +187,9 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
         web3.eth.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
             if(error) {
                 console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
-                tryNextBlock();
-                setTimeout(restart, 3000);
             }
             else if(blockData == null) {
-                console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
+                //console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
             }
             else {
                 writeBlockToDB(config, blockData);
@@ -218,27 +201,7 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
             setTimeout(restart, 3000);
     }
 }
-var sleepFlag = 0;
-var tryNextBlock = function() {
-    currentBlock--
-    sleepFlag++;
-    if(currentBlock%1000==0)
-        console.log("block number:", currentBlock);
-    if(currentBlock>=config.patchStartBlocks){
-        if(sleepFlag>3){
-            sleepFlag = 0;
-            // setTimeout(grabBlock3, 100);
-            grabBlock3();
-        }else{
-            grabBlock3();
-        }
-        
-    }else{
-        console.log("【finish address grabber. ready insert db】:");
-        nextInsertBatch();
-    }
-
-}    
+    
 function restart(){
     connectWeb3();
     if(newBlocksWatch)
@@ -312,7 +275,8 @@ var upsertAddress=function(miner, addrs){
 /**
     Break transactions out of blocks and write to DB
 **/
-var pingTXAddr = "0x000000000000000000000000000000000000000a";
+var BlockSigners = "xdc0000000000000000000000000000000000000089";
+var RandomizeSMC = "xdc0000000000000000000000000000000000000090";
 var pingTXValue = "0";
 var writeTransactionsToDB = function(blockData) {
     var bulkOps = [];
@@ -461,7 +425,7 @@ var writeTransactionsToDB = function(blockData) {
             }
 
             //drop out masterNode ping transactions
-            if(!(txData.to == pingTXAddr && txData.value == pingTXValue && 
+            if(!(txData.to == BlockSigners || txData.to == RandomizeSMC || txData.value == pingTXValue && 
                 (txData.gasUsed==34957||txData.gasUsed==49957||txData.gasUsed==34755||txData.gasUsed==19755||txData.gasUsed==44550))
                 ){
                 bulkOps.push(txData);
@@ -563,39 +527,5 @@ setInterval(function(){
         writeTransactionsToDB(_blockData);
     }
 }, 3000);
-var currentBlock;
-var itemBatchSize = 100;
-var batchIdex = -1;
-var batchItems = [];
-var itemIndex = -1;
-function nextInsertBatch(){
-    batchItems.length = 0;
-    batchIdex++;
-    console.log("nextInsertBatch index:", batchIdex);
-    for(var i=0; i<itemBatchSize; i++){
-        itemIndex++;
-        if(itemIndex>=addressItems.length){
-            break;
-        }
-        var addrItem = {"addr":addressItems[itemIndex], "type":0, "balance":0};
-        addrItem.balance = web3.eth.getBalance(addrItem.addr);
-        // if(contractAddrs.indexOf(addrItem.addr)>-1){//contract addr
-        //     addrItem.type = 1;
-        // }
-        if(addrItem.balance>0)
-            batchItems.push(addrItem);
-    }
-    if(batchItems.length>0){
-        insertDB();
-    }else if(itemIndex<addressItems.length){
-        nextInsertBatch();
-    }else{
-        console.log("total items:", addressItems.length);
-        console.log("【insert finish !】");
-        mongoose.disconnect();
-        process.exit(0);
-    }
-}
 
 grabBlocks();
-
