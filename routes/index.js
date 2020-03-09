@@ -516,7 +516,7 @@ const getXinFinStats = async function(lim, res) {
   res.write(JSON.stringify({
     totalMasterNodes:totalMasterNodesVal, 
     totalStakedValue:totalStakedValueVal,
-    totalStakedValueFiat:parseFloat(totalStakedValueVal)*parseFloat(cmc_xdc_price.price),
+    totalStakedValueFiat:(parseFloat(totalStakedValueVal)*parseFloat(cmc_xdc_price.price)).toFixed(),
     burntBalance:(burntBalance).toFixed(), 
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
