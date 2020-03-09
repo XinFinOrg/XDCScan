@@ -511,10 +511,12 @@ var sendBlocks = function(lim, res) {
 }
 
 const getXinFinStats = async function(lim, res) {
+  // if (cmc_xdc_price)
+  console.log("totalStakedValueVal: ", totalStakedValueVal*cmc_xdc_price.price)
   res.write(JSON.stringify({
     totalMasterNodes:totalMasterNodesVal, 
     totalStakedValue:totalStakedValueVal,
-    totalStakedValueFiat:totalStakedValueVal*parseFloat(cmc_xdc_price.price).toFixed(),
+    totalStakedValueFiat:(parseFloat(totalStakedValueVal)*parseFloat(cmc_xdc_price.price)).toFixed(),
     burntBalance:(burntBalance).toFixed(), 
     mnDailyRewards:mnDailyRewards,
     totalXDC:totalXDC,
