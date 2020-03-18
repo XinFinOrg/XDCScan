@@ -24,7 +24,7 @@ var Block = new Schema(
     "timestamp": {type: Number, index: true},
     "uncles": [String],
     "txs": [String],//same with transactions
-    "witness": {type: String, index: true}
+    "witness": [String]
 });
 
 //master node Info
@@ -32,8 +32,9 @@ var Witness = new Schema(
     {
         "blocksNum": Number,//mine block count
         "lastCountTo": Number,//block height
+        "mnStake": String,//MasterNode Stake
+        "kycDocs": String, // MasterNode IPFS KYC Docs
         "witness": {type: String, index: {unique: true}},
-
         "status":Boolean,
         "hash":String,
         "reward":Number,
@@ -79,7 +80,7 @@ var Transaction = new Schema(
     "gasPrice": String,
     "timestamp": Number,
     "input": String,
-    "witness": String
+    "witness": [String]
 });
 
 
@@ -119,11 +120,10 @@ mongoose.model('LogEvent', LogEvent);
 var Address = new Schema(
     {
         "addr": {type: String, index: {unique: true}},
-        "type": {type: Number, index: true},//0:normal 1:contract 2:masternode
+        "type": {type: Number, index: true},//0:normal 1:contract 2:masternode 3:blacklist
         "balance": Number
     });
 mongoose.model('Address', Address);
-
 mongoose.model('Block', Block);
 mongoose.model('Contract', Contract);
 mongoose.model('Transaction', Transaction);

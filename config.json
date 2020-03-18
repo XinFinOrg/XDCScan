@@ -4,7 +4,11 @@
     "patchStartBlocks": 1,
     "quiet": true,
     "terminateAtExistingDB": false,
-    "listenOnly": false,
+    "listenOnly": true,
     "out": ".",
-    "MONGO_URI":"mongodb://localhost/BlockScanDB"
+    "MONGO_URI":"mongodb://localhost/BlockScanDB2",
+    "epoch":900,
+    "fRewards":500,
+    "mnRewards":4500,
+    "rewards":5000
 }
