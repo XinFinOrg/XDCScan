@@ -1,3 +1,4 @@
+
 //add timestamp for console.log()
 (function() { //add timestamp to console.log and console.error(from http://yoyo.play175.com)
     var date = new Date();
@@ -45,6 +46,15 @@ var LogEvent = mongoose.model( 'LogEvent' );
 var Witness = mongoose.model( 'Witness' );
 var Address = mongoose.model( 'Address' );
 var config = require('./../config.json')
+let web3relay = require('./../routes/web3relay');
+
+var contracts = require('../contractTpl/contracts.js');
+
+var contractAddress = "0x0000000000000000000000000000000000000088";
+let resignMNCount = 7;
+
+
+
 
 const ERC20ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"tokens","type":"uint256"},{"name":"data","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tokenAddress","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"tokenOwner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"tokenOwner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"tokens","type":"uint256"}],"name":"Approval","type":"event"}];
 const ERC20_METHOD_DIC = {"0xa9059cbb":"transfer", "0xa978501e":"transferFrom"};
@@ -59,7 +69,7 @@ const METHOD_DIC = {
 };
 
 var ContractStruct;
-
+let masterNodeContract
 //the TX has no receipt while grabbing block, we cache TX and grab later
 var laterGrabBlockDatas = [];
 
@@ -212,6 +222,22 @@ function restart(){
 }
 
 var writeBlockToDB = function(config, blockData) {
+
+    let mnCandidateCnt;
+    let mNodeReWards 
+    if(!masterNodeContract){
+        var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
+        masterNodeContract = contractOBJ.at(contractAddress);
+        }
+    if(masterNodeContract){
+        mnCandidateCnt = masterNodeContract.getCandidates()
+        totalMasterNodesVal = (String(mnCandidateCnt.length - resignMNCount));
+        mNodeReWards = (config.mnRewards/config.epoch)/totalMasterNodesVal;
+        console.log(totalMasterNodesVal,"!@",mNodeReWards,config.mnRewards,totalMasterNodesVal)
+
+    }
+    blockData.witness = mnCandidateCnt
+    console.log(blockData.witness.length,"1")
     //only save address for transaction info
     blockData.txs = [];
     for(var i=0; i<blockData.transactions.length; i++){
@@ -220,6 +246,7 @@ var writeBlockToDB = function(config, blockData) {
 
     //write block to db
     return new Block(blockData).save( function( err, block, count ){
+
         if ( typeof err !== 'undefined' && err ) {
             if (err.code == 11000) {
                 //console.log('Skip: Duplicate key ' + blockData.number.toString() + ': ' + err);
@@ -227,21 +254,43 @@ var writeBlockToDB = function(config, blockData) {
                console.log('Block Error: Aborted due to error on ' + 'block number ' + blockData.number.toString() + ': ' +  err);
                process.exit(9);
            }
-        } else {
+        } else { 
+            if (blockData.number/config.epoch){
+                console.log("custom if",blockData.number)
+
+
             //update witness reward
-            Witness.update({"witness":blockData.witness},
-            {$set:{"lastCountTo":blockData.number, "hash":blockData.hash, "miner":blockData.miner, "timestamp":blockData.timestamp, "status":true}, 
-            $inc:{"blocksNum":1, "reward":0.3375}},
-            {upsert: true},
-            function (err, data) {
-                if(err)
-                    console.log("err:", err);
+            for ( i=0;i<mnCandidateCnt.length;i++){
+                let masterNode= 'xdc'+mnCandidateCnt[i].substring(2)
+                let kycDocs
+                // console.log("masterNode name",masterNode)
+
+                let mnCandidateStake = etherUnits.toEther(new BigNumber(masterNodeContract.getCandidateCap(mnCandidateCnt[i])), 'wei');
+                if(masterNode!="xdc0000000000000000000000000000000000000000"){
+                kycDocs = masterNodeContract.getLatestKYC(mnCandidateCnt[i]).toString()
+                }
+                // console.log("Stake Value",masterNode,kycDocs)
+                Witness.update({"witness":masterNode},
+                {$set:{"lastCountTo":blockData.number, "hash":blockData.hash, "miner":masterNode,"mnStake":mnCandidateStake,"kycDocs":kycDocs, "timestamp":blockData.timestamp, "status":true}, 
+                $inc:{"blocksNum":1, "reward":mNodeReWards}},
+                {upsert: true},
+                function (err, data) {
+                    if(err)
+                        console.log("err:", err);
+                }
+                );
+
             }
-            );
+            console.log("MasterNode Updated")
+
 
             if(!('quiet' in config && config.quiet === true)) {
                 //console.log('DB successfully written for block number ' + blockData.number.toString() );
-            }            
+                } 
+            }else{
+                console.log("custom else",blockData.number/config.epoch,blockData.number,config.epoch)
+            }
+           
         }
       });
 }
@@ -279,6 +328,17 @@ var BlockSigners = "xdc0000000000000000000000000000000000000089";
 var RandomizeSMC = "xdc0000000000000000000000000000000000000090";
 var pingTXValue = "0";
 var writeTransactionsToDB = function(blockData) {
+    let mNodeAddr;
+                
+    if(!masterNodeContract){
+        var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
+        masterNodeContract = contractOBJ.at(contractAddress);
+        }
+    if(masterNodeContract){
+        mNodeAddr = masterNodeContract.getCandidates()
+        // console.log(mNodeAddr,"mNodeAddr")
+        // totalMasterNodesVal = (String(mnCandidateCnt - 5));
+    }
     var bulkOps = [];
     var noReceiptTXs = [];
     var addrs = [];
@@ -292,7 +352,8 @@ var writeTransactionsToDB = function(blockData) {
                 continue;
             }
             txData.timestamp = blockData.timestamp;
-            txData.witness = blockData.witness;
+            txData.witness = mNodeAddr;
+            
             txData.gasPrice = etherUnits.toEther(new BigNumber(txData.gasPrice), 'ether');
             txData.value = etherUnits.toEther(new BigNumber(txData.value), 'wei');
             
@@ -376,7 +437,7 @@ var writeTransactionsToDB = function(blockData) {
             }else{//out transaction
                 // console.log("not contract transaction");
             }
-
+            
             //Event logs of internal transaction  . write to doc of EventLog
             if(receiptData){
                 logEvents = [];
@@ -423,11 +484,11 @@ var writeTransactionsToDB = function(blockData) {
                     });
                 } 
             }
-
             //drop out masterNode ping transactions
             if(!(txData.to == BlockSigners || txData.to == RandomizeSMC || txData.value == pingTXValue && 
                 (txData.gasUsed==34957||txData.gasUsed==49957||txData.gasUsed==34755||txData.gasUsed==19755||txData.gasUsed==44550))
                 ){
+                console.log(txData.number,"txData.num")
                 bulkOps.push(txData);
                 if(txData.from)
                     addrs.push(txData.from);
@@ -435,7 +496,7 @@ var writeTransactionsToDB = function(blockData) {
                     addrs.push(txData.to);
             }
         }
-
+        
         //collect address
         upsertAddress(blockData.miner, addrs);
 
