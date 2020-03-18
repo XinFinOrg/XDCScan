@@ -3,7 +3,7 @@ var mongoose = require( 'mongoose' );
 var Block = mongoose.model('Block');
 var Witness = mongoose.model('Witness');
 var oneDaySeconds = 86400//24*60*60;//seconds of one day
-
+let config = require('./../config.json');
 module.exports = function(req, res){
   var respData = "";
   var action = req.body.action;
@@ -35,14 +35,18 @@ module.exports = function(req, res){
     }
 
   }else if(action == "metadata"){//witness metadata
-    Witness.findOne({'witness':witness}, "-_id reward blocksNum").lean(true).exec(function (err, doc) {
-      var resultData={"reward":0, "totalBlocks":0};
+    Witness.findOne({'witness':witness}, "-_id reward blocksNum mnStake kycDocs").lean(true).exec(function (err, doc) {
+      var resultData={"reward":0, "totalBlocks":0,"mnstake":0 };
       if(err){
         console.log("err:", err);
       }
       if(doc){
         resultData.reward = doc.reward;
+        resultData.mnStake = doc.mnStake;
+        console.log(doc,"1")
         resultData.totalBlocks = doc.blocksNum;
+        resultData.kycDocs = doc.kycDocs;
+        resultData.totalEpoch = (doc.blocksNum/config.epoch).toFixed();
       }
       res.write(JSON.stringify(resultData));
       res.end();
