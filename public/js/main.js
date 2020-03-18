@@ -118,6 +118,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 }]
             }
         })
+    
 
         .state('address', {
             url: "/addr/{hash}",
@@ -260,7 +261,12 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                         name: 'BlocksApp',
                         insertBefore: '#ng_load_plugins_before', 
                         files: [
-                             '/js/controllers/TokenListController.js'
+                             '/js/controllers/TokenListController.js',
+                             '/plugins/datatables/datatables.min.css',
+                             '/plugins/datatables/datatables.bootstrap.css',
+                             // '/plugins/datatables/datatables.all.min.js',
+                             '/plugins/datatables/datatable.min.js'
+
                         ]
                     });
                 }]
@@ -277,7 +283,12 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                         name: 'BlocksApp',
                         insertBefore: '#ng_load_plugins_before', 
                         files: [
-                             '/js/controllers/ContractListController.js'
+                             '/js/controllers/ContractListController.js',
+                             '/plugins/datatables/datatables.min.css',
+                             '/plugins/datatables/datatables.bootstrap.css',
+                             // '/plugins/datatables/datatables.all.min.js',
+                             '/plugins/datatables/datatable.min.js'
+
                         ]
                     });
                 }]
@@ -348,7 +359,11 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                         name: 'BlocksApp',
                         insertBefore: '#ng_load_plugins_before', 
                         files: [
-                             '/js/controllers/WitnessListController.js'
+                             '/js/controllers/WitnessListController.js',
+                             '/plugins/datatables/datatables.min.css',
+                             '/plugins/datatables/datatables.bootstrap.css',
+                             // '/plugins/datatables/datatables.all.min.js',
+                             '/plugins/datatables/datatable.min.js'
                         ]
                     });
                 }]
@@ -399,7 +414,12 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                         name: 'BlocksApp',
                         insertBefore: '#ng_load_plugins_before', 
                         files: [
-                             '/js/controllers/AddressListController.js'
+                             '/js/controllers/AddressListController.js',
+                             '/plugins/datatables/datatables.min.css',
+                             '/plugins/datatables/datatables.bootstrap.css',
+                             // '/plugins/datatables/datatables.all.min.js',
+                             '/plugins/datatables/datatable.min.js'
+
                         ]
                     });
                 }]
