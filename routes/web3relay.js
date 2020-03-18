@@ -8,12 +8,12 @@ var Web3 = require("xdc3");
 var web3;
 var config = require('./../config.json')
 var BigNumber = require('bignumber.js');
-var etherUnits = require(__lib + "etherUnits.js")
+// var etherUnits = require(__lib + "etherUnits.js")
+var etherUnits = require('./../lib/etherUnits')
 
 var getLatestBlocks = require('./index').getLatestBlocks;
 var filterBlocks = require('./filters').filterBlocks;
 var filterTrace = require('./filters').filterTrace;
-
 
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
