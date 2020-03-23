@@ -122,7 +122,7 @@ module.exports = function(app){
 
   xinfinSiteStatTicker();
 
-  setInterval(xinfinSiteStatTicker, 300000);
+  setInterval(xinfinSiteStatTicker, 1000000);
 
   async function xinfinSiteStatTicker() {
     try{
