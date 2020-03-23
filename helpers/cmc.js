@@ -1,13 +1,15 @@
 const axios = require("axios");
 const cmcKeys = require("../config/cmcKeys");
 
+let i=0;
+
 module.exports = {
   getCMCData: async () => {
     try{
       const cmc_xdc_data = await axios({
         method:"get",
         headers: {
-          'X-CMC_PRO_API_KEY': cmcKeys.xdce.key
+          'X-CMC_PRO_API_KEY': cmcKeys.xdce.key[i++%cmcKeys.xdce.key.length]
         },
         url: 'https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest',
         params: {
