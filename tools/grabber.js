@@ -126,7 +126,7 @@ var intervalBlocks = function() {
             }catch(err){
                 console.log(err);
             }
-        }, 1000);
+        }, 500);
             
     });
         
