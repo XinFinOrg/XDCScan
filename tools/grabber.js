@@ -378,7 +378,7 @@ var writeTransactionsToDB = function(blockData) {
             }
 
             //Event logs of internal transaction  . write to doc of EventLog
-            if(receiptData){
+            if(receiptData && !( txData.to == BlockSigners || txData.to == RandomizeSMC )){
                 logEvents = [];
                 for(k in receiptData.logs){
                     var logItem = receiptData.logs[k];
