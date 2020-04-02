@@ -7,7 +7,7 @@
     "listenOnly": false,
     "fetchBlock":12549888,
     "out": ".",
-    "MONGO_URI":"mongodb://localhost/BlockScanDB2",
+    "MONGO_URI":"mongodb://localhost/BlockScanDB",
     "epoch":900,
     "fRewards":500,
     "mnRewards":4500,
