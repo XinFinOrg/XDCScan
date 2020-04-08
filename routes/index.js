@@ -82,7 +82,8 @@ module.exports = function (app) {
   const masterNodeController = require('../controller/masterNodeController');
   // var masternodeRouter = require('./masterNode');
   app.get('/masternode/list', masterNodeController.list);
-  app.get('/masternode/savemnDetails', masterNodeController.saveMNDetails);
+  app.get('/masternode/savemndetails', masterNodeController.saveMNDetails);
+  app.get('/masternode/updatemndetails', masterNodeController.updateMNDetails);
 
   //app.post('/daorelay', DAO);
   app.post('/addressListData', addressListData);

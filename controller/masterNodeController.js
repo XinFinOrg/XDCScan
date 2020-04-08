@@ -1,7 +1,10 @@
 const masterNodeDetails = require('../models/masterNodeDetails');
 const contracts = require('../contractTpl/contracts.js');
+var config = require('../config.json');
 var masterNodeContract;
 const web3relay = require('../routes/web3relay');
+const Xdc3Latest = require('xdc3-latest');
+const xdc3Latest = new Xdc3Latest(new Xdc3Latest.providers.WebsocketProvider(config.wss));
 var xdc3latestrelay = require('../routes/xdc3LatestRelay');
 var contractAddress = "0x0000000000000000000000000000000000000088";
 var burntAddress = "0x0000000000000000000000000000000000000000";
@@ -9,19 +12,11 @@ let resignMNCount = 9;
 let epochRewards = 5000;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
+const masterNodeHelper = require('../helpers/masterNodeHelper');
 // const mongoose = require('mongoose');
 // const masterNodeDetails = mongoose.model('MasterNodeDetails');
 
 module.exports = {
-    index: async function (req, res) {
-        try {
-            return responseHelper.successWithMessage(res, "HEll0");
-        }
-        catch (error) {
-            console.log('index_error', error);
-            return responseHelper.serverError(res, error);
-        }
-    },
 
     list: async function (req, res) {
         try {
@@ -50,10 +45,10 @@ module.exports = {
                 let mnArray = [];
                 let array = [];
                 let masterNodeDetailsFind = '';
-                let blockHash, transactionHash, blockNumber, owner, canditate, address, event, i;
+                let blockHash, transactionHash, blockNumber, owner, candidate, address, event, i;
                 for (i = 0; i < data.length; i++) {
                     address = data[i].address;
-                    blockHash = data[i].blockHash; 
+                    blockHash = data[i].blockHash;
                     transactionHash = data[i].transactionHash;
                     blockNumber = data[i].blockNumber;
                     owner = data[i].returnValues._owner;
@@ -80,6 +75,18 @@ module.exports = {
         }
         catch (error) {
             console.log('saveMNDetails_error', error);
+            return responseHelper.serverError(res, error);
+        }
+    },
+
+    updateMNDetails: async function (req, res) {
+        try {
+            console.log('called');
+            masterNodeHelper.startWatch();
+            return responseHelper.successWithMessage(res, "Started");
+        }
+        catch (error) {
+            console.log('testMNDetails_error', error);
             return responseHelper.serverError(res, error);
         }
     },
