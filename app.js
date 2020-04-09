@@ -99,7 +99,7 @@ http.listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
 
-var RESPONSE = require('./config/RESPONSE.js');
+var RESPONSE = require('./helpers/RESPONSE.js');
 // var axios = require('axios');
 // // axios.get(`${process.env.APP_URL}/masternode/test`);
 // axios.get(`http://localhost:3000/masternode/updatemndetails`);

@@ -87,6 +87,7 @@ module.exports = {
         try {
             if (blockNumber % epochInterval == 0) {
                 const currentEpoch = blockNumber / epochInterval;
+                console.log('New Epoch ' + currentEpoch + ' Reached.');
                 let processedEpoch, i, epochBlockNumber, candidatesData, totalCandidates, rewardsPerCandidate, candidate, owner, j, array, stakeAmount, rewardsExist, contractOBJ;
                 const processedEpochData = await masterNodeRewardsDetails.find().sort({ epochNumber: -1 }).limit(1);
                 if (processedEpochData != '' && processedEpochData != null) {
@@ -110,7 +111,7 @@ module.exports = {
                             owner = await masterNodeContract.getCandidateOwner(candidate);
                             candidate = 'xdc' + candidate.substring(2, candidate.length);
                             owner = 'xdc' + owner.substring(2, owner.length);
-                            stakeAmount = stakeAmount/(10**18);
+                            stakeAmount = stakeAmount / (10 ** 18);
                             array = {
                                 epochNumber: i,
                                 blockNumber: epochBlockNumber,
@@ -119,7 +120,8 @@ module.exports = {
                                 rewards: rewardsPerCandidate,
                                 stakeAmount: stakeAmount
                             };
-                            rewardsExist = await masterNodeRewardsDetails.findOne({ epochNumber: i, blockNumber: blockNumber, candidate: candidate, owner: owner, rewards: rewardsPerCandidate });
+                            // rewardsExist = await masterNodeRewardsDetails.findOne({ epochNumber: i, blockNumber: blockNumber, candidate: candidate, owner: owner, rewards: rewardsPerCandidate });
+                            rewardsExist = await masterNodeRewardsDetails.findOne(array);
                             if (!(rewardsExist != '' && rewardsExist != null && rewardsExist != 'error')) {
                                 await masterNodeRewardsDetails.create(array);
                             }

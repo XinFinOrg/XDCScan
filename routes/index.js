@@ -84,6 +84,7 @@ module.exports = function (app) {
   app.get('/masternode/list', masterNodeController.list);
   app.get('/masternode/savemndetails', masterNodeController.saveMNDetails);
   app.get('/masternode/updatemndetails', masterNodeController.updateMNDetails);
+  app.post('/masternode/rewards', masterNodeController.rewards);
 
   //app.post('/daorelay', DAO);
   app.post('/addressListData', addressListData);

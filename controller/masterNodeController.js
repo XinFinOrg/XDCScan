@@ -1,4 +1,5 @@
 const masterNodeDetails = require('../models/masterNodeDetails');
+const masterNodeRewardsDetails = require('../models/masterNodeRewardsDetails');
 const contracts = require('../contractTpl/contracts.js');
 var config = require('../config.json');
 var masterNodeContract;
@@ -87,6 +88,25 @@ module.exports = {
         }
         catch (error) {
             console.log('testMNDetails_error', error);
+            return responseHelper.serverError(res, error);
+        }
+    },
+
+    rewards: async function (req, res) {
+        try {
+            let address = req.body.address;
+            let data;
+            if (address == null || address == '') {
+                address = '';
+                data = await masterNodeRewardsDetails.find();
+            }
+            else {
+                data = await masterNodeRewardsDetails.find({ $or: [{ candidate: address }, { owner: address }] });
+            }
+            return responseHelper.successWithData(res, "Data fetched", data);
+        }
+        catch (error) {
+            console.log('rewards_error', error);
             return responseHelper.serverError(res, error);
         }
     },
