@@ -1,4 +1,4 @@
-# XinFinScan 
+# XDC Explorer 
 
 ## Local installation
 
