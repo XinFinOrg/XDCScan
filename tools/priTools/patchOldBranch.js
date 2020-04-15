@@ -35,7 +35,7 @@ require( '../../db.js' );
 var etherUnits = require("../../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
 
-var Web3 = require('xdc3');;
+var Web3 = require("xdc3-old");;
 var web3;
 var mongoose = require( 'mongoose' );
 var Address = mongoose.model('Address');

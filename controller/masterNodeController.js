@@ -4,7 +4,7 @@ const contracts = require('../contractTpl/contracts.js');
 var config = require('../config.json');
 var masterNodeContract;
 const web3relay = require('../routes/web3relay');
-const Xdc3Latest = require('xdc3-latest');
+const Xdc3Latest = require("xdc3");
 const xdc3Latest = new Xdc3Latest(new Xdc3Latest.providers.WebsocketProvider(config.wss));
 var xdc3latestrelay = require('../routes/xdc3LatestRelay');
 var contractAddress = "0x0000000000000000000000000000000000000088";
