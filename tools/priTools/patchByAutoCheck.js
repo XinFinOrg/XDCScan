@@ -5,7 +5,7 @@ require( '../../db.js' );
 var etherUnits = require("../../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
 var fs = require('fs');
-var Web3 = require('xdc3');;
+var Web3 = require("xdc3-old");;
 var web3;
 var config3 = require('./../config.json')
 var mongoose = require( 'mongoose' );

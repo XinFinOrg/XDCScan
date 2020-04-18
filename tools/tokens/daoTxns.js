@@ -4,7 +4,7 @@
     Thing to get history of DAO transactions
 */
 
-var Web3 = require("xdc3");
+var Web3 = require("xdc3-old");
 var web3;
 var async = require('async');
 

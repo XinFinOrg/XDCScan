@@ -1,18 +1,51 @@
-require( '../../db.js' );
-var etherUnits = require("../../lib/etherUnits.js");
+//add timestamp for console.log()
+(function() { //add timestamp to console.log and console.error(from http://yoyo.play175.com)
+    var date = new Date();
+  
+    function timeFlag() {
+        date.setTime(Date.now());
+        var m = date.getMonth() + 1;
+        var d = date.getDate();
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var milliseconds = date.getMilliseconds();
+        return '[' + ((m < 10) ? '0' + m : m) + '-' + ((d < 10) ? '0' + d : d) +
+            ' ' + ((hour < 10) ? '0' + hour : hour) + ':' + ((minutes < 10) ? '0' + minutes : minutes) +
+            ':' + ((seconds < 10) ? '0' + seconds : seconds) + '.' + ('00' + milliseconds).slice(-3) + '] ';
+    }
+    var log = console.log;
+    console.error = console.log = function() {
+        var prefix = ''; //cluster.isWorker ? '[WORKER '+cluster.worker.id + '] ' : '[MASTER]';
+        if (typeof(arguments[0]) == 'string') {
+            var first_parameter = arguments[0]; //for this:console.log("%s","str");
+            var other_parameters = Array.prototype.slice.call(arguments, 1);
+            log.apply(console, [prefix + timeFlag() + first_parameter].concat(other_parameters));
+        } else {
+            var args = Array.prototype.slice.call(arguments);
+            log.apply(console, [prefix + timeFlag()].concat(args));
+        }
+    }
+  })();
+  
+require( '../db.js' );
+var etherUnits = require("../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
 
-var fs = require('fs');
-var config = require('./../config.json')
-var Web3 = require("xdc3-old");;
+
+var Web3 = require("xdc3-old");
 var web3;
-var TokenTransferGrabber = require('../grabTokenTransfer');
+// var TokenTransferGrabber = require('./grabTokenTransfer');
 var mongoose = require( 'mongoose' );
 var Block     = mongoose.model( 'Block' );
 var Transaction     = mongoose.model( 'Transaction' );
 var Contract     = mongoose.model( 'Contract' );
 var TokenTransfer = mongoose.model( 'TokenTransfer' );
 var LogEvent = mongoose.model( 'LogEvent' );
+var Witness = mongoose.model( 'Witness' );
+var Address = mongoose.model( 'Address' );
+var config = require('./../config.json')
+
 const ERC20ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"tokens","type":"uint256"},{"name":"data","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tokenAddress","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"tokenOwner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"tokenOwner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"tokens","type":"uint256"}],"name":"Approval","type":"event"}];
 const ERC20_METHOD_DIC = {"0xa9059cbb":"transfer", "0xa978501e":"transferFrom"};
 const METHOD_DIC = {
@@ -30,54 +63,102 @@ var ContractStruct;
 //the TX has no receipt while grabbing block, we cache TX and grab later
 var laterGrabBlockDatas = [];
 
-//listen every history token in db
-var listenHistoryToken = function(){
-    // var eth = require('./web3relay').eth;
-    // var TokenTransferGrabber = require('./grabTokenTransfer');
-    // TokenTransferGrabber.Init(eth);
-    var ContractFind = Contract.find({ERC:{$gt:0}}).lean(true);
-    var transforEvent;
-    ContractFind.exec(function(err, doc){
-      if(doc){
-        for(var i=0; i<doc.length; i++){
-          //transforEvent = TokenTransferGrabber.GetTransferEvent(doc[i].abi, doc[i].address)
-          transforEvent = TokenTransferGrabber.GetTransferEvent(ERC20ABI, doc[i].address)
-          TokenTransferGrabber.ListenTransferTokens(transforEvent, web3.eth.blockNumber+1);
-        }
-      }
-    })
+function connectWeb3(){
+    web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
 }
 
-var grabBlocks = function(config) {
+// //listen every history token in db
+// var listenHistoryToken = function(){
+//     // var eth = require('./web3relay').eth;
+//     // var TokenTransferGrabber = require('./grabTokenTransfer');
+//     // TokenTransferGrabber.Init(eth);
+//     var ContractFind = Contract.find({ERC:{$gt:0}}).lean(true);
+//     var transforEvent;
+//     ContractFind.exec(function(err, doc){
+//       if(doc){
+//         for(var i=0; i<doc.length; i++){
+//           //transforEvent = TokenTransferGrabber.GetTransferEvent(doc[i].abi, doc[i].address)
+//           transforEvent = TokenTransferGrabber.GetTransferEvent(ERC20ABI, doc[i].address)
+//           TokenTransferGrabber.ListenTransferTokens(transforEvent, web3.eth.blockNumber+1);
+//         }
+//       }
+//     })
+// }
+
+var grabBlocks = function() {
+    connectWeb3();
+    // TokenTransferGrabber.Init(web3.eth);
     // listenHistoryToken();
-    if('listenOnly' in config && config.listenOnly === true) {
-        listenBlocks(config, web3);
-    }
-    else
-        setTimeout(function() {
-            grabBlock(config, web3, config.blocks.pop());
-        }, 2000);
-
+    ContractStruct = web3.eth.contract(ERC20ABI);
+    intervalBlocks();
 }
 
-var listenBlocks = function(config, web3) {
-    var newBlocks = web3.eth.filter("latest");
-    newBlocks.watch(function (error, log) {
+//grabber block by interval
+var grabeIntervalHandle = null;
+var intervalBlocks = function() {
+    var lastBlockNum;
+    var delayBlock = 3;//delay grabber block num
+    var blockFind = Block.findOne({}, "number").sort('-number');
+    blockFind.exec(function (err, doc) {
+        if(err){
+            console.log("blockFind err:"+err);
+            return;
+        }
+        if(!doc)
+            lastBlockNum=0;
+        else
+            lastBlockNum = config.fetchBlock;//Avoid incomplete collection of the last block in the database
+
+        grabeIntervalHandle = setInterval(function(){
+            try{
+                var newBlockNumber = web3.eth.blockNumber;
+                if(lastBlockNum < newBlockNumber-delayBlock){
+                    lastBlockNum++;
+                    grabBlock(config, web3, lastBlockNum);
+                }else{
+                    // console.log("lastBlockNum:",lastBlockNum);
+                }
+            }catch(err){
+                console.log(err);
+            }
+        }, 500);
+            
+    });
+        
+}
+
+//listen new Block by watch
+var newBlocksWatch;
+var listenBlocks = function() {
+    var delayBlock = 3;//delay grabber block num
+    var lastBlockNum = web3.eth.blockNumber-2;//restarting may pass 2 blocks
+    if(lastBlockNum<0)
+        lastBlockNum=0;
+    newBlocksWatch = web3.eth.filter("latest");
+    newBlocksWatch.watch(function (error, log) {
         //console.log("watch log:", log);
         if(error) {
             console.log('Error: ' + error);
+            setTimeout(restart, 3000);
         } else if (log == null) {
             //console.log('Warning: null block hash');
         } else {
-            grabBlock(config, web3, log);
+            blockNumber = web3.eth.blockNumber-delayBlock;
+            if(blockNumber<0)
+                blockNumber = 0;
+            if(blockNumber>lastBlockNum){
+                blockNumber = lastBlockNum+1;
+                lastBlockNum = blockNumber;
+                grabBlock(config, web3, blockNumber);
+                //console.log("log:",blockNumber);
+            }
         }
-
     });
 }
 
+
 var grabBlock = function(config, web3, blockHashOrNumber) {
     var desiredBlockHashOrNumber;
-
     // check if done
     if(blockHashOrNumber == undefined) {
         return; 
@@ -98,60 +179,32 @@ var grabBlock = function(config, web3, blockHashOrNumber) {
     }
 
     if(web3.isConnected()) {
-
         web3.eth.getBlock(desiredBlockHashOrNumber, true, function(error, blockData) {
             if(error) {
-                //console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
+                console.log('Warning: error on getting block with hash/number: ' + desiredBlockHashOrNumber + ': ' + error);
             }
             else if(blockData == null) {
                 //console.log('Warning: null block data received from the block with hash/number: ' + desiredBlockHashOrNumber);
             }
             else {
-                if('terminateAtExistingDB' in config && config.terminateAtExistingDB === true) {
-                    checkBlockScanDBExistsThenWrite(config, blockData);
-                }
-                else {
-                    writeBlockToDB(config, blockData);
-                }
-
-                if (!('skipTransactions' in config && config.skipTransactions === true))
-                    writeTransactionsToDB(blockData);
-                
-                if('listenOnly' in config && config.listenOnly === true) 
-                    return;
-
-                if('hash' in blockData && 'number' in blockData) {
-                    // If currently working on an interval (typeof blockHashOrNumber === 'object') and 
-                    // the block number or block hash just grabbed isn't equal to the start yet: 
-                    // then grab the parent block number (<this block's number> - 1). Otherwise done 
-                    // with this interval object (or not currently working on an interval) 
-                    // -> so move onto the next thing in the blocks array.
-                    if(typeof blockHashOrNumber === 'object' &&
-                        (
-                            (typeof blockHashOrNumber['start'] === 'string' && blockData['hash'] !== blockHashOrNumber['start']) ||
-                            (typeof blockHashOrNumber['start'] === 'number' && blockData['number'] > blockHashOrNumber['start'])
-                        )
-                    ) {
-                        blockHashOrNumber['end'] = blockData['number'] - 1;
-                        grabBlock(config, web3, blockHashOrNumber);
-                    }
-                    else {
-                        grabBlock(config, web3, config.blocks.pop());
-                    }
-                }
-                else {
-                    console.log('Error: No hash or number was found for block: ' + blockHashOrNumber);
-                    process.exit(9);
-                }
+                writeBlockToDB(config, blockData);
+                writeTransactionsToDB(blockData);
             }
         });
     }else {
-        console.log('Error: Aborted due to web3 is not connected when trying to ' +
-            'get block ' + desiredBlockHashOrNumber);
-        process.exit(9);
+            console.log('Error: Aborted due to web3 is not connected when trying to ' +'get block ' + blockHashOrNumber);
+            setTimeout(restart, 3000);
     }
 }
-
+    
+function restart(){
+    connectWeb3();
+    if(newBlocksWatch)
+        newBlocksWatch.stopWatching();
+    if(grabeIntervalHandle)
+        clearInterval(grabeIntervalHandle);
+    grabBlocks();
+}
 
 var writeBlockToDB = function(config, blockData) {
     //only save address for transaction info
@@ -159,28 +212,28 @@ var writeBlockToDB = function(config, blockData) {
     for(var i=0; i<blockData.transactions.length; i++){
         blockData.txs.push(blockData.transactions[i].hash);
     }
-    //update witness
-    Witness.update({"witness":blockData.witness},
-    {$set:{"lastCountTo":blockData.number, "hash":blockData.hash, "miner":blockData.miner, "timestamp":blockData.timestamp, "status":true}, 
-    $inc:{"blocksNum":1, "reward":0.3375}},
-    {upsert: true},
-    function (err, data) {
-        if(err)
-            console.log("err:", err);
-    }
-    );
+
     //write block to db
     return new Block(blockData).save( function( err, block, count ){
         if ( typeof err !== 'undefined' && err ) {
             if (err.code == 11000) {
                 //console.log('Skip: Duplicate key ' + blockData.number.toString() + ': ' + err);
             } else {
-               console.log('Error: Aborted due to error on ' + 
-                    'block number ' + blockData.number.toString() + ': ' + 
-                    err);
+               console.log('Block Error: Aborted due to error on ' + 'block number ' + blockData.number.toString() + ': ' +  err);
                process.exit(9);
            }
         } else {
+            //update witness reward
+            Witness.update({"witness":blockData.witness},
+            {$set:{"lastCountTo":blockData.number, "hash":blockData.hash, "miner":blockData.miner, "timestamp":blockData.timestamp, "status":true}, 
+            $inc:{"blocksNum":1, "reward":0.3375}},
+            {upsert: true},
+            function (err, data) {
+                if(err)
+                    console.log("err:", err);
+            }
+            );
+
             if(!('quiet' in config && config.quiet === true)) {
                 //console.log('DB successfully written for block number ' + blockData.number.toString() );
             }            
@@ -188,35 +241,45 @@ var writeBlockToDB = function(config, blockData) {
       });
 }
 
-/**
-  * Checks if the a record exists for the block number then ->
-  *     if record exists: abort
-  *     if record DNE: write a file for the block
-  */
-var checkBlockScanDBExistsThenWrite = function(config, blockData) {
-    Block.find({number: blockData.number}, function (err, b) {
-        if (!b.length)
-            writeBlockToDB(config, blockData);
-        else {
-            //console.log('Aborting because block number: ' + blockData.number.toString() + ' already exists in DB.');
-            process.exit(9);
+var upsertAddress=function(miner, addrs){
+    if(miner){
+        Address.update({"addr":miner},
+            {$set:{"type":2}, $inc:{"balance":0.3375}},
+            {upsert: true},
+            function (err, doc) {
+                if(err)
+                    console.log("err:", err);
+            }
+        )
+    }
+    if(addrs){
+        for(var i=0; i<addrs.length; i++){
+            var balance = web3.eth.getBalance(addrs[i]);
+            Address.update({"addr":addrs[i]},
+                {$set:{"balance":balance}},
+                {upsert: true},
+                function (err, doc) {
+                    if(err)
+                        console.log("err:", err);
+                }
+            )
         }
-
-    })
+    }
 }
 
 /**
     Break transactions out of blocks and write to DB
 **/
+var BlockSigners = "xdc0000000000000000000000000000000000000089";
+var RandomizeSMC = "xdc0000000000000000000000000000000000000090";
+var pingTXValue = "0";
 var writeTransactionsToDB = function(blockData) {
     var bulkOps = [];
     var noReceiptTXs = [];
-    var checkTxs = checkTXDic[String(blockData.number)];
+    var addrs = [];
     if (blockData.transactions.length > 0) {
         for (d in blockData.transactions) {
             var txData = blockData.transactions[d];
-            if(checkTxs.indexOf(txData.hash)==-1)
-                continue;
             //receipt . maybe null at this moment
             var receiptData = web3.eth.getTransactionReceipt(txData.hash);
             if(!receiptData){
@@ -229,16 +292,10 @@ var writeTransactionsToDB = function(blockData) {
             txData.value = etherUnits.toEther(new BigNumber(txData.value), 'wei');
             
             if(receiptData){
-                //write all type of transaction into db
-                Transaction.update(
-                    {hash: txData.hash}, 
-                    {$set:{'gasUsed':receiptData.gasUsed, 'contractAddress':receiptData.contractAddress, 'status':receiptData.status}}, 
-                    {multi: false, upsert: false}, 
-                    function (err, data) {
-                        if(err)
-                            console.log(err);
-                    }
-                  );
+                txData.gasUsed = receiptData.gasUsed;
+                txData.contractAddress = receiptData.contractAddress;
+                if(receiptData.status!=null)
+                    txData.status = receiptData.status;
             }
             if(txData.input && txData.input.length>2){// contract create, Event logs of internal transaction
                 if(txData.to == null){//contract create
@@ -249,7 +306,6 @@ var writeTransactionsToDB = function(blockData) {
                     if(Token){//write Token to Contract in db
                         try{
                             contractdb.byteCode = web3.eth.getCode(receiptData.contractAddress);
-                            contractdb.blockNumber = blockData.number;
                             contractdb.tokenName = Token.name();
                             contractdb.decimals = Token.decimals();
                             contractdb.symbol = Token.symbol();
@@ -262,6 +318,7 @@ var writeTransactionsToDB = function(blockData) {
                         isTokenContract = false;
                     }
                     contractdb.owner = txData.from;
+                    contractdb.blockNumber = blockData.number;
                     contractdb.creationTransaction = txData.hash;
                     if(isTokenContract){
                         contractdb.ERC = 2;
@@ -279,6 +336,36 @@ var writeTransactionsToDB = function(blockData) {
                                 console.log(err);
                         }
                     );
+                }else{//internal transaction  . write to doc of InternalTx
+                    var transferData = {"transactionHash": "", "blockNumber": 0, "amount": 0, "contractAdd":"", "to": "", "from": "", "timestamp":0};
+                    var methodCode = txData.input.substr(0,10);
+                    if(ERC20_METHOD_DIC[methodCode]=="transfer" || ERC20_METHOD_DIC[methodCode]=="transferFrom"){
+                        if(ERC20_METHOD_DIC[methodCode]=="transfer"){//token transfer transaction
+                            transferData.from= txData.from;
+                            transferData.to= "0x"+txData.input.substring(34,74);
+                            transferData.amount= Number("0x"+txData.input.substring(74));
+                        }else{//transferFrom
+                            transferData.from= "0x"+txData.input.substring(34,74);
+                            transferData.to= "0x"+txData.input.substring(74,114);
+                            transferData.amount= Number("0x"+txData.input.substring(114));
+                        }
+                        transferData.methodName = ERC20_METHOD_DIC[methodCode];
+                        transferData.transactionHash= txData.hash;
+                        transferData.blockNumber= blockData.number;
+                        transferData.contractAdd= txData.to;
+                        
+                        transferData.timestamp = blockData.timestamp;
+                        //write transfer transaction into db
+                        TokenTransfer.update(
+                            {transactionHash: transferData.transactionHash}, 
+                            {$setOnInsert: transferData}, 
+                            {upsert: true}, 
+                            function (err, data) {
+                                if(err)
+                                    console.log(err);
+                            }
+                        );
+                    }
                 }
 
             }else{//out transaction
@@ -286,7 +373,7 @@ var writeTransactionsToDB = function(blockData) {
             }
 
             //Event logs of internal transaction  . write to doc of EventLog
-            if(receiptData){
+            if(receiptData && !( txData.to == BlockSigners || txData.to == RandomizeSMC )){
                 logEvents = [];
                 for(k in receiptData.logs){
                     var logItem = receiptData.logs[k];
@@ -298,7 +385,7 @@ var writeTransactionsToDB = function(blockData) {
                     var methodCode = txData.input.substr(0,10);
                     if(ERC20_METHOD_DIC[methodCode])
                         logEvent.methodName = ERC20_METHOD_DIC[methodCode];
-                    var eventCode = logItem.topics[0].substr(0,66);
+                    var eventCode = logItem.topics;
                     if(METHOD_DIC[eventCode])
                         logEvent.eventName = METHOD_DIC[eventCode];
                     logEvent.txHash= txData.hash;
@@ -332,8 +419,36 @@ var writeTransactionsToDB = function(blockData) {
                 } 
             }
 
+            //drop out masterNode ping transactions
+            if(!(txData.to == BlockSigners || txData.to == RandomizeSMC || txData.value == pingTXValue && 
+                (txData.gasUsed==34957||txData.gasUsed==49957||txData.gasUsed==34755||txData.gasUsed==19755||txData.gasUsed==44550))
+                ){
+                bulkOps.push(txData);
+                if(txData.from)
+                    addrs.push(txData.from);
+                if(txData.to)
+                    addrs.push(txData.to);
+            }
         }
-        
+
+        //collect address
+        upsertAddress(blockData.miner, addrs);
+
+        //write all type of transaction into db
+        if(bulkOps.length>0){
+            Transaction.collection.insert(bulkOps, function( err, tx ){
+                if ( typeof err !== 'undefined' && err ) {
+                    if (err.code == 11000) {
+                        //console.log('Skip: Duplicate key ' + err);
+                    } else {
+                        console.log('Transaction Error: Aborted due to error: ' + err);
+                    }
+                } else{
+                    //console.log('DB successfully written for block ' + blockData.transactions.length.toString() );
+                }
+            });
+        }
+
     }
 
     //cache and grab later
@@ -347,8 +462,7 @@ var writeTransactionsToDB = function(blockData) {
   Patch Missing Blocks
 */
 var patchBlocks = function(config) {
-    var web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
-
+    connectWeb3();
     // number of blocks should equal difference in block numbers
     var firstBlock = 0;
     var lastBlock = web3.eth.blockNumber;
@@ -389,55 +503,24 @@ var blockIter = function(web3, firstBlock, lastBlock, config) {
 }
 
 //periodically grab TX which has no TXReceipt while block grabbing
-var patchIntervalHandle =-1;
-var patchNoReceiptInterval = function(){
-    patchIntervalHandle = setInterval(function(){
-        if(laterGrabBlockDatas.length>0){
-            var _blockData = laterGrabBlockDatas.shift();
-            if(!_blockData.hasOwnProperty("grabTime")){
-                _blockData.grabTime=0;
-            }else{
-                _blockData.grabTime++;
-            }
-            if(_blockData.grabTime>10){//3 tries at most
-                for(var i=0; i<_blockData.transactions.length; i++){
-                    console.log("no transactionReceipt: "+_blockData.transactions[i].hash);
-                }
-                return;
-            }
-            
-            writeTransactionsToDB(_blockData);
+setInterval(function(){
+    if(laterGrabBlockDatas.length>0){
+        console.log("[!]laterGrabBlockDatas.length:"+laterGrabBlockDatas.length);
+        var _blockData = laterGrabBlockDatas.shift();
+        if(!_blockData.hasOwnProperty("grabTime")){
+            _blockData.grabTime=0;
         }else{
-            clearInterval(patchIntervalHandle);
+            _blockData.grabTime++;
         }
-    }, 200);
-}
-
-var checkTXDic = {};
-function patchNoReciept(){
-    blockNumberKey = -1;
-    Transaction.find({'gasUsed':null}).exec(async function(err, docs){
-        for(var i=0; i<docs.length; i++){
-            if(blockNumberKey != docs[i].blockNumber){//group by blockNumber
-                blockNumberKey = docs[i].blockNumber;
-                checkTXDic[String(blockNumberKey)] = [];
-                var bd = web3.eth.getBlock(blockNumberKey, true);
-                laterGrabBlockDatas.push(bd);
-                
+        if(_blockData.grabTime>5){//5 tries at most
+            for(var i=0; i<_blockData.transactions.length; i++){
+                console.log("no transactionReceipt: "+_blockData.transactions[i].hash);
             }
-            checkTXDic[String(blockNumberKey)].push(docs[i].hash);
+            return;
         }
-        console.log("totalcount:"+docs.length);
+        
+        writeTransactionsToDB(_blockData);
+    }
+}, 3000);
 
-        patchNoReceiptInterval();
-    });
-
-}
-
-web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
-TokenTransferGrabber.Init(web3.eth);
-ContractStruct = web3.eth.contract(ERC20ABI);
-
-//grabBlocks(config);
-
-patchNoReciept();
+grabBlocks();

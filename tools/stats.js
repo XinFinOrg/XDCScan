@@ -2,7 +2,7 @@
   Tool for calculating block stats
 */
 
-var Web3 = require('xdc3');;
+var Web3 = require("xdc3-old");;
 var config = require('./../config.json')
 var mongoose = require( 'mongoose' );
 var BlockStat = require( '../db-stats.js' ).BlockStat;

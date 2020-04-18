@@ -5,6 +5,15 @@
     "quiet": true,
     "terminateAtExistingDB": false,
     "listenOnly": false,
+    "fetchBlock":12549888,
     "out": ".",
-    "MONGO_URI":"mongodb://localhost/BlockScanDB"
+    "MONGO_URI":"mongodb://localhost/BlockScanDB",
+    "epoch":900,
+    "fRewards":500,
+    "mnRewards":4500,
+    "rewards":5000,
+    "xdce_id":2634,
+    "cmckey":"",
+    "wss":"Wss://w.xinfin.network"
+
 }

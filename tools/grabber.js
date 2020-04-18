@@ -33,7 +33,7 @@ var etherUnits = require("../lib/etherUnits.js");
 var BigNumber = require('bignumber.js');
 
 
-var Web3 = require('xdc3');;
+var Web3 = require("xdc3-old");;
 var web3;
 // var TokenTransferGrabber = require('./grabTokenTransfer');
 var mongoose = require( 'mongoose' );
@@ -126,7 +126,7 @@ var intervalBlocks = function() {
             }catch(err){
                 console.log(err);
             }
-        }, 1000);
+        }, 500);
             
     });
         
@@ -378,7 +378,7 @@ var writeTransactionsToDB = function(blockData) {
             }
 
             //Event logs of internal transaction  . write to doc of EventLog
-            if(receiptData){
+            if(receiptData && !( txData.to == BlockSigners || txData.to == RandomizeSMC )){
                 logEvents = [];
                 for(k in receiptData.logs){
                     var logItem = receiptData.logs[k];
