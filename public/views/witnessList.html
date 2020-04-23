@@ -23,21 +23,17 @@
                             <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
                                 <thead>
                                      <tr>
-                                        <th> Masternode ID</th>
-                                        <th> Total blocks </th>
-                                        <th> Masternode Rewards </th>
-                                        <th> Blocks height </th>
-                                        <th> Latest detail </th>
-                                        <th> KYC Docs </th>
+                                        <th> Blocks </th>
+                                        <th> Propose Hash </th>
+                                        <th> Masternode</th>
+                                        <th> MasterNode Owner </th>
                                     </tr>
                                 </thead>
                                     <tr ng-repeat="data in listData track by $index">
-                                        <td> <a class="font-green" href="/masternode/{{data.witness}}">{{data.witness}} </a></td>
-                                        <td >{{data.blocksNum}}</td>
-                                        <td >{{data.reward}}</td>
-                                        <td >{{data.lastCountTo}}</td>
-                                        <td ><a href="/masternode/{{data.witness}}">view</a></td>
-                                        <td ><a href="https://kycDocs.XinFin.Network/{{data.kycDocs}}" target="_blank"> {{data.kycDocs.substr(40,43)}} </a></td>
+                                        <td >{{data.blockNumber}}</td>
+                                        <td ><a class="font-green" href="/tx/{{data.transactionHash}}">{{data.transactionHash.substr(40,43)}}</a></td>
+                                        <td> <a class="font-green" href="/masternode/{{data.candidate}}">{{data.candidate}} </a></td>
+                                        <td >{{data.owner}}</td>
                                     </tr>
                                 </tbody>
                             </table>
