@@ -2,6 +2,8 @@
 var mongoose = require( 'mongoose' );
 var Witness = mongoose.model('Witness');
 var Block = mongoose.model('Block');
+const masterNodeDetails = require('../models/masterNodeDetails');
+
 var resultData={"totalPage":0, "list":null, "page":0};
 
 function requestParam(req, param){
@@ -33,7 +35,7 @@ module.exports = function(req, res){
   resultData.list = null;
 
   if(listFormat==2){//migrate to blockListData in future
-    Block.find({}, "number witness timestamp").sort("-number").limit(pageSize).lean(true).exec(function(err, docs){
+    masterNodeRewardsDetails.find({}, "number witness timestamp").sort("-number").limit(pageSize).lean(true).exec(function(err, docs){
       var listData = [];
       for(var i=0; i<docs.length; i++){
         listData.push({"block":docs[i].number, "mn_reward":0.3375, "mn_pubkey":docs[i].witness, "timestamp":docs[i].timestamp});
@@ -71,7 +73,7 @@ module.exports = function(req, res){
 }; 
 
 function getList(res, page, pageSize, listFormat){
-  WitnessFind = Witness.find({}).sort("-lastCountTo").skip(page*pageSize).limit(pageSize).lean(true);
+  WitnessFind = masterNodeDetails.find({}).sort("-lastCountTo").skip(page*pageSize).limit(pageSize).lean(true);
   WitnessFind.exec(function (err, docs) {
     if(err){
       console.log("Witness err: ", err);
