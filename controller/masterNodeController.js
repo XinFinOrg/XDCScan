@@ -48,12 +48,12 @@ module.exports = {
                 let masterNodeDetailsFind = '';
                 let blockHash, transactionHash, blockNumber, owner, candidate, address, event, i;
                 for (i = 0; i < data.length; i++) {
-                    address = data[i].address;
+                    address = 'xdc' + data[i].address.substring(2,data[i].address.length).toLowerCase();
                     blockHash = data[i].blockHash;
                     transactionHash = data[i].transactionHash;
                     blockNumber = data[i].blockNumber;
-                    owner = data[i].returnValues._owner;
-                    candidate = data[i].returnValues._candidate;
+                    owner = 'xdc' + data[i].returnValues._owner.substring(2,address.length).toLowerCase();
+                    candidate = 'xdc' + data[i].returnValues._candidate.substring(2,address.length).toLowerCase();
                     event = data[i].event;
                     masterNodeDetailsFind = '';
                     array = {
