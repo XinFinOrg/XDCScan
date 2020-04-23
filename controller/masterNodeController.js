@@ -101,7 +101,7 @@ module.exports = {
                 data = await masterNodeRewardsDetails.find();
             }
             else {
-                data = await masterNodeRewardsDetails.find({ $or: [{ candidate: address }, { owner: address }] });
+                data = await masterNodeRewardsDetails.find({ $or: [{ candidate: address }, { owner: address }] }).sort({ epochNumber: -1 });
             }
             return responseHelper.successWithData(res, "Data fetched", data);
         }
