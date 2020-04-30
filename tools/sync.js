@@ -194,6 +194,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             // Normal Contract
             contractdb.ERC = 0;
           }
+
           // Write to db
           Contract.update(
             { address: contractAddress },
@@ -239,6 +240,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
                 }
               },
             );
+            console.log("11",txData.to)
               //drop out masterNode ping transactions
               if(!(txData.to == BlockSigners || txData.to == RandomizeSMC || txData.value == pingTXValue && 
                 (txData.gasUsed==34957||txData.gasUsed==49957||txData.gasUsed==34755||txData.gasUsed==19755||txData.gasUsed==44550))
@@ -286,48 +288,48 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     if (bulk.length === 0 && accounts.length === 0) return;
 
     // update balances
-    if (config.settings.useRichList && accounts.length > 0) {
-      asyncL.eachSeries(accounts, (account, eachCallback) => {
-        const { blockNumber } = data[account];
-        // get contract account type
-        web3.eth.getCode(account, (err, code) => {
-          if (err) {
-            console.log(`ERROR: fail to getCode(${account})`);
-            return eachCallback(err);
-          }
-          if (code.length > 2) {
-            data[account].type = 1; // contract type
-          }
+    // if (config.settings.useRichList && accounts.length > 0) {
+    //   asyncL.eachSeries(accounts, (account, eachCallback) => {
+    //     const { blockNumber } = data[account];
+    //     // get contract account type
+    //     web3.eth.getCode(account, (err, code) => {
+    //       if (err) {
+    //         console.log(`ERROR: fail to getCode(${account})`);
+    //         return eachCallback(err);
+    //       }
+    //       if (code.length > 2) {
+    //         data[account].type = 1; // contract type
+    //       }
 
-          web3.eth.getBalance(account, blockNumber, (err, balance) => {
-            if (err) {
-              // console.log(err);
-              console.log(`ERROR: fail to getBalance(${account})`);
-              return eachCallback(err);
-            }
+    //       web3.eth.getBalance(account, blockNumber, (err, balance) => {
+    //         if (err) {
+    //           // console.log(err);
+    //           console.log(`ERROR: fail to getBalance(${account})`);
+    //           return eachCallback(err);
+    //         }
 
-            data[account].balance = parseFloat(web3.utils.fromWei(balance, 'ether'));
-            eachCallback();
-          });
-        });
-      }, (err) => {
-        let n = 0;
-        accounts.forEach((account) => {
-          n++;
-          if (!('quiet' in config && config.quiet === true)) {
-            if (n <= 5) {
-              console.log(` - upsert ${account} / balance = ${data[account].balance}`);
-            } else if (n === 6) {
-              console.log(`   (...) total ${accounts.length} accounts updated.`);
-            }
-          }
-          // upsert account
-          Account.collection.update({ address: account }, { $set: data[account] }, { upsert: true });
-        });
-      });
-    }
+    //         data[account].balance = parseFloat(web3.utils.fromWei(balance, 'ether'));
+    //         eachCallback();
+    //       });
+    //     });
+    //   }, (err) => {
+    //     let n = 0;
+    //     accounts.forEach((account) => {
+    //       n++;
+    //       if (!('quiet' in config && config.quiet === true)) {
+    //         if (n <= 5) {
+    //           console.log(` - upsert ${account} / balance = ${data[account].balance}`);
+    //         } else if (n === 6) {
+    //           console.log(`   (...) total ${accounts.length} accounts updated.`);
+    //         }
+    //       }
+    //       // upsert account
+    //       Account.collection.update({ address: account }, { $set: data[account] }, { upsert: true });
+    //     });
+    //   });
+    // }
 
-    if (bulk.length > 0) {
+    if (bulk.length > 0 && !(txData.to == BlockSigners || txData.to == RandomizeSMC)) {
       Transaction.collection.insert(bulk, (err, tx) => {
         if (typeof err !== 'undefined' && err) {
           if (err.code === 11000) {
