@@ -252,7 +252,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     }
   }
   self.blocks++;
-  if (flush && self.blocks > 0 || self.blocks >= config.bulkSize && !(txData.to == BlockSigners || txData.to == RandomizeSMC)) {
+  if (flush && self.blocks > 0 || self.blocks >= config.bulkSize) {
     const bulk = self.bulkOps;
     self.bulkOps = [];
     self.blocks = 0;
