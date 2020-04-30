@@ -243,7 +243,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           }
         }
       }
-      if (tx.to!==BlockSigners || tx.to!==RandomizeSMC){
+      if (!(tx.to ==BlockSigners || tx.to ==RandomizeSMC)){
         self.bulkOps.push(tx);
       }
     }
