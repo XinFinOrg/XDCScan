@@ -240,29 +240,19 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
                 }
               },
             );
-            console.log("11",txData.to)
-              //drop out masterNode ping transactions
-              if(!(txData.to == BlockSigners || txData.to == RandomizeSMC || txData.value == pingTXValue && 
-                (txData.gasUsed==34957||txData.gasUsed==49957||txData.gasUsed==34755||txData.gasUsed==19755||txData.gasUsed==44550))
-                ){
-                bulkOps.push(txData);
-                if(txData.from)
-                    addrs.push(txData.from);
-                if(txData.to)
-                    addrs.push(txData.to);
-            }
           }
         }
       }
-      self.bulkOps.push(tx);
+      if (tx.to!==BlockSigners || tx.to!==RandomizeSMC){
+        self.bulkOps.push(tx);
+      }
     }
     if (!('quiet' in config && config.quiet === true)) {
       console.log(`\t- block #${blockData.number.toString()}: ${blockData.transactions.length.toString()} transactions recorded.`);
     }
   }
   self.blocks++;
-
-  if (flush && self.blocks > 0 || self.blocks >= config.bulkSize) {
+  if (flush && self.blocks > 0 || self.blocks >= config.bulkSize && !(txData.to == BlockSigners || txData.to == RandomizeSMC)) {
     const bulk = self.bulkOps;
     self.bulkOps = [];
     self.blocks = 0;
@@ -328,8 +318,8 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     //     });
     //   });
     // }
+    if (bulk.length > 0) {
 
-    if (bulk.length > 0 && !(txData.to == BlockSigners || txData.to == RandomizeSMC)) {
       Transaction.collection.insert(bulk, (err, tx) => {
         if (typeof err !== 'undefined' && err) {
           if (err.code === 11000) {
