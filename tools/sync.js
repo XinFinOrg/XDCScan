@@ -297,7 +297,6 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
               console.log(`ERROR: fail to getBalance(${account})`,blockNumber);
               return eachCallback(err);
             }
-            console.log(balance,account,data)
             data[account].balance = parseFloat(web3.utils.fromWei(balance, 'ether'));
             eachCallback();
           });
