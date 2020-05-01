@@ -269,55 +269,55 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     });
 
     // setup miners
-    miners.forEach((miner) => {
-      data[miner.address] = miner;
-    });
+    // miners.forEach((miner) => {
+    //   data[miner.address] = miner;
+    // });
 
     const accounts = Object.keys(data);
 
     if (bulk.length === 0 && accounts.length === 0) return;
 
     // update balances
-    // if (config.settings.useRichList && accounts.length > 0) {
-    //   asyncL.eachSeries(accounts, (account, eachCallback) => {
-    //     const { blockNumber } = data[account];
-    //     // get contract account type
-    //     web3.eth.getCode(account, (err, code) => {
-    //       if (err) {
-    //         console.log(`ERROR: fail to getCode(${account})`);
-    //         return eachCallback(err);
-    //       }
-    //       if (code.length > 2) {
-    //         data[account].type = 1; // contract type
-    //       }
+    if (config.settings.useRichList && accounts.length > 0) {
+      asyncL.eachSeries(accounts, (account, eachCallback) => {
+        const { blockNumber } = data[account];
+        // get contract account type
+        web3.eth.getCode(account, (err, code) => {
+          if (err) {
+            console.log(`ERROR: fail to getCode(${account})`);
+            return eachCallback(err);
+          }
+          if (code.length > 2) {
+            data[account].type = 1; // contract type
+          }
 
-    //       web3.eth.getBalance(account, blockNumber, (err, balance) => {
-    //         if (err) {
-    //           // console.log(err);
-    //           console.log(`ERROR: fail to getBalance(${account})`);
-    //           return eachCallback(err);
-    //         }
-
-    //         data[account].balance = parseFloat(web3.utils.fromWei(balance, 'ether'));
-    //         eachCallback();
-    //       });
-    //     });
-    //   }, (err) => {
-    //     let n = 0;
-    //     accounts.forEach((account) => {
-    //       n++;
-    //       if (!('quiet' in config && config.quiet === true)) {
-    //         if (n <= 5) {
-    //           console.log(` - upsert ${account} / balance = ${data[account].balance}`);
-    //         } else if (n === 6) {
-    //           console.log(`   (...) total ${accounts.length} accounts updated.`);
-    //         }
-    //       }
-    //       // upsert account
-    //       Account.collection.update({ address: account }, { $set: data[account] }, { upsert: true });
-    //     });
-    //   });
-    // }
+          web3.eth.getBalance(account, (err, balance) => {
+            if (err) {
+              // console.log(err);
+              console.log(`ERROR: fail to getBalance(${account})`,blockNumber);
+              return eachCallback(err);
+            }
+            console.log(balance,account,data)
+            data[account].balance = parseFloat(web3.utils.fromWei(balance, 'ether'));
+            eachCallback();
+          });
+        });
+      }, (err) => {
+        let n = 0;
+        accounts.forEach((account) => {
+          n++;
+          if (!('quiet' in config && config.quiet === true)) {
+            if (n <= 5) {
+              console.log(` - upsert ${account} / balance = ${data[account].balance}`);
+            } else if (n === 6) {
+              console.log(`   (...) total ${accounts.length} accounts updated.`);
+            }
+          }
+          // upsert account
+          Account.collection.update({ addr: account }, { $set: data[account] }, { upsert: true });
+        });
+      });
+    }
     if (bulk.length > 0) {
 
       Transaction.collection.insert(bulk, (err, tx) => {
