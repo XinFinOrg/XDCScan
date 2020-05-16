@@ -6,7 +6,7 @@
   "repository": "",
   "license": "MIT",
   "scripts": {
-    "start": "pm2 start app.js --name XinFinScan && pm2 start tools/grabber.js --name Grabber && pm2 start tools/grabber2.js --name Grabber2",
+    "start": "pm2 start app.js --name XinFinScan && pm2 start tools/grabber.js --name Grabber",
     "dev": "concurrently \"nodemon tools/grabber2.js \" \"nodemon tools/grabber.js \" \"nodemon app.js\" ",
     "grabber": " pm2 start tools/grabber.js -i 4",
     "pretest": "copyfiles app.js app/  ",
