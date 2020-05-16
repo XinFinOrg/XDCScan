@@ -1,38 +1,78 @@
-<div class="row ">
-    <div class="col-md-12 portlet light">
-        <div class="portlet-body">
 
-            <table class="col-md-6 table">
-                    <thead>
-                            <tr>
-                                <th> Masternode ID</th>
-                                <th> Total blocks </th>
-                                <th> Masternode Rewards </th>
-                                <th> Blocks height </th>
-                                <th> Latest detail </th>
-                            </tr>
-                        </thead>
-                <tr ng-repeat="data in listData track by $index">
-                    <td> <a class="font-green" href="/masternode/{{data.witness}}">0x{{data.witness}} </a></td>
-                    <td >{{data.blocksNum}}</td>
-                    <td >{{data.reward}}</td>
-                    <td >{{data.lastCountTo}}</td>
-                    <td ><a href="/masternode/{{data.witness}}">view</a></td>
-                    <!--td ng-click="update(data.witness)">{{balance}} update</td-->
-                </tr>
-            </table>
-            <div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
-                <ul class="pagination" style="visibility: visible;">
-                    <li class="prev" ng-click="getInfoList(page-1)"><a href="#"><<</a></li>
-                </ul>
-                <ul class="pagination" style="visibility: visible;" ng-repeat="p in pages">
-                    <li class="active" ng-show="p-1==page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
-                    <li ng-show="p-1!=page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
-                </ul>
-                <ul class="pagination" style="visibility: visible;">
-                    <li class="next" ng-click="getInfoList(page+1)"><a href="#">>></a></li>
-                </ul>
+<!-- start Block Details -->
+<section id="blockDetails" class="mb-4">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-12 safari-float-left">
+                <div class="block-header d-flex justify-content-between align-items-center">
+                    <h3 class="blockDetails-header-title text-break text-center text-md-left">XinFin MasterNode List</h3>
+                </div>
             </div>
+
+            <!-- start Blocks -->
+            <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h2 class="card-header-title">Masternode List</h2>
+                    </div>
+
+                    <div id="all-blocks" class="card-body">
+
+                        <div class="table-responsive">
+                            <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
+                                <thead>
+                                     <tr>
+                                        <th> Masternode ID</th>
+                                        <th> Total blocks </th>
+                                        <th> Masternode Rewards </th>
+                                        <th> Blocks height </th>
+                                        <th> Latest detail </th>
+                                        <th> KYC Docs </th>
+                                    </tr>
+                                </thead>
+                                    <tr ng-repeat="data in listData track by $index">
+                                        <td> <a class="font-green" href="/masternode/{{data.witness}}">{{data.witness}} </a></td>
+                                        <td >{{data.blocksNum}}</td>
+                                        <td >{{data.reward}}</td>
+                                        <td >{{data.lastCountTo}}</td>
+                                        <td ><a href="/masternode/{{data.witness}}">view</a></td>
+                                        <td ><a href="https://kycDocs.XinFin.Network/{{data.kycDocs}}" target="_blank"> {{data.kycDocs.substr(40,43)}} </a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <!-- <div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
+                                    <ul class="pagination" style="visibility: visible;">
+                                        <li class="prev" ng-click="getInfoList(page-1)"><a href="#"><<</a></li>
+                                    </ul>
+                                    <ul class="pagination" style="visibility: visible;" ng-repeat="p in pages">
+                                        <li class="active" ng-show="p-1==page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                                        <li ng-show="p-1!=page"  ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                                    </ul>
+                                    <ul class="pagination" style="visibility: visible;">
+                                        <li class="next" ng-click="getInfoList(page+1)"><a href="#">>></a></li>
+                                    </ul>
+                                </div>
+                        </div> -->
+                        <div class="dataTables_paginate paging_bootstrap_number" id="table_txs_paginate">
+                            <ul class="pagination" style="visibility: visible;">
+                                <li class="page-link prev" ng-click="getInfoList(page-1)"><a href="#"><i class="fa fa-angle-double-left"></i></a></li>
+                            </ul>
+                            <ul class="pagination" style="visibility: visible;" ng-repeat="p in pages">
+                                <li class="page-link active" ng-show="p-1==page" ng-click="getInfoList(p-1)"><a href="#">{{p}}</a></li>
+                                <li ng-show="p-1!=page" ng-click="getInfoList(p-1)" class="page-link"><a href="#">{{p}}</a></li>
+                            </ul>
+                            <ul class="pagination" style="visibility: visible;">
+                                <li class="page-link next" ng-click="getInfoList(page+1)"><a href="#"><i class="fa fa-angle-double-right"></i></a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- end Blocks -->
+
         </div>
     </div>
-</div>
+</section>
+<!-- end Block Details -->

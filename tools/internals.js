@@ -6,7 +6,7 @@ require( '../db-internal.js' );
 var config = require('./../config.json')
 
 var http = require('http');
-var Web3 = require('xdc3');;
+var Web3 = require("xdc3-old");;
 var web3 = new Web3(new Web3.providers.HttpProvider(config.rpc));
 
 var mongoose = require( 'mongoose' );

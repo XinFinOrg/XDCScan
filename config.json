@@ -1,5 +1,5 @@
 {
-    "rpc": "https://explorerrpc.xinfin.network",
+    "rpc": "https://explorerrpc.apothem.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "patchStartBlocks": 1,
     "quiet": true,
@@ -13,6 +13,7 @@
     "mnRewards":4500,
     "rewards":5000,
     "xdce_id":2634,
-    "cmckey":""
+    "cmckey":"",
+    "wss":"Wss://w.xinfin.network"
 
 }
