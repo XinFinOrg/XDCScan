@@ -4,7 +4,7 @@
     Endpoint for client to talk to etc node
 */
 
-var Web3 = require("xdc3");
+var Web3 = require("xdc3-old");
 var web3;
 var config = require('./../config.json')
 var BigNumber = require('bignumber.js');

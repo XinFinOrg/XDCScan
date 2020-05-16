@@ -4,7 +4,7 @@
 var config = require('./../config.json')
 
 require( '../../db.js' );
-var Web3 = require('xdc3');;
+var Web3 = require("xdc3-old");;
 var web3;
 var mongoose = require('mongoose');
 var Address = mongoose.model('Address');

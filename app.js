@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 //给console.log()增加时间戳
-(function() { //add timestamp to console.log and console.error(from http://yoyo.play175.com)
+(function () { //add timestamp to console.log and console.error(from http://yoyo.play175.com)
     var date = new Date();
 
     function timeFlag() {
@@ -16,9 +16,9 @@
             ':' + ((seconds < 10) ? '0' + seconds : seconds) + '.' + ('00' + milliseconds).slice(-3) + '] ';
     }
     var log = console.log;
-    console.error = console.log = function() {
+    console.error = console.log = function () {
         var prefix = ''; //cluster.isWorker ? '[WORKER '+cluster.worker.id + '] ' : '[MASTER]';
-        if (typeof(arguments[0]) == 'string') {
+        if (typeof (arguments[0]) == 'string') {
             var first_parameter = arguments[0]; //for this:console.log("%s","str");
             var other_parameters = Array.prototype.slice.call(arguments, 1);
             log.apply(console, [prefix + timeFlag() + first_parameter].concat(other_parameters));
@@ -29,7 +29,7 @@
     }
 })();
 
-require( './db' );
+require('./db');
 
 var express = require('express');
 var path = require('path');
@@ -46,7 +46,7 @@ app.set('view engine', 'ejs');
 
 // app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('combined'));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -56,14 +56,14 @@ global.__lib = __dirname + '/lib/';
 
 // client
 
-app.get('/', function(req, res) {
-  res.render('index');
+app.get('/', function (req, res) {
+    res.render('index');
 });
 require('./routes')(app);
 
 // let angular catch them
-app.use(function(req, res) {
-  res.render('index');
+app.use(function (req, res) {
+    res.render('index');
 });
 
 // error handlers
@@ -71,7 +71,7 @@ app.use(function(req, res) {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
+    app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.render('error', {
             message: err.message,
@@ -83,7 +83,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
@@ -95,6 +95,22 @@ app.use(function(err, req, res, next) {
 // web3socket(io);
 
 var http = require('http').Server(app);
-http.listen(app.get('port'), '0.0.0.0', function() {
+http.listen(app.get('port'), '0.0.0.0', function () {
     console.log('Express server listening on port ' + app.get('port'));
 });
+
+var RESPONSE = require('./helpers/RESPONSE.js');
+// var axios = require('axios');
+// // axios.get(`${process.env.APP_URL}/masternode/test`);
+// axios.get(`http://localhost:3000/masternode/updatemndetails`);
+
+// const masterNodeController = require('./controller/masterNodeController');
+// masterNodeController.updateMNDetails();
+
+function startWatch() {
+    const masterNodeHelper = require('./helpers/masterNodeHelper');
+    masterNodeHelper.startWatch();
+    masterNodeHelper.startEpochWatch();
+}
+
+startWatch();

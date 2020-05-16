@@ -28,7 +28,8 @@
     "socket.io": "^2.0.4",
     "solc": "^0.4.19",
     "ws": "^7.2.1",
-    "xdc3": "^0.20.8"
+    "xdc3": "git+https://git@github.com/rudreshsolanki97/XDC3.git#patch-1",
+    "xdc3-old": "npm:xdc3@^0.20.8"
   },
   "devDependencies": {
     "chai": "^4.1.2",
