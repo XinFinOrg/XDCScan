@@ -457,6 +457,55 @@ pre {
 .coinpaprika-currency-widget .cp-widget__header,.coinpaprika-currency-widget .cp-widget__footer {display:none!important;}
 /*---------- XDC Volume widget ----------*/
 
+/*---------- Stats CSS ----------*/
+.counterFact {
+    height: 100%;
+    padding: 20px 20px 22px;
+    text-align: center;
+    /*margin-bottom: 30px;*/
+	background-color: #fff;
+	-webkit-box-shadow: 1px 0 20px rgba(0,0,0,.05);
+    border: 1px solid #e1e4ec;
+    box-shadow: 1px 0 20px rgba(0,0,0,.05);
+    border-radius: .50rem!important;
+}
+.counterFact .factTitle {
+    font-size: 18px;
+    font-weight: 500;
+    color: #254a81;
+    line-height: 24px;
+    margin-bottom: 2px;
+    transform: scale(1.1, 1.2);
+    -webkit-transform: scale(1.1, 1.2);
+    -moz-transform: scale(1.1, 1.2);
+    -ms-transform: scale(1.1, 1.2);
+    -o-transform: scale(1.1, 1.2);
+}
+.tf-divider {
+    padding: 5px 0px 5px!important;
+}
+.tf-divider hr {
+    margin: 5px 0px 5px 0px!important;
+    border-color: #ececec!important;
+}
+.counterFact p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    margin-bottom: 0px;
+}
+@media only screen and (min-width: 577px) {
+.flex-row.row {
+    display: flex;
+    flex-wrap: wrap;
+}
+.flex-row.row > [class*='col-'] {
+    display: flex;
+    flex-direction: column;
+}
+}
+/*---------- Stats CSS ----------*/
+
 /*----- For safari browser -----*/
 .card{width: 100%;float: left;display:inline-block;}
 .card-body{display: inline-block;width: 100%;}
