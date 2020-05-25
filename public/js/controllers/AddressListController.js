@@ -39,7 +39,7 @@ angular.module('BlocksApp').controller('AddressListController', function($stateP
         totalPage = repData.totalPage;
         $scope.totalPage = repData.totalPage;
         for(var i=0; i<repData.list.length; i++){
-          repData.list[i].balance = repData.list[i].balance/(10**18);
+          repData.list[i].balance = repData.list[i].balance;
         }
         $scope.list = repData.list;
       });
