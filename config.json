@@ -14,6 +14,18 @@
     "rewards":5000,
     "xdce_id":2634,
     "cmckey":"",
-    "wss":"Wss://w.xinfin.network"
+    "wss":"Wss://w.xinfin.network",
+    "nodeAddr":     "localhost",
+    "wsPort":       8555,
+    "startBlock":   0,
+    "endBlock":     "latest",
+    "syncAll":      true,
+    "patch":        true,
+    "patchBlocks":  1000,
+    "bulkSize":     1000,
+    "settings": {
+        "useRichList": true,
+        "useFiat": true
+    }
 
 }

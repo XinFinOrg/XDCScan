@@ -9,7 +9,8 @@ const masterNodeRewardsDetails = new Schema(
         "owner":String,
         "candidate":String,
         "rewards":String,
-        "stakeAmount":Number
+        "stakeAmount":Number,
+        "createdAt":String,
     }
 );
 

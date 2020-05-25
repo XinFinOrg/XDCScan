@@ -2,6 +2,7 @@
 var mongoose = require( 'mongoose' );
 var Block = mongoose.model('Block');
 var Witness = mongoose.model('Witness');
+const masterNodeRewardsDetails = require('../models/masterNodeRewardsDetails');
 var oneDaySeconds = 86400//24*60*60;//seconds of one day
 
 module.exports = function(req, res){
@@ -35,7 +36,7 @@ module.exports = function(req, res){
     }
 
   }else if(action == "metadata"){//witness metadata
-    Witness.findOne({'witness':witness}, "-_id reward blocksNum").lean(true).exec(function (err, doc) {
+    masterNodeRewardsDetails.findOne({'candidate':witness}, "-_id reward blocksNum").lean(true).exec(function (err, doc) {
       var resultData={"reward":0, "totalBlocks":0};
       if(err){
         console.log("err:", err);

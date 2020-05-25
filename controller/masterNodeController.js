@@ -7,8 +7,8 @@ const web3relay = require('../routes/web3relay');
 const Xdc3Latest = require("xdc3");
 const xdc3Latest = new Xdc3Latest(new Xdc3Latest.providers.WebsocketProvider(config.wss));
 var xdc3latestrelay = require('../routes/xdc3LatestRelay');
-var contractAddress = "0x0000000000000000000000000000000000000088";
-var burntAddress = "0x0000000000000000000000000000000000000000";
+var contractAddress = "xdc0000000000000000000000000000000000000088";
+var burntAddress = "xdc0000000000000000000000000000000000000000";
 let resignMNCount = 9;
 let epochRewards = 5000;
 let epochInDay = 48;
@@ -48,12 +48,12 @@ module.exports = {
                 let masterNodeDetailsFind = '';
                 let blockHash, transactionHash, blockNumber, owner, candidate, address, event, i;
                 for (i = 0; i < data.length; i++) {
-                    address = data[i].address;
+                    address = 'xdc' + data[i].address.substring(2,data[i].address.length).toLowerCase();
                     blockHash = data[i].blockHash;
                     transactionHash = data[i].transactionHash;
                     blockNumber = data[i].blockNumber;
-                    owner = data[i].returnValues._owner;
-                    candidate = data[i].returnValues._candidate;
+                    owner = 'xdc' + data[i].returnValues._owner.substring(2,address.length).toLowerCase();
+                    candidate = 'xdc' + data[i].returnValues._candidate.substring(2,address.length).toLowerCase();
                     event = data[i].event;
                     masterNodeDetailsFind = '';
                     array = {
@@ -101,7 +101,7 @@ module.exports = {
                 data = await masterNodeRewardsDetails.find();
             }
             else {
-                data = await masterNodeRewardsDetails.find({ $or: [{ candidate: address }, { owner: address }] });
+                data = await masterNodeRewardsDetails.find({ $or: [{ candidate: address }, { owner: address }] }).sort({ epochNumber: -1 });
             }
             return responseHelper.successWithData(res, "Data fetched", data);
         }
