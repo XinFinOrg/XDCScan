@@ -21,8 +21,8 @@
     "endBlock":     "latest",
     "syncAll":      true,
     "patch":        true,
-    "patchBlocks":  1000,
-    "bulkSize":     1000,
+    "patchBlocks":  100,
+    "bulkSize":     100,
     "settings": {
         "useRichList": true,
         "useFiat": true
