@@ -1,9 +1,68 @@
-
 <!-- start Block Details -->
 <section id="blockDetails" class="mb-4">
     <div class="container">
-        <div class="row">
+		
+		<div class="row flex-row">
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle">$ <span class="counter">0.0022</span></div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">XDC Price</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle">$ <span class="counter">81,382,668</span></div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">Market Cap</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle"><span class="counter">75</span></div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">Live Masternodes</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle"><span class="counter">770,000,000</span></div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">Total Stake (XDC)</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle">$ <span class="counter">1,667,418</span></div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">Total Capital Locked in Masternodes</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle"><span class="counter">96,000</span> XDC</div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">Monthly Masternode Rewards</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle">$ <span class="counter">208</span></div>
+						<div class="tf-divider"><hr></div>
+                    	<p class="text-secondary">Fiat Value of Rewards</p>
+                	</div>
+                </div>
+				<div class="col-lg-3 col-md-4 col-sm-6 mb-3">
+					<div class="counterFact">
+                        <div class="factTitle"><span class="counter">0.96</span> % Per Month</div>
+						<div class="tf-divider"><hr></div>
+                        <p class="text-secondary"><span class="counter">11.68</span> % Per Year</p>
+                    	<p class="text-secondary">Return on P2P Masternodes</p>
+                	</div>
+                </div>
+        </div>
 
+        <div class="row mt-3">
             <div class="col-lg-12 safari-float-left">
                 <div class="block-header d-flex justify-content-between align-items-center">
                     <h3 class="blockDetails-header-title text-break text-center text-md-left">XinFin MasterNode List</h3>
@@ -23,17 +82,21 @@
                             <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
                                 <thead>
                                      <tr>
-                                        <th> Blocks </th>
-                                        <th> Propose Hash </th>
-                                        <th> Masternode</th>
-                                        <th> MasterNode Owner </th>
+                                        <th>Masternode ID</th>
+                                        <th>Total blocks</th>
+                                        <th>Masternode Rewards</th>
+                                        <th>Blocks height</th>
+                                        <th>Latest detail</th>
+                                        <th>KYC Docs</th>
                                     </tr>
                                 </thead>
                                     <tr ng-repeat="data in listData track by $index">
-                                        <td >{{data.blockNumber}}</td>
-                                        <td ><a class="font-green" href="/tx/{{data.transactionHash}}">{{data.transactionHash.substr(40,43)}}</a></td>
-                                        <td> <a class="font-green" href="/masternode/{{data.candidate}}">{{data.candidate}} </a></td>
-                                        <td >{{data.owner}}</td>
+                                        <td><a class="font-green" href="/masternode/{{data.witness}}">{{data.witness}} </a></td>
+                                        <td>{{data.blocksNum}}</td>
+                                        <td>{{data.reward}}</td>
+                                        <td>{{data.lastCountTo}}</td>
+                                        <td><a href="/masternode/{{data.witness}}">view</a></td>
+                                        <td><a href="https://kycDocs.XinFin.Network/{{data.kycDocs}}" target="_blank"> {{data.kycDocs.substr(40,43)}} </a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -70,5 +133,31 @@
 
         </div>
     </div>
+	</div>
 </section>
 <!-- end Block Details -->
+
+
+
+
+<!-- Counter Animation JS -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+<script src="https://www.jqueryscript.net/demo/Animating-Numbers-Counting-Up-with-jQuery-Counter-Up-Plugin/jquery.counterup.min.js"></script>
+<script>
+	jQuery(document).ready(function($) {
+		$('.counter').counterUp({
+			delay: 10,
+			time: 1000,
+            });
+        });			
+		
+		function numberWithCommas(x) {
+    		return x.toString().replace(/(\d+)(\d{3})/, '$1' + ',' + '$2');
+		}
+		$('.counter').each(function(){
+			var v_pound = $(this).html();
+			v_pound = numberWithCommas(v_pound);
+		$(this).html(v_pound)
+	})
+</script>
