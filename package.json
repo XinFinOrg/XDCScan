@@ -30,7 +30,7 @@
     "socket.io": "^2.0.4",
     "solc": "^0.4.19",
     "ws": "^7.2.1",
-    "xdc3": "^1.2.11",
+    "xdc3": "git+https://github.com/XinFinOrg/XDC3.git#release/1.2.1",
     "xdc3-old": "npm:xdc3@^0.20.8"
   },
   "devDependencies": {
