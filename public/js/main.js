@@ -133,7 +133,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                              '/js/controllers/AddressController.js',
                             '/plugins/datatables/datatables.min.css',
                             '/plugins/datatables/datatables.bootstrap.css',
-                            // '/plugins/datatables/datatables.all.min.js',
+                            '/plugins/datatables/datatables.all.min.js',
                             '/plugins/datatables/datatable.min.js'
                         ]
                     });

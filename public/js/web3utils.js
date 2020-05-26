@@ -23,13 +23,13 @@ var isAddress = function (address) {
         address = "0x" + address.substring(3);
     }    
     if (!/^(xdc)?[0-9a-f]{40}$/i.test(address)) {
-        return true;
+        return false;
         // If it's ALL lowercase or ALL upppercase
     } else if (/^(xdc|XDC)?[0-9a-f]{40}$/.test(address) || /^(xdc|XDC)?[0-9A-F]{40}$/.test(address)) {
         return true;
     } else {
         // Otherwise check each case
-        return true;
+        return false;
     }
 };
 

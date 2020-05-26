@@ -1,207 +1,63 @@
-<!-- <span style="margin-top:10px;" class="caption-su`ject font-red bold uppercase">COMMON STATISTICS</span> -->
-   <!-- start Wrapper -->
-   
-   <!-- <div class="wrapper"> -->
-       <!-- start Main Box -->
-		<section id="mainboxes">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <div class="row mx-gutters-md-1">
-                                    <div class="col-sm-12 col-md-6 col-lg-4 ver-divider ver-divider_none-md safari-float-left">
-                                        <div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                            	<img src="/img/icons/block-height-icon.png" class="img-fluid" alt="Epoch / Block Height">
-                                            </figure>
-                                            <div class="media-body">
-                                                <a href="https://master.xinfin.network/" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="" target="_blank">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Epoch</h2>
-                                                {{epoch}}</a>
-                                            </div>
-											<div class="media-body text-right">
-                                                <a href="https://xinfin.network" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="" target="_blank" >
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Block Height</h2>
-                                                {{blockHeight}}</a>
-                                            </div>
-                                        </div>
-                                        <hr class="hr-space-lg">
-                                        <div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                            	<img src="/img/icons/tps-icon.png" class="img-fluid" alt="Current / Max TPS<">
-                                            </figure>
-                                            <div class="media-body">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Current TPS</h2>
-                                                <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{TPS}}</a>
-                                            </div>
-											<div class="media-body text-right">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Max TPS</h2>
-                                                <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-original-title="" title="">2000</a>
-                                            </div>
-                                        </div>
-                                        <hr class="hr-space-lg">
-                                        <div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                                <img src="/img/icons/burnt-xdc-icon.png" class="img-fluid" alt="Total Stake / Burnt XDC">
-                                        	</figure>
-											<div class="media-body">
-                                                <a class="text-size-1 text-link counter " data-toggle="tooltip" data-placement="right" data-title="View More" href="/addr/xdc0000000000000000000000000000000000000088" data-original-title="" title="" target="_blank" >
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Total Stake</h2>
-												{{totalStakedValue}}</a>
-											</div>
-											<div class="media-body text-right">
-                                                <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-title="View More" href="/addr/xdc0000000000000000000000000000000000000000" data-original-title="" title="" target="_blank" >
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Burnt XDC</h2>
-												{{totalBurntValue}}</a>
-											</div>
-                                        </div>
-                                        <hr class="d-block d-md-none hr-space-lg">
-                                    </div>
-                                    <div class="col-sm-12 col-md-6 col-lg-4 ver-divider ver-divider_none-md safari-float-left">
-                                        <div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                            	<img src="/img/icons/online-nodes-icon.png" class="img-fluid" alt="MasterNodes / Daily Rewards">
-                                            </figure>
-                                            <div class="media-body">
-                                                <a href="https://master.xinfin.network/" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="" target="_blank">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">MasterNodes</h2>
-                                                {{totalNodes}}</a>
-                                            </div>
-											<div class="media-body text-right">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Daily Rewards</h2>
-                                                <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{todayDailyRewards}} XDC</a>
-                                            </div>
-                                        </div>
-                                        <hr class="hr-space-lg">
-                                        <div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                                    <img src="/img/icons/block-time-icon.png" class="img-fluid" alt="Block Time">
-                                            </figure>
-                                            <div class="media-body">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">Block Time</h2>
-                                                <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{blockTime}} <span>s</span></a>
-                                            </div>
-                                        </div>
-                                        <hr class="hr-space-lg">
-                                        <div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                                <img src="/img/icons/marketcap-icon.png" class="img-fluid" alt="Total XDC Supply / Market Cap">
-                                        	</figure>
-											<div class="media-body">
-												<h2 class="font-size-1 text-uppercase text-secondary mb-0">Total XDC Supply</h2>
-												<a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{totalXDC}} XDC</a>
-											</div>
-											<div class="media-body text-right">
-												<h2 class="font-size-1 text-uppercase text-secondary mb-0">Market Cap</h2>
-												<a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD}} </a>
-											</div>
-                                        </div>
-                                        <hr class="d-block d-md-none hr-space-lg">
-                                    </div>
-                                    <div class="col-sm-12 col-md-12 col-lg-4 safari-float-left">
-										<hr class="d-none d-md-block d-lg-none my-4">
-										<div class="media align-items-center">
-                                            <figure class="sm-avatar mr-2">
-                                                    <img src="/img/icons/xdc-price-icon.png" class="img-fluid" alt="Producer">
-                                            </figure>
-                                            <div class="media-body">
-                                                <a href="https://coinmarketcap.com/currencies/xinfin-network/" target="_blank" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">
-                                                <h2 class="font-size-1 text-uppercase text-secondary mb-0">XDC Price</h2>
-                                                $ {{CMCPrice_USD}}  </a><small text-size-1={{CMCPrice_change24h}}%> </small>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- <hr class="hr-space-sm"> -->
-                                        <div class="media align-items-center">
-											<iframe frameborder="0" style="border-bottom: 1px solid #f0f0f0; height:175px; overflow:scroll; width: 100%" src="https://xinfin.io/xdc-volume-coinpaparika.html" marginheight="1" marginwidth="1" seamless="seamless" scrolling="no" allowtransparency="true"></iframe>
-										</div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+<span style="margin-top:10px;" class="caption-subject font-red bold uppercase">COMMON STATISTICS</span>
+<div class="row">
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <!--div class="icon">
+            <i class="fa fa-cube"></i>
+        </div-->
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>
+                    {{blockHeight}}
+                    </h3>
+                    <small>Block Height</small>
                 </div>
             </div>
-        </section>
-		<!-- end Main Box -->		
+        </div>
     </div>
-    <!-- end wrapper -->
-
-        <!-- start Latest Blocks & Transactions -->
-        <section class="mb-4">
-                <div class="container">
-                    <div class="row">
-    
-                        <!-- start Latest Blocks -->
-                        <div class="portlet col-lg-6 mb-4 mb-lg-0 safari-float-left"  ng-class="(t.extraData.indexOf('Parity') > -1) ? 'item-border-red': '';(t.extraData.indexOf('Pool') > -1) ? 'item-border-blue': ''"  >
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h2 class="card-header-title">Latest Blocks</h2>
-                                </div>
-    
-                                <div id="latest-blocks" class="card-body overflow-hidden">
-                                    <div class="row hr-space-bottom" ng-repeat="t in latest_blocks track by $index">
-                                        <div class="col-sm-5" >
-                                            <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0" >                                                
-                                                <div class="d-none d-sm-flex mr-2">
-                                                    <span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">Bk</span></span>
-                                                </div>
-                                                <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href="/block/{{t.number}}">{{t.number}}</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <div class="d-flex justify-content-between">
-                                                <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">By <a class="hash-tag " href="/addr/{{t.miner}}">{{t._id}}</a></span><a href="/block/{{t.number}}" title="Transactions in this Block">{{t.txs.length}} txns </a> 
-                                                </div>
-                                                <!--<div class="d-none d-sm-block"></div>-->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    </div>
-                                <!-- <div class="card-footer text-center">
-                                    <a class="btn btn-lg btn-primary text-uppercase" href="all-blocks.html">View All Blocks</a>
-                                </div> -->
-                            </div>
-                        </div>
-                        <!-- end Latest Blocks -->
-    
-
-                        <!-- start Transactions -->
-                        <div class="portlet col-lg-6 safari-float-left">
-                            <div class="portlet-title card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h2 class="card-header-title">Transactions</h2>
-                                </div>
-                                <div id="transactions" class="portlet-body card-body overflow-hidden">
-                                    <div class="row hr-space-bottom" ng-repeat="t in latest_txs track by $index">
-                                        <div class="col-sm-5">
-                                            <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
-                                                <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon_inner text-dark">Tx</span></span>
-                                                </div>
-                                                <div class="media-body"><span class="d-inline-block d-sm-none mr-1">TX#</span><a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/{{t.hash}}">{{t.hash}}</a><span class="d-none d-sm-block small text-secondary"><div data-countdown="60000">{{t.timestamp | timeDuration }} ago</div></span></div>
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-7">
-                                            <div class="d-sm-flex justify-content-between">
-                                                <div class="text-nowrap mr-4 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-sm-block">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
-                                                <div><span class="label label_xs label_secondary text-center text-nowrap" title="Amount">{{t.value}} XDC</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                <!-- <div class="card-footer text-center">
-                                    <a class="btn btn-lg btn-primary text-uppercase" href="all-tx.html">View All Transactions</a>
-                                </div> -->
-                            </div>
-                        </div>
-                        <!-- end Transactions -->
-                        
-                    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <!--div class="icon">
+            <i class="fa fa-hourglass-half"></i>
+        </div-->
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>
+                        {{blockTime}} <small>s</small>
+                    </h3>
+                    <small>Block Time</small>
                 </div>
-            </section>
-            <!-- end Latest Blocks & Transactions -->    
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <div class="display">
+                <div class="number">
+                    <h3>{{todayDailyRewards}}</h3>
+                    <small>Daily Reward</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <div class="dashboard-stat2 ">
+            <!--div class="icon">
+                <i class="icon-puzzle"></i>
+            </div-->
+            <div class="display">
+                <div class="number">
+                    <h3>
+                    {{TPS}} <small>t/s</small>
+                    </h3>
+                    <small>TPS</small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
 <!-- <hr style="margin-top:10px;margin-bottom:10px;">
 
 <span style="margin-top:10px;" class="caption-subject font-red bold uppercase">MASTER NODE RELAY</span>
@@ -240,5 +96,77 @@
     </div>
 
 </div> -->
+
+
+<div class="row">
+    <div class="col-md-6 col-sm-6">
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="fa fa-cubes font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">Blocks</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn btn-med" ng-click="reloadBlocks()">refresh ↑↓</a>
+                    </div>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="todo-tasklist scrollable">
+                    <div ng-repeat="t in latest_blocks track by $index" class="todo-tasklist-item item-border-green row" ng-class="(t.extraData.indexOf('Parity') > -1) ? 'item-border-red': '';(t.extraData.indexOf('Pool') > -1) ? 'item-border-blue': ''">
+                        <!--TODO: color by known miners -->
+                        <div class="col-sm-5">
+                            <span class="todo-tasklist-item-title"><i class="fa fa-cube"></i> <a href="/block/{{t.number}}">{{t.number}}</a></span><br>
+                            <span class="todo-tasklist-date">
+                                <i class="fa fa-hourglass-o"></i>{{t.timestamp | timeDuration }} ago</span>
+                        </div>
+                        <div class="todo-tasklist-controls col-sm-7">
+                            <div class="todo-tasklist-item-text"><a href="/addr/{{t.miner}}">{{t.extraData}}</a><br>
+                            by <a href="/addr/{{t.miner}}">{{t.miner}}</a><br>
+                            transactions: {{t.txs.length}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- END PORTLET-->
     </div>
-<!-- </div> -->
+    <div class="col-md-6 col-sm-6" >
+        <!-- BEGIN PORTLET-->
+        <div class="portlet light">
+            <div class="portlet-title">
+                <div class="caption caption-md">
+                    <i class="icon-bar-chart font-red"></i>
+                    <span class="caption-subject font-red bold uppercase">Transactions</span>
+                </div>
+                <div class="actions">
+                    <div class="btn-group">
+                        <a class="btn btn-med" ng-click="reloadTransactions()">refresh ↑↓</a>
+                    </div>
+                </div>                    
+            </div>
+            <div class="portlet-body">
+                <div class="general-item-list scrollable">
+                    <div class="item"  ng-repeat="t in latest_txs track by $index">
+                    <div class="item-head">
+                        <div class="truncate-txhash" style="float:left">
+                            TX <a href="/tx/{{t.hash}}" class="primary-link">{{t.hash}}</a>
+                        </div>
+                        <div class="item-date" style="float:right"><span ng-show="tx.status==0"  alt="transaction fail"><image src="img/FAIL.png"/></span> {{t.timestamp | timeDuration }} ago</div>
+                    </div>
+                    <div class="todo-tasklist-controls"> 
+                      <span class="todo-tasklist-item-text">From <a href="/addr/{{t.from}}">{{t.from.substr(0,24)}}...</a></span> 
+                      <span class="todo-tasklist-item-text">To <a href="/addr/{{t.to}}">{{t.to.substr(0,24)}}...</a></span><br>
+                      <div class="todo-tasklist-item-text" style="margin-top:4px;">{{t.value}} XDC</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- END PORTLET-->
+    </div>
+</div>
+

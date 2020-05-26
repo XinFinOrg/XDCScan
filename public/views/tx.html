@@ -1,257 +1,103 @@
-    <!-- start Wrapper -->
-    <!-- <div class="wrapper"> -->
- 
-                <!-- start Block Details -->
-                <section id="blockDetails" class="mb-4">
-                    <div class="container">
-                        <div class="row">
-        
-                            <div class="col-lg-12 safari-float-left">
-                                <div class="block-header d-flex justify-content-between align-items-center">
-                                    <h3 class="blockDetails-header-title">Transaction Details</h3>
-                                </div>
-                            </div>
-        
-                            <!-- start Overview -->
-                            <div class="portlet col-lg-12 mb-4 mb-lg-0 safari-float-left">
-                                <div class="card">
-                                    <div class="card-header d-flex justify-content-between align-items-center p-0">
-                                        <!-- Nav tabs -->
-                                        <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
-                                            <li ng-class="{active: activeTab == 'tab_1' || !activeTab}" class="nav-item"><a class="nav-link active" href="#overview" role="tab" data-toggle="tab">Overview</a></li>
-                                            <li ng-class="{active: activeTab == 'tab_2'}" ng-click="getLogs()" class="nav-item"><a class="nav-link" href="#eventLog" role="tab" data-toggle="tab">Event Logs ({{logs.length}})</a></li>
-                                        </ul>
-                                        <!-- Nav tabs -->
-                                    </div>
-        
-                                    <div id="block-overview" class="card-body">
-        
-                                        <div class="tab-content">
-                                            <div class="tab-pane fade active show" id="overview">
-                                                <div class="row align-items-center mt-1">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="A TxHash or transaction hash is a unique 66 characters identifier that is generated whenever a transaction is executed."></i>Transaction Hash </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small fw6">
-                                                            {{tx.hash}} </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The status of the transaction."></i>Transaction Status </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <span ng-show="!(tx.status==0) && tx.blockNumber" class="label label_sm label_success ml-0"><i class="fa fa-check-circle mr-1"></i>Success</span> 
-                                                            <span ng-show="tx.status==0"  alt="transaction fail"><font color="#ff0000"> Fail (Error encountered during transaction !)</font></span> 
-                                                            <span class="label label_sm label_success rounded ml-0"ng-show="tx.hash && tx.blockNumber==null" ><font color="#00ff00"><font color="#0000ff">Pending</font></font></span> 
-                                                            <span ng-show="!tx.hash"  alt="transaction fail"><font color="#ff0000"> Not exist</font></span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space mt-2">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The number of the block in which the transaction was recorded. Block confirmation indicate how many blocks since the transaction is mined."></i>Block Number </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/block/{{tx.blockNumber}}">{{tx.blockNumber}}</a> </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The date and time at which a transaction is mined."></i>Time </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <i class="far fa-clock small mr-2"></i>{{tx.datetime | date:'yyyy-MM-dd HH:mm:ss Z' }} ({{tx.timestamp | timeDuration}} ago) </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The sending party of the transaction (could be from a contract address)."></i>From </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/addr/{{tx.from}}">{{tx.from}}</a> </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center" ng-show="tx.to">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The receiving party of the transaction (could be a contract address)."></i>To </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/addr/{{tx.to}}">{{tx.to}}</a> </div>
-                                                    </div>
-                                                </div>
-                                                
-                                                <div class="row align-items-center" ng-show="tx.createContract">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The receiving party of the transaction (could be a contract address)."></i>Create Contract:  </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/addr/{{tx.createContract}}">{{tx.createContract}}</a> </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center" ng-show="tx.tokenName">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The contract address of receiving party."></i>{{tx.contractLable}}: </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/{{tx.contractLink}}">{{tx.tokenName}}</a> </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div  ng-show="tx.needVerify" class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Verify status of contract."></i>Verify </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/verifycontract/{{tx.contractAddr}}"><span class="label label_sm label_info ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to verify your contract </div>
-                                                    </div>
-                                                </div>
-                                                <!--  Type of Token
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center" ng-show="tx.ERC">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>XRC {ERC} </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            {{tx.ERC}} </div>
-                                                    </div>
-                                                </div> -->
-                                                <div class="row align-items-center" ng-show="tx.isTransfer">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Token Transfer: </div>
-                                                        <div class="pl-small">From <a href="/addr/{{tx.from}}">{{tx.from.substr(0,24)}}...</a>  </div>
-                                                        <div class="pl-small">To <a href="/addr/{{tx.to}}">{{tx.transerTo.substr(0,24)}}...</a> </div>
-                                                        <div class="pl-small">{{tx.tokenNum}} <a href="/token/{{tx.contractAddr}}">{{tx.tokenName}}</a>
-                                                    </div>
-                                                    <!-- <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            0 XDC </div>
-                                                    </div> -->
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Value </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            {{tx.value}} XDC </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Maximum amount of gas provided for the transaction. For normal Eth transfers, the value is 21,000. For contract this value is higher and bound by block gas limit."></i>Gas Provided </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            {{tx.gas}} </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Cost per unit of gas specified for the transaction, in Ether and Gwei. The higher the gas price the higher chance of getting included in a block."></i>Gas Price </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                                {{tx.gasPrice}} </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The exact units of gas that was used for the transaction."></i>Gas Used </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            {{tx.gasUsed}} </div>
-                                                    </div>
-                                                </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."></i>Nonce </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            {{tx.nonce}} </div>
-                                                    </div>
-                                                </div>
-                                                <!-- <hr class="hr-space">
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Msternodes runed by the miner."></i>Masternode </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/masternode/{{tx.witness}}">{{tx.witness}}</a> </div>
-                                                    </div>
-                                                </div> -->
-                                                <hr class="hr-space">
-                                                <div class="row align-items-top">
-                                                    <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Additional information that is required for the transaction."></i>Input Data </div>
-                                                    <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <textarea readonly="" class="form-control bg-light text-secondary p-3" rows="2" id="inputdata">{{tx.input}}</textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-        
-                                            <div class="tab-pane fade" id="eventLog" ng-class="{active: activeTab == 'tab_1'}">
-                                                    <table><tbody ng-repeat="log in logs">
-                                                            <tr><td width="20%"><b>[{{$index}}]Address </b></td><td><a href="/addr/">{{log.transactionHash}}</a></td></tr>
-                                                            <tr ng-show="log.methodName!=null"><td width="20%">Method: </td><td>{{log.methodName}}()</td></tr>
-                                                            <tr ng-show="log.eventName!=null && log.eventName!=''"><td width="20%">Event: </td><td>{{log.eventName}}</td></tr>
-                                                            <tr><td width="20%">topics:</td>
-                                                                <td>
-                                                                    <table><tbody><tr ng-repeat="topic in log.topics">
-                                                                        <td ng-show="$index>-1">[topic{{$index}}]{{topic}}</td>
-                                                                    </tr></tbody></table>
-                                                                </td>
-                                                            </tr>
-                                                            <tr><td width="20%">data:</td>
-                                                                <td>{{log.data}}</td>
-                                                            </tr>
-                                                            <tr><td width="20%"></td><td><br></td></tr>
-                                                        </tbody></table>
-                                                <!-- <div class="media">
-                                                    <div class="mt-1 mr-3"><span class="btn btn-icon label_success rounded-circle"><span class="btn-icon_inner">25</span></span>
-                                                    </div>
-                                                    <div class="media-body">
-                                                        <dl class="row align-items-baseline mb-3"><dt class="col-md-2 col-lg-1 text-md-right"><h6 class="fw6 mb-0">Address</h6></dt>
-                                                            <dd class="col-md-10 mb-0"><a class="text-break mr-2" href="address.html">0x3edceb529c47192dd3740b7c80095567f9071bea8f795bb75dee134c0bb447b2</a></dd>
-                                                        </dl>
-                                                        <dl class="row align-items-baseline mb-3"><dt class="col-md-2 col-lg-1 text-md-right"><h6 class="mb-0">Topics</h6></dt>
-                                                            <dd class="col-md-10 mb-0">
-                                                                <ul class="list-unstyled list-xs-space mb-0">
-                                                                    <li><span class="label label_xs label_secondary rounded ml-0 mr-1">0</span><span class="text-monospace text-break">0x3edceb529c47192dd3740b7c80095567f9071bea8f795bb75dee134c0bb447b2</span></li>
-                                                                    <li><span class="label label_xs label_secondary rounded ml-0 mr-1">1</span> <i class="fa fa-long-arrow-alt-right text-secondary mx-1"></i><span class="text-monospace text-break">0x3edceb529c47192dd3740b7c80095567f9071bea8f795bb75dee134c0bb447b2</span></li>
-                                                                    <li><span class="label label_xs label_secondary rounded ml-0 mr-1">2</span> <i class="fa fa-long-arrow-alt-right text-secondary mx-1"></i><span class="text-monospace text-break">0x3edceb529c47192dd3740b7c80095567f9071bea8f795bb75dee134c0bb447b2</span></li>
-                                                                </ul>
-                                                            </dd>
-                                                        </dl>
-                                                        <dl class="row align-items-baseline mb-0"><dt class="col-md-2 col-lg-1 text-md-right"><h6 class="mb-0">Data</h6></dt>
-                                                            <dd class="col-md-10 mb-0">
-                                                                <ul class="list-unstyled list-xs-space mb-0">
-                                                                    <li><span class="text-monospace text-break">0x3edceb529c47192dd3740b7c80095567f9071bea8f795bb75dee134c0bb447b2</span>
-                                                                    </li>
-                                                                </ul>
-                                                            </dd>
-                                                        </dl>
-                                                    </div>
-                                                </div> -->
-                                            </div>
-        
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end Overview -->
-                        </div>
-                    </div>
-                </section>
-                <!-- end Block Details -->
-<!-- </div> -->
+<!-- BEGIN PAGE CONTENT-->
+<div class="portlet light col-md-12">
+    <div class="portlet-body">
+      
+      <div class="tabbable-line">
+         <ul class="nav nav-tabs ">
+            <li ng-class="{active: activeTab == 'tab_1' || !activeTab}">
+                 <a href="#tab_1" data-toggle="tab" aria-expanded="true"><b> OverView </b></a>
+             </li>
+             <li ng-class="{active: activeTab == 'tab_2'}" ng-click="getLogs()">
+                 <a href="#tab_2" data-toggle="tab" aria-expanded="false"><b> Event Logs[{{logs.length}}] </b></a>
+             </li>
+         </ul>
+         <div class="tab-content">
+           <div class="tab-pane" ng-class="{active: activeTab == 'tab_1' || !activeTab}" id="tab_1">
+                <table class="col-md-6 table table-hover">
+                    <tr ><td width="25%">TXHash:</td><td>{{tx.hash}}</td></tr>
+                    <tr ><td width="25%">TxReceipt Status:</td><td>
+                        <span ng-show="tx.status==0"  alt="transaction fail"><font color="#ff0000"> Fail (Error encountered during transaction !)</font></span>
+                        <span ng-show="!(tx.status==0) && tx.blockNumber" ><font color="#00ff00"> Success </font></span>
+                        <span ng-show="tx.hash && tx.blockNumber==null" ><font color="#00ff00"><font color="#0000ff">Pending</font></font></span>
+                        <span ng-show="!tx.hash"  alt="transaction fail"><font color="#ff0000"> Not exist</font></span>
+                    </td>
+                    </tr>
+                    <tr ><td width="25%">Block Number:</td>
+                        <td><a href="/block/{{tx.blockNumber}}">{{tx.blockNumber}}</a></td>
+                    </tr>
+                    <tr ><td width="25%">Time:</td>
+                        <td>{{tx.datetime | date:'yyyy-MM-dd HH:mm:ss Z' }} ({{tx.timestamp | timeDuration}} ago)</td>
+                    </tr>
+                    <tr ><td width="25%">From:</td>
+                        <td><a href="/addr/{{tx.from}}">{{tx.from}}</a></td></tr>
+                    <tr ng-show="tx.to"><td width="25%">To:</td><td><a href="/addr/{{tx.to}}">{{tx.to}}</a></td></tr>
+                    <tr ng-show="tx.createContract"><td width="25%">Create Contract: </td><td><a href="/addr/{{tx.createContract}}">{{tx.createContract}}</a></td></tr>  
+                    <tr ng-show="tx.tokenName"><td width="25%">{{tx.contractLable}}:</td><td><a href="/{{tx.contractLink}}">{{tx.tokenName}}</a></td></tr>  
+                    <tr ng-show="tx.needVerify"><td width="25%">Verify</td><td><a href="/verifycontract/{{tx.contractAddr}}">click here to verify your contract</a></td></tr> 
+                    <!--tr ng-show="tx.ERC"><td width="25%">ERC</td><td>{{tx.ERC}}</td></tr--> 
+                    <tr ng-show="tx.isTransfer"><td width="25%">Token Transfer:</td><td>{{tx.tokenNum}} <a href="/token/{{tx.contractAddr}}">{{tx.tokenName}}</a>   from <a href="/addr/{{tx.from}}">{{tx.from.substr(0,24)}}...</a>  to <a href="/addr/{{tx.to}}">{{tx.transerTo.substr(0,24)}}...</a></td></tr>
+                    <tr ><td width="25%">Value:</td><td>{{tx.value}} XDC</td></tr>
+                    <tr ><td width="25%">Gas Provided:</td><td>{{tx.gas}}</td></tr>
+                    <tr ><td width="25%">GasPrice:</td><td>{{tx.gasPrice}}</td></tr>
+                    <tr ><td width="25%">GasUsed:</td><td>{{tx.gasUsed}}</td></tr>
+                    <tr ><td width="25%">Nonce:</td><td>{{tx.nonce}}</td></tr>
+                    <tr ><td width="25%">Masternode:</td><td><a href="/masternode/{{tx.witness}}">{{tx.witness}}</a></td></tr>
+                    <tr ><td width="25%">Input Data:</td><td><pre class="code">{{tx.input}}</pre></td></tr>
+                </table>
+                <table class="table table-condensed" ng-show="tx.isTrace">
+                    <thead>
+                        <tr>
+                            <th> From </th>
+                            <th> To </th>
+                            <th style="text-align:right"> Amount </th>
+                            <th style="text-align:right"> Gas </th>
+                            <th style="text-align:right"> GasUsed </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="t in internal_transactions track by $index">
+                            <td class="truncate-addrhash"> <a href="/addr/{{t.from}}">{{t.from}}</a> </td>
+                            <td class="truncate-addrhash"> <a href="/addr/{{t.to}}">{{t.to}}</a> </td>
+                            <td style="text-align:right"> {{t.value}} </td>
+                            <td style="text-align:right"> {{t.gas}} </td>
+                            <td style="text-align:right"> {{t.gasUsed}} </td>
+                            <td style="text-align:center"><span class="label label-sm label-info {{t.type}}"> {{t.type}}</span><span class="label label-sm label-danger" ng-show="t.error"> {{t.error}}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+           </div>
+
+            <div class="tab-pane" ng-class="{active: activeTab == 'tab_1'}" id="tab_2">
+                <!--div>
+                    <table>
+                        <tbody>
+                            <tr><td>[95]</td><td>&nbsp;&nbsp;&nbsp;<b>Address</b>&nbsp;&nbsp;&nbsp;&nbsp;</td><td><a href="/address/0x811a4895edb9968acda7001e25c55a163abe54ae">0x811a4895edb9968acda7001e25c55a163abe54ae</a>&nbsp;&nbsp;<div class="btn-group" style="margin-top:3px; padding-bottom:5px;" title="Search for Similiar Events at this Address"><button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-search-plus"></i>&nbsp;&nbsp;<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu" role="menu"><li><a href="/txs?ea=0x811a4895edb9968acda7001e25c55a163abe54ae&amp;topic0=0xa5fa572a8b161228889664627cfb44937b3ccafc5412660986dc01cb32fc3134">Matches Topic[0]</a></li></ul></div></td></tr>
+                            <tr><td></td><td>&nbsp;&nbsp;&nbsp;Topics</td><td>[0]&nbsp;<font style="font-family: Monospace;">0xa5fa572a8b161228889664627cfb44937b3ccafc5412660986dc01cb32fc3134</font></td></tr><tr><td style="height:5px"></td><td></td><td></td></tr>
+                            <tr><td></td><td valign="top">&nbsp;&nbsp;&nbsp;<i>Data</i></td><td><table><tbody><tr><td width="54px"><div class="btn-group" title="Convert"><button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown"><span id="convert_button_1_1">Hex</span>&nbsp;<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu" role="menu"><li><a href="javascript:funcOnclick('Hex', '1_1');">Hex</a></li><li><a href="javascript:funcOnclick('Num', '1_1');">Number</a></li><li><a href="javascript:funcOnclick('Text', '1_1');">Text</a></li><li><a href="javascript:funcOnclick('Addr', '1_1');">Address</a></li></ul></div></td><td width="10px"><i class="fa fa-long-arrow-right"></i></td><td>&nbsp;<span id="chunk_1_1">0000000000000000000000003eb868e2953635ef6bd5a69c0686ca37e0004ae1</span><span style="display:none" id="chunk_ori_1_1">0000000000000000000000003eb868e2953635ef6bd5a69c0686ca37e0004ae1</span></td></tr><tr><td width="54px"><div class="btn-group" title="Convert"><button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown"><span id="convert_button_1_2">Hex</span>&nbsp;<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu" role="menu"><li><a href="javascript:funcOnclick('Hex', '1_2');">Hex</a></li><li><a href="javascript:funcOnclick('Num', '1_2');">Number</a></li><li><a href="javascript:funcOnclick('Text', '1_2');">Text</a></li><li><a href="javascript:funcOnclick('Addr', '1_2');">Address</a></li></ul></div></td><td width="10px"><i class="fa fa-long-arrow-right"></i></td><td>&nbsp;<span id="chunk_1_2">000000000000000000000000000000000000000000000000016345785d8a0000</span><span style="display:none" id="chunk_ori_1_2">000000000000000000000000000000000000000000000000016345785d8a0000</span></td></tr><tr><td width="54px"><div class="btn-group" title="Convert"><button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown"><span id="convert_button_1_3">Hex</span>&nbsp;<i class="fa fa-angle-down"></i></button><ul class="dropdown-menu" role="menu"><li><a href="javascript:funcOnclick('Hex', '1_3');">Hex</a></li><li><a href="javascript:funcOnclick('Num', '1_3');">Number</a></li><li><a href="javascript:funcOnclick('Text', '1_3');">Text</a></li><li><a href="javascript:funcOnclick('Addr', '1_3');">Address</a></li></ul></div></td><td width="10px"><i class="fa fa-long-arrow-right"></i></td><td>&nbsp;<span id="chunk_1_3">000000000000000000000000000000000000000000000000016345785d8a0000</span><span style="display:none" id="chunk_ori_1_3">000000000000000000000000000000000000000000000000016345785d8a0000</span></td></tr></tbody></table></td></tr><tr><td>&nbsp;</td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div-->
+                <table><tbody ng-repeat="log in logs">
+                    <tr><td width="20%"><b>[{{$index}}]Address </b></td><td><a href="/addr/">{{log.transactionHash}}</a></td></tr>
+                    <tr ng-show="log.methodName!=null"><td width="20%">Method: </td><td>{{log.methodName}}()</td></tr>
+                    <tr ng-show="log.eventName!=null && log.eventName!=''"><td width="20%">Event: </td><td>{{log.eventName}}</td></tr>
+                    <tr><td width="20%">topics:</td>
+                        <td>
+                            <table><tbody><tr ng-repeat="topic in log.topics">
+                                <td ng-show="$index>-1">[topic{{$index}}]{{topic}}</td>
+                            </tr></tbody></table>
+                        </td>
+                    </tr>
+                    <tr><td width="20%">data:</td>
+                        <td>{{log.data}}</td>
+                    </tr>
+                    <tr><td width="20%"></td><td><br></td></tr>
+                </tbody></table>
+
+            </div>
+
+         </div>
+        </div>
+    </div>
+</div>
