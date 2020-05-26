@@ -19050,8 +19050,8 @@ angular.module('BlocksApp').controller('WitnessController', function($stateParam
         _page = 0;
       $http({
         method: 'POST',
-        url: '/witnessData',
-        data: {"action":"blocks", "witness": witness, "page":_page}
+        url: '/masternode/rewards',
+        data: { "address": witness, "page":_page}
       }).success(function(data) {
         if (data.error)
           $location.path("/err404/witness/" + witness);

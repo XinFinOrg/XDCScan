@@ -123,6 +123,7 @@ module.exports = {
                             // rewardsExist = await masterNodeRewardsDetails.findOne({ epochNumber: i, blockNumber: blockNumber, candidate: candidate, owner: owner, rewards: rewardsPerCandidate });
                             rewardsExist = await masterNodeRewardsDetails.findOne(array);
                             if (!(rewardsExist != '' && rewardsExist != null && rewardsExist != 'error')) {
+                                array.createdAt = new Date();
                                 await masterNodeRewardsDetails.create(array);
                             }
                         }
