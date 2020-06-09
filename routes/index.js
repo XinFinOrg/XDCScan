@@ -71,6 +71,7 @@ module.exports = function (app) {
 
   app.post('/addr', getAddr);
   app.post('/addrTXcounts', addrTXcounts);
+  
   app.post('/tx', getTx);
   app.post('/block', getBlock);
   app.post('/data', getData);
