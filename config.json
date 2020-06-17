@@ -1,5 +1,5 @@
 {
-    "rpc": "https://explorerrpc.xinfin.network",
+    "rpc": "https://explorerrpc.apothem.network",
     "blocks": [ {"start": 0, "end": "latest"}],
     "patchStartBlocks": 1,
     "quiet": true,
@@ -14,7 +14,7 @@
     "rewards":5000,
     "xdce_id":2634,
     "cmckey":"",
-    "wss":"Wss://w.xinfin.network",
+    "wss":"Wss://ws.apothem.network",
     "nodeAddr":     "localhost",
     "wsPort":       8555,
     "startBlock":   0,
