@@ -32,13 +32,14 @@ ws.on('open', function open() {
 });
 
 
-ws.on('message', function incoming(data) {
-  const currData = JSON.parse(data);
-  if (Object.keys(currData).includes("symbol")) {
-    // not a pong message
-    homieExData = currData;
-  }
-});
+// ws.on('message', function incoming(data) {
+//   const currData = JSON.parse(data);
+//   if (Object.keys(currData).includes("symbol")) {
+//     // not a pong message
+//     homieExData = currData;
+//     console.log(homieExData,"homieExData")
+//   }
+// });
 
 var contracts = require('../contractTpl/contracts.js');
 var masterNodeContract;
@@ -537,7 +538,8 @@ const getXinFinStats = async function (lim, res) {
     monthlyRewardPer: (((parseFloat(mnDailyRewards) * 30) / 10000000) * 100).toFixed(2),
     yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
     priceUsd: cmc_xdc_price.price,
-    xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
+    // xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
+    xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"])  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
   }));
   res.end()
 }
