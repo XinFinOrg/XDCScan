@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-md-9">
                                 <div class="pl-small fw6">
-                                    {{block.number}}
+                                    <tr ><td><a class="btn btn-info" ng-show="block.number > 0 && blockNum == block.number" href="/block/{{block.number - 1}}">&lt;Prev</a> {{block.number | number}} <a class="btn btn-info" ng-show="blockNum == block.number" href="/block/{{block.number + 1}}">Next&gt;</a></td></tr>
                                 </div>
                             </div>
                         </div>
