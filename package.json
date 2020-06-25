@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "pm2 start app.js --name XinFinScan && pm2 start tools/sync.js --node-args='--max-old-space-size=10001' --name Sync",
-    "dev": "concurrently \"nodemon tools/sync.js \" \"nodemon tools/grabber.js \" \"nodemon app.js\" ",
+    "dev": "concurrently \"nodemon tools/sync.js \" \"nodemon app.js\" ",
     "grabber": " pm2 start tools/grabber.js -i 4",
     "sync": " pm2 start tools/sync.js --node-args='--max-old-space-size=2048'",
     "pretest": "copyfiles app.js app/  ",
