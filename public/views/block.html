@@ -25,8 +25,10 @@
                                 <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Also known as Block Number. The block height, which indicates the length of the blockchain, increases after the addition of the new block."></i>Block Height
                             </div>
                             <div class="col-md-9">
-                                <div class="pl-small fw6">
-                                    {{block.number}}
+                                <div class="d-flex pl-small fw6">
+                                    <span class="mr-3">{{block.number}}</span>
+									<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View previous block"><i class="fa fa-chevron-left"></i></a>
+									<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View next block"><i class="fa fa-chevron-right"></i></a>
                                 </div>
                             </div>
                         </div>

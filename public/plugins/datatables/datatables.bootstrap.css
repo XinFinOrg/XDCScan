@@ -65,16 +65,16 @@ table.dataTable thead .sorting:after, table.dataTable thead .sorting_asc:after, 
     bottom: 8px;
     right: 8px;
     display: block;
-    font-family: 'Glyphicons Halflings';
+    font-family: 'Font Awesome\ 5 Free';
     opacity: 0.5;
 }
 table.dataTable thead .sorting:after {
     opacity: 0.2;
-    content: "\e150"}
+    content: "\f0dc"}
 table.dataTable thead .sorting_asc:after {
-    content: "\e155"}
+    content: "\f0de";color:blue;}
 table.dataTable thead .sorting_desc:after {
-    content: "\e156"}
+    content: "\f0dd";color:blue;}
 table.dataTable thead .sorting_asc_disabled:after, table.dataTable thead .sorting_desc_disabled:after {
     color: #eee;
 }
@@ -100,7 +100,8 @@ div.dataTables_scrollFoot table {
     div.dataTables_wrapper div.dataTables_length, div.dataTables_wrapper div.dataTables_filter, div.dataTables_wrapper div.dataTables_info, div.dataTables_wrapper div.dataTables_paginate {
     text-align: center;
 }
-}table.dataTable.table-condensed>thead>tr>th {
+}
+table.dataTable.table-condensed>thead>tr>th {
     padding-right: 20px;
 }
 table.dataTable.table-condensed .sorting:after, table.dataTable.table-condensed .sorting_asc:after, table.dataTable.table-condensed .sorting_desc:after {
@@ -122,3 +123,6 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
 div.dataTables_scrollHead table.table-bordered {
     border-bottom-width: 0;
 }
+div.table-responsive>div.dataTables_wrapper>div.row{margin:0}
+div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:first-child{padding-left:0}
+div.table-responsive>div.dataTables_wrapper>div.row>div[class^=col-]:last-child{padding-right:0}
