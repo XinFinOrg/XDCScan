@@ -78,6 +78,8 @@ module.exports = function (app) {
   app.post('/data', getData);
   app.get('/publicAPI', publicAPI);//all public APIs
   app.get('/totalXDC', publicAPI.getTotalXDC);
+  app.get('/getcirculatingsupply', publicAPI.getCirculatingSupply);
+
   app.get('/totalXDCSupply', getTotalXDCSupply);
 
   //masternode routes

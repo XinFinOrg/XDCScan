@@ -432,3 +432,10 @@ module.exports.getTotalXDC = function(req, res){
   res.write(String(respData));
   res.end();
 }
+
+module.exports.getCirculatingSupply= function(req, res){
+  totalBlockNum = eth.blockNumber;
+  respData = 12100000000+5.55*totalBlockNum;
+  res.write(String(respData));
+  res.end();
+}
