@@ -164,7 +164,7 @@ module.exports = function (app) {
       }
 
       totalBlockNum = eth.blockNumber;
-      totalXDC = 37500000000 + 5.55 * totalBlockNum;
+      totalXDC = (37500000000 + 5.55 * totalBlockNum).toFixed();
 
       alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
 
