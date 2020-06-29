@@ -10,7 +10,7 @@ var xdc3latestrelay = require('../routes/xdc3LatestRelay');
 var contractAddress = "xdc0000000000000000000000000000000000000088";
 var burntAddress = "xdc0000000000000000000000000000000000000000";
 let resignMNCount = 11;
-let epochRewards = 5000;
+let epochRewards = 4500;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
 const masterNodeHelper = require('../helpers/masterNodeHelper');
