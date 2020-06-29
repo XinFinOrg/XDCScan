@@ -461,8 +461,7 @@ function fnum(x) {
 var getTotalXDCSupply = function (req, res) {
   burntBalance = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
   totalBlockNum = eth.blockNumber;
-  console.log(burntBalance)
-  respData = (37500000000 + 5.55 * totalBlockNum)-burntBalance ;
+  respData = ((37500000000 + 5.55 * totalBlockNum)-burntBalance).toFixed() ;
   res.write(String(respData,burntBalance));
   res.end();
 }
