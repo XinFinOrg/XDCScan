@@ -14,6 +14,7 @@ let epochRewards = 5000;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
 const masterNodeHelper = require('../helpers/masterNodeHelper');
+let responseHelper = require('../helpers/RESPONSE')
 // const mongoose = require('mongoose');
 // const masterNodeDetails = mongoose.model('MasterNodeDetails');
 
@@ -22,11 +23,10 @@ module.exports = {
     list: async function (req, res) {
         try {
             if (!masterNodeContract) {
-                let contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-                masterNodeContract = contractOBJ.at(contractAddress);
+                masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
             }
             if (masterNodeContract) {
-                var data = await masterNodeContract.getCandidates();
+                var data = await masterNodeContract.methods.getCandidates().call();
                 return responseHelper.successWithMessage(res, data);
             }
         }
@@ -39,7 +39,7 @@ module.exports = {
     saveMNDetails: async function (req, res) {
         try {
             if (!masterNodeContract) {
-                masterNodeContract = new xdc3latestrelay.eth.Contract(contracts.masterNodeABI, contractAddress);
+                masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
             }
             if (masterNodeContract) {
                 let data = await masterNodeContract.getPastEvents('Propose', { fromBlock: 0, toBlock: 'latest' });
