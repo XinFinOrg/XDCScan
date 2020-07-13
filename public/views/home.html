@@ -142,30 +142,39 @@
                     <div class="portlet col-lg-6 mb-4 mb-lg-0 safari-float-left"  ng-class="(t.extraData.indexOf('Parity') > -1) ? 'item-border-red': '';(t.extraData.indexOf('Pool') > -1) ? 'item-border-blue': ''"  >
                         <div class="card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h2 class="card-header-title">Latest Blocks</h2>
-                                <!-- <div class="actions">
+                                <h2 class="card-header-title"><img src="/img/icons/latest-blocks-icon.png" class="img-fluid"> Latest Blocks</h2>
+                                <div class="actions">
                                     <div class="btn-group">
-                                        <a class="btn btn-med" ng-click="reloadBlocks()"><i class="fa fa-refresh"
-                                                                                            ng-class="{'fa-spin': blockLoading}"></i>
+                                        <a class="btn btn-sm" ng-click="reloadBlocks()"><i class="fas fa-sync-alt" ng-class="{'fa-spin': blockLoading}"></i>
                                         </a>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
 
                             <div id="latest-blocks" class="card-body overflow-hidden">
                                 <div class="row hr-space-bottom" ng-repeat="t in latest_blocks track by $index">
                                     <div class="col-sm-5" >
                                         <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0" >                                                
-                                            <div class="d-none d-sm-flex mr-2">
+                                            <!--<div class="d-none d-sm-flex mr-2">
                                                 <span class="btn btn-icon btn-soft-secondary"><span class="btn-icon_inner text-dark">BK</span></span>
-                                            </div>
-                                            <div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href="/block/{{t.number}}">{{t.number}}</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span></div>
+                                            </div>-->
+                                            <!--<div class="media-body"><span class="d-inline-block d-sm-none">Block</span> <a href="/block/{{t.number}}">{{t.number}}</a><span class="d-sm-block small text-secondary ml-1 ml-sm-0 text-nowrap" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span></div>-->
+											<div class="media-body">
+												<!--<span class="d-inline-block d-sm-none">Block</span>-->
+												<a href="/block/{{t.number}}"><i class="fa fa-cube"></i> {{t.number}}</a>
+												
+												<span class="d-block text-nowrap mt-1"><a href="/block/{{t.number}}" title="Transactions in this Block"><i class="fas fa-exchange-alt"></i> {{t.txs.length}} txns </a></span>
+											</div>
                                         </div>
                                     </div>
                                     <div class="col-sm-7">
-                                        <div class="d-flex justify-content-between">
-                                            <div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">By <a class="hash-tag " href="/addr/{{t.miner}}">{{t._id}}</a></span><a href="/block/{{t.number}}" title="Transactions in this Block">{{t.txs.length}} txns </a> 
-                                            </div>
+                                        <div class="justify-content-between">
+                                            <!--<div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">By <a class="hash-tag " href="/addr/{{t.miner}}">{{t._id}}</a></span><a href="/block/{{t.number}}" title="Transactions in this Block">{{t.txs.length}} txns </a>
+                                            </div>-->
+											<div class="text-nowrap lb-right-col">
+												<span class="d-block mb-1 mb-sm-0"><span class="block-reward">Block Reward: </span>{{t.reward}} XDC</span>
+												<span class="d-sm-block small text-secondary mt-2 ml-1 ml-sm-0 text-nowrap" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span>
+                                            </div>											
                                             <!--<div class="d-none d-sm-block"></div>-->
                                         </div>
                                     </div>
@@ -184,28 +193,26 @@
                     <div class="portlet col-lg-6 safari-float-left">
                         <div class="portlet-title card">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h2 class="card-header-title">Transactions</h2>
-                                <!-- <div class="actions">
+                                <h2 class="card-header-title"><img src="/img/icons/transactions-icon.png" class="img-fluid"> Transactions</h2>
+								<div class="actions">
                                     <div class="btn-group">
-                                        <a class="btn btn-med" ng-click="reloadTransactions()"><i class="fa fa-refresh"
-                                                                                                  ng-class="{'fa-spin': txLoading}"></i>
-                                        </a>
+                                        <a class="btn btn-sm" ng-click="reloadTransactions()"><i class="fas fa-sync-alt" ng-class="{'fa-spin': txLoading}"></i></a>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                             
                             <div id="transactions" class="portlet-body card-body overflow-hidden">
                                 <div class="row hr-space-bottom" ng-repeat="t in latest_txs track by $index">
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-4">
                                         <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
-                                            <div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon_inner text-dark">Tx</span></span>
-                                            </div>
+                                            <!--<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon_inner text-dark">Tx</span></span>
+                                            </div>-->
                                             <div class="media-body"><span class="d-inline-block d-sm-none mr-1">TX#</span><a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/{{t.hash}}">{{t.hash}}</a><span class="d-none d-sm-block small text-secondary"><div data-countdown="60000">{{t.timestamp | timeDuration }} ago</div></span></div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-7">
+                                    <div class="col-sm-8">
                                         <div class="d-sm-flex justify-content-between">
-                                            <div class="text-nowrap mr-3 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-sm-block">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
+                                            <div class="text-nowrap mr-2 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-sm-block">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
                                             <div><span class="label label_xs label_secondary text-center text-nowrap" title="Amount">{{t.value}} XDC</span></div>
                                         </div>
                                     </div>
