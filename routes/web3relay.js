@@ -20,7 +20,7 @@ const Contract = mongoose.model( 'Contract' );
 const Transaction = mongoose.model( 'Transaction' );
 const Market = mongoose.model( 'Market' );
 const ActiveAddressesStat = mongoose.model( 'ActiveAddressesStat' );
-const CLOTransferredStat = mongoose.model( 'CLOTransferredStat' );
+
 
 var getLatestBlocks = require('./index').getLatestBlocks;
 var filterBlocks = require('./filters').filterBlocks;
@@ -602,7 +602,6 @@ exports.data = async (req, res) => {
       var nblock = latest.number - checknum;
 
       const activeAddressesStat = await ActiveAddressesStat.find().sort({blockNumber: -1}).limit(1);
-      const cloTransferredStat = await CLOTransferredStat.find().sort({blockNumber: -1}).limit(1);
       const latestPrice = await Market.findOne().sort({timestamp: -1})
       let quoteUSD = 0;
 
@@ -617,9 +616,6 @@ exports.data = async (req, res) => {
         activeAddresses = activeAddressesStat[0].count;
       }
 
-      if (cloTransferredStat.length > 0) {
-        cloTransferredAmount = cloTransferredStat[0].amount;
-      }
 
       const blockChecknum = await Block.findOne({number: checknum});
 
