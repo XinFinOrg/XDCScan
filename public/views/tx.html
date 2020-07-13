@@ -55,9 +55,16 @@
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The number of the block in which the transaction was recorded. Block confirmation indicate how many blocks since the transaction is mined."></i>Block Number </div>
                                                     <div class="col-md-9">
                                                         <div class="d-flex pl-small">
-                                                            <span class="mr-3"><a href="/block/{{tx.blockNumber}}">{{tx.blockNumber}}</a></span>
-															<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View previous block"><i class="fa fa-chevron-left"></i></a>
-															<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View next block"><i class="fa fa-chevron-right"></i></a>
+                                                            <span class="mr-3"><a href="/block/{{tx.blockNumber}}">{{tx.blockNumber}}</a>
+                                                                -
+                                                                <ng-pluralize count="tx.confirmations"
+                                                                              when="{'0': 'No block confirmation',
+                                                              'one': '1 block confirmation',
+                                                              'other': '{} block confirmations'}">
+                                                                </ng-pluralize>
+                                                            </span>
+															<!-- <a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View previous block"><i class="fa fa-chevron-left"></i></a>
+															<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View next block"><i class="fa fa-chevron-right"></i></a> -->
 														</div>
                                                     </div>
                                                 </div>
@@ -88,17 +95,19 @@
                                                             <a href="/addr/{{tx.to}}">{{tx.to}}</a> </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr-space">
-                                                <div class="row align-items-center" ng-show="tx.createContract">
+                                                <div class="row align-items-center" ng-show="tx.creates">
+                                                    <hr class="hr-space">
+
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The receiving party of the transaction (could be a contract address)."></i>Create Contract:  </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
-                                                            <a href="/addr/{{tx.createContract}}">{{tx.createContract}}</a> </div>
+                                                            <a href="/addr/{{tx.creates}}">{{tx.creates}}</a> </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr-space">
+                                                
                                                 <div class="row align-items-center" ng-show="tx.tokenName">
+                                                    <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The contract address of receiving party."></i>{{tx.contractLable}}: </div>
                                                     <div class="col-md-9">
@@ -106,8 +115,9 @@
                                                             <a href="/{{tx.contractLink}}">{{tx.tokenName}}</a> </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr-space">
+                                                
                                                 <div  ng-show="tx.needVerify" class="row align-items-center">
+                                                    <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Verify status of contract."></i>Verify </div>
                                                     <div class="col-md-9">
@@ -115,7 +125,7 @@
                                                             <a href="/verifycontract/{{tx.contractAddr}}"><span class="label label_sm label_info ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to verify your contract </div>
                                                     </div>
                                                 </div>
-												<hr class="hr-space">
+												
                                                 <!--  Type of Token                                                
                                                 <div class="row align-items-center" ng-show="tx.ERC">
                                                     <div class="col-md-3 fw6 mb-1">
@@ -126,6 +136,7 @@
                                                     </div>
                                                 </div> -->
                                                 <div class="row align-items-center" ng-show="tx.isTransfer">
+                                                    <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Token Transfer: </div>
                                                         <div class="pl-small">From <a href="/addr/{{tx.from}}">{{tx.from.substr(0,24)}}...</a>  </div>
@@ -143,7 +154,20 @@
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Value </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small fw6">
-                                                            {{tx.value}} XDC 
+                                                            <!-- <img src="/img/mini-logo.svg" alt="mini-logo" class="mini-logo"/>  -->
+                                                            {{tx.value | number: 8}} {{ settings.symbol }} => {{ tx.valueUSD | currency : "USD $" : 4 }}
+                                                            <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
+														</div>
+                                                    </div>
+                                                </div>
+                                                <hr class="hr-space">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-3 fw6 mb-1">
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Transaction fee: </div>
+                                                    <div class="col-md-9">
+                                                        <div class="pl-small fw6">
+                                                            {{tx.transactionFee | number : 14}} {{ settings.symbol }} => {{ tx.transactionFeeUSD | currency :
+                                                                "USD $" : 15 }}
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>
                                                     </div>
