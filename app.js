@@ -96,10 +96,10 @@ var RESPONSE = require('./helpers/RESPONSE.js');
 // const masterNodeController = require('./controller/masterNodeController');
 // masterNodeController.updateMNDetails();
 
-function startWatch() {
-    const masterNodeHelper = require('./helpers/masterNodeHelper');
-    masterNodeHelper.startWatch();
-    masterNodeHelper.startEpochWatch();
-}
+// function startWatch() {
+//     const masterNodeHelper = require('./helpers/masterNodeHelper');
+//     masterNodeHelper.startWatch();
+//     masterNodeHelper.startEpochWatch();
+// }
 
-startWatch();
+// startWatch();
