@@ -4,63 +4,44 @@ Version: .0.0.2
 This file will start syncing the blockchain from the node address you provide in the conf.json file.
 Please read the README in the root directory that explains the parameters of this code
 */
-require('../db.js');
-var BlockSigners = "xdc0000000000000000000000000000000000000089";
-var RandomizeSMC = "xdc0000000000000000000000000000000000000090";
-var pingTXValue = "0";
-const BigNumber = require('bignumber.js');
-const _ = require('lodash');
+require( '../db.js' );
 
-const asyncL = require('async');
-const Web3 = require('xdc3');
+var etherUnits = require("../lib/etherUnits.js");
+var BigNumber = require('bignumber.js');
+var _ = require('lodash');
 
-const ERC20ABI = [{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"tokens","type":"uint256"}],"name":"approve","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"from","type":"address"},{"name":"to","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transferFrom","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"decimals","outputs":[{"name":"","type":"uint8"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"_totalSupply","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"tokenOwner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[],"name":"acceptOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"symbol","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"to","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"spender","type":"address"},{"name":"tokens","type":"uint256"},{"name":"data","type":"bytes"}],"name":"approveAndCall","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"newOwner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"tokenAddress","type":"address"},{"name":"tokens","type":"uint256"}],"name":"transferAnyERC20Token","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"tokenOwner","type":"address"},{"name":"spender","type":"address"}],"name":"allowance","outputs":[{"name":"remaining","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":true,"stateMutability":"payable","type":"fallback"},{"anonymous":false,"inputs":[{"indexed":true,"name":"_from","type":"address"},{"indexed":true,"name":"_to","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"tokens","type":"uint256"}],"name":"Transfer","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"tokenOwner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"tokens","type":"uint256"}],"name":"Approval","type":"event"}];
+var asyncL = require('async');
 
-const fetch = require('node-fetch');
+var Web3 = require('xdc3');
+let ERC20ABI = require('../contractTpl/contracts').ERC20ABI
 
-const mongoose = require('mongoose');
-const etherUnits = require('../lib/etherUnits.js');
-const { Market } = require('../db.js');
-
-const Block = mongoose.model('Block');
-const Transaction = mongoose.model('Transaction');
-const Account = mongoose.model('Address');
+var mongoose        = require( 'mongoose' );
+var Block           = mongoose.model( 'Block' );
+var Transaction     = mongoose.model( 'Transaction' );
+var Account         = mongoose.model( 'Account' );
 const Contract = mongoose.model('Contract');
 const TokenTransfer = mongoose.model('TokenTransfer');
 
+var BlockSigners = "xdc0000000000000000000000000000000000000089";
+var RandomizeSMC = "xdc0000000000000000000000000000000000000090";
+var pingTXValue = "0";
 const ERC20_METHOD_DIC = { '0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom' };
+const METHOD_DIC = {
+  "0x930a61a57a70a73c2a503615b87e2e54fe5b9cdeacda518270b852296ab1a377":"Transfer(address,address,uint)",
+  "0xa9059cbb2ab09eb219583f4a59a5d0623ade346d962bcd4e46b11da047c9049b":"transfer(address,uint256)",
+  "0xa978501e4506ecbd340f6e45a48ac5bd126b1c14f03f2210837c8e0b602d4d7b":"transferFrom(address,address,uint)",
+  "0x086c40f692cc9c13988b9e49a7610f67375e8373bfe7653911770b351c2b1c54":"approve(address,uint)",
+  "0xf2fde38b092330466c661fc723d5289b90272a3e580e3187d1d7ef788506c557":"transferOwnership(address)",
+  "0x3bc50cfd0fe2c05fb67c0fe4be91fb10eb723ba30ea8f559d533fcd5fe29be7f":"Released(address,uint)",
+  "0xb21fb52d5749b80f3182f8c6992236b5e5576681880914484d7f4c9b062e619e":"Released(address indexed, uint indexed)"
+};
 
-/**
-  Start config for node connection and sync
-**/
-/**
- * nodeAddr: node address
- * wsPort:  rpc port
- * bulkSize: size of array in block to use bulk operation
- */
-// load config.json
-const config = { nodeAddr: 'localhost', wsPort: 8546, bulkSize: 100 };
-try {
-  var local = require('../config.json');
-  _.extend(config, local);
-  console.log('config.json found.');
-} catch (error) {
-  if (error.code === 'MODULE_NOT_FOUND') {
-    var local = require('../config.example.json');
-    _.extend(config, local);
-    console.log('No config file found. Using default configuration... (config.example.json)');
-  } else {
-    throw error;
-    process.exit(1);
-  }
-}
 
-console.log(`Connecting ${config.nodeAddr}:${config.wsPort}...`);
-// Sets address for RPC WEB3 to connect to, usually your node IP address defaults ot localhost
-const web3 = new Web3(new Web3.providers.WebsocketProvider(`ws://${config.nodeAddr}:${config.wsPort.toString()}`));
 
-const normalizeTX = async (txData, receipt, blockData) => {
-  const tx = {
+
+
+const normalizeTX = async (txData, receipt,blockData) => {
+  var tx = {
     blockHash: txData.blockHash,
     blockNumber: txData.blockNumber,
     from: txData.from.toLowerCase(),
@@ -72,16 +53,15 @@ const normalizeTX = async (txData, receipt, blockData) => {
     v: txData.v,
     gas: txData.gas,
     gasUsed: receipt.gasUsed,
-    gasPrice: String(txData.gasPrice),
+    gasPrice: txData.gasPrice,
     input: txData.input,
     transactionIndex: txData.transactionIndex,
     timestamp: blockData.timestamp,
+    status: 0
   };
-
   if (receipt.status) {
     tx.status = receipt.status;
   }
-
   if (txData.to) {
     tx.to = txData.to.toLowerCase();
     return tx;
@@ -95,43 +75,45 @@ const normalizeTX = async (txData, receipt, blockData) => {
 };
 
 /**
-  Write the whole block object to DB
+   Write the whole block object to DB
 **/
-var writeBlockToDB = function (config, blockData, flush) {
-  const self = writeBlockToDB;
+var writeBlockToDB = function(config, blockData, flush) {
+  var self = writeBlockToDB;
   if (!self.bulkOps) {
     self.bulkOps = [];
   }
   if (blockData && blockData.number >= 0) {
     self.bulkOps.push(new Block(blockData));
     if (!('quiet' in config && config.quiet === true)) {
-      console.log(`\t- block #${blockData.number.toString()} inserted.`);
+    console.log('\t- block #' + blockData.number.toString() + ' inserted.');
     }
   }
 
-  if (flush && self.bulkOps.length > 0 || self.bulkOps.length >= config.bulkSize) {
-    const bulk = self.bulkOps;
+  if(flush && self.bulkOps.length > 0 || self.bulkOps.length >= config.bulkSize) {
+    var bulk = self.bulkOps;
     self.bulkOps = [];
-    if (bulk.length === 0) return;
+    if(bulk.length == 0) return;
+    
+    Block.collection.insert(bulk, function( err, blocks ){
 
-    Block.collection.insert(bulk, (err, blocks) => {
-      if (typeof err !== 'undefined' && err) {
-        if (err.code === 11000) {
-          if (!('quiet' in config && config.quiet === true)) {
-            console.log(`Skip: Duplicate DB key : ${err}`);
+      if ( typeof err !== 'undefined' && err ) {
+        if (err.code == 11000) {
+          if(!('quiet' in config && config.quiet === true)) {
+            console.log('Skip: Duplicate DB key : ' +err);
           }
-        } else {
-          console.log(`Error: Aborted due to error on DB: ${err}`);
+        }else{
+          console.log('Error: Aborted due to error on DB: ' + err);
           process.exit(9);
         }
-      } else {
+      }else{
         if (!('quiet' in config && config.quiet === true)) {
-          console.log(`* ${blocks.insertedCount} blocks successfully written.`);
+        console.log('* ' + blocks.insertedCount + ' blocks successfully written.');
+          }
         }
-      }
     });
   }
-};
+
+}
 /**
   Break transactions out of blocks and write to DB
 **/
@@ -187,7 +169,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           } catch (err) {
             isTokenContract = false;
           }
-          contractdb.byteCode = await web3.eth.getCode(contractAddress);
+          contractdb.byteCode = await web3.eth.getCode(contractAddress);        
           if (isTokenContract) {
             contractdb.ERC = 2;
           } else {
@@ -216,12 +198,12 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
               // Token transfer transaction
               transfer.from = txData.from;
-              transfer.to = `0x${txData.input.substring(34, 74)}`;
+              transfer.to = `xdc${txData.input.substring(34, 74)}`;
               transfer.value = Number(`0x${txData.input.substring(74)}`);
             } else {
               // transferFrom
-              transfer.from = `0x${txData.input.substring(34, 74)}`;
-              transfer.to = `0x${txData.input.substring(74, 114)}`;
+              transfer.from = `xdc${txData.input.substring(34, 74)}`;
+              transfer.to = `xdc${txData.input.substring(74, 114)}`;
               transfer.value = Number(`0x${txData.input.substring(114)}`);
             }
             transfer.method = ERC20_METHOD_DIC[methodCode];
@@ -243,9 +225,10 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           }
         }
       }
-      if (!(tx.to ==BlockSigners || tx.to ==RandomizeSMC)){
-        self.bulkOps.push(tx);
-      }
+      // if (!(tx.to ==BlockSigners || tx.to ==RandomizeSMC)){
+      //   self.bulkOps.push(tx);
+      // }
+      self.bulkOps.push(tx);
     }
     if (!('quiet' in config && config.quiet === true)) {
       console.log(`\t- block #${blockData.number.toString()}: ${blockData.transactions.length.toString()} transactions recorded.`);
@@ -341,17 +324,17 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
 /**
   //Just listen for latest blocks and sync from the start of the app.
 **/
-const listenBlocks = function (config) {
-  const newBlocks = web3.eth.subscribe('newBlockHeaders', (error, result) => {
+var listenBlocks = function(config) {
+  var newBlocks = web3.eth.subscribe('newBlockHeaders', function(error, result){
     if (!error) {
-      return;
+        return;
     }
 
     console.error(error);
   });
-  newBlocks.on('data', (blockHeader) => {
-    web3.eth.getBlock(blockHeader.hash, true, (error, blockData) => {
-      if (blockHeader === null) {
+  newBlocks.on("data", function (blockHeader) {
+    web3.eth.getBlock(blockHeader.hash, true, function(error, blockData) {
+      if (blockHeader == null) {
         console.log('Warning: null block hash');
       } else {
         writeBlockToDB(config, blockData, true);
@@ -359,77 +342,77 @@ const listenBlocks = function (config) {
       }
     });
   });
-  newBlocks.on('error', console.error);
-};
+  newBlocks.on("error", console.error);
+}
 /**
-  If full sync is checked this function will start syncing the block chain from lastSynced param see README
+If full sync is checked this function will start syncing the block chain from lastSynced param see README
 **/
-var syncChain = function (config, nextBlock) {
-  if (web3.eth.net.isListening()) {
-    if (typeof nextBlock === 'undefined') {
-      prepareSync(config, (error, startBlock) => {
-        if (error) {
-          console.log(`ERROR: error: ${error}`);
-          return;
-        }
-        syncChain(config, startBlock);
-      });
-      return;
-    }
-
-    if (nextBlock === null) {
-      console.log('nextBlock is null');
-      return;
-    } if (nextBlock < config.startBlock) {
-      writeBlockToDB(config, null, true);
-      writeTransactionsToDB(config, null, true);
-      console.log('*** Sync Finsihed ***');
-      config.syncAll = false;
-      return;
-    }
-
-    let count = config.bulkSize;
-    while (nextBlock >= config.startBlock && count > 0) {
-      web3.eth.getBlock(nextBlock, true, (error, blockData) => {
-        if (error) {
-          console.log(`Warning (syncChain): error on getting block with hash/number: ${nextBlock}: ${error}`);
-        } else if (blockData === null) {
-          console.log(`Warning: null block data received from the block with hash/number: ${nextBlock}`);
-        } else {
-          writeBlockToDB(config, blockData);
-          writeTransactionsToDB(config, blockData);
-        }
-      });
-      nextBlock--;
-      count--;
-    }
-
-    setTimeout(() => { syncChain(config, nextBlock); }, 500);
-  } else {
-    console.log(`Error: Web3 connection time out trying to get block ${nextBlock} retrying connection now`);
-    syncChain(config, nextBlock);
+var syncChain = function(config, nextBlock){
+if(web3.eth.net.isListening()) {
+  if (typeof nextBlock === 'undefined') {
+    prepareSync(config, function(error, startBlock) {
+      if(error) {
+        console.log('ERROR: error: ' + error);
+        return;
+      }
+      syncChain(config, startBlock);
+    });
+    return;
   }
-};
+
+  if( nextBlock == null ) {
+    console.log('nextBlock is null');
+    return;
+  } else if( nextBlock < config.startBlock ) {
+    writeBlockToDB(config, null, true);
+    writeTransactionsToDB(config, null, true);
+    console.log('*** Sync Finsihed ***');
+    config.syncAll = false;
+    return;
+  }
+
+  var count = config.bulkSize;
+  while(nextBlock >= config.startBlock && count > 0) {
+    web3.eth.getBlock(nextBlock, true, function(error,blockData) {
+      if(error) {
+        console.log('Warning (syncChain): error on getting block with hash/number: ' + nextBlock + ': ' + error);
+      }else if(blockData == null) {
+        console.log('Warning: null block data received from the block with hash/number: ' + nextBlock);
+      }else{
+        writeBlockToDB(config, blockData);
+        writeTransactionsToDB(config, blockData);
+      }
+    });
+    nextBlock--;
+    count--;
+  }
+
+  setTimeout(function() { syncChain(config, nextBlock); }, 500);
+}else{
+  console.log('Error: Web3 connection time out trying to get block ' + nextBlock + ' retrying connection now');
+  syncChain(config, nextBlock);
+}
+}
 /**
   //check oldest block or starting block then callback
 **/
 const prepareSync = async (config, callback) => {
-  let blockNumber = null;
-  const oldBlockFind = Block.find({}, 'number').lean(true).sort('number').limit(1);
+  var blockNumber = null;
+  var oldBlockFind = Block.find({}, "number").lean(true).sort('number').limit(1);
   oldBlockFind.exec(async (err, docs) => {
-    if (err || !docs || docs.length < 1) {
+    if(err || !docs || docs.length < 1) {
       // not found in db. sync from config.endBlock or 'latest'
-      if (web3.eth.net.isListening()) {
-        const currentBlock = await web3.eth.getBlockNumber();
-        const latestBlock = config.endBlock || currentBlock || 'latest';
-        if (latestBlock === 'latest') {
-          web3.eth.getBlock(latestBlock, true, (error, blockData) => {
-            if (error) {
-              console.log(`Warning (prepareSync): error on getting block with hash/number: ${latestBlock}: ${error}`);
-            } else if (blockData === null) {
-              console.log(`Warning: null block data received from the block with hash/number: ${latestBlock}`);
+      if(web3.eth.net.isListening()) {
+        var currentBlock = await web3.eth.getBlockNumber();
+        var latestBlock = config.endBlock || currentBlock || 'latest';
+        if(latestBlock === 'latest') {
+          web3.eth.getBlock(latestBlock, true, function(error, blockData) {
+            if(error) {
+              console.log('Warning (prepareSync): error on getting block with hash/number: ' +   latestBlock + ': ' + error);
+            } else if(blockData == null) {
+              console.log('Warning: null block data received from the block with hash/number: ' + latestBlock);
             } else {
-              console.log(`Starting block number = ${blockData.number}`);
+              console.log('Starting block number = ' + blockData.number);
               if ('quiet' in config && config.quiet === true) {
                 console.log('Quiet mode enabled');
               }
@@ -438,7 +421,7 @@ const prepareSync = async (config, callback) => {
             }
           });
         } else {
-          console.log(`Starting block number = ${latestBlock}`);
+          console.log('Starting block number = ' + latestBlock);
           if ('quiet' in config && config.quiet === true) {
             console.log('Quiet mode enabled');
           }
@@ -449,61 +432,59 @@ const prepareSync = async (config, callback) => {
         console.log('Error: Web3 connection error');
         callback(err, null);
       }
-    } else {
+    }else{
       blockNumber = docs[0].number - 1;
-      console.log(`Old block found. Starting block number = ${blockNumber}`);
+      console.log('Old block found. Starting block number = ' + blockNumber);
       if ('quiet' in config && config.quiet === true) {
         console.log('Quiet mode enabled');
       }
       callback(null, blockNumber);
     }
   });
-};
+}
 /**
   Block Patcher(experimental)
 **/
 const runPatcher = async (config, startBlock, endBlock) => {
-  if (!web3 || !web3.eth.net.isListening()) {
+  if(!web3 || !web3.eth.net.isListening()) {
     console.log('Error: Web3 is not connected. Retrying connection shortly...');
-    setTimeout(() => { runPatcher(config); }, 3000);
+    setTimeout(function() { runPatcher(config); }, 3000);
     return;
   }
 
-  if (typeof startBlock === 'undefined' || typeof endBlock === 'undefined') {
+  if(typeof startBlock === 'undefined' || typeof endBlock === 'undefined') {
     // get the last saved block
-    const blockFind = Block.find({}, 'number').lean(true).sort('-number').limit(1);
+    var blockFind = Block.find({}, "number").lean(true).sort('-number').limit(1);
     blockFind.exec(async (err, docs) => {
-      if (err || !docs || docs.length < 1) {
+      if(err || !docs || docs.length < 1) {
         // no blocks found. terminate runPatcher()
         console.log('No need to patch blocks.');
         return;
       }
 
-      const lastMissingBlock = docs[0].number + 1;
-      const currentBlock = await web3.eth.getBlockNumber();
-      runPatcher(config, lastMissingBlock, currentBlock - 1);
+      var lastMissingBlock = docs[0].number + 1;
+      var currentBlock = await web3.eth.getBlockNumber();
+      runPatcher(config, currentBlock - 10000, currentBlock - 1);
     });
     return;
   }
 
-  const missingBlocks = endBlock - startBlock + 1;
+  var missingBlocks = endBlock - startBlock + 1;
   if (missingBlocks > 0) {
-    if (!('quiet' in config && config.quiet === true)) {
-      console.log(`Patching from #${startBlock} to #${endBlock}`);
-    }
-    let patchBlock = startBlock;
-    let count = 0;
-    while (count < config.patchBlocks && patchBlock <= endBlock) {
-      if (!('quiet' in config && config.quiet === true)) {
-        console.log(`Patching Block: ${patchBlock}`);
+    console.log('Patching from #' + startBlock + ' to #' + endBlock);
+    var patchBlock = startBlock;
+    var count = 0;
+    while(count < config.patchBlocks && patchBlock <= endBlock) {
+      if(!('quiet' in config && config.quiet === true)) {
+        console.log('Patching Block: ' + patchBlock)
       }
-      web3.eth.getBlock(patchBlock, true, (error, patchData) => {
-        if (error) {
-          console.log(`Warning: error on getting block with hash/number: ${patchBlock}: ${error}`);
-        } else if (patchData === null) {
-          console.log(`Warning: null block data received from the block with hash/number: ${patchBlock}`);
+      web3.eth.getBlock(patchBlock, true, function(error, patchData) {
+        if(error) {
+          console.log('Warning: error on getting block with hash/number: ' + patchBlock + ': ' + error);
+        } else if(patchData == null) {
+          console.log('Warning: null block data received from the block with hash/number: ' + patchBlock);
         } else {
-          checkBlockDBExistsThenWrite(config, patchData);
+          checkBlockDBExistsThenWrite(config, patchData)
         }
       });
       patchBlock++;
@@ -513,91 +494,71 @@ const runPatcher = async (config, startBlock, endBlock) => {
     writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
 
-    setTimeout(() => { runPatcher(config, patchBlock, endBlock); }, 1000);
+    setTimeout(function() { runPatcher(config, patchBlock, endBlock); }, 1000);
   } else {
     // flush
     writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
-
+    currentBlock = await web3.eth.getBlockNumber();
+    setTimeout(function() { runPatcher(config, currentBlock - 1000, currentBlock); }, 600000);
     console.log('*** Block Patching Completed ***');
   }
-};
+}
 /**
   This will be used for the patcher(experimental)
 **/
-var checkBlockDBExistsThenWrite = function (config, patchData, flush) {
-  Block.find({ number: patchData.number }, (err, b) => {
-    if (!b.length) {
+var checkBlockDBExistsThenWrite = function(config, patchData, flush) {
+  Block.find({number: patchData.number}, function (err, b) {
+    if (!b.length){
       writeBlockToDB(config, patchData, flush);
       writeTransactionsToDB(config, patchData, flush);
-    } else if (!('quiet' in config && config.quiet === true)) {
-      console.log(`Block number: ${patchData.number.toString()} already exists in DB.`);
+    }else if(!('quiet' in config && config.quiet === true)) {
+      console.log('Block number: ' +patchData.number.toString() + ' already exists in DB.');
     }
   });
 };
 /**
-  Fetch market price from cryptocompare
+  Start config for node connection and sync
 **/
-// 10 minutes
-const quoteInterval = 10 * 60 * 1000;
-
-const getQuote = async () => {
-  const options = {
-    timeout: 10000,
-  };
-  const URL = `https://min-api.cryptocompare.com/data/price?fsym=${config.settings.symbol}&tsyms=USD`;
-
-  try {
-    const requestUSD = await fetch(URL);
-    const quoteUSD = await requestUSD.json();
-
-    quoteObject = {
-      timestamp: Math.round(Date.now() / 1000),
-      quoteUSD: quoteUSD.USD,
-    };
-
-    new Market(quoteObject).save((err, market, count) => {
-      if (typeof err !== 'undefined' && err) {
-        process.exit(9);
-      } else {
-        if (!('quiet' in config && config.quiet === true)) {
-          console.log('DB successfully written for market quote.');
-        }
-      }
-    });
-  } catch (error) {
-    if (!('quiet' in config && config.quiet === true)) {
-      console.log(error);
+/**
+ * nodeAddr: node address
+ * gethPort: geth port
+ * bulkSize: size of array in block to use bulk operation
+ */
+// load config.json
+var config = { nodeAddr: '109.169.40.128', gethPort: 8545, bulkSize: 100 };
+try {
+    var local = require('../config.json');
+    _.extend(config, local);
+    console.log('config.json found.');
+} catch (error) {
+    if (error.code === 'MODULE_NOT_FOUND') {
+        var local = require('../config.example.json');
+        _.extend(config, local);
+        console.log('No config file found. Using default configuration... (config.example.json)');
+    } else {
+        throw error;
+        process.exit(1);
     }
-  }
-};
-
-// patch missing blocks
-if (config.patch === true) {
-  console.log('Checking for missing blocks');
-  runPatcher(config);
 }
 
-// check NORICHLIST env
-// you can use it like as 'NORICHLIST=1 node tools/sync.js' to disable balance updater temporary.
-if (process.env.NORICHLIST) {
-  config.settings.useRichList = false;
+console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
+
+// Sets address for RPC WEB3 to connect to, usually your node IP address defaults ot localhost
+//var web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.nodeAddr + ':' + config.gethPort.toString()));
+var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://' + config.nodeAddr + ':' + config.gethWSPort));
+
+// patch missing blocks
+if (config.patch === true){
+  console.log('Checking for missing blocks');
+  runPatcher(config);
 }
 
 // Start listening for latest blocks
 listenBlocks(config);
 
 // Starts full sync when set to true in config
-if (config.syncAll === true) {
+if (config.syncAll === true){
   console.log('Starting Full Sync');
   syncChain(config);
-}
-
-// Start price sync on DB
-if (config.settings.useFiat) {
-  getQuote();
-
-  setInterval(() => {
-    getQuote();
-  }, quoteInterval);
 }

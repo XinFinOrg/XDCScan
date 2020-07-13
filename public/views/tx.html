@@ -30,7 +30,7 @@
                                             <div class="tab-pane fade active show" id="overview">
                                                 <div class="row align-items-center mt-1">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="A TxHash or transaction hash is a unique 66 characters identifier that is generated whenever a transaction is executed."></i>Transaction Hash </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="A TxHash or transaction hash is a unique 66 characters identifier that is generated whenever a transaction is executed."></i>Transaction Hash </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small fw6">
                                                             {{tx.hash}} </div>
@@ -39,7 +39,7 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The status of the transaction."></i>Transaction Status </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The status of the transaction."></i>Transaction Status </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <span ng-show="!(tx.status==0) && tx.blockNumber" class="label label_sm label_success ml-0"><i class="fa fa-check-circle mr-1"></i>Success</span> 
@@ -52,16 +52,26 @@
                                                 <hr class="hr-space mt-2">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The number of the block in which the transaction was recorded. Block confirmation indicate how many blocks since the transaction is mined."></i>Block Number </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The number of the block in which the transaction was recorded. Block confirmation indicate how many blocks since the transaction is mined."></i>Block Number </div>
                                                     <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            <a href="/block/{{tx.blockNumber}}">{{tx.blockNumber}}</a> </div>
+                                                        <div class="d-flex pl-small">
+                                                            <span class="mr-3"><a href="/block/{{tx.blockNumber}}">{{tx.blockNumber}}</a>
+                                                                -
+                                                                <ng-pluralize count="tx.confirmations"
+                                                                              when="{'0': 'No block confirmation',
+                                                              'one': '1 block confirmation',
+                                                              'other': '{} block confirmations'}">
+                                                                </ng-pluralize>
+                                                            </span>
+															<!-- <a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View previous block"><i class="fa fa-chevron-left"></i></a>
+															<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View next block"><i class="fa fa-chevron-right"></i></a> -->
+														</div>
                                                     </div>
                                                 </div>
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The date and time at which a transaction is mined."></i>Time </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The date and time at which a transaction is mined."></i>Time </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <i class="far fa-clock small mr-2"></i>{{tx.datetime | date:'yyyy-MM-dd HH:mm:ss Z' }} ({{tx.timestamp | timeDuration}} ago) </div>
@@ -70,7 +80,7 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The sending party of the transaction (could be from a contract address)."></i>From </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" title="The sending party of the transaction (could be from a contract address)."></i>From </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <a href="/addr/{{tx.from}}">{{tx.from}}</a> </div>
@@ -79,52 +89,56 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center" ng-show="tx.to">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The receiving party of the transaction (could be a contract address)."></i>To </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The receiving party of the transaction (could be a contract address)."></i>To </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <a href="/addr/{{tx.to}}">{{tx.to}}</a> </div>
                                                     </div>
                                                 </div>
-                                                
-                                                <div class="row align-items-center" ng-show="tx.createContract">
+                                                <div class="row align-items-center" ng-show="tx.creates">
+                                                    <hr class="hr-space">
+
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The receiving party of the transaction (could be a contract address)."></i>Create Contract:  </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The receiving party of the transaction (could be a contract address)."></i>Create Contract:  </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
-                                                            <a href="/addr/{{tx.createContract}}">{{tx.createContract}}</a> </div>
+                                                            <a href="/addr/{{tx.creates}}">{{tx.creates}}</a> </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr-space">
+                                                
                                                 <div class="row align-items-center" ng-show="tx.tokenName">
+                                                    <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The contract address of receiving party."></i>{{tx.contractLable}}: </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The contract address of receiving party."></i>{{tx.contractLable}}: </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <a href="/{{tx.contractLink}}">{{tx.tokenName}}</a> </div>
                                                     </div>
                                                 </div>
-                                                <hr class="hr-space">
+                                                
                                                 <div  ng-show="tx.needVerify" class="row align-items-center">
+                                                    <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Verify status of contract."></i>Verify </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Verify status of contract."></i>Verify </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <a href="/verifycontract/{{tx.contractAddr}}"><span class="label label_sm label_info ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to verify your contract </div>
                                                     </div>
                                                 </div>
-                                                <!--  Type of Token
-                                                <hr class="hr-space">
+												
+                                                <!--  Type of Token                                                
                                                 <div class="row align-items-center" ng-show="tx.ERC">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>XRC {ERC} </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>XRC {ERC} </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             {{tx.ERC}} </div>
                                                     </div>
                                                 </div> -->
                                                 <div class="row align-items-center" ng-show="tx.isTransfer">
+                                                    <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Token Transfer: </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Token Transfer: </div>
                                                         <div class="pl-small">From <a href="/addr/{{tx.from}}">{{tx.from.substr(0,24)}}...</a>  </div>
                                                         <div class="pl-small">To <a href="/addr/{{tx.to}}">{{tx.transerTo.substr(0,24)}}...</a> </div>
                                                         <div class="pl-small">{{tx.tokenNum}} <a href="/token/{{tx.contractAddr}}">{{tx.tokenName}}</a>
@@ -137,16 +151,31 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The value being transacted in Ether and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Value </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Value </div>
                                                     <div class="col-md-9">
-                                                        <div class="pl-small">
-                                                            {{tx.value}} XDC </div>
+                                                        <div class="pl-small fw6">
+                                                            <!-- <img src="/img/mini-logo.svg" alt="mini-logo" class="mini-logo"/>  -->
+                                                            {{tx.value | number: 8}} {{ settings.symbol }} => {{ tx.valueUSD | currency : "USD $" : 4 }}
+                                                            <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
+														</div>
                                                     </div>
                                                 </div>
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Maximum amount of gas provided for the transaction. For normal Eth transfers, the value is 21,000. For contract this value is higher and bound by block gas limit."></i>Gas Provided </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Transaction fee: </div>
+                                                    <div class="col-md-9">
+                                                        <div class="pl-small fw6">
+                                                            {{tx.transactionFee | number : 14}} {{ settings.symbol }} => {{ tx.transactionFeeUSD | currency :
+                                                                "USD $" : 15 }}
+                                                            <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
+														</div>
+                                                    </div>
+                                                </div>
+                                                <hr class="hr-space">
+                                                <div class="row align-items-center">
+                                                    <div class="col-md-3 fw6 mb-1">
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Maximum amount of gas provided for the transaction. For normal XDC transfers, the value is 21,000. For contract this value is higher and bound by block gas limit."></i>Gas Provided </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             {{tx.gas}} </div>
@@ -155,7 +184,7 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Cost per unit of gas specified for the transaction, in Ether and Gwei. The higher the gas price the higher chance of getting included in a block."></i>Gas Price </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Cost per unit of gas specified for the transaction, in XDC and Gwei. The higher the gas price the higher chance of getting included in a block."></i>Gas Price </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                                 {{tx.gasPrice}} </div>
@@ -164,7 +193,7 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="The exact units of gas that was used for the transaction."></i>Gas Used </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The exact units of gas that was used for the transaction."></i>Gas Used </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             {{tx.gasUsed}} </div>
@@ -173,7 +202,7 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."></i>Nonce </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Sequential running number for an address, beginning with 0 for the first transaction. For example, if the nonce of a transaction is 10, it would be the 11th transaction sent from the sender's address."></i>Nonce </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             {{tx.nonce}} </div>
@@ -182,7 +211,7 @@
                                                 <!-- <hr class="hr-space">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Msternodes runed by the miner."></i>Masternode </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Msternodes runed by the miner."></i>Masternode </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <a href="/masternode/{{tx.witness}}">{{tx.witness}}</a> </div>
@@ -191,7 +220,7 @@
                                                 <hr class="hr-space">
                                                 <div class="row align-items-top">
                                                     <div class="col-md-3 fw6 mb-1">
-                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="popover" data-placement="top" data-original-title="" title="" data-content="Additional information that is required for the transaction."></i>Input Data </div>
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="Additional information that is required for the transaction."></i>Input Data </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small">
                                                             <textarea readonly="" class="form-control bg-light text-secondary p-3" rows="2" id="inputdata">{{tx.input}}</textarea>

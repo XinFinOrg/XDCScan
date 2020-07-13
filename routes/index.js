@@ -1,44 +1,53 @@
-var mongoose = require('mongoose');
+var mongoose = require( 'mongoose' );
 const axios = require("axios");
 const WebSocket = require("ws");
-var Block = mongoose.model('Block');
+let price = require('../tools/price')
+let Market = mongoose.model( 'Market' );
+var Block     = mongoose.model('Block');
 var Transaction = mongoose.model('Transaction');
-// var Contract = mongoose.model('Contract');
-// var Witness = mongoose.model( 'Witness' );
-var filters = require('./filters')
-var eth = require("./web3relay").eth;
+var Account = mongoose.model('Account');
+let ActiveAddressesStat = mongoose.model( 'ActiveAddressesStat' );
 
+var filters = require('./filters');
+var eth = require("./web3relay").eth;
 const { getCMCData } = require("../helpers/cmc");
 
 const cmc = "https://api.coinmarketcap.com/v1/ticker/xinfin-network/";
 
+
+var async = require('async');
 const ws = new WebSocket("wss://wsapi.homiex.com/openapi/quote/ws/v1");
 let homieExData;
+let BlockSigners = "xdc0000000000000000000000000000000000000089";
+let RandomizeSMC = "xdc0000000000000000000000000000000000000090";
 
-ws.on('open', function open() {
-  console.log("[*] connected to the homiex wss")
-  ws.send(JSON.stringify({ "ping": Date.now() }));
-  setInterval(() => {
+// module.exports = function(app){
+  var web3relay = require('./web3relay');
+  ws.on('open', function open() {
+    // console.log("[*] connected to the homiex wss")
     ws.send(JSON.stringify({ "ping": Date.now() }));
-  }, 120000);
-  ws.send(JSON.stringify({
-    "symbol": "XDCEUSDT",
-    "topic": "realtimes",
-    "event": "sub",
-    "params": {
-      "binary": false
-    }
-  }))
-});
+    setInterval(() => {
+      ws.send(JSON.stringify({ "ping": Date.now() }));
+    }, 120000);
+    ws.send(JSON.stringify({
+      "symbol": "XDCEUSDT",
+      "topic": "realtimes",
+      "event": "sub",
+      "params": {
+        "binary": false
+      }
+    }))
+  });
 
 
-ws.on('message', function incoming(data) {
-  const currData = JSON.parse(data);
-  if (Object.keys(currData).includes("symbol")) {
-    // not a pong message
-    homieExData = currData;
-  }
-});
+// ws.on('message', function incoming(data) {
+//   const currData = JSON.parse(data);
+//   if (Object.keys(currData).includes("symbol")) {
+//     // not a pong message
+//     homieExData = currData;
+//     console.log(homieExData,"homieExData")
+//   }
+// });
 
 var contracts = require('../contractTpl/contracts.js');
 var masterNodeContract;
@@ -52,7 +61,6 @@ let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, tota
 module.exports = function (app) {
   web3relay = require('./web3relay');
 
-  //var DAO = require('./dao');
   var Token = require('./token');
   var addressListData = require('./addressListData');
   var tokenListData = require('./tokenListData');
@@ -64,13 +72,13 @@ module.exports = function (app) {
   var compile = require('./compiler');
   var fiat = require('./fiat');
   var stats = require('./stats');
+  var richList = require('./richlist');
   var eventLog = require('./eventLog.js');
   var publicAPI = require("./publicAPIData");
 
-  const cmc = "https://api.coinmarketcap.com/v1/ticker/xinfin-network/";
-
   app.post('/addr', getAddr);
   app.post('/addrTXcounts', addrTXcounts);
+  
   app.post('/tx', getTx);
   app.post('/block', getBlock);
   app.post('/data', getData);
@@ -104,12 +112,12 @@ module.exports = function (app) {
 
   app.post('/fiat', fiat);
   app.post('/stats', stats);
-  app.post('/todayRewards', todayRewards);
-  app.post('/totalStakedValue', totalStakedValue)
-  app.post('/totalBurntValue', totalBurntValue)
-  app.post('/totalXDCStakedValue', totalXDCStakedValue)
-  app.post('/totalXDCBurntValue', totalXDCBurntValue)
-  app.post('/totalMasterNodes', totalMasterNodes);
+  // app.post('/todayRewards', todayRewards);
+  // app.post('/totalStakedValue', totalStakedValue)
+  // app.post('/totalBurntValue', totalBurntValue)
+  // app.post('/totalXDCStakedValue', totalXDCStakedValue)
+  // app.post('/totalXDCBurntValue', totalXDCBurntValue)
+  // app.post('/totalMasterNodes', totalMasterNodes);
   app.post('/CMCPrice', totalMasterNodes);
   app.post('/getXinFinStats', getXinFinStats)
   app.get('/getXinFinStats', getXinFinStats)
@@ -128,30 +136,28 @@ module.exports = function (app) {
    */
 
 
-  xinfinSiteStatTicker();
+  // xinfinSiteStatTicker();
 
-  setInterval(xinfinSiteStatTicker, 1000000);
+  // setInterval(xinfinSiteStatTicker, 1000000);
 
   async function xinfinSiteStatTicker() {
     try {
       console.log("called xinfinSiteStatTicker");
-      burntBalance = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
+      burntBalance = web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
       totalMasterNodesVal = "";
       let mnCandidateCnt;
       if (!masterNodeContract) {
-        var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-        masterNodeContract = contractOBJ.at(contractAddress);
+        masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
       }
       if (masterNodeContract) {
-        mnCandidateCnt = masterNodeContract.getCandidates().length
+        mnCandidateCnt = masterNodeContract.methods.getCandidates().length
         totalMasterNodesVal = (String(mnCandidateCnt - resignMNCount));
       }
 
-      totalStakedValueVal = web3relay.eth.getBalance(contractAddress).toPrecision() / Math.pow(10, 18)
+      totalStakedValueVal = web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
 
       if (!masterNodeContract) {
-        var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-        masterNodeContract = contractOBJ.at(contractAddress);
+        masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
       }
       if (masterNodeContract) {
         let mnCount = mnCandidateCnt - resignMNCount
@@ -175,13 +181,19 @@ module.exports = function (app) {
 
 
 
-  /* 
+  /*
     Local DB: data request format
-    { "address": "0x1234blah", "txin": true } 
+    { "address": "0x1234blah", "txin": true }
     { "tx": "0x1234blah" }
     { "block": "1234" }
   */
-
+  app.post('/richlist', richList);
+  app.post('/addr', getAddr);
+  app.post('/addr_count', getAddrCounter);
+  app.post('/tx', getTx);
+  app.post('/block', getBlock);
+  app.post('/data', getData);
+  app.get('/total', getTotal);
   //app.post('/daorelay', DAO);
   app.post('/addressListData', addressListData);
   app.get('/addressListData', addressListData);
@@ -194,6 +206,7 @@ module.exports = function (app) {
   app.post('/witnessListData', witnessListData);
   app.get('/witnessListData', witnessListData);
   app.post('/eventLog', eventLog);
+  app.post('/tokenrelay', Token);
   app.post('/web3relay', web3relay.data);
   app.post('/compile', compile);
   app.post('/publicAPI', publicAPI);//all public APIs
@@ -219,36 +232,36 @@ module.exports = function (app) {
 
 }
 
-var getAddr = function (req, res) {
+const getAddr = async (req, res) => {
   // TODO: validate addr and tx
   var addr = req.body.addr.toLowerCase();
   var count = parseInt(req.body.count);
-  var totalTX = parseInt(req.body.totalTX);
+
   var limit = parseInt(req.body.length);
   var start = parseInt(req.body.start);
-  var data = { draw: parseInt(req.body.draw), recordsFiltered: count, recordsTotal: count };
 
-  // Transaction.count({ $or: [{"to": addr}, {"from": addr}] }).exec().then(function(recordCount)
-  //   {
-  data.recordsFiltered = totalTX;
-  data.recordsTotal = totalTX;
+  var data = { draw: parseInt(req.body.draw), recordsFiltered: count, recordsTotal: count, mined: 0 };
 
-  var addrFind = Transaction.find({ $or: [{ "to": addr }, { "from": addr }] })
-  addrFind.lean(true).sort('-blockNumber').skip(start).limit(limit).exec("find", function (err, docs) {
-    if (err) {
-      console.log("getAddr err: ", err);
+  var addrFind = Transaction.find( { $or: [{"to": addr}, {"from": addr}] })
+
+  var sortOrder = '-blockNumber';
+  if (req.body.order && req.body.order[0] && req.body.order[0].column) {
+    // date or blockNumber column
+    if (req.body.order[0].column == 1 || req.body.order[0].column == 6) {
+      if (req.body.order[0].dir == 'asc') {
+        sortOrder = 'blockNumber';
+      }
+    }
+  }
+
+  addrFind.lean(true).sort(sortOrder).skip(start).limit(limit).exec("find", function (err, docs) {
+      if (docs)
+        data.data = filters.filterTX(docs, addr);
+      else
+        data.data = [];
       res.write(JSON.stringify(data));
       res.end();
-    }
-    if (docs)
-      data.data = filters.filterTX(docs, addr);
-    else
-      data.data = [];
-
-    res.write(JSON.stringify(data));
-    res.end();
   });
-  // })
 
 };
 
@@ -265,51 +278,63 @@ var addrTXcounts = function (req, res) {
     res.end();
   }
 }
+var getAddrCounter = function(req, res) {
+  var addr = req.body.addr.toLowerCase();
+  var count = parseInt(req.body.count);
+  var data = { recordsFiltered: count, recordsTotal: count, mined: 0 };
 
+  async.waterfall([
+  function(callback) {
 
-
-var getBlock = function (req, res) {
-  // TODO: support queries for block hash
-  var txQuery = "number";
-  var number = parseInt(req.body.block);
-  if (isNaN(number) || !number) {
-    res.write(JSON.stringify({ "error": true }));
-    res.end();
-    return;
-  }
-  var blockFind = Block.findOne({ number: number }, "number timestamp hash parentHash sha3Uncles miner difficulty totalDifficulty gasLimit gasUsed nonce witness extraData txs").lean(true);
-  blockFind.exec(function (err, doc) {
-    var resultBlockData;
-    if (err) {
-      console.error("BlockFind error: " + err)
-      console.error(req.body);
-      resultBlockData = { "error": true };
-    } else if (!doc) {
-      var blockData = web3relay.getBlock(number);
-      if (blockData) {
-        blockData.txs = blockData.transactions;
-        var blocks = filters.filterBlocks([blockData]);
-        resultBlockData = blocks[0];
-      } else {
-        resultBlockData = {};
-      }
-
-    } else {
-      var blocks = filters.filterBlocks([doc]);
-      resultBlockData = blocks[0];
+  Transaction.count({ $or: [{"to": addr}, {"from": addr}] }, function(err, count) {
+    if (!err && count) {
+      // fix recordsTotal
+      data.recordsTotal = count;
+      data.recordsFiltered = count;
     }
-    res.write(JSON.stringify(resultBlockData));
+    callback(null);
+  });
+
+  }, function(callback) {
+
+  Block.count({ "miner": addr }, function(err, count) {
+    if (!err && count) {
+      data.mined = count;
+    }
+    callback(null);
+  });
+
+  }], function (err) {
+    res.write(JSON.stringify(data));
     res.end();
   });
 
 };
+var getBlock = function(req, res) {
+  // TODO: support queries for block hash
+  var txQuery = "number";
+  var number = parseInt(req.body.block);
 
-var getTx = function (req, res) {
+  var blockFind = Block.findOne( { number : number }).lean(true);
+  blockFind.exec(function (err, doc) {
+    if (err || !doc) {
+      console.error("BlockFind error: " + err)
+      // console.error(req.body);
+      res.write(JSON.stringify({"error": true}));
+    } else {
+      var block = filters.filterBlocks([doc]);
+      res.write(JSON.stringify(block[0]));
+    }
+    res.end();
+  });
+};
+
+var getTx = function(req, res){
   var tx = req.body.tx.toLowerCase();
-  var txFind = Block.findOne({ "transactions.hash": tx }, "transactions timestamp").lean(true);
+  var txFind = Block.findOne( { "transactions.hash" : tx }, "transactions timestamp").lean(true);
   txFind.exec(function (err, doc) {
-    if (!doc) {
-      console.log("missing: " + tx)
+    if (!doc){
+      console.log("missing: " +tx)
       res.write(JSON.stringify({}));
       res.end();
     } else {
@@ -319,14 +344,11 @@ var getTx = function (req, res) {
       res.end();
     }
   });
-
 };
-
-
 /*
   Fetch data from DB
 */
-var getData = function (req, res) {
+var getData = function(req, res){
   // TODO: error handling for invalid calls
   var action = req.body.action.toLowerCase();
   var limit = req.body.limit
@@ -336,43 +358,45 @@ var getData = function (req, res) {
       var lim = MAX_ENTRIES;
     else
       var lim = parseInt(limit);
-
     DATA_ACTIONS[action](lim, res);
-
   } else {
-
     console.error("Invalid Request: " + action)
     res.status(400).send();
   }
-
 };
 
-var getTotalXDC = function (req, res) {
-  var block = Block.findOne({}, "number")
-    .lean(true).sort('-number');
-  block.exec(function (err, doc) {
-    // res.write(JSON.stringify(doc));
-    var total = 194000000 + (doc.number - 4936270) * 1.8;
-    res.write(total.toString());
+/*
+  Total supply API code
+*/
+var getTotal = function(req, res) {
+  Account.aggregate([
+    { $group: { _id: null, totalSupply: { $sum: '$balance' } } }
+  ]).exec(function(err, docs) {
+    if (err) {
+      res.write("Error getting total supply");
+      res.end()
+    }
+    res.write(docs[0].totalSupply.toString());
     res.end();
   });
 }
 
-/* 
+/*
   temporary blockstats here
 */
-var latestBlock = function (req, res) {
+var latestBlock = function(req, res) {
   var block = Block.findOne({}, "totalDifficulty")
-    .lean(true).sort('-number');
+                      .lean(true).sort('-number');
   block.exec(function (err, doc) {
     res.write(JSON.stringify(doc));
     res.end();
   });
 }
 
-var getLatest = function (lim, res, callback) {
+
+var getLatest = function(lim, res, callback) {
   var blockFind = Block.find({}, "number transactions timestamp miner extraData")
-    .lean(true).sort('-number').limit(lim);
+                      .lean(true).sort('-number').limit(lim);
   blockFind.exec(function (err, docs) {
     callback(docs, res);
   });
@@ -401,31 +425,29 @@ var regDecimal = function (nb, decimalNum) {
 //   });
 // }
 
-var todayRewards = function (req, res) {
+var todayRewards = async function (req, res) {
 
 
   if (!masterNodeContract) {
-    var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-    masterNodeContract = contractOBJ.at(contractAddress);
+    masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
   if (masterNodeContract) {
-    let mnCount = masterNodeContract.getCandidates().length - resignMNCount
-    let epoch = (eth.blockNumber / 900).toFixed()
+    let mnCount = await masterNodeContract.methods.getCandidates().call() 
+    mnCount = mnCount.length- resignMNCount
     let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
-
     res.write(String(mnDailyRewards));
   }
   res.end();
 
 }
 
-var totalMasterNodes = function (req, res) {
+var totalMasterNodes = async function  (req, res) {
   if (!masterNodeContract) {
-    var contractOBJ = web3relay.eth.contract(contracts.masterNodeABI);
-    masterNodeContract = contractOBJ.at(contractAddress);
+    masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
+  let getCandidates = await masterNodeContract.methods.getCandidates().call()
   if (masterNodeContract) {
-    res.write(String(masterNodeContract.getCandidates().length - resignMNCount));
+    res.write(String(getCandidates.length - resignMNCount));
   }
   res.end();
 }
@@ -454,70 +476,103 @@ function fnum(x) {
 
   return "1T+";
 }
-var getTotalXDCSupply = function (req, res) {
-  totalBlockNum = eth.blockNumber;
-  respData = 37500000000 + 5.55 * totalBlockNum;
-  res.write(String(respData));
+var getTotalXDCSupply = async function (req, res) {
+  burntBalance = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
+  totalBlockNum =  await web3relay.eth.getBlockNumber();
+  respData = ((37500000000 + 5.55 * totalBlockNum)-burntBalance).toFixed() ;
+  res.write(String(respData,burntBalance));
   res.end();
 }
 
-var totalStakedValue = function (req, res) {
-  let balace = web3relay.eth.getBalance(contractAddress).toPrecision() / Math.pow(10, 18)
+var totalStakedValue = async function (req, res) {
+  let balace = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
   res.write(fnum(balace));
   res.end();
 }
-var totalBurntValue = function (req, res) {
-  let balace = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
-  res.write(fnum(balace));
+var totalBurntValue = async function (req, res) {
+  let balace = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
+  // res.write(fnum(balace));
   res.end();
 }
-var totalXDCStakedValue = function (req, res) {
-  let balace = web3relay.eth.getBalance(contractAddress).toPrecision() / Math.pow(10, 18)
+var totalXDCStakedValue = async function (req, res) {
+  let balace = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
   res.write(balace);
   res.end();
 }
-var totalXDCBurntValue = function (req, res) {
-  let balace = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
+var totalXDCBurntValue = async function (req, res) {
+  let balace = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
   res.write(balace);
   res.end();
 }
 var firstDayTime = 1559211559;
 var oneDaySeconds = 86400;
 /* get blocks from db */
-var sendBlocks = function (lim, res) {
-  var blockHetht = web3relay.eth.blockNumber;
-  var blockFind = Block.find({}, "number txs timestamp miner extraData").lean(true).sort('-number').limit(lim);
-  blockFind.exec(function (err, docs) {
-    if (err) {
-      console.log(err);
-      res.end();
-      return;
-    }
+var sendBlocks = async function(lim, res) {
+  let activeAddresses = 0;
+  if (!masterNodeContract) {
+    masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
+  }
 
-    docs = filters.filterBlocks(docs);
-    var result = { "blocks": docs };
-    if (docs.length > 1) {
-      result.blockHeight = blockHetht;
-      var totalTXs = 0;
-      var costTime = docs[0].timestamp - docs[docs.length - 1].timestamp;
-      result.blockTime = costTime / (docs.length - 1);
-      result.blockTime = Math.round(result.blockTime * 1000) / 1000;
-      for (var i = 0; i < docs.length; i++) {
-        if (docs[i].txs)
-          totalTXs += docs[i].txs.length;
-      }
+  var blockHetht = await web3relay.eth.getBlockNumber();
+  const latestPrice = await Market.findOne().sort({timestamp: -1})
+  if (latestPrice) {
+    quoteUSD = latestPrice.quoteUSD;
+    
+  }
 
-      result.TPS = totalTXs / costTime;
-      result.TPS = Math.round(result.TPS * 1000) / 1000;
-      result.meanDayRewards = 0.3375 * docs[0].number / ((docs[0].timestamp - firstDayTime) / oneDaySeconds);
-      result.meanDayRewards = regDecimal(result.meanDayRewards, 4);
-    }
+  let transactionCount = await Transaction.count();
+  let accountsCount = await Account.count();
 
-    res.write(JSON.stringify(result));
-    res.end();
+    let mnCount = await masterNodeContract.methods.getCandidates().call() 
+    mnCount = mnCount.length- resignMNCount
+    let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+    let totalXDCBurntValue = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
+    let totalXDCStakedValue = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
+    let totalXDCSupply = ((37500000000 + 5.55 * blockHetht)-totalXDCBurntValue).toFixed() ;
+    let getCandidates = await masterNodeContract.methods.getCandidates().call()
+    let totalMNCount = getCandidates.length - resignMNCount
+
+
+    var blockFind = Block.find({}, "number txs timestamp miner extraData")
+                      .lean(true).sort('-number').limit(lim);
+        blockFind.exec(function (err, docs) {
+          if (err) {
+            // console.log(err);
+            res.end();
+            return;
+          }
+      
+          docs = filters.filterBlocks(docs);
+          var result = { "blocks": docs };
+          if (docs.length > 1) {
+            result.blockHeight = blockHetht;
+            var totalTXs = 0;
+            // console.log(docs)
+            var costTime = docs[0].timestamp - docs[docs.length - 1].timestamp;
+            result.blockTime = costTime / (docs.length - 1);
+            result.blockTime = Math.round(result.blockTime * 1000) / 1000;
+            for (var i = 0; i < docs.length; i++) {
+              if (docs[i].txs)
+                totalTXs += docs[i].txs.length;
+            }
+            result.quoteUSD = quoteUSD;
+            result.accountsCount = accountsCount;
+            result.transactionCount = transactionCount;
+            result.percent_change_24h = latestPrice.percent_change_24h;
+            result.todayRewards = mnDailyRewards;
+            result.totalXDCBurntValue = totalXDCBurntValue;
+            result.totalXDCStakedValue = totalXDCStakedValue.toFixed();
+            result.totalXDCSupply = totalXDCSupply;
+            result.totalMNCount = totalMNCount;
+            result.activeAddresses = activeAddresses;
+            result.TPS = totalTXs / costTime;
+            result.TPS = Math.round(result.TPS * 1000) / 1000;
+          }
+
+          res.write(JSON.stringify(result));
+          res.end();
   });
 }
-
 const getXinFinStats = async function (lim, res) {
   // if (cmc_xdc_price)
   console.log("totalStakedValueVal: ", totalStakedValueVal * cmc_xdc_price.price)
@@ -534,17 +589,18 @@ const getXinFinStats = async function (lim, res) {
     monthlyRewardPer: (((parseFloat(mnDailyRewards) * 30) / 10000000) * 100).toFixed(2),
     yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
     priceUsd: cmc_xdc_price.price,
-    xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
+    // xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
+    xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"])  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
   }));
   res.end()
 }
 
-var sendTxs = function (lim, res) {
-  Transaction.find({}, "hash timestamp from to value").lean(true).sort('-timestamp').limit(lim)
-    .exec(function (err, txs) {
-      res.write(JSON.stringify({ "txs": txs }));
-      res.end();
-    });
+var sendTxs = function(lim, res) {
+  Transaction.find({"to":{$nin:[BlockSigners,RandomizeSMC]}}).lean(true).sort('-blockNumber').limit(lim)
+        .exec(function (err, txs) {
+          res.write(JSON.stringify({"txs": txs}));
+          res.end();
+        });
 }
 
 const MAX_ENTRIES = 10;

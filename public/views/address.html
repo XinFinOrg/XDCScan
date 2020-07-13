@@ -24,29 +24,35 @@
 
                       <div class="row align-items-center">
                           <div class="col-md-3 fw6 mb-1">
-                              XDC Balance                                    </div>
+                              Balance
+						  </div>
                           <div class="col-md-9">
-                              <div class="pl-small">
-                                {{ addrBalance | number: 10 }}                                        </div>
+                              	<div class="pl-small fw6">
+                                    {{ addrBalance | number: 10 }} XDC
+                                    <!-- <span class="usd_value fw4">($ {{ balanceUSD | number: 6 }})</span> -->
+						  		</div>
                           </div>
                       </div>
                       <hr class="hr-space">
                       
-                      <!-- <div class="row align-items-center">
-                          <div class="col-md-3 fw6 mb-1">
-                              XDC Value                                    </div>
+                      <div class="row align-items-center">
+                            <div class="col-md-3 fw6 mb-1">
+                              XDC Value
+                            </div>
                           <div class="col-md-9">
-                              <div class="pl-small">
-                                  $12.31                                        </div>
+                                <div class="pl-small">
+                                  ${{ balanceUSD | number: 6 }}
+                                <span class="usd_value fw4">(@ ${{ quoteUSD | number: 6 }}/XDC) </span>
+                                </div>
                           </div>
-                      </div> -->
-                      <!-- <hr class="hr-space"> -->
+                      </div>
+                      <hr class="hr-space">
                       <div class="row align-items-center">
                           <div class="col-md-3 fw6 mb-1">
-                              Transactions                                    </div>
+                              Transactions
+						  </div>
                           <div class="col-md-3">
-                              <div class="pl-small">
-                                {{ count }}                                        </div>
+                              <div class="pl-small">{{ count }}</div>
                           </div>
                       </div>
                       <div ng-show="isContract">
@@ -101,10 +107,12 @@
                                         <hr class="hr-space">
                                         <div class="row align-items-center">
                                             <div class="col-md-4 fw6 mb-1">
-                                                Contract </div>
+                                                Contract
+											</div>
                                             <div class="col-md-8">
                                                 <div class="text-truncate d-block">
-                                                        <a href="/token/{{token.address}}">{{ token.address }}</a> </div>
+                                                	<a href="/token/{{token.address}}">{{ token.address }}</a>
+												</div>
                                             </div>
                                         </div>
                                         <hr class="hr-space">
@@ -113,7 +121,8 @@
                                                 Transaction </div>
                                             <div class="col-md-8">
                                                 <div class="text-truncate d-block">
-                                                        <a href="/tx/{{token.transaction}}">{{ token.transaction.substr(0,41) }}...</a> </div>
+                                                	<a href="/tx/{{token.transaction}}">{{ token.transaction.substr(0,41) }}...</a>
+												</div>
                                             </div>
                                         </div>
                                     </div>
@@ -148,57 +157,55 @@
                         <div class="tab-content">
                             <div class="tab-pane fade active show" id="allTransactions">
                                 <div class="table-responsive" ng-class="{active: activeTab == 'tab_addr_1' || !activeTab}" >
-                            <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <tr role="row" class="heading">
-                                            <th width="15%"> TxHash </th>
-                                            <th width="8%"> Block </th>
-                                            <th width="15%"> From </th>
-                                            <th width="15%"> To </th>
-                                            <th width="10%"> XDC </th>
-                                            <th width="0%"> gas </th>
-                                            <th width="12%"> Age </th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
-                        </div>
+									<table id="address-transaction" class="table table-hover nowrap" style="width:100%">
+										<thead>
+											<tr role="row" class="heading">
+												<th width="15%"> TxHash </th>
+												<th width="8%"> Block </th>
+												<th width="15%"> From </th>
+												<th width="15%"> To </th>
+												<th width="10%"> XDC </th>
+												<th width="0%"> Gas </th>
+												<th width="12%"> Age </th>
+											</tr>
+										</thead>
+										<tbody></tbody>
+									</table>
+                        		</div>
                             </div>
 
                             <div class="tab-pane fade" id="internalTransactions">
                                 <div class="table-responsive">
-                            <table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th> TxHash </th>
-                                        <th> Block </th>
-                                        <th> From </th>
-                                        <th> To </th>
-                                        <th> XDC </th>
-                                        <th> Age </th>
-                                        <th style="text-align:right"> Amount </th>
-                                        <th>type</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="t in internalDatas track by $index">
-                                        <td><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a class="hash-tag text-truncate" href="/tx/{{t.hash}}?isTransfer=true">{{t.hash}}</a></td>
-                                        <td><a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</a></td>
-                                        
-                                        
-                                        <td><a class="hash-tag text-truncate" ng-show="acc==t.from" class="truncate-addrhash">{{t.from}}</a></td>
-                                        <td><a class="hash-tag text-truncate" ng-show="acc!=t.from" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a></td>
-                                        <td><a class="hash-tag text-truncate" ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </a></td>
-                                        <td><a class="hash-tag text-truncate" ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}} </a></td>
-                                        <td>{{t.value}}</td>
-                                        <td>{{t.timestamp | timeDuration}}</td>
-                                        <!--td style="text-align:right"> {{t.amount}} </td>
-                                        <td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+									<table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
+										<thead>
+											<tr>
+												<th> TxHash </th>
+												<th> Block </th>
+												<th> From </th>
+												<th> To </th>
+												<th> XDC </th>
+												<th> Age </th>
+												<th style="text-align:right"> Amount </th>
+												<th>type</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="t in internalDatas track by $index">
+												<td><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a class="hash-tag text-truncate" href="/tx/{{t.hash}}?isTransfer=true">{{t.hash}}</a></td>
+												<td><a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</a></td>
+												
+												<td><a class="hash-tag text-truncate" ng-show="acc==t.from" class="text-truncate">{{t.from}}</a></td>
+												<td><a class="hash-tag text-truncate" ng-show="acc!=t.from" class="text-truncate"> <a href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a></td>
+												<td><a class="hash-tag text-truncate" ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </a></td>
+												<td><a class="hash-tag text-truncate" ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}} </a></td>
+												<td>{{t.value}}</td>
+												<td>{{t.timestamp | timeDuration}}</td>
+												<!--td style="text-align:right"> {{t.amount}} </td>
+												<td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
+											</tr>									
+										</tbody>
+									</table>
+                        		</div>
                             </div>
                             
                             <div class="tab-pane fade" id="contractSource" ng-show="isContract" ng-class="{active: activeTab == 'tab_addr_3'}">

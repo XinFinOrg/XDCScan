@@ -3,228 +3,228 @@
      
         <!-- start Address Details -->
         <section id="blockDetails" class="mb-4">
-                <div class="container">
-                    <div class="row">
-    
-                        <div class="col-lg-12 safari-float-left">
-                            <div class="block-header d-flex justify-content-between align-items-center">
-                                <h3 class="blockDetails-header-title text-break text-center text-md-left"><i class="far mr-1"><img src="img/tokens/1.png"></i> Token <span class="text-secondary">  {{ token.name }}  ({{ token.symbol }})</span></h3>
-                            </div>
-                        </div>
-    
-                        <!-- start Overview -->
-                        <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h2 class="card-header-title">Overview</h2>
-                                </div>
-    
-                                <div id="block-overview" class="card-body">
-    
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Token Name </div>
-                                        <div class="col-md-8">
-                                            <div>
-                                                    {{ token.name }}  ({{ token.symbol }}) </div>
-                                        </div>
-                                    </div>
-                                    <hr class="hr-space">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Decimals </div>
-                                        <div class="col-md-8">
-                                            <div>
-                                                {{ token.decimals }} </div>
-                                        </div>
-                                    </div>
-                                    <!-- <hr class="hr-space">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Price </div>
-                                        <div class="col-md-8">
-                                            <div>
-                                                $441.9752 </div>
-                                        </div>
-                                    </div> -->
-                                    <hr class="hr-space">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Total Supply </div>
-                                        <div class="col-md-8">
-                                            <div>
-                                                {{ token.totalSupply}} {{ token.symbol }}  </div>
-                                        </div>
-                                    </div>
-                                 
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end Overview -->
-                        
-                        <!-- start Token Summary-->
-                        <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
-                                    <h2 class="card-header-title">Profile Summary</h2>
-                                </div>
-    
-                                <div id="block-overview" class="card-body">
-    
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Contract </div>
-                                        <div class="col-md-8">
-                                            <div class="text-truncate d-block">
-                                                    <a href="/addr/{{token.address}}">{{token.address }}</a> </div>
-                                        </div>
-                                    </div>
-                                    <hr class="hr-space">
+          <div class="container">
+              <div class="row">
 
-                                    <div class="margin-top-20" ng-show="!acc">
-                                            <span class="eth-stat-text"> <span class="help-block"><b>Enter Your Address </b></span> to Get {{ token.name }}  Balance ↓</span>
-                                            <div class="row">
-                                            <form class="col-md-12 center" name="form.tokens">
-                                                
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" name="addrInput" placeholder="{{token.address}}" ng-model="form.addrInput" ng-keyup="$event.keyCode == 13 ? getBalance(form.addrInput) : null">
-                                                    <span class="input-group-btn">
-                                                        <button class="btn blue-madison" type="button" ng-click="getBalance(form.addrInput)">Go!</button>
-                                                    </span>
-                                                </div>
-                                                <span class="help-block font-red-mint">{{errors.address}}</span>
-                                            </form>
-                                            </div>
-                                            <div class="row" ng-show="showTokens">
-                                            <div class="col-md-10">
-                                                <h4>You have {{ token.symbol }}  tokens <span class="eth-stat-title font-blue-madison">{{userTokens}}</span></h4>
-                                            </div>
-                                            </div>
-                                        </div>
-                                    <!-- <hr class="hr-space">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Decimals </div>
-                                        <div class="col-md-8">
-                                            <div>
-                                                {{ token.decimals }} </div>
-                                        </div>
-                                    </div>
-                                    <hr class="hr-space">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 fw6 mb-1">
-                                            Transactions </div>
-                                        <div class="col-md-8">
-                                            <div>
-                                                3 </div>
-                                        </div>
-                                    </div> -->
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end Token Summary-->
-                    </div>
-                </div>
-            </section>
-            <!-- end Address Details -->
-    
-            <!-- start Transaction Details -->
-            <section id="transactionDetails" class="mb-4">
-                <div class="container">
-                    <div class="row">
-    
-                        <!-- start Transactions -->
-                        <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
-                            <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center p-0">
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
-                                        <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link active" href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
-                                        <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link" href="#internalTransactions" role="tab" data-toggle="tab">Internal Transactions</a></li>
-                                        <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab" data-toggle="tab">Contract Source</a></li>
-                                    </ul>
-                                    <!-- Nav tabs -->
-                                </div>
-    
-                                <div id="block-overview" class="card-body">
-    
-                                    <div class="tab-content">
-                                        <div class="tab-pane fade active show" id="tokenTransfers">
-                                            <transfer-tokens>
-                                            <div class="table-responsive">
-                                        <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Txn Hash</th>
-                                                    <th>Age</th>
-                                                    <th>Block</th>
-                                                    <th>From</th>
-                                                    <th>To</th>
-                                                    <th>Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="t in transfer_tokens track by $index">
-                                                    <td><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a href="/tx/{{t.transactionHash}}?isTransfer=true">{{t.transactionHash}}</a></td>
-                                                    <td>{{t.timestamp | timeDuration}} ago</td>
-                                                    <td><a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</td>
-                                                    <td ng-show="acc==t.from" class="truncate-addrhash">{{t.from}} </td>
-                                                    <td ng-show="acc!=t.from" class="truncate-addrhash"> <a class="hash-tag text-truncate" href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a> </td>
-                                                    <td ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </td>
-                                                    <td ng-show="acc!=t.to" class="truncate-addrhash"> <a class="hash-tag text-truncate" href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}}</a> </td>
-                                                    <td style="text-align:right"> {{t.amount}} </td>
-                                                    <td style="text-align:center"><span class="label label-sm label-info"> {{t.methodName}} </span></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </transfer-tokens>
-                                        </div>
-    
-                                        <div class="tab-pane fade" id="internalTransactions">
-                                            <div class="table-responsive">
-                                        <table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
-                                            <thead>
-                                                <tr>
-                                                    <th>Txn Hash</th>
-                                                    <th>Age</th>
-                                                    <th>Block</th>
-                                                    <th>From</th>
-                                                    <th>To</th>
-                                                    <th>XDC</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr ng-repeat="t in internalDatas track by $index">
-                                                    <td class="truncate-txhash"><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a href="/tx/{{t.hash}}?isTransfer=true" class="hash-tag text-truncate">{{t.hash}}</a> </td>
-                                                    <td>{{t.timestamp | timeDuration}} ago</td>
-                                                    <td> <a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</a> </td>
-                                                    <td ng-show="acc==t.from" class="truncate-addrhash">{{t.from}} </td>
-                                                    <td ng-show="acc!=t.from" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}" class="hash-tag text-truncate">{{t.from}}</a> </td>
-                                                    <td ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </td>
-                                                    <td ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}" class="hash-tag text-truncate">{{t.to}}</a> </td>
-                                                    <td>{{t.value}}</td>
-                                                    <!--td style="text-align:right"> {{t.amount}} </td>
-                                                    <td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                        </div>
-                                        
-                                        <div class="tab-pane fade" id="contractSource">
-                                                <contract-source></contract-source>
+                  <div class="col-lg-12 safari-float-left">
+                      <div class="block-header d-flex justify-content-between align-items-center">
+                          <h3 class="blockDetails-header-title text-break text-center text-md-left"><i class="far mr-1"><img src="img/tokens/1.png"></i> Token <span class="text-secondary">  {{ token.name }}  ({{ token.symbol }})</span></h3>
+                      </div>
+                  </div>
 
-                                        </div>
-    
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- end Transactions -->
-                    </div>
-                </div>
-            </section>
-            <!-- end Transaction Details -->
-        <!-- </div> -->
-        <!-- end wrapper -->    
+                  <!-- start Overview -->
+                  <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
+                      <div class="card">
+                          <div class="card-header d-flex justify-content-between align-items-center">
+                              <h2 class="card-header-title">Overview</h2>
+                          </div>
+
+                          <div id="block-overview" class="card-body">
+
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Token Name </div>
+                                  <div class="col-md-8">
+                                      <div>
+                                              {{ token.name }}  ({{ token.symbol }}) </div>
+                                  </div>
+                              </div>
+                              <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Decimals </div>
+                                  <div class="col-md-8">
+                                      <div>
+                                          {{ token.decimals }} </div>
+                                  </div>
+                              </div>
+                              <!-- <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Price </div>
+                                  <div class="col-md-8">
+                                      <div>
+                                          $441.9752 </div>
+                                  </div>
+                              </div> -->
+                              <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Total Supply </div>
+                                  <div class="col-md-8">
+                                      <div>
+                                          {{ token.totalSupply}} {{ token.symbol }}  </div>
+                                  </div>
+                              </div>
+                           
+                          </div>
+                      </div>
+                  </div>
+                  <!-- end Overview -->
+                  
+                  <!-- start Token Summary-->
+                  <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
+                      <div class="card">
+                          <div class="card-header d-flex justify-content-between align-items-center">
+                              <h2 class="card-header-title">Profile Summary</h2>
+                          </div>
+
+                          <div id="block-overview" class="card-body">
+
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Contract </div>
+                                  <div class="col-md-8">
+                                      <div class="text-truncate d-block">
+                                              <a href="/addr/{{token.address}}">{{token.address }}</a> </div>
+                                  </div>
+                              </div>
+                              <hr class="hr-space">
+
+                              <div class="margin-top-20" ng-show="!acc">
+                                      <span class="eth-stat-text"> <span class="help-block"><b>Enter Your Address </b></span> to Get {{ token.name }}  Balance ↓</span>
+                                      <div class="row">
+                                      <form class="col-md-12 center" name="form.tokens">
+                                          
+                                          <div class="input-group">
+                                              <input type="text" class="form-control" name="addrInput" placeholder="{{token.address}}" ng-model="form.addrInput" ng-keyup="$event.keyCode == 13 ? getBalance(form.addrInput) : null">
+                                              <span class="input-group-btn">
+                                                  <button class="btn blue-madison" type="button" ng-click="getBalance(form.addrInput)">Go!</button>
+                                              </span>
+                                          </div>
+                                          <span class="help-block font-red-mint">{{errors.address}}</span>
+                                      </form>
+                                      </div>
+                                      <div class="row" ng-show="showTokens">
+                                      <div class="col-md-10">
+                                          <h4>You have {{ token.symbol }}  tokens <span class="eth-stat-title font-blue-madison">{{userTokens}}</span></h4>
+                                      </div>
+                                      </div>
+                                  </div>
+                              <!-- <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Decimals </div>
+                                  <div class="col-md-8">
+                                      <div>
+                                          {{ token.decimals }} </div>
+                                  </div>
+                              </div>
+                              <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">
+                                      Transactions </div>
+                                  <div class="col-md-8">
+                                      <div>
+                                          3 </div>
+                                  </div>
+                              </div> -->
+                          </div>
+                      </div>
+                  </div>
+                  <!-- end Token Summary-->
+              </div>
+          </div>
+      </section>
+      <!-- end Address Details -->
+
+      <!-- start Transaction Details -->
+      <section id="transactionDetails" class="mb-4">
+          <div class="container">
+              <div class="row">
+
+                  <!-- start Transactions -->
+                  <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
+                      <div class="card">
+                          <div class="card-header d-flex justify-content-between align-items-center p-0">
+                              <!-- Nav tabs -->
+                              <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
+                                  <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link active" href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
+                                  <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link" href="#internalTransactions" role="tab" data-toggle="tab">Contract Transactions</a></li>
+                                  <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab" data-toggle="tab">Contract Source</a></li>
+                              </ul>
+                              <!-- Nav tabs -->
+                          </div>
+
+                          <div id="block-overview" class="card-body">
+
+                              <div class="tab-content">
+                                  <div class="tab-pane fade active show" id="tokenTransfers">
+                                      <transfer-tokens>
+                                      <div class="table-responsive">
+                                  <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
+                                      <thead>
+                                          <tr>
+                                              <th>Txn Hash</th>
+                                              <th>Age</th>
+                                              <th>Block</th>
+                                              <th>From</th>
+                                              <th>To</th>
+                                              <th>Amount</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr ng-repeat="t in transfer_tokens track by $index">
+                                              <td><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a href="/tx/{{t.transactionHash}}?isTransfer=true">{{t.transactionHash}}</a></td>
+                                              <td>{{t.timestamp | timeDuration}} ago</td>
+                                              <td><a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</td>
+                                              <td ng-show="acc==t.from" class="truncate-addrhash">{{t.from}} </td>
+                                              <td ng-show="acc!=t.from" class="truncate-addrhash"> <a class="hash-tag text-truncate" href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a> </td>
+                                              <td ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </td>
+                                              <td ng-show="acc!=t.to" class="truncate-addrhash"> <a class="hash-tag text-truncate" href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}}</a> </td>
+                                              <td style="text-align:right"> {{t.amount}} </td>
+                                              <td style="text-align:center"><span class="label label-sm label-info"> {{t.methodName}} </span></td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                          </transfer-tokens>
+                                  </div>
+
+                                  <div class="tab-pane fade" id="internalTransactions">
+                                      <div class="table-responsive">
+                                  <table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
+                                      <thead>
+                                          <tr>
+                                              <th>Txn Hash</th>
+                                              <th>Age</th>
+                                              <th>Block</th>
+                                              <th>From</th>
+                                              <th>To</th>
+                                              <th>XDC</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr ng-repeat="t in internalDatas track by $index">
+                                              <td class="truncate-txhash"><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a href="/tx/{{t.hash}}?isTransfer=true" class="hash-tag text-truncate">{{t.hash}}</a> </td>
+                                              <td>{{t.timestamp | timeDuration}} ago</td>
+                                              <td> <a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</a> </td>
+                                              <td ng-show="acc==t.from" class="truncate-addrhash">{{t.from}} </td>
+                                              <td ng-show="acc!=t.from" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}" class="hash-tag text-truncate">{{t.from}}</a> </td>
+                                              <td ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </td>
+                                              <td ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}" class="hash-tag text-truncate">{{t.to}}</a> </td>
+                                              <td>{{t.value}}</td>
+                                              <!--td style="text-align:right"> {{t.amount}} </td>
+                                              <td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                              </div>
+                                  </div>
+                                  
+                                  <div class="tab-pane fade" id="contractSource">
+                                          <contract-source></contract-source>
+
+                                  </div>
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- end Transactions -->
+              </div>
+          </div>
+      </section>
+      <!-- end Transaction Details -->
+  <!-- </div> -->
+  <!-- end wrapper -->    

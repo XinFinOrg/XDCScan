@@ -7,7 +7,7 @@ var BigNumber = require('bignumber.js');
 var etherUnits = require(__lib + "etherUnits.js")
 
 exports.data = function(req, res){
-  // console.log(req.body)
+  console.log(req.body)
   
   if ("addr" in req.body) {
     var addr = req.body.addr.toLowerCase();
@@ -51,9 +51,9 @@ exports.data = function(req, res){
     res.end();
   
   } else {
+  
     console.error("Invalid Request: " + action)
     res.status(400).send();
-    res.end();
   }
 
 };

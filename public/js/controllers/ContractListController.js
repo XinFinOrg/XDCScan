@@ -12,15 +12,15 @@ angular.module('BlocksApp').controller('ContractListController', function($state
         method: 'POST',
         url: '/contractListData',
         data: {"ERC": -1, "page":page}
-    }).success(function(repData) {
-      $scope.page = repData.page;
+    }).then(function(repData) {
+      $scope.page = repData.data.page;
       var pages = [];
-      for(i=0; i<repData.totalPage; i++){
+      for(i=0; i<repData.data.totalPage; i++){
         pages.push(i+1);
       }
       $scope.pages = pages;
-      $scope.totalPage = repData.totalPage;
-      $scope.contracts = repData.list;
+      $scope.totalPage = repData.data.totalPage;
+      $scope.contracts = repData.data.list;
     });
   }
 
