@@ -89,7 +89,9 @@ const treasuryAddress = "0x74682fc32007af0b6118f259cbe7bccc21641600";
 // var newTxs = web3.eth.filter("pending");
 
 exports.data = async (req, res) => {
+  try{
   if ("tx" in req.body) {
+    let transactionResponse;
     var txHash = req.body.tx.toLowerCase();
 
     Transaction.findOne({hash: txHash}).lean(true).exec(async(err, doc) => {
@@ -653,6 +655,11 @@ exports.data = async (req, res) => {
     console.error("Invalid Request: " + action)
     res.status(400).send();
   }
+  }
+  catch(e){
+    console.log(`got an error at Web3Relay ${e}`)
+  }
+
 
 };
 
