@@ -59,8 +59,8 @@
                                                                 -
                                                                 <ng-pluralize count="tx.confirmations"
                                                                               when="{'0': 'No block confirmation',
-                                                              'one': '1 block confirmation',
-                                                              'other': '{} block confirmations'}">
+                                                              'one': '1 Block confirmation',
+                                                              'other': '{} Block confirmations'}">
                                                                 </ng-pluralize>
                                                             </span>
 															<!-- <a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View previous block"><i class="fa fa-chevron-left"></i></a>
@@ -155,7 +155,7 @@
                                                     <div class="col-md-9">
                                                         <div class="pl-small fw6">
                                                             <!-- <img src="/img/mini-logo.svg" alt="mini-logo" class="mini-logo"/>  -->
-                                                            {{tx.value | number: 8}} {{ settings.symbol }} => {{ tx.valueUSD | currency : "USD $" : 4 }}
+                                                            {{tx.value | number: 8}} {{ settings.symbol }} ({{ tx.valueUSD | currency : "USD $" : 2 }})
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>
                                                     </div>
@@ -166,8 +166,8 @@
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Transaction fee: </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small fw6">
-                                                            {{tx.transactionFee | number : 14}} {{ settings.symbol }} => {{ tx.transactionFeeUSD | currency :
-                                                                "USD $" : 15 }}
+                                                            {{tx.transactionFee | number : 11}} {{ settings.symbol }} ({{ tx.transactionFeeUSD | currency :
+                                                                "$" : 14 }})
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>
                                                     </div>
