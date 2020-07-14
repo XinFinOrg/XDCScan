@@ -213,7 +213,7 @@
                                     <div class="col-sm-8">
                                         <div class="d-sm-flex justify-content-between">
                                             <div class="text-nowrap mr-2 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-sm-block">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
-                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title="Amount">{{t.value}} XDC</span></div>
+                                            <div><span class="label label_xs label_secondary text-center text-nowrap" title="Amount">{{t.value | number: 0 }} XDC</span></div>
                                         </div>
                                     </div>
                                 </div>
