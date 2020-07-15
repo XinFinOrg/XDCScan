@@ -37,7 +37,7 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       $scope.totalXDCinUSD = (resp.data.totalXDCSupply * parseFloat($scope.quoteUSD)).toFixed();
       $scope.accountsCount = resp.data.accountsCount;
       $scope.transactionCount = resp.data.transactionCount;
-      $scope.totalBurntValue = resp.data.totalXDCBurntValue;
+      $scope.totalBurntValue = resp.data.totalXDCBurntValue.toFixed();
       $scope.totalStakedValue = resp.data.totalXDCStakedValue;
       $scope.CMCPrice_change24h = (resp.data.percent_change_24h).toFixed(2);
       $scope.activeAddresses = resp.data.activeAddresses;

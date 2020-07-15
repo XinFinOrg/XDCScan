@@ -549,6 +549,8 @@ pre {
 .safari-float-left{float: left!important;}
 
 .wrapper{width: 100%;display:inline-block;}
+
+@media (max-width:767px) {.navigation{max-height: 450px;overflow-x: hidden;overflow-y: scroll;}}
 /*----- For safari browser -----*/
 
 /*----- Footer -----*/

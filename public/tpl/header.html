@@ -78,20 +78,53 @@
 
                             </ul>
                         </li>
-                        <li class="nav-item hs-has-sub-menu header_nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut">
-                            <a id="moreMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="moreSubMenu">Tools</a>
-                            <ul id="moreSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer dropdown-menu-md-right" aria-labelledby="moreMegaMenu" style="min-width: 230px;">
+                        <!--<li class="nav-item hs-has-sub-menu header_nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut">
+                            <a id="toolsMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="toolsSubMenu">Tools</a>
+                            <ul id="toolsSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="toolsMegaMenu" style="min-width: 230px;">
                                 <li><a href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" class="nav-link header_sub-menu-nav-link" title="XinPay" target="_blank">XinPay</a></li>
                                 <li><a href="https://wallet.xinfin.network" class="nav-link header_sub-menu-nav-link" title="Web Wallet" target="_blank">Web Wallet</a></li>
                                 <li><a href="https://play.google.com/store/apps/details?id=com.xdcwallet&hl=en" class="nav-link header_sub-menu-nav-link" title="Android Wallet" target="_blank">Android Wallet</a></li>
                                 <li><a href="https://remix.xinfin.network/" class="nav-link header_sub-menu-nav-link" title="XinFin Remix" target="_blank">XinFin Remix</a></li>
-                                <li><a href="https://xinfin.org/setup-masternode.php" class="nav-link header_sub-menu-nav-link" title="One-Click Installler" target="_blank">One-Click Installer</a></li>
+                                <li><a href="https://xinfin.org/setup-masternode" class="nav-link header_sub-menu-nav-link" title="One-Click Installler" target="_blank">One-Click Installer</a></li>
                             </ul>
-                        </li>
-                        <li class="nav-item header_nav-item" data-event="hover">
+                        </li>-->
+						<li class="nav-item hs-has-mega-menu header_nav-item" data-event="hover" data-animation-in="slideInUp" data-animation-out="fadeOut" data-position="left">
+							<a id="toolsMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false">Tools</a>
+							<div class="hs-mega-menu w-100 header_sub-menu hs-position-right" aria-labelledby="toolsMegaMenu">
+								<div class="row header_mega-menu-wrapper">
+									<div class="col-sm-6 col-md-4 col-lg mb-3 mb-lg-0">
+										<span class="header_sub-menu-title">Live Network</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://wallet.xinfin.network/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Web Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://play.google.com/store/apps/details?id=com.xdcwallet" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Android Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.network/#explorer" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Block Explorer</a></li>
+											<!--<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.org/setup-masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>One-Click Node Installer</a></li>-->
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.network/#masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Become a Master Node/Validator</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
+										<span class="header_sub-menu-title">SandBox / TestNet</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://apothem.network/#getTestXDC" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Faucet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://wallet.apothem.network/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Web Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://explorer.apothem.network/home" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Block Explorer</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://apothem.network/#masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Become a Master Node/Validator</a></li>
+										</ul>
+									</div>
+									<div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
+										<span class="header_sub-menu-title">More</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" target="_blank"><i class="fa fa-angle-right small mr-1"></i>XinPay</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://remix.xinfin.network/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>XinFin Remix</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://xinfin.org/setup-masternode" target="_blank"><i class="fa fa-angle-right small mr-1"></i>One-Click Node Installer</a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li class="nav-item header_nav-item" data-event="hover">
                             <a class="nav-link header_nav-link" href="/publicAPIDoc" aria-haspopup="true" aria-expanded="false" aria-labelledby="pagesSubMenu">XinFinScan APIs</a>
                         </li>
-
                     </ul>
                 </div>
         </div> 
