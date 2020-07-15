@@ -46,8 +46,8 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "xdc0000000000000000000000000000000000000088";
 var burntAddress = "xdc0000000000000000000000000000000000000000";
-let resignMNCount = 13;
-let epochRewards = 5000;
+let resignMNCount = 11;
+let epochRewards = 4500;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
 module.exports = function (app) {
@@ -78,6 +78,8 @@ module.exports = function (app) {
   app.post('/data', getData);
   app.get('/publicAPI', publicAPI);//all public APIs
   app.get('/totalXDC', publicAPI.getTotalXDC);
+  app.get('/getcirculatingsupply', publicAPI.getCirculatingSupply);
+
   app.get('/totalXDCSupply', getTotalXDCSupply);
 
   //masternode routes
@@ -162,7 +164,7 @@ module.exports = function (app) {
       }
 
       totalBlockNum = eth.blockNumber;
-      totalXDC = 37500000000 + 5.55 * totalBlockNum;
+      totalXDC = (37500000000 + 5.55 * totalBlockNum).toFixed();
 
       alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
 
@@ -459,8 +461,7 @@ function fnum(x) {
 var getTotalXDCSupply = function (req, res) {
   burntBalance = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
   totalBlockNum = eth.blockNumber;
-  console.log(burntBalance)
-  respData = (37500000000 + 5.55 * totalBlockNum)-burntBalance ;
+  respData = ((37500000000 + 5.55 * totalBlockNum)-burntBalance).toFixed() ;
   res.write(String(respData,burntBalance));
   res.end();
 }
