@@ -4,6 +4,9 @@ var filterBlocks = require('./filters').filterBlocks;
 var witnessListData = require('./witnessListData');
 
 var totalXDC = "totalXDC";
+
+var getcirculatingsupply = "getcirculatingsupply";
+
 var balance = "balance";
 var balancemulti = "balancemulti";
 
@@ -65,7 +68,18 @@ module.exports = function(req, res){
         case totalXDC:
           totalBlockNum = eth.blockNumber;
           onlyValue = requestParam(req, "onlyValue");
-          value = 37500000000+5.55*totalBlockNum;
+          value = (37500000000+5.55*totalBlockNum).toFixed();
+          if(onlyValue){
+            res.write(String(value));
+            res.end();
+          }else{
+            sendData(res, respData, value);
+          }
+          break;
+          case getcirculatingsupply:
+          totalBlockNum = eth.blockNumber;
+          onlyValue = requestParam(req, "onlyValue");
+          value = (12100000000+5.55*totalBlockNum).toFixed();
           if(onlyValue){
             res.write(String(value));
             res.end();
@@ -428,7 +442,14 @@ function responseFail(res, respData, msg){
 
 module.exports.getTotalXDC = function(req, res){
   totalBlockNum = eth.blockNumber;
-  respData = 37500000000+5.55*totalBlockNum;
+  respData = (37500000000+5.55*totalBlockNum).toFixed();
+  res.write(String(respData));
+  res.end();
+}
+
+module.exports.getCirculatingSupply= function(req, res){
+  totalBlockNum = eth.blockNumber;
+  respData = 12100000000+5.55*totalBlockNum;
   res.write(String(respData));
   res.end();
 }
