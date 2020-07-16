@@ -594,9 +594,8 @@ const getXinFinStats = async function (lim, res) {
     totalBlockNum = await eth.getBlockNumber();
     totalXDC = 37500000000 + 5.55 * totalBlockNum;
     percent_change_24h = latestPrice.percent_change_24h;
-    console.log(quoteUSD,"quoteUSD")
     totalStakedValueVal = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
-
+    alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
   res.write(JSON.stringify({
     totalMasterNodes: totalMasterNodesVal,
     totalStakedValue: totalStakedValueVal,
