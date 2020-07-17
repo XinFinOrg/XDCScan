@@ -23,7 +23,7 @@
                                         <div class="media-body text-right">
                                             <a href="https://xinfin.network" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="" target="_blank" >
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Block Height</h2>
-                                            {{blockHeight}}</a>
+                                            {{blockHeight | number}}</a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">
@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="media-body text-right">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Transactions</h2>
-                                            <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{transactionCount}}</a>
+                                            <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{transactionCount | number }}</a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">
@@ -48,12 +48,12 @@
                                         <div class="media-body">
                                             <a class="text-size-1 text-link counter " data-toggle="tooltip" data-placement="right" data-title="View More" href="/addr/xdc0000000000000000000000000000000000000088" data-original-title="" title="" target="_blank" >
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Total Stake</h2>
-                                            {{totalStakedValue}}</a>
+                                            {{totalStakedValue | number}}</a>
                                         </div>
                                         <div class="media-body text-right">
                                             <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-title="View More" href="/addr/xdc0000000000000000000000000000000000000000" data-original-title="" title="" target="_blank" >
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Burnt XDC</h2>
-                                            {{totalBurntValue}}</a>
+                                            {{totalBurntValue | number}}</a>
                                         </div>
                                     </div>
                                     <hr class="d-block d-md-none hr-space-lg">
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="media-body text-right">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Daily Rewards</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{todayDailyRewards}} XDC</a>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{todayDailyRewards | number}} XDC</a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">
@@ -94,11 +94,11 @@
                                         </figure>
                                         <div class="media-body">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Total XDC Supply</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{totalXDC}} XDC</a>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{totalXDC | number}} XDC</a>
                                         </div>
                                         <div class="media-body text-right">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Market Cap</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD}} </a>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD | number }} </a>
                                         </div>
                                     </div>
                                     <hr class="d-block d-md-none hr-space-lg">
