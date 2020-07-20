@@ -172,8 +172,8 @@
                                             <!--<div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">By <a class="hash-tag " href="/addr/{{t.miner}}">{{t._id}}</a></span><a href="/block/{{t.number}}" title="Transactions in this Block">{{t.txs.length}} txns </a>
                                             </div>-->
 											<div class="text-nowrap lb-right-col">
-												<span class="d-block mb-1 mb-sm-0"><span class="block-reward">Block Reward: </span>5.5 XDC</span>
-												<span class="d-sm-block small text-secondary mt-2 ml-1 ml-sm-0 text-nowrap" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span>
+												<span class="d-lg-block d-sm-block mb-1 mb-sm-0"><span class="block-reward">Block Reward: </span>5.5 XDC</span>
+												<span class="d-sm-block small text-secondary mt-2 ml-1 ml-sm-0 text-nowrap time" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span>
                                             </div>											
                                             <!--<div class="d-none d-sm-block"></div>-->
                                         </div>
@@ -207,12 +207,12 @@
                                         <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
                                             <!--<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon_inner text-dark">Tx</span></span>
                                             </div>-->
-                                            <div class="media-body"><span class="d-inline-block d-sm-none mr-1">TX#</span><a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/{{t.hash}}">{{t.hash}}</a><span class="d-none d-sm-block small text-secondary"><div data-countdown="60000">{{t.timestamp | timeDuration }} ago</div></span></div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none mr-1">TX#</span><a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/{{t.hash}}">{{t.hash}}</a><span class="d-sm-block mt-2 small text-secondary time"><div data-countdown="60000">{{t.timestamp | timeDuration }} ago</div></span></div>
                                         </div>
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="d-sm-flex justify-content-between">
-                                            <div class="text-nowrap mr-2 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-sm-block">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
+                                            <div class="text-nowrap mr-2 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-block mt-1">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
                                             <div><span class="label label_xs label_secondary text-center text-nowrap" title="Amount">{{t.value | number: 0 }} XDC</span></div>
                                         </div>
                                     </div>
