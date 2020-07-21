@@ -229,7 +229,7 @@ var testValidCode = function(output, data, bytecode, response) {
     //write to db
     var  ERCType = checkERC(data.abi);
     data.ERC = ERCType;
-    var txFind = Transaction.findOne({to:null, contractAddress:data.address}).lean(true);
+    var txFind = Transaction.findOne({to:null, creates:data.address}).lean(true);
     txFind.exec(async function (err, doc) {
       //get token info from blockchain
       var Token = new eth.Contract(ERC20ABI,data.address);
