@@ -28,7 +28,7 @@ exports.findContract = function(address, res) {
       res.write(JSON.stringify({"valid": false}));
     } else {
       var data = doc;
-      data.valid = true;
+      data.valid = doc.sourceCode!=null;
       res.write(JSON.stringify(data));
     }
     res.end();
