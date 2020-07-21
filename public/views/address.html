@@ -59,10 +59,18 @@
                           
                         <hr class="hr-space">
 
-                        <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract name </span> <a href="/token/{{token.address}}">{{token.name}}</a></div>
-                        <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract verified √</span></div>
+                        <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract name </span> <a href="/token/{{token.address}}">{{token.name}}</a></div> -->
+                        <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract verified √</span></div> -->
                         <!-- <div class="col-md-3 fw6 mb-1" ng-show="!token.isVerified"><span class="eth-stat-text">not verified  <a href="/verifycontract/{{token.address}}">[go for verifying]</a> -->
-                            
+                        <div class="row align-items-center" ng-show="token.isVerified">
+                                <div class="col-md-3 fw6 mb-1">
+                                    Contract name </div>
+                                <div class="col-md-9">
+                                    <div class="pl-small">
+                                        <span class="ml-0 mr-2"><a href="/token/{{token.address}}">{{token.name}}</a></span> <span class="eth-stat-text">Contract verified √</span></div>
+                                </div>
+                            </div>
+                        <!-- </div>                             -->
                             <div class="row align-items-center" ng-show="!token.isVerified">
                                     <div class="col-md-3 fw6 mb-1">
                                         Status </div>
