@@ -31,7 +31,7 @@ module.exports = function(req, res) {
 }
 
 
-var compileSolc = function(req, res) {
+var compileSolc = async function(req, res) {
 
   // get bytecode at address
   var address = req.body.address;
@@ -41,7 +41,7 @@ var compileSolc = function(req, res) {
   var optimization = (req.body.optimization) ? true : false;
   var optimise = (optimization) ? 1 : 0;
 
-  var bytecode = eth.getCode(address);
+  var bytecode = await eth.getCode(address);
   if (bytecode.substring(0,2)=="0x")
     bytecode = bytecode.substring(2);
 
@@ -230,16 +230,23 @@ var testValidCode = function(output, data, bytecode, response) {
     var  ERCType = checkERC(data.abi);
     data.ERC = ERCType;
     var txFind = Transaction.findOne({to:null, contractAddress:data.address}).lean(true);
-    txFind.exec(function (err, doc) {
+    txFind.exec(async function (err, doc) {
       //get token info from blockchain
-      var ContractStruct = eth.contract(JSON.parse(data.abi));
-      data.balance = eth.getBalance(data.address);
+      var Token = new eth.Contract(ERC20ABI,data.address);
+      data.balance = await eth.getBalance(data.address);
+      console.log(data.address,"data.address")
       if(ERCType>0){//is token
+        console.log(ERCType,"ERCType")
         try{
-          var Token = ContractStruct.at(data.address);
-          data.decimals = Number(Token.decimals().toString());
-          data.symbol = Token.symbol();
-          data.totalSupply = Token.totalSupply();
+          data.decimals = await Token.methods.decimals().call();
+          console.log(data.decimals,"data")
+
+          data.symbol = await Token.methods.symbol().call();
+          console.log(data.symbol,"symbol")
+
+          data.totalSupply = await Token.methods.totalSupply().call();
+          console.log(data.totalSupply,"totalSupply")
+
           // data.owner = doc.from;
         } catch (e) {
           console.log(e.stack);
