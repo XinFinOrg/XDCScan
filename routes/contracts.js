@@ -9,10 +9,10 @@ var Contract     = mongoose.model( 'Contract' );
 exports.addContract = function(contract) {
   Contract.update(
     {address: contract.address}, 
-    {$setOnInsert: contract}, 
+    contract,
     {upsert: true}, 
     function (err, data) {
-      console.log(data);
+      console.log(err,data);
     }
   );
 }
