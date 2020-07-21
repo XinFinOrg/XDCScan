@@ -23,7 +23,6 @@ angular.module('BlocksApp').controller('TokenListController', function($statePar
           url: '/tokenListData',
           data: {"ERC": 0, "page":page, "totalPage":totalPage}
         }).then(function(resp) {
-          console.log(resp,"resp")
           $scope.page = resp.data.page;
           var pages = [];
           for(i=0; i<resp.data.totalPage; i++){

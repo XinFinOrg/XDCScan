@@ -57,7 +57,7 @@ var compileSolc = async function(req, res) {
     "compilerVersion": version,
     "optimization": optimization,
     "contractName": name,
-    // "tokenName":"",//don't overwrite
+    "tokenName":"",
     "sourceCode": input
   }
   if(bytecode==""){
@@ -238,15 +238,10 @@ var testValidCode = function(output, data, bytecode, response) {
       if(ERCType>0){//is token
         console.log(ERCType,"ERCType")
         try{
+          data.tokenName = await Token.methods.name().call();
           data.decimals = await Token.methods.decimals().call();
-          console.log(data.decimals,"data")
-
           data.symbol = await Token.methods.symbol().call();
-          console.log(data.symbol,"symbol")
-
           data.totalSupply = await Token.methods.totalSupply().call();
-          console.log(data.totalSupply,"totalSupply")
-
           // data.owner = doc.from;
         } catch (e) {
           console.log(e.stack);
