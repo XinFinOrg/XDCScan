@@ -514,7 +514,7 @@ var sendBlocks = async function(lim, res) {
     masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
 
-  var blockHetht = await web3relay.eth.getBlockNumber();
+  var blockHeight = await web3relay.eth.getBlockNumber();
   const latestPrice = await Market.findOne().sort({timestamp: -1})
   if (latestPrice) {
     quoteUSD = latestPrice.quoteUSD;
@@ -529,7 +529,8 @@ var sendBlocks = async function(lim, res) {
     let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
     let totalXDCBurntValue = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
     let totalXDCStakedValue = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
-    let totalXDCSupply = ((37500000000 + 5.55 * blockHetht)-totalXDCBurntValue).toFixed() ;
+    let totalXDCSupply = ((37500000000 + 5.55 * blockHeight)-totalXDCBurntValue).toFixed() ;
+    let XDCCirculatingSupply = (12100000000+5.55*blockHeight).toFixed() ;
     let getCandidates = await masterNodeContract.methods.getCandidates().call()
     let totalMNCount = getCandidates.length - resignMNCount
 
@@ -546,7 +547,7 @@ var sendBlocks = async function(lim, res) {
           docs = filters.filterBlocks(docs);
           var result = { "blocks": docs };
           if (docs.length > 1) {
-            result.blockHeight = blockHetht;
+            result.blockHeight = blockHeight;
             var totalTXs = 0;
             // console.log(docs)
             var costTime = docs[0].timestamp - docs[docs.length - 1].timestamp;
@@ -564,6 +565,7 @@ var sendBlocks = async function(lim, res) {
             result.totalXDCBurntValue = totalXDCBurntValue;
             result.totalXDCStakedValue = totalXDCStakedValue.toFixed();
             result.totalXDCSupply = totalXDCSupply;
+            result.XDCCirculatingSupply = XDCCirculatingSupply
             result.totalMNCount = totalMNCount;
             result.activeAddresses = activeAddresses;
             result.TPS = totalTXs / costTime;
