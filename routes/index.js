@@ -595,7 +595,7 @@ const getXinFinStats = async function (lim, res) {
   }
     totalBlockNum = await eth.getBlockNumber();
     totalXDC = 37500000000 + 5.55 * totalBlockNum;
-    percent_change_24h = latestPrice.percent_change_24h;
+    volume_24h = latestPrice.volume_24h;
     totalStakedValueVal = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
     alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
   res.write(JSON.stringify({
@@ -612,7 +612,7 @@ const getXinFinStats = async function (lim, res) {
     yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
     priceUsd: quoteUSD,
     // xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
-    xdcVol24HR: (parseFloat(percent_change_24h)  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(quoteUSD)).toFixed()
+    xdcVol24HR: (parseFloat(volume_24h)  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(quoteUSD)).toFixed()
   }));
   res.end()
 

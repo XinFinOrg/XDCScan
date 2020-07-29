@@ -122,7 +122,8 @@ var Market = new Schema({
     "timestamp": Number,
     "quoteBTC": Number,
     "quoteUSD": Number,
-    "percent_change_24h": Number
+    "percent_change_24h": Number,
+    "volume_24h":Number
 })
 
 var ActiveAddressesStat = new Schema({
