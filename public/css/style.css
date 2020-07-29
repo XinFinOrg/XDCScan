@@ -153,10 +153,60 @@ figure {
     margin: 0;
 	line-height: inherit;
 }
+.card-header-title img {
+    width: 30px;
+    height: auto;
+    margin-top: -4px;
+    margin-right: 7px;
+}
+.card-header .actions a {
+    cursor: pointer!important;
+}
+.card-header .actions a i {
+    color:rgba(52,152,219,0.6);
+}
+.card-header .actions a i:hover {
+    color:rgba(52,152,219,1);
+}
 .card-header:first-child {
     border-radius: calc(.50rem - 1px) calc(.50rem - 1px) 0 0!important;
 	border-top-left-radius: .50rem!important;
 	border-top-right-radius: .50rem!important;
+}
+#latest-blocks .block-reward {
+    font-weight:500;
+}
+#latest-blocks .lb-right-col {
+    text-align:right;
+}
+@media only screen and (max-width: 575px) {
+  #latest-blocks .lb-right-col {
+    text-align:left;
+  }
+  #latest-blocks .lb-right-col .time {
+    float: right;
+    margin-top: .2rem!important;
+  }
+  #latest-blocks .row .media.mr-4 {
+    margin-right: 0rem!important;
+  }
+  #transactions .label_xs {
+    margin-left: 0px;!important;
+  }
+  #transactions .time {
+    float: right;
+    margin-top: .2rem!important;
+  }
+  #transactions .row .media.mr-4 {
+    margin-right: 0rem!important;
+  }
+}
+#latest-blocks .media-body a i {
+    font-size: 14px;
+    color: rgba(64, 170, 220, 0.8);
+    /*padding-bottom: 3px;
+    vertical-align: middle;*/
+    margin-right: .5rem!important;
 }
 .card-footer {
     padding: .75rem;
@@ -516,6 +566,8 @@ pre {
 .safari-float-left{float: left!important;}
 
 .wrapper{width: 100%;display:inline-block;}
+
+@media (max-width:767px) {.navigation{max-height: 450px;overflow-x: hidden;overflow-y: scroll;}}
 /*----- For safari browser -----*/
 
 /*----- Footer -----*/

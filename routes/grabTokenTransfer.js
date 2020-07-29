@@ -15,31 +15,30 @@ exports.Init = function(ethInstance){
 
 
 //get TokenTransfer information from blockchain
-exports.PatchTransferTokens = function(contractData, listenOnComplete){
-  var event = exports.GetTransferEvent(contractData.abi, contractData.address);
-  var transferEventFilter = event({}, {fromBlock: 0, toBlock: "latest"});
+exports.PatchTransferTokens = async function(ERC20ABI,contractData, listenOnComplete){
+  var TokenInstance = new eth.Contract(ERC20ABI,contractData.address);
+  // var event = exports.GetTransferEvent(ERC20ABI, contractData.address);
+  // var transferEventFilter = event({}, {fromBlock: 0, toBlock: "latest"});
+
+  let transferEventLog = await TokenInstance.getPastEvents('Transfer', { fromBlock: 0, toBlock: 'latest' });
   var endBlockNum = 0;
-  transferEventFilter.get( function(err, log) {
-      if (err) {
-        console.error(err);
-        return null;
-      } else {
         var tokenTransferObj = {"transactionHash": "", "blockNumber": 0, "amount": 0, "contractAdd":"", "to": "", "from": "", "timestamp":0};
-        for (var l in log) {
+        for (var l in transferEventLog) {
           try {
-            tokenTransferObj.transactionHash= log[l].transactionHash;
-            tokenTransferObj.blockNumber= log[l].blockNumber;
-            tokenTransferObj.amount= log[l].args.tokens;
-            tokenTransferObj.contractAdd= log[l].address;
-            tokenTransferObj.to= log[l].args.to;
-            tokenTransferObj.from= log[l].args.from;
+            tokenTransferObj.transactionHash= transferEventLog[l].transactionHash;
+            tokenTransferObj.blockNumber= transferEventLog[l].blockNumber;
+            tokenTransferObj.amount= transferEventLog[l].returnValues.tokens;
+            tokenTransferObj.contractAdd= transferEventLog[l].address;
+            tokenTransferObj.to= transferEventLog[l].returnValues.to;
+            tokenTransferObj.from= transferEventLog[l].returnValues.from;
+            
           } catch (e) {
             console.error(e);
             continue;
           }
-          endBlockNum = log[l].blockNumber;
+          endBlockNum = transferEventLog[l].blockNumber;
           try {
-            var block = eth.getBlock(log[l].blockNumber);
+            var block = eth.getBlock(transferEventLog[l].blockNumber);
             tokenTransferObj.timestamp = block.timestamp;
           } catch (e) {
             console.error(e);
@@ -50,45 +49,43 @@ exports.PatchTransferTokens = function(contractData, listenOnComplete){
           new db.TokenTransfer(tokenTransferObj).save( function( err, token, count ){
             if ( typeof err !== 'undefined' && err ) {
               if (err.code == 11000) {
-                  console.log('Skip: Duplicate tx ' + log[l].transactionHash + ': ' + err);
+                  console.log('Skip: Duplicate tx ' + transferEventLog[l].transactionHash + ': ' + err);
                   return null;
               } else {
-                 console.log('Error: Aborted due to error on ' + 'block number ' + log[l].blockNumber.toString() + ': ' + err);
+                 console.log('Error: Aborted due to error on ' + 'block number ' + transferEventLog[l].blockNumber.toString() + ': ' + err);
                  return null;
               }
             } else 
-              console.log('DB successfully written for tx ' + log[l].transactionHash );            
+              console.log('DB successfully written for tx ' + transferEventLog[l].transactionHash );            
           });        
         }
         //finish history TokenTransfer
-
+        let blocknumber = await eth.getBlockNumber()
         if(listenOnComplete){
-          exports.ListenTransferTokens(event, eth.blockNumber+1);
+          exports.ListenTransferTokens(TokenInstance, blocknumber+1);
         }
-      }
-  });
+ 
 
-  return event;
+  return TokenInstance;
 }
 
 
 //listen new TransferTokens event
-exports.ListenTransferTokens=  function(transferEvent, fromBlockNum=eth.blockNumber){
-  var transferEventWatchFilter = transferEvent({}, {fromBlock: fromBlockNum, toBlock: "latest"});
-    transferEventWatchFilter.watch(onTokenTransfer);
+exports.ListenTransferTokens=  function(transferEvent, fromBlockNum=blocknumber){
+  var transferEventWatchFilter = transferEvent.getPastEvents('Transfer', { fromBlock: fromBlockNum, toBlock: 'latest' });
+  // var transferEventWatchFilter = transferEvent({}, {fromBlock: fromBlockNum, toBlock: "latest"});
+    // transferEventWatchFilter.watch(onTokenTransfer);  Need to work from here. Anil
 }
 
 exports.GetTransferEvent=function(abiObj, contractAddress){
-  if(typeof(abiObj) == "string"){
-    abiObj = JSON.parse(abiObj);
-  }
-  var tokenContract = eth.contract(abiObj);
-  var TokenInstance = tokenContract.at(contractAddress);
+  var TokenInstance = new eth.Contract(abiObj,contractAddress);
+  // var TokenInstance = tokenContract.at(contractAddress);
+  console.log(TokenInstance.Transfer,"TokenInstance.Transfer")
   return TokenInstance.Transfer;
 }
 
 var onTokenTransfer= function(error, log){
-  //console.log("token transfer event:");
+  console.log("token transfer event:");
   if(log){
     var tokenTransferObj = {"transactionHash": "", "blockNumber": 0, "amount": 0, "contractAdd":"", "to": "", "from": "", "timestamp":0};
     tokenTransferObj.transactionHash= log.transactionHash;

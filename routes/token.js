@@ -88,9 +88,8 @@ module.exports = function(req, res){
             }
             if(fromAccount){
               var eth = require('./web3relay').eth;
-              var ContractStruct = eth.contract(ABI);
-              var TokenInst = ContractStruct.at(contractAddress);
-              tokenData.tokenNum = TokenInst.balanceOf(fromAccount);
+              var TokenInst = new eth.Contract(ABI,contractAddress);
+              tokenData.tokenNum = TokenInst.methods.balanceOf(fromAccount).call();
             }
             res.write(JSON.stringify(tokenData));
             res.end();
@@ -136,20 +135,24 @@ module.exports = function(req, res){
 
   } else if (req.body.action=="balanceOf") {
     var eth = require('./web3relay').eth;
-    var ContractStruct = eth.contract(ABI);
-    var addr = req.body.user.toLowerCase();
+    var Token = new eth.Contract(ABI,contractAddress);
+    var addr = '0x'+ req.body.address.toLowerCase().substring(3,);
+    console.log(addr,"addr")
     var tokens = 0;
     try {
-      var Token = ContractStruct.at(contractAddress);
-      tokens = Token.balanceOf(addr);
-      tokens = tokens/10**Token.decimals().toNumber();
+      
+      tokens = Token.methods.balanceOf(addr).call().then(
+      tokens = tokens/10**Token.methods.decimals().call().then(
+        res.write(JSON.stringify({"tokens": tokens})),
+        res.end()
+           )
+      );
+      
       // tokens = etherUnits.toEther(tokens, 'wei')*100;
       
     } catch (e) {
       console.error(e);
     }
-    res.write(JSON.stringify({"tokens": tokens}));
-    res.end();
 
   } else if (req.body.action=="create") {//create token contract
     res.write("");

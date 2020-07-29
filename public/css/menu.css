@@ -690,7 +690,7 @@ small[text-size-1] {
 .header_sub-menu-title {
 	display: block;
 	color: #1e2022;
-	font-size: .8125rem;
+	font-size: .9125rem;
 	font-weight: 600;
 	margin-bottom: .5rem
 }
@@ -1208,7 +1208,8 @@ small[text-size-1] {
 		right: 20%
 	}
 	.navbar-expand-md .header_mega-menu-wrapper {
-		padding: 2.5rem;
+		/*padding: 2.5rem;*/
+		padding: 1.5rem;
 		margin-left: 0;
 		margin-right: 0
 	}

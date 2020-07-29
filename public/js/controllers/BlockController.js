@@ -7,23 +7,19 @@ angular.module('BlocksApp').controller('BlockController', function($stateParams,
 
     $rootScope.$state.current.data["pageSubTitle"] = $stateParams.number;
     $scope.blockNum = $stateParams.number;
+    $scope.settings = $rootScope.setup;
 
     //fetch transactions
     $http({
       method: 'POST',
-      url: '/block',
+      url: '/web3relay',
       data: {"block": $scope.blockNum}
-    }).success(function(data) {
-      if (data.error)
+    }).then(function(resp) {
+      if (resp.data.error)
         $location.path("/err404/block/" + $scope.blockNum);
       else {
-        // if(data.extraData && data.extraData.length>5){
-        //   data.extraData = data.extraData.charCodeAt(3)+"."+data.extraData.charCodeAt(4)+"."+data.extraData.charCodeAt(5);
-        // }
-        $scope.block = data;
-        $scope.block.datetime = new Date(data.timestamp*1000); 
+        $scope.block = resp.data;
+        $scope.block.datetime = new Date(resp.data.timestamp*1000); 
       }
     });
-
-
 })

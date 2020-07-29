@@ -9,13 +9,12 @@ var Contract     = mongoose.model( 'Contract' );
 exports.addContract = function(contract) {
   Contract.update(
     {address: contract.address}, 
-    contract, 
+    contract,
     {upsert: true}, 
     function (err, data) {
-      console.log(data);
+      console.log(err,data);
     }
   );
-
 }
 
 exports.findContract = function(address, res) {
@@ -24,9 +23,9 @@ exports.findContract = function(address, res) {
     if (err) {
       console.error("ContractFind error: " + err);
       console.error("bad address: " + address);
-      res.write(JSON.stringify({"error": true, "err":err, "valid": false}));
+      res.write(JSON.stringify({"error": true, "valid": false}));
     } else if (!doc) {
-      res.write(JSON.stringify({"err":"doc is empty!", "valid": false}));
+      res.write(JSON.stringify({"valid": false}));
     } else {
       var data = doc;
       data.valid = doc.sourceCode!=null;

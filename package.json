@@ -1,7 +1,7 @@
 {
   "name": "XinFinScan",
   "private": false,
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "A lightweight XinFinScan block explorer",
   "repository": "",
   "license": "MIT",
@@ -14,6 +14,7 @@
     "test": "./node_modules/.bin/mocha --reporter spec  "
   },
   "dependencies": {
+    "abi-decoder": "^1.1.0",
     "axios": "^0.19.2",
     "bignumber.js": "^5.0.0",
     "body-parser": "^1.12.2",
@@ -26,11 +27,12 @@
     "morgan": "^1.9.0",
     "node-fetch": "^2.6.0",
     "nodemon": "^1.18.10",
+    "rlp": "^2.0.0",
     "serve-favicon": "~2.4.5",
     "socket.io": "^2.0.4",
     "solc": "^0.4.19",
     "ws": "^7.2.1",
-    "xdc3": "git+https://github.com/XinFinOrg/XDC3.git#release/1.2.1",
+    "xdc3": "^1.2.1211",
     "xdc3-old": "npm:xdc3@^0.20.8"
   },
   "devDependencies": {

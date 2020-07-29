@@ -38,11 +38,9 @@ jspm_packages
 
 # local data
 data/
-.node-xmlhttprequest-*
-.node-xml*
 package-lock.json
 public/js/stats/The_bomb_chart.js
-.gitattributes
-.vscode/launch.json
-.vscode/settings.json
-config/*
+.node-xmlhttprequest-*
+/nbproject/private/
+public/views/richlist.js
+.idea

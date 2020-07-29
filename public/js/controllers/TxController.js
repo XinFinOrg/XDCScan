@@ -7,68 +7,37 @@ angular.module('BlocksApp').controller('TxController', function($stateParams, $r
     $rootScope.$state.current.data["pageSubTitle"] = $stateParams.hash;
     $scope.hash = $stateParams.hash;
     $scope.tx = {"hash": $scope.hash};
+    $scope.settings = $rootScope.setup;
 
     //fetch web3 stuff
-    var isTransfer = false;
-    if($location.$$search && $location.$$search.isTransfer)
-      isTransfer = true;
     $http({
       method: 'POST',
-      url: '/transactionRelay',
-      data: {"tx": $scope.hash, "isTransfer": isTransfer}
-    }).success(function(data) {
-      $scope.tx = data;
-      $scope.isTransfer = data.isTransfer;
-      if (data.timestamp)
-        $scope.tx.datetime = new Date(data.timestamp*1000); 
-      if (data.isTrace) // Get internal txs
-        //fetchInternalTxs();
-        $scope.logs=[];
-        $scope.getLogs();
-    });
-
-    // var fetchInternalTxs = function() {
-    //   $http({
-    //     method: 'POST',
-    //     url: '/web3relay',
-    //     data: {"tx_trace": $scope.hash}
-    //   }).success(function(data) {
-    //     $scope.internal_transactions = data;
-    //   });      
-    // }
-
-    $scope.getLogs = function() {
-      if($scope.logs){
+      url: '/web3relay',
+      data: {"tx": $scope.hash}
+    }).then(function(resp) {
+      if (resp.data.error) {
+        if (resp.data.isBlock) {
+          // this is a blockHash
+          $location.path("/block/" + $scope.hash);
+          return;
+        }
+        $location.path("/err404/tx/" + $scope.hash);
         return;
       }
+      $scope.tx = resp.data;
+      if (resp.data.timestamp)
+        $scope.tx.datetime = new Date(resp.data.timestamp*1000); 
+      if (resp.data.isTrace) // Get internal txs
+        fetchInternalTxs();
+    });
+
+    var fetchInternalTxs = function() {
       $http({
         method: 'POST',
-        url: '/eventLog',
-        data: {"txHash": $scope.hash}
-      }).success(function(data) {
-        $scope.logs = data;
-        // for(var i=0; i<$scope.logs.length; i++){
-        //   $scope.logs[i].params = splitParam($scope.logs[i].to);
-        // }
-        
+        url: '/web3relay',
+        data: {"tx_trace": $scope.hash}
+      }).then(function(resp) {
+        $scope.internal_transactions = resp.data;
       });      
     }
-
-    // var splitParam = function(paramsStr){
-    //   var params = [];
-    //   var step = 0;
-    //   var addNum;
-    //   for(var i=0; i<paramsStr.length; i=i+addNum){
-    //     if(i==0){
-    //       params.push(paramsStr.substr(0, 10));
-    //       addNum=10;
-    //     }
-    //     else{
-    //       params.push(paramsStr.substr(10+(step-1)*64, 64));
-    //       addNum=64;
-    //     }
-    //     step++;
-    //   }
-    //   return params;
-    // }
 })
