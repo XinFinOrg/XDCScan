@@ -446,7 +446,7 @@ module.exports.getTotalXDC = function(req, res){
 }
 
 module.exports.getCirculatingSupply= function(req, res){
-  respData = 12100000000+5.55*totalBlockNum;
+  respData = (12100000000+5.55*totalBlockNum).toFixed();
   res.write(String(respData));
   res.end();
 }
