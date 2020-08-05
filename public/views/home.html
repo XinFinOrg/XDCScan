@@ -23,7 +23,7 @@
                                         <div class="media-body text-right">
                                             <a href="https://xinfin.network" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="" target="_blank" >
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Block Height</h2>
-                                            {{blockHeight}}</a>
+                                            {{blockHeight | number}}</a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">
@@ -37,7 +37,7 @@
                                         </div>
                                         <div class="media-body text-right">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Transactions</h2>
-                                            <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{transactionCount}}</a>
+                                            <a class="text-size-1 text-link" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{transactionCount | number }}</a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">
@@ -48,12 +48,12 @@
                                         <div class="media-body">
                                             <a class="text-size-1 text-link counter " data-toggle="tooltip" data-placement="right" data-title="View More" href="/addr/xdc0000000000000000000000000000000000000088" data-original-title="" title="" target="_blank" >
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Total Stake</h2>
-                                            {{totalStakedValue}}</a>
+                                            {{totalStakedValue | number}}</a>
                                         </div>
                                         <div class="media-body text-right">
                                             <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-title="View More" href="/addr/xdc0000000000000000000000000000000000000000" data-original-title="" title="" target="_blank" >
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Burnt XDC</h2>
-                                            {{totalBurntValue}}</a>
+                                            {{totalBurntValue | number}}</a>
                                         </div>
                                     </div>
                                     <hr class="d-block d-md-none hr-space-lg">
@@ -70,7 +70,7 @@
                                         </div>
                                         <div class="media-body text-right">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Daily Rewards</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{todayDailyRewards}} XDC</a>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{todayDailyRewards | number}} XDC</a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">
@@ -93,12 +93,12 @@
                                             <img src="/img/icons/marketcap-icon.png" class="img-fluid" alt="Total XDC Supply / Market Cap">
                                         </figure>
                                         <div class="media-body">
-                                            <h2 class="font-size-1 text-uppercase text-secondary mb-0">Total XDC Supply</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{totalXDC}} XDC</a>
+                                            <h2 class="font-size-1 text-uppercase text-secondary mb-0">Circulating Supply</h2>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{XDCCirculatingSupply | number}} XDC</a>
                                         </div>
                                         <div class="media-body text-right">
-                                            <h2 class="font-size-1 text-uppercase text-secondary mb-0">Market Cap</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD}} </a>
+                                            <h2 class="font-size-1 text-uppercase text-secondary mb-0"> Market Cap</h2>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCXDCCirculatingSupplyinUSD | number }} </a>
                                         </div>
                                     </div>
                                     <hr class="d-block d-md-none hr-space-lg">
@@ -118,10 +118,30 @@
                                             </a>
                                         </div>
                                     </div>
-                                    <!-- <hr class="hr-space-sm"> -->
+                                    <hr class="hr-space-lg">
                                     <div class="media align-items-center">
-                                        <iframe frameborder="0" style="border-bottom: 1px solid #f0f0f0; height:175px; overflow:scroll; width: 100%" src="https://xinfin.io/xdc-volume-coinpaparika.html" marginheight="1" marginwidth="1" seamless="seamless" scrolling="no" allowtransparency="true"></iframe>
+                                        <figure class="sm-avatar mr-2">
+                                            <img src="/img/icons/marketcap-icon.png" class="img-fluid" alt="Total XDC Supply / Market Cap">
+                                        </figure>
+                                        <div class="media-body text-left">
+                                            <h2 class="font-size-1 text-uppercase text-secondary mb-0">Fully Diluted Market Cap</h2>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD | number }} </a>
+                                        </div>
                                     </div>
+                                    <hr class="hr-space-lg">
+                                    <div class="media align-items-center">
+                                        <figure class="sm-avatar mr-2">
+                                            <img src="/img/icons/marketcap-icon.png" class="img-fluid" alt="Total XDC Supply / Market Cap">
+                                        </figure>
+                                        <div class="media-body">
+                                            <h2 class="font-size-1 text-uppercase text-secondary mb-0">Total XDC Supply</h2>
+                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">{{totalXDC | number}} XDC</a>
+                                        </div>
+                                    </div>
+                                    <!-- <hr class="hr-space-sm"> -->
+                                    <!-- <div class="media align-items-center">
+                                        <iframe frameborder="0" style="border-bottom: 1px solid #f0f0f0; height:175px; overflow:scroll; width: 100%" src="https://xinfin.io/xdc-volume-coinpaparika.html" marginheight="1" marginwidth="1" seamless="seamless" scrolling="no" allowtransparency="true"></iframe>
+                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -172,8 +192,8 @@
                                             <!--<div class="text-nowrap"><span class="d-block mb-1 mb-sm-0">By <a class="hash-tag " href="/addr/{{t.miner}}">{{t._id}}</a></span><a href="/block/{{t.number}}" title="Transactions in this Block">{{t.txs.length}} txns </a>
                                             </div>-->
 											<div class="text-nowrap lb-right-col">
-												<span class="d-block mb-1 mb-sm-0"><span class="block-reward">Block Reward: </span>5.5 XDC</span>
-												<span class="d-sm-block small text-secondary mt-2 ml-1 ml-sm-0 text-nowrap" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span>
+												<span class="d-lg-block d-sm-block mb-1 mb-sm-0"><span class="block-reward">Block Reward: </span>5.5 XDC</span>
+												<span class="d-sm-block small text-secondary mt-2 ml-1 ml-sm-0 text-nowrap time" data-countdown="60000">{{t.timestamp | timeDuration }} ago</span>
                                             </div>											
                                             <!--<div class="d-none d-sm-block"></div>-->
                                         </div>
@@ -207,12 +227,12 @@
                                         <div class="media align-items-sm-center mr-4 mb-1 mb-sm-0">
                                             <!--<div class="d-none d-sm-flex mr-2"><span class="btn btn-icon btn-soft-secondary rounded-circle"><span class="btn-icon_inner text-dark">Tx</span></span>
                                             </div>-->
-                                            <div class="media-body"><span class="d-inline-block d-sm-none mr-1">TX#</span><a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/{{t.hash}}">{{t.hash}}</a><span class="d-none d-sm-block small text-secondary"><div data-countdown="60000">{{t.timestamp | timeDuration }} ago</div></span></div>
+                                            <div class="media-body"><span class="d-inline-block d-sm-none mr-1">TX#</span><a class="hash-tag hash-tag--xs hash-tag-xs-down--md text-truncate" href="/tx/{{t.hash}}">{{t.hash}}</a><span class="d-sm-block mt-2 small text-secondary time"><div data-countdown="60000">{{t.timestamp | timeDuration }} ago</div></span></div>
                                         </div>
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="d-sm-flex justify-content-between">
-                                            <div class="text-nowrap mr-2 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-sm-block">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
+                                            <div class="text-nowrap mr-2 mb-1 mb-sm-0"><span>From <a href="/addr/{{t.from}}" class="hash-tag text-truncate">{{t.from.substr(0,24)}}...</a></span><span class="d-block mt-1">To <a href="/addr/{{t.to}}" class="hash-tag text-truncate">{{t.to.substr(0,24)}}...</a></span></div>
                                             <div><span class="label label_xs label_secondary text-center text-nowrap" title="Amount">{{t.value | number: 0 }} XDC</span></div>
                                         </div>
                                     </div>

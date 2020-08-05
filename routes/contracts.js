@@ -9,10 +9,10 @@ var Contract     = mongoose.model( 'Contract' );
 exports.addContract = function(contract) {
   Contract.update(
     {address: contract.address}, 
-    {$setOnInsert: contract}, 
+    contract,
     {upsert: true}, 
     function (err, data) {
-      console.log(data);
+      console.log(err,data);
     }
   );
 }
@@ -28,7 +28,7 @@ exports.findContract = function(address, res) {
       res.write(JSON.stringify({"valid": false}));
     } else {
       var data = doc;
-      data.valid = true;
+      data.valid = doc.sourceCode!=null;
       res.write(JSON.stringify(data));
     }
     res.end();

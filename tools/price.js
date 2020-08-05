@@ -18,12 +18,12 @@ const getQuote = async () => {
         let requestBTC = await fetch(URL + '&convert=BTC');
         let quoteUSD = await requestUSD.json();
         let quoteBTC = await requestBTC.json();
-
         quoteObject = {
             symbol: config.settings.symbol,
             timestamp: Math.round(new Date(quoteUSD.status.timestamp).getTime() / 1000),
             quoteBTC: quoteBTC.data.XDCE.quote.BTC.price,
             quoteUSD: quoteUSD.data.XDCE.quote.USD.price,
+            volume_24h:quoteUSD.data.XDCE.quote.USD.volume_24h,
             percent_change_24h: quoteUSD.data.XDCE.quote.USD.percent_change_24h,
         }
 

@@ -10,9 +10,8 @@ let ActiveAddressesStat = mongoose.model( 'ActiveAddressesStat' );
 
 var filters = require('./filters');
 var eth = require("./web3relay").eth;
-const { getCMCData } = require("../helpers/cmc");
 
-const cmc = "https://api.coinmarketcap.com/v1/ticker/xinfin-network/";
+
 
 
 var async = require('async');
@@ -54,8 +53,8 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "xdc0000000000000000000000000000000000000088";
 var burntAddress = "xdc0000000000000000000000000000000000000000";
-let resignMNCount = 11;
-let epochRewards = 5000;
+let resignMNCount = 13;
+let epochRewards = 4500;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
 module.exports = function (app) {
@@ -84,6 +83,8 @@ module.exports = function (app) {
   app.post('/data', getData);
   app.get('/publicAPI', publicAPI);//all public APIs
   app.get('/totalXDC', publicAPI.getTotalXDC);
+  app.get('/getcirculatingsupply', publicAPI.getCirculatingSupply);
+
   app.get('/totalXDCSupply', getTotalXDCSupply);
 
   //masternode routes
@@ -140,44 +141,44 @@ module.exports = function (app) {
 
   // setInterval(xinfinSiteStatTicker, 1000000);
 
-  async function xinfinSiteStatTicker() {
-    try {
-      console.log("called xinfinSiteStatTicker");
-      burntBalance = web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
-      totalMasterNodesVal = "";
-      let mnCandidateCnt;
-      if (!masterNodeContract) {
-        masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
-      }
-      if (masterNodeContract) {
-        mnCandidateCnt = masterNodeContract.methods.getCandidates().length
-        totalMasterNodesVal = (String(mnCandidateCnt - resignMNCount));
-      }
+  // async function xinfinSiteStatTicker() {
+  //   try {
+  //     console.log("called xinfinSiteStatTicker");
+  //     burntBalance = web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
+  //     totalMasterNodesVal = "";
+  //     let mnCandidateCnt;
+  //     if (!masterNodeContract) {
+  //       masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
+  //     }
+  //     if (masterNodeContract) {
+  //       mnCandidateCnt = masterNodeContract.methods.getCandidates().length
+  //       totalMasterNodesVal = (String(mnCandidateCnt - resignMNCount));
+  //     }
 
-      totalStakedValueVal = web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
+  //     totalStakedValueVal = web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
 
-      if (!masterNodeContract) {
-        masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
-      }
-      if (masterNodeContract) {
-        let mnCount = mnCandidateCnt - resignMNCount
-        // let epoch = (eth.blockNumber / 900).toFixed()
-        mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
-      }
+  //     if (!masterNodeContract) {
+  //       masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
+  //     }
+  //     if (masterNodeContract) {
+  //       let mnCount = mnCandidateCnt - resignMNCount
+  //       // let epoch = (eth.blockNumber / 900).toFixed()
+  //       mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+  //     }
 
       totalBlockNum = eth.blockNumber;
-      totalXDC = 37500000000 + 5.55 * totalBlockNum;
+      totalXDC = (37500000000 + 5.55 * totalBlockNum).toFixed();
 
-      alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
+  //     alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
 
-      const cmc_xdc_data = await getCMCData();
-      cmc_xdc_price = cmc_xdc_data.data.data["2634"].quote.USD;
+  //     const cmc_xdc_data = 2
+  //     cmc_xdc_price = cmc_xdc_data.data.data["2634"].quote.USD;
 
 
-    } catch (e) {
-      console.log("exception ar routes.index.getXinFinStats: ", e);
-    }
-  }
+  //   } catch (e) {
+  //     console.log("exception ar routes.index.getXinFinStats: ", e);
+  //   }
+  // }
 
 
 
@@ -476,9 +477,9 @@ function fnum(x) {
 
   return "1T+";
 }
-var getTotalXDCSupply = async function (req, res) {
-  burntBalance = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
-  totalBlockNum =  await web3relay.eth.getBlockNumber();
+var getTotalXDCSupply = function (req, res) {
+  burntBalance = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
+  totalBlockNum = eth.blockNumber;
   respData = ((37500000000 + 5.55 * totalBlockNum)-burntBalance).toFixed() ;
   res.write(String(respData,burntBalance));
   res.end();
@@ -513,7 +514,7 @@ var sendBlocks = async function(lim, res) {
     masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
 
-  var blockHetht = await web3relay.eth.getBlockNumber();
+  var blockHeight = await web3relay.eth.getBlockNumber();
   const latestPrice = await Market.findOne().sort({timestamp: -1})
   if (latestPrice) {
     quoteUSD = latestPrice.quoteUSD;
@@ -528,7 +529,8 @@ var sendBlocks = async function(lim, res) {
     let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
     let totalXDCBurntValue = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
     let totalXDCStakedValue = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
-    let totalXDCSupply = ((37500000000 + 5.55 * blockHetht)-totalXDCBurntValue).toFixed() ;
+    let totalXDCSupply = ((37500000000 + 5.55 * blockHeight)-totalXDCBurntValue).toFixed() ;
+    let XDCCirculatingSupply = (12100000000+5.55*blockHeight).toFixed() ;
     let getCandidates = await masterNodeContract.methods.getCandidates().call()
     let totalMNCount = getCandidates.length - resignMNCount
 
@@ -545,7 +547,7 @@ var sendBlocks = async function(lim, res) {
           docs = filters.filterBlocks(docs);
           var result = { "blocks": docs };
           if (docs.length > 1) {
-            result.blockHeight = blockHetht;
+            result.blockHeight = blockHeight;
             var totalTXs = 0;
             // console.log(docs)
             var costTime = docs[0].timestamp - docs[docs.length - 1].timestamp;
@@ -563,6 +565,7 @@ var sendBlocks = async function(lim, res) {
             result.totalXDCBurntValue = totalXDCBurntValue;
             result.totalXDCStakedValue = totalXDCStakedValue.toFixed();
             result.totalXDCSupply = totalXDCSupply;
+            result.XDCCirculatingSupply = XDCCirculatingSupply
             result.totalMNCount = totalMNCount;
             result.activeAddresses = activeAddresses;
             result.TPS = totalTXs / costTime;
@@ -574,25 +577,45 @@ var sendBlocks = async function(lim, res) {
   });
 }
 const getXinFinStats = async function (lim, res) {
-  // if (cmc_xdc_price)
-  console.log("totalStakedValueVal: ", totalStakedValueVal * cmc_xdc_price.price)
+  const latestPrice = await Market.findOne().sort({timestamp: -1})
+  if (latestPrice) {
+    quoteUSD = latestPrice.quoteUSD;
+  }
+  burntBalance = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
+  totalMasterNodesVal = "";
+  let mnCandidateCnt;
+  if (!masterNodeContract) {
+    masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
+  }
+  if (masterNodeContract) {
+    mnCandidateCnt = await masterNodeContract.methods.getCandidates().call()
+    totalMasterNodesVal = (String(mnCandidateCnt.length - resignMNCount));
+    mnDailyRewards = ((epochRewards / totalMasterNodesVal) * epochInDay).toFixed()
+
+  }
+    totalBlockNum = await eth.getBlockNumber();
+    totalXDC = 37500000000 + 5.55 * totalBlockNum;
+    volume_24h = latestPrice.volume_24h;
+    totalStakedValueVal = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
+    alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
   res.write(JSON.stringify({
     totalMasterNodes: totalMasterNodesVal,
     totalStakedValue: totalStakedValueVal,
-    totalStakedValueFiat: (parseFloat(totalStakedValueVal) * parseFloat(cmc_xdc_price.price)).toFixed(),
+    totalStakedValueFiat: (parseFloat(totalStakedValueVal) * parseFloat(quoteUSD)).toFixed(),
     burntBalance: (burntBalance).toFixed(),
     mnDailyRewards: mnDailyRewards,
     totalXDC: totalXDC,
-    totalXDCFiat: (totalXDC * parseFloat(cmc_xdc_price.price)).toFixed(),
+    totalXDCFiat: (totalXDC * parseFloat(quoteUSD)).toFixed(),
     monthlyRewards: (parseFloat(mnDailyRewards) * 30).toFixed(),
-    monthlyRewardsFiat: (parseFloat(mnDailyRewards) * 30 * parseFloat(cmc_xdc_price.price)).toFixed(),
+    monthlyRewardsFiat: (parseFloat(mnDailyRewards) * 30 * parseFloat(quoteUSD)).toFixed(),
     monthlyRewardPer: (((parseFloat(mnDailyRewards) * 30) / 10000000) * 100).toFixed(2),
     yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
-    priceUsd: cmc_xdc_price.price,
+    priceUsd: quoteUSD,
     // xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
-    xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"])  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
+    xdcVol24HR: (parseFloat(volume_24h)  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(quoteUSD)).toFixed()
   }));
   res.end()
+
 }
 
 var sendTxs = function(lim, res) {

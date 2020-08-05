@@ -4,6 +4,9 @@ var filterBlocks = require('./filters').filterBlocks;
 var witnessListData = require('./witnessListData');
 
 var totalXDC = "totalXDC";
+
+var getcirculatingsupply = "getcirculatingsupply";
+
 var balance = "balance";
 var balancemulti = "balancemulti";
 
@@ -54,18 +57,28 @@ var requestParam = function(req, param){
   return p;
 }
 
-module.exports = function(req, res){
+module.exports = async function(req, res){
   var respData = {"status":1,"message":"OK","result":""};
     try{
+      totalBlockNum = await eth.getBlockNumber();
       methodName = req.query.methodName;
       if(!methodName)
         methodName = req.query.action;
       
       switch(methodName){
         case totalXDC:
-          totalBlockNum = eth.blockNumber;
           onlyValue = requestParam(req, "onlyValue");
-          value = 37500000000+5.55*totalBlockNum;
+          value = (37500000000+5.55*totalBlockNum).toFixed();
+          if(onlyValue){
+            res.write(String(value));
+            res.end();
+          }else{
+            sendData(res, respData, value);
+          }
+          break;
+          case getcirculatingsupply:
+          onlyValue = requestParam(req, "onlyValue");
+          value = (12100000000+5.55*totalBlockNum).toFixed();
           if(onlyValue){
             res.write(String(value));
             res.end();
@@ -239,7 +252,7 @@ module.exports = function(req, res){
               findObj.data = data;
             }
             if(toBlock == "latest")
-              toBlock = eth.blockNumber;
+              toBlock = totalBlockNum;
             else
               toBlock = Number(toBlock);
             
@@ -265,12 +278,12 @@ module.exports = function(req, res){
             break;
 
           case eth_blockNumber:
-            sendData(res, respData, eth.blockNumber);
+            sendData(res, respData, totalBlockNum);
             break;
           case eth_getBlockByNumber:
             blockNumber = requestParam(req, "blockNumber");
             if(blockNumber == "latest")
-              blockNumber = eth.blockNumber;
+              blockNumber = totalBlockNum;
             else
               blockNumber = Number(blockNumber);
             sendData(res, respData, eth.getBlock(blockNumber));
@@ -426,9 +439,16 @@ function responseFail(res, respData, msg){
   res.end();
 }
 
-module.exports.getTotalXDC = function(req, res){
-  totalBlockNum = eth.blockNumber;
-  respData = 37500000000+5.55*totalBlockNum;
+module.exports.getTotalXDC = async function(req, res){
+  totalBlockNum = await eth.getBlockNumber();
+  respData = (37500000000+5.55*totalBlockNum).toFixed();
+  res.write(String(respData));
+  res.end();
+}
+
+module.exports.getCirculatingSupply= async function(req, res){
+  totalBlockNum = await eth.getBlockNumber();
+  respData = (12100000000+5.55*totalBlockNum).toFixed();
   res.write(String(respData));
   res.end();
 }

@@ -34,7 +34,9 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       $scope.todayDailyRewards = resp.data.todayRewards;
       $scope.totalXDC = resp.data.totalXDCSupply;
       $scope.totalNodes = resp.data.totalMNCount;
+      $scope.XDCCirculatingSupply = resp.data.XDCCirculatingSupply;
       $scope.totalXDCinUSD = (resp.data.totalXDCSupply * parseFloat($scope.quoteUSD)).toFixed();
+      $scope.totalXDCXDCCirculatingSupplyinUSD = (resp.data.XDCCirculatingSupply * parseFloat($scope.quoteUSD)).toFixed();
       $scope.accountsCount = resp.data.accountsCount;
       $scope.transactionCount = resp.data.transactionCount;
       $scope.totalBurntValue = resp.data.totalXDCBurntValue.toFixed();
