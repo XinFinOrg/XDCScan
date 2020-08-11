@@ -1,97 +1,82 @@
 <div class="col-md-12">
   <div style="margin-bottom:20px;" ng-show="!contract.valid">
-  <div class="row align-items-center">
-  <div class="col-md-4 fw6 mb-1">Contract Source Code</div>
-  <div class="col-md-8"><div><span class="label label_sm label_danger label_rounded ml-0"><i class="fa fa-exclamation-triangle mr-1"></i>Unverified</span></div></div>
-  <!--<span class="eth-stat" ><i style="color: red" class="fa fa-wheelchair"></i> Contract Source Code Unverified</span>
+    <div class="row align-items-center">
+      <div class="col-md-4 fw6 mb-1">Contract Source Code</div>
+      <div class="col-md-8">
+        <div><span class="label label_sm label_danger label_rounded ml-0"><i
+              class="fa fa-exclamation-triangle mr-1"></i>Unverified</span></div>
+      </div>
+      <!--<span class="eth-stat" ><i style="color: red" class="fa fa-wheelchair"></i> Contract Source Code Unverified</span>
   <br>-->
-  </div>
-  <hr class="hr-space">
-  <div class="row align-items-center">
-  <div class="col-md-4 fw6 mb-1">Verify </div>
-  <div class="col-md-8"><div class="pl-small eth-stat-text"><a href="/contract/{{addrHash}}"><span class="label label_sm label_info label_rounded ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span></a> to Verify and Publish Source Code</div></div>
-  <!--<span class="eth-stat-text"><a href="/contract/{{addrHash}}">Verify And Publish Source Code.</a></span>-->
-  </div>  
-</div>
-  
-<div ng-show="contract.valid">
-  <div class="row align-items-center">
-  <div class="col-md-4 fw6 mb-1">Contract Source Code</div>
-  <div class="col-md-8"><div><span class="label label_sm label_success label-rounded ml-0"><i class="fa fa-check mr-1"></i>Verified</span></div></div>
-  </div>
-  <hr class="hr-space">
-</div>
-  
-  <!--<div class="row" ng-show="contract.valid">
-    <p class="eth-stat"><i style="color: green" class="fa fa-check-circle-o"></i> Contract Source Code Verified</p>
-  </div>-->
-
-
-<!--<div class="row" ng-show="contract.valid">
-  <div class="col-md-6 center">
-    <div class="eth-stat">
-        <div class="margin-top-20">
-        <span class="eth-stat-text">Contract Name: </span>
-        <span ng-model="contract.contractName">{{contract.contractName}}</span>
-        </div>
-        <div class="margin-top-20">
-        <span class="eth-stat-text">Compiler Version: </span>
-        <span ng-model="contract.compilerVersion">{{contract.compilerVersion}}</span>
-        </div>
-        <div class="margin-top-20">
-        <span class="eth-stat-text">Optimization Enabled: </span>
-        <span ng-model="contract.optimization">{{contract.optimization}}</span>
-        </div>
+    </div>
+    <hr class="hr-space">
+    <div class="row align-items-center">
+      <div class="col-md-4 fw6 mb-1">Verify </div>
+      <div class="col-md-8">
+        <div class="pl-small eth-stat-text"><a href="/contract/{{addrHash}}"><span
+              class="label label_sm label_info label_rounded ml-0"><i class="fas fa-shield-alt mr-1"></i>Click
+              here</span></a> to Verify and Publish Source Code</div>
+      </div>
+      <!--<span class="eth-stat-text"><a href="/contract/{{addrHash}}">Verify And Publish Source Code.</a></span>-->
     </div>
   </div>
-</div>-->  
-
 
   <div ng-show="contract.valid">
-<div class="row align-items-center">
-  <div class="col-md-4 fw6 mb-1 eth-stat-text">Contract Name</div>
-  <div class="col-md-8">
-    <div ng-model="contract.contractName">{{contract.contractName}}</div>
+    <div class="row align-items-center">
+      <div class="col-md-4 fw6 mb-1">Contract Source Code</div>
+      <div class="col-md-8">
+        <div><span class="label label_sm label_success label-rounded ml-0"><i
+              class="fa fa-check mr-1"></i>Verified</span></div>
+      </div>
+    </div>
+    <hr class="hr-space">
   </div>
-</div>
-<hr class="hr-space">
-<div class="row align-items-center">
-  <div class="col-md-4 fw6 mb-1 eth-stat-text">Compiler Version</div>
-  <div class="col-md-8">
-    <div ng-model="contract.compilerVersion">{{contract.compilerVersion}}</div>
+  <div ng-show="contract.valid">
+    <div class="row align-items-center">
+      <div class="col-md-4 fw6 mb-1 eth-stat-text">Contract Name</div>
+      <div class="col-md-8">
+        <div ng-model="contract.contractName">{{contract.contractName}}</div>
+      </div>
+    </div>
+    <hr class="hr-space">
+    <div class="row align-items-center">
+      <div class="col-md-4 fw6 mb-1 eth-stat-text">Compiler Version</div>
+      <div class="col-md-8">
+        <div ng-model="contract.compilerVersion">{{contract.compilerVersion}}</div>
+      </div>
+    </div>
+    <hr class="hr-space">
+    <div class="row align-items-center">
+      <div class="col-md-4 fw6 mb-1 eth-stat-text">Optimization Enabled</div>
+      <div class="col-md-8">
+        <div ng-model="contract.optimization">{{contract.optimization}}</div>
+      </div>
+    </div>
+    <hr class="hr-space">
   </div>
-</div>
-<hr class="hr-space">
-<div class="row align-items-center">
-  <div class="col-md-4 fw6 mb-1 eth-stat-text">Optimization Enabled</div>
-  <div class="col-md-8">
-    <div ng-model="contract.optimization">{{contract.optimization}}</div>
+
+
+
+
+
+
+
+
+  <div class="row" ng-show="contract.valid">
+    <div class="col-md-12 mt-4">
+      <h4 class="card-header-title">Contract Source Code <i class="fa fa-code"></i></h4>
+      <pre class="code-js language-markup scrollable" ng-model="contract.sourceCode">{{contract.sourceCode}}</pre>
+      <br>
+      <h4 class="card-header-title">Contract ABI <i class="fa fa-tasks"></i></h4>
+      <pre class="code-js language-markup scrollable" ng-model="contract.abi">{{contract.abi}}</pre><br>
+    </div>
   </div>
-</div>
-<hr class="hr-space">
-</div>
 
-
-
-
-
-
-
-
-<div class="row" ng-show="contract.valid">
-  <div class="col-md-12 mt-4">
-<h4 class="card-header-title">Contract Source Code <i class="fa fa-code"></i></h4>
-  <pre class="code-js language-markup scrollable" ng-model="contract.sourceCode">{{contract.sourceCode}}</pre>
-  <br>
-  <h4 class="card-header-title">Contract ABI <i class="fa fa-tasks"></i></h4>
-  <pre class="code-js language-markup scrollable" ng-model="contract.abi">{{contract.abi}}</pre><br>
-</div>
-</div>
-
-<div class="row">
-  <div class="col-md-12">
-<h4 class="card-header-title">Contract Bytecode <i class="fa fa-file-code"></i></h4>
-  <pre class="code-bytecode language-markup scrollable" ng-class="{verified: contract.valid}">{{addr.bytecode}}</pre>
-</div>
-</div>
+  <div class="row">
+    <div class="col-md-12">
+      <h4 class="card-header-title">Contract Bytecode <i class="fa fa-file-code"></i></h4>
+      <pre class="code-bytecode language-markup scrollable"
+        ng-class="{verified: contract.valid}">{{addr.bytecode}}</pre>
+    </div>
+  </div>
 </div>
