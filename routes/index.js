@@ -1,12 +1,12 @@
-var mongoose = require( 'mongoose' );
+var mongoose = require('mongoose');
 const axios = require("axios");
 const WebSocket = require("ws");
 let price = require('../tools/price')
-let Market = mongoose.model( 'Market' );
-var Block     = mongoose.model('Block');
+let Market = mongoose.model('Market');
+var Block = mongoose.model('Block');
 var Transaction = mongoose.model('Transaction');
 var Account = mongoose.model('Account');
-let ActiveAddressesStat = mongoose.model( 'ActiveAddressesStat' );
+let ActiveAddressesStat = mongoose.model('ActiveAddressesStat');
 
 var filters = require('./filters');
 var eth = require("./web3relay").eth;
@@ -21,22 +21,22 @@ let BlockSigners = "xdc0000000000000000000000000000000000000089";
 let RandomizeSMC = "xdc0000000000000000000000000000000000000090";
 
 // module.exports = function(app){
-  var web3relay = require('./web3relay');
-  ws.on('open', function open() {
-    // console.log("[*] connected to the homiex wss")
+var web3relay = require('./web3relay');
+ws.on('open', function open() {
+  // console.log("[*] connected to the homiex wss")
+  ws.send(JSON.stringify({ "ping": Date.now() }));
+  setInterval(() => {
     ws.send(JSON.stringify({ "ping": Date.now() }));
-    setInterval(() => {
-      ws.send(JSON.stringify({ "ping": Date.now() }));
-    }, 120000);
-    ws.send(JSON.stringify({
-      "symbol": "XDCEUSDT",
-      "topic": "realtimes",
-      "event": "sub",
-      "params": {
-        "binary": false
-      }
-    }))
-  });
+  }, 120000);
+  ws.send(JSON.stringify({
+    "symbol": "XDCEUSDT",
+    "topic": "realtimes",
+    "event": "sub",
+    "params": {
+      "binary": false
+    }
+  }))
+});
 
 
 // ws.on('message', function incoming(data) {
@@ -77,7 +77,7 @@ module.exports = function (app) {
 
   app.post('/addr', getAddr);
   app.post('/addrTXcounts', addrTXcounts);
-  
+
   app.post('/tx', getTx);
   app.post('/block', getBlock);
   app.post('/data', getData);
@@ -166,8 +166,8 @@ module.exports = function (app) {
   //       mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
   //     }
 
-      totalBlockNum = eth.blockNumber;
-      totalXDC = (37500000000 + 5.55 * totalBlockNum).toFixed();
+  totalBlockNum = eth.blockNumber;
+  totalXDC = (37500000000 + 5.55 * totalBlockNum).toFixed();
 
   //     alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
 
@@ -243,7 +243,7 @@ const getAddr = async (req, res) => {
 
   var data = { draw: parseInt(req.body.draw), recordsFiltered: count, recordsTotal: count, mined: 0 };
 
-  var addrFind = Transaction.find( { $or: [{"to": addr}, {"from": addr}] })
+  var addrFind = Transaction.find({ $or: [{ "to": addr }, { "from": addr }] })
 
   var sortOrder = '-blockNumber';
   if (req.body.order && req.body.order[0] && req.body.order[0].column) {
@@ -256,12 +256,12 @@ const getAddr = async (req, res) => {
   }
 
   addrFind.lean(true).sort(sortOrder).skip(start).limit(limit).exec("find", function (err, docs) {
-      if (docs)
-        data.data = filters.filterTX(docs, addr);
-      else
-        data.data = [];
-      res.write(JSON.stringify(data));
-      res.end();
+    if (docs)
+      data.data = filters.filterTX(docs, addr);
+    else
+      data.data = [];
+    res.write(JSON.stringify(data));
+    res.end();
   });
 
 };
@@ -279,49 +279,49 @@ var addrTXcounts = function (req, res) {
     res.end();
   }
 }
-var getAddrCounter = function(req, res) {
+var getAddrCounter = function (req, res) {
   var addr = req.body.addr.toLowerCase();
   var count = parseInt(req.body.count);
   var data = { recordsFiltered: count, recordsTotal: count, mined: 0 };
 
   async.waterfall([
-  function(callback) {
+    function (callback) {
 
-  Transaction.count({ $or: [{"to": addr}, {"from": addr}] }, function(err, count) {
-    if (!err && count) {
-      // fix recordsTotal
-      data.recordsTotal = count;
-      data.recordsFiltered = count;
-    }
-    callback(null);
-  });
+      Transaction.count({ $or: [{ "to": addr }, { "from": addr }] }, function (err, count) {
+        if (!err && count) {
+          // fix recordsTotal
+          data.recordsTotal = count;
+          data.recordsFiltered = count;
+        }
+        callback(null);
+      });
 
-  }, function(callback) {
+    }, function (callback) {
 
-  Block.count({ "miner": addr }, function(err, count) {
-    if (!err && count) {
-      data.mined = count;
-    }
-    callback(null);
-  });
+      Block.count({ "miner": addr }, function (err, count) {
+        if (!err && count) {
+          data.mined = count;
+        }
+        callback(null);
+      });
 
-  }], function (err) {
-    res.write(JSON.stringify(data));
-    res.end();
-  });
+    }], function (err) {
+      res.write(JSON.stringify(data));
+      res.end();
+    });
 
 };
-var getBlock = function(req, res) {
+var getBlock = function (req, res) {
   // TODO: support queries for block hash
   var txQuery = "number";
   var number = parseInt(req.body.block);
 
-  var blockFind = Block.findOne( { number : number }).lean(true);
+  var blockFind = Block.findOne({ number: number }).lean(true);
   blockFind.exec(function (err, doc) {
     if (err || !doc) {
       console.error("BlockFind error: " + err)
       // console.error(req.body);
-      res.write(JSON.stringify({"error": true}));
+      res.write(JSON.stringify({ "error": true }));
     } else {
       var block = filters.filterBlocks([doc]);
       res.write(JSON.stringify(block[0]));
@@ -330,12 +330,12 @@ var getBlock = function(req, res) {
   });
 };
 
-var getTx = function(req, res){
+var getTx = function (req, res) {
   var tx = req.body.tx.toLowerCase();
-  var txFind = Block.findOne( { "transactions.hash" : tx }, "transactions timestamp").lean(true);
+  var txFind = Block.findOne({ "transactions.hash": tx }, "transactions timestamp").lean(true);
   txFind.exec(function (err, doc) {
-    if (!doc){
-      console.log("missing: " +tx)
+    if (!doc) {
+      console.log("missing: " + tx)
       res.write(JSON.stringify({}));
       res.end();
     } else {
@@ -349,7 +349,7 @@ var getTx = function(req, res){
 /*
   Fetch data from DB
 */
-var getData = function(req, res){
+var getData = function (req, res) {
   // TODO: error handling for invalid calls
   var action = req.body.action.toLowerCase();
   var limit = req.body.limit
@@ -369,10 +369,10 @@ var getData = function(req, res){
 /*
   Total supply API code
 */
-var getTotal = function(req, res) {
+var getTotal = function (req, res) {
   Account.aggregate([
     { $group: { _id: null, totalSupply: { $sum: '$balance' } } }
-  ]).exec(function(err, docs) {
+  ]).exec(function (err, docs) {
     if (err) {
       res.write("Error getting total supply");
       res.end()
@@ -385,9 +385,9 @@ var getTotal = function(req, res) {
 /*
   temporary blockstats here
 */
-var latestBlock = function(req, res) {
+var latestBlock = function (req, res) {
   var block = Block.findOne({}, "totalDifficulty")
-                      .lean(true).sort('-number');
+    .lean(true).sort('-number');
   block.exec(function (err, doc) {
     res.write(JSON.stringify(doc));
     res.end();
@@ -395,9 +395,9 @@ var latestBlock = function(req, res) {
 }
 
 
-var getLatest = function(lim, res, callback) {
+var getLatest = function (lim, res, callback) {
   var blockFind = Block.find({}, "number transactions timestamp miner extraData")
-                      .lean(true).sort('-number').limit(lim);
+    .lean(true).sort('-number').limit(lim);
   blockFind.exec(function (err, docs) {
     callback(docs, res);
   });
@@ -433,8 +433,8 @@ var todayRewards = async function (req, res) {
     masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
   if (masterNodeContract) {
-    let mnCount = await masterNodeContract.methods.getCandidates().call() 
-    mnCount = mnCount.length- resignMNCount
+    let mnCount = await masterNodeContract.methods.getCandidates().call()
+    mnCount = mnCount.length - resignMNCount
     let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
     res.write(String(mnDailyRewards));
   }
@@ -442,7 +442,7 @@ var todayRewards = async function (req, res) {
 
 }
 
-var totalMasterNodes = async function  (req, res) {
+var totalMasterNodes = async function (req, res) {
   if (!masterNodeContract) {
     masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
@@ -480,8 +480,8 @@ function fnum(x) {
 var getTotalXDCSupply = function (req, res) {
   burntBalance = web3relay.eth.getBalance(burntAddress).toPrecision() / Math.pow(10, 18)
   totalBlockNum = eth.blockNumber;
-  respData = ((37500000000 + 5.55 * totalBlockNum)-burntBalance).toFixed() ;
-  res.write(String(respData,burntBalance));
+  respData = ((37500000000 + 5.55 * totalBlockNum) - burntBalance).toFixed();
+  res.write(String(respData, burntBalance));
   res.end();
 }
 
@@ -508,76 +508,76 @@ var totalXDCBurntValue = async function (req, res) {
 var firstDayTime = 1559211559;
 var oneDaySeconds = 86400;
 /* get blocks from db */
-var sendBlocks = async function(lim, res) {
+var sendBlocks = async function (lim, res) {
   let activeAddresses = 0;
   if (!masterNodeContract) {
     masterNodeContract = new web3relay.eth.Contract(contracts.masterNodeABI, contractAddress);
   }
 
   var blockHeight = await web3relay.eth.getBlockNumber();
-  const latestPrice = await Market.findOne().sort({timestamp: -1})
+  const latestPrice = await Market.findOne().sort({ timestamp: -1 })
   if (latestPrice) {
     quoteUSD = latestPrice.quoteUSD;
-    
+
   }
 
   let transactionCount = await Transaction.count();
   let accountsCount = await Account.count();
 
-    let mnCount = await masterNodeContract.methods.getCandidates().call() 
-    mnCount = mnCount.length- resignMNCount
-    let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
-    let totalXDCBurntValue = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
-    let totalXDCStakedValue = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
-    let totalXDCSupply = ((37500000000 + 5.55 * blockHeight)-totalXDCBurntValue).toFixed() ;
-    let XDCCirculatingSupply = (12100000000+5.55*blockHeight).toFixed() ;
-    let getCandidates = await masterNodeContract.methods.getCandidates().call()
-    let totalMNCount = getCandidates.length - resignMNCount
+  let mnCount = await masterNodeContract.methods.getCandidates().call()
+  mnCount = mnCount.length - resignMNCount
+  let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+  let totalXDCBurntValue = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
+  let totalXDCStakedValue = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
+  let totalXDCSupply = ((37500000000 + 5.55 * blockHeight) - totalXDCBurntValue).toFixed();
+  let XDCCirculatingSupply = (12100000000 + 5.55 * blockHeight).toFixed();
+  let getCandidates = await masterNodeContract.methods.getCandidates().call()
+  let totalMNCount = getCandidates.length - resignMNCount
 
 
-    var blockFind = Block.find({}, "number txs timestamp miner extraData")
-                      .lean(true).sort('-number').limit(lim);
-        blockFind.exec(function (err, docs) {
-          if (err) {
-            // console.log(err);
-            res.end();
-            return;
-          }
-      
-          docs = filters.filterBlocks(docs);
-          var result = { "blocks": docs };
-          if (docs.length > 1) {
-            result.blockHeight = blockHeight;
-            var totalTXs = 0;
-            // console.log(docs)
-            var costTime = docs[0].timestamp - docs[docs.length - 1].timestamp;
-            result.blockTime = costTime / (docs.length - 1);
-            result.blockTime = Math.round(result.blockTime * 1000) / 1000;
-            for (var i = 0; i < docs.length; i++) {
-              if (docs[i].txs)
-                totalTXs += docs[i].txs.length;
-            }
-            result.quoteUSD = quoteUSD;
-            result.accountsCount = accountsCount;
-            result.transactionCount = transactionCount;
-            result.percent_change_24h = latestPrice.percent_change_24h;
-            result.todayRewards = mnDailyRewards;
-            result.totalXDCBurntValue = totalXDCBurntValue;
-            result.totalXDCStakedValue = totalXDCStakedValue.toFixed();
-            result.totalXDCSupply = totalXDCSupply;
-            result.XDCCirculatingSupply = XDCCirculatingSupply
-            result.totalMNCount = totalMNCount;
-            result.activeAddresses = activeAddresses;
-            result.TPS = totalTXs / costTime;
-            result.TPS = Math.round(result.TPS * 1000) / 1000;
-          }
+  var blockFind = Block.find({}, "number txs timestamp miner extraData")
+    .lean(true).sort('-number').limit(lim);
+  blockFind.exec(function (err, docs) {
+    if (err) {
+      // console.log(err);
+      res.end();
+      return;
+    }
 
-          res.write(JSON.stringify(result));
-          res.end();
+    docs = filters.filterBlocks(docs);
+    var result = { "blocks": docs };
+    if (docs.length > 1) {
+      result.blockHeight = blockHeight;
+      var totalTXs = 0;
+      // console.log(docs)
+      var costTime = docs[0].timestamp - docs[docs.length - 1].timestamp;
+      result.blockTime = costTime / (docs.length - 1);
+      result.blockTime = Math.round(result.blockTime * 1000) / 1000;
+      for (var i = 0; i < docs.length; i++) {
+        if (docs[i].txs)
+          totalTXs += docs[i].txs.length;
+      }
+      result.quoteUSD = quoteUSD;
+      result.accountsCount = accountsCount;
+      result.transactionCount = transactionCount;
+      result.percent_change_24h = latestPrice.percent_change_24h;
+      result.todayRewards = mnDailyRewards;
+      result.totalXDCBurntValue = totalXDCBurntValue;
+      result.totalXDCStakedValue = totalXDCStakedValue.toFixed();
+      result.totalXDCSupply = totalXDCSupply;
+      result.XDCCirculatingSupply = XDCCirculatingSupply
+      result.totalMNCount = totalMNCount;
+      result.activeAddresses = activeAddresses;
+      result.TPS = totalTXs / costTime;
+      result.TPS = Math.round(result.TPS * 1000) / 1000;
+    }
+
+    res.write(JSON.stringify(result));
+    res.end();
   });
 }
 const getXinFinStats = async function (lim, res) {
-  const latestPrice = await Market.findOne().sort({timestamp: -1})
+  const latestPrice = await Market.findOne().sort({ timestamp: -1 })
   if (latestPrice) {
     quoteUSD = latestPrice.quoteUSD;
   }
@@ -593,11 +593,11 @@ const getXinFinStats = async function (lim, res) {
     mnDailyRewards = ((epochRewards / totalMasterNodesVal) * epochInDay).toFixed()
 
   }
-    totalBlockNum = await eth.getBlockNumber();
-    totalXDC = 37500000000 + 5.55 * totalBlockNum;
-    volume_24h = latestPrice.volume_24h;
-    totalStakedValueVal = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
-    alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
+  totalBlockNum = await eth.getBlockNumber();
+  totalXDC = 37500000000 + 5.55 * totalBlockNum;
+  volume_24h = latestPrice.volume_24h;
+  totalStakedValueVal = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
+  alphaExVol = await axios.get("https://api2.alphaex.net/api/xdcVolume");
   res.write(JSON.stringify({
     totalMasterNodes: totalMasterNodesVal,
     totalStakedValue: totalStakedValueVal,
@@ -612,18 +612,18 @@ const getXinFinStats = async function (lim, res) {
     yearlyRewardPer: (((parseFloat(mnDailyRewards) * 365) / 10000000) * 100).toFixed(2),
     priceUsd: quoteUSD,
     // xdcVol24HR: (parseFloat(cmc_xdc_price["volume_24h"]) + parseFloat(homieExData.data[0].v) * parseFloat(cmc_xdc_price.price) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(cmc_xdc_price.price)).toFixed()
-    xdcVol24HR: (parseFloat(volume_24h)  + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(quoteUSD)).toFixed()
+    xdcVol24HR: (parseFloat(volume_24h) + parseFloat(alphaExVol.data.xdcVolume) * parseFloat(quoteUSD)).toFixed()
   }));
   res.end()
 
 }
 
-var sendTxs = function(lim, res) {
-  Transaction.find({"to":{$nin:[BlockSigners,RandomizeSMC]}}).lean(true).sort('-blockNumber').limit(lim)
-        .exec(function (err, txs) {
-          res.write(JSON.stringify({"txs": txs}));
-          res.end();
-        });
+var sendTxs = function (lim, res) {
+  Transaction.find({ "to": { $nin: [BlockSigners, RandomizeSMC] } }).lean(true).sort('-blockNumber').limit(lim)
+    .exec(function (err, txs) {
+      res.write(JSON.stringify({ "txs": txs }));
+      res.end();
+    });
 }
 
 const MAX_ENTRIES = 10;

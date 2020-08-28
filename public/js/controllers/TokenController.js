@@ -87,7 +87,6 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
         url: '/tokenrelay',
         data: {"action": "tokenTransfer", "address": address, "transferPage":transferPage, 'fromAccount':$scope.acc}
       }).then(function(resp) {
-        console.log("transfer_tokens:", resp);
         resp.data.forEach(function(record){
           record.amount = record.amount/10**parseInt($scope.token.decimals);
         })
