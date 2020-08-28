@@ -439,14 +439,16 @@ function responseFail(res, respData, msg){
   res.end();
 }
 
-module.exports.getTotalXDC = function(req, res){
+module.exports.getTotalXDC = async function(req, res){
+  totalBlockNum = await eth.getBlockNumber();
   respData = (37500000000+5.55*totalBlockNum).toFixed();
   res.write(String(respData));
   res.end();
 }
 
-module.exports.getCirculatingSupply= function(req, res){
-  respData = 12100000000+5.55*totalBlockNum;
+module.exports.getCirculatingSupply= async function(req, res){
+  totalBlockNum = await eth.getBlockNumber();
+  respData = (12100000000+5.55*totalBlockNum).toFixed();
   res.write(String(respData));
   res.end();
 }

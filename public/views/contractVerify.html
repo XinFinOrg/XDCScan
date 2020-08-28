@@ -1,205 +1,217 @@
-
 <!-- start Verify Details -->
 <section id="verifyDetails" class="mb-4">
   <div class="container">
-      <div class="row">
+    <div class="row">
 
-          <div class="col-lg-12 safari-float-left">
-              <div class="block-header d-flex justify-content-between align-items-center">
-                  <h3 class="blockDetails-header-title">Verify Contract</h3>
-              </div>
+      <div class="col-lg-12 safari-float-left">
+        <div class="block-header d-flex justify-content-between align-items-center">
+          <h3 class="blockDetails-header-title">Verify Contract</h3>
+        </div>
+      </div>
+
+      <!-- start Verify & Publish -->
+      <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
+        <div class="card">
+          <div class="card-header d-flex justify-content-between align-items-center p-0">
+            <!-- Nav tabs -->
+            <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
+              <li class="nav-item"><a class="nav-link active" href="#source-code" role="tab" data-toggle="tab">Source
+                  Code</a></li>
+              <li class="nav-item"><a class="nav-link" href="#bytecode-abi" role="tab" data-toggle="tab">Bytecode and
+                  ABI</a></li>
+            </ul>
+            <!-- Nav tabs -->
           </div>
 
-          <!-- start Verify & Publish -->
-          <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
-              <div class="card">
-                  <div class="card-header d-flex justify-content-between align-items-center p-0">
-                      <!-- Nav tabs -->
-                      <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
-                          <li class="nav-item"><a class="nav-link active" href="#source-code" role="tab" data-toggle="tab">Source Code</a></li>
-                          <li class="nav-item"><a class="nav-link" href="#bytecode-abi" role="tab" data-toggle="tab">Bytecode and ABI</a></li>
-                      </ul>
-                      <!-- Nav tabs -->
+          <div id="block-overview" class="card-body">
+
+            <div class="tab-content">
+              <div class="tab-pane fade active show" id="source-code">
+
+                <div class="row align-items-center mt-1">
+                  <div class="col-md-12 fw6">
+                    <p class="mt-0 mb-2">Verify and Publish Contract Source Code</p>
+                  </div>
+                  <div class="col-md-12 fw5 mb-1">
+                    <div class="bg-light-blue border border-radius p-3">
+                      <p class="mt-0 mb-1">Enter Contract Source Code below.</p>
+                      <p class="m-0">If the compiled bytecode matches the Creation Address bytecode, the contract is
+                        then Verified and will be published online.</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="contract-form mt-4">
+                  <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-6">
+                      <div class="form-group">
+                        <label for="contractAddress" class="fw5">Contract Address</label>
+                        <input type="text" class="form-control" id="contractAddress" placeholder="Contract Address"
+                          ng-model="contract.address">
+                      </div>
+                      <span class="help-block font-red-mint">{{errors.address}}</span>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                      <div class="form-group">
+                        <label for="contractName" class="fw5">Contract Name</label>
+                        <input type="text" class="form-control" id="contractName" ng-model="contract.name"
+                          placeholder="Contract Name">
+                      </div>
+                      <span class="help-block font-red-mint">{{errors.name}}</span>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                      <div class="form-group">
+                        <label for="contractName" class="fw5">Compiler</label>
+                        <select name="compilerVersion" class="form-control ng-pristine ng-valid ng-touched"
+                          ng-model="contract.version">
+                          <option value="">Select Compiler</option>
+                          <option ng-repeat="cv in compilerVersions" value="{{cv.value}}">{{cv.name}}</option>
+                        </select>
+                      </div>
+                      <span class="help-block font-red-mint">{{errors.version}}</span>
+                    </div>
+
+                    <div class="col-lg-3 col-md-6">
+                      <div class="form-check mb-2 mr-sm-2">
+                        <input class="form-check-input" type="checkbox" id="optimizationEnabled"
+                          ng-model="contract.optimization">
+                        <label class="form-check-label" for="optimizationEnabled">
+                          Optimization Enabled
+                        </label>
+                      </div>
+                    </div>
                   </div>
 
-                  <div id="block-overview" class="card-body">
-      
-      <div class="tab-content">
-                          <div class="tab-pane fade active show" id="source-code">
-                      
-      <div class="row align-items-center mt-1">
-                          <div class="col-md-12 fw6">
-          <p class="mt-0 mb-2">Verify and Publish Contract Source Code</p>
-        </div>
-        <div class="col-md-12 fw5 mb-1">
-            <div class="bg-light-blue border border-radius p-3">
-              <p class="mt-0 mb-1">Enter Contract Source Code below.</p>
-              <p class="m-0">If the compiled bytecode matches the Creation Address bytecode, the contract is then Verified and will be published online.</p>
-            </div>
-        </div>
+                  <div class="row align-items-center">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="contractCode" class="fw5">Contract Code</label>
+                        <span class="help-block font-red-mint">{{errors.code}}</span>
+
+                        <textarea class="form-control code" rows="4" spellcheck="false"
+                          ng-model="contract.code"></textarea>
                       </div>
-      <div class="contract-form mt-4">
-        <div class="row align-items-center">
-  <div class="col-lg-3 col-md-6">
-    <div class="form-group">
-  <label for="contractAddress" class="fw5">Contract Address</label>
-  <input type="text" class="form-control" id="contractAddress" placeholder="Contract Address" ng-model="contract.address" >
-</div>
-<span class="help-block font-red-mint">{{errors.address}}</span>
-  </div>
+                    </div>
+                  </div>
 
-  <div class="col-lg-3 col-md-6">
-    <div class="form-group">
-  <label for="contractName" class="fw5">Contract Name</label>
-  <input type="text" class="form-control" id="contractName" ng-model="contract.name" placeholder="Contract Name">
-</div>
-<span class="help-block font-red-mint">{{errors.name}}</span>
-  </div>
-
-<div class="col-lg-3 col-md-6">
-    <div class="form-group">
-  <label for="contractName" class="fw5">Compiler</label>
-  <select name="compilerVersion" class="form-control ng-pristine ng-valid ng-touched" ng-model="contract.version">
-<option value="">Select Compiler</option>
-<option ng-repeat="cv in compilerVersions" value="{{cv.value}}">{{cv.name}}</option>
-</select>
-</div>
-<span class="help-block font-red-mint">{{errors.version}}</span>
-  </div>
-
-<div class="col-lg-3 col-md-6">
-    <div class="form-check mb-2 mr-sm-2">
-<input class="form-check-input" type="checkbox" id="optimizationEnabled" ng-model="contract.optimization">
-<label class="form-check-label" for="optimizationEnabled">
-Optimization Enabled
-</label>
-</div>
-  </div>
-</div>
-
-<div class="row align-items-center">
-  <div class="col-lg-12">
-    <div class="form-group">
-  <label for="contractCode" class="fw5">Contract Code</label>
-  <span class="help-block font-red-mint">{{errors.code}}</span>
-
-<textarea class="form-control code" rows="4" spellcheck="false" ng-model="contract.code"></textarea>
-</div>
-  </div>
-</div>
-
-<div class="row align-items-center">
-  <div class="col-lg-12">
-    <div class="form-group">
-  <label for="constructorArguments" class="fw5">Constructor Arguments ABI-encoded <span>(OPTIONAL - Required for certain contracts only)</span></label>
-<input type="textarea" class="form-control" id="constructorArguments" placeholder="Constructor Arguments" ng-model="contract.abi">
-</div>
-  </div>
-  <span class="help-block font-red-mint">{{errors.abi}}</span>
-
-</div>
-
-<div class="row">
-<div class="col-lg-12">
-<button type="button" ng-click="submitCode()" class="btn btn-info" id="submitCodeBtn">Validate Code</button>
-<button type="button" ng-click="resetCode()" class="btn btn-dark">Reset</button>
-</div>
-</div>
-      </div>
-      </div>
-      
-      
-      
-      <div class="tab-pane fade" id="bytecode-abi" ng-show="contract.compiled">
-                      
-      <div class="status-error mb-4" ng-show="!contract.valid">
-      <div class="row align-items-center">
-                          <div class="col-md-2 fw6 mb-1">Status </div>
-                          <div class="col-md-10">
-                              <div>
-                                  <span class="label label_sm label_danger rounded ml-0">Unable to Verify Code</span></div>
-                          </div>
+                  <div class="row align-items-center">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="constructorArguments" class="fw5">Constructor Arguments ABI-encoded <span>(OPTIONAL
+                            - Required for certain contracts only)</span></label>
+                        <input type="textarea" class="form-control" id="constructorArguments"
+                          placeholder="Constructor Arguments" ng-model="contract.abi">
                       </div>
-      <hr class="hr-space">
-      <div class="row align-items-center">
-                          <div class="col-md-2 fw6 mb-1">ERROR </div>
-                          <div class="col-md-10">
-                              <div>
-                                  <span class="rounded ml-0 mr-2">{{contract.err}} </div>
-                          </div>
-                      </div>
-      </div>
-      
-      <div class="status-success mb-4" ng-show="!contract.valid">
-      <div class="row align-items-center">
-                          <div class="col-md-2 fw6 mb-1">Status </div>
-                          <div class="col-md-10">
-                              <div>
-                                  <span class="label label_sm label_success rounded ml-0"><i class="fa fa-check-circle mr-1"></i>Successful</span></div>
-                                  <!-- <h4>Contract Source Code Verified <i class="fa fa-smile-o"></i></h4>
+                    </div>
+                    <span class="help-block font-red-mint">{{errors.abi}}</span>
+
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <button type="button" ng-click="submitCode()" class="btn btn-info" id="submitCodeBtn">Validate
+                        Code</button>
+                      <button type="button" ng-click="resetCode()" class="btn btn-dark">Reset</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="tab-pane fade" id="bytecode-abi" ng-show="contract.compiled">
+
+                <div class="status-error mb-4" ng-show="!contract.valid">
+                  <div class="row align-items-center">
+                    <div class="col-md-2 fw6 mb-1">Status </div>
+                    <div class="col-md-10">
+                      <div>
+                        <span class="label label_sm label_danger rounded ml-0">Unable to Verify Code</span></div>
+                    </div>
+                  </div>
+                  <hr class="hr-space">
+                  <div class="row align-items-center">
+                    <div class="col-md-2 fw6 mb-1">ERROR </div>
+                    <div class="col-md-10">
+                      <div>
+                        <span class="rounded ml-0 mr-2">{{contract.err}} </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="status-success mb-4" ng-show="contract.valid">
+                  <div class="row align-items-center">
+                    <div class="col-md-2 fw6 mb-1">Status </div>
+                    <div class="col-md-10">
+                      <div>
+                        <span class="label label_sm label_success rounded ml-0"><i
+                            class="fa fa-check-circle mr-1"></i>Successful</span></div>
+                      <h4>Contract Source Code Verified <i class="fa fa-smile-o"></i></h4>
                                   <p>
 
-                                    <i class="fa fa-check-circle-o font-green-sharp"></i> View the verified result at <a href="/addr/{{contract.address}}">{{contract.address}}</a>.
-                                    </p> -->
-                          </div>
+                                    <i class="fa fa-check-circle-o font-green-sharp"></i> View the verified result at <a href="/addr/{{contract.address}}">{{contract.address}}</a>
+                                    </p>
+                    </div>
 
+                  </div>
+                </div>
+
+                <div class="row align-items-center mt-1">
+                  <div class="col-md-12 fw5 mb-1">
+                    <div>
+                      <div class="bg-light-blue border rounded p-3">
+                        <p>Compiler Version: {{contract.compilerVersion}}</p>
+                        <p class="mb-0">Optimization: {{contract.optimization}}</p>
                       </div>
-      </div>
-      
-      <div class="row align-items-center mt-1">
-                          <div class="col-md-12 fw5 mb-1">
-          <div>
-            <div class="bg-light-blue border rounded p-3">
-              <p>Compiler Version: {{contract.compilerVersion}}</p>
-              <p class="mb-0">Optimization: {{contract.optimization}}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="generated-contract-form mt-4" ng-repeat="v in contract.verifiedContracts">
+                  <div class="row align-items-center">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="contractName" class="fw5">ContractName</label>
+                        <input type="text" class="form-control" id="contractName" readonly> {{v.name}}
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="contractBytecode" class="fw5">ContractBytecode</label>
+                        <textarea class="form-control" id="contractBytecode" readonly>{{v.bytecode}}</textarea>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <label for="contractABI" class="fw5">ContractABI</label>
+                        <textarea class="form-control" id="contractABI" rows="8" readonly>{{v.abi}}</textarea>
+                      </div>
+                    </div>
+
+
+
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <button type="button" class="btn btn-info" id="submitCodeBtn" ng-show="!contract.valid"
+                          ng-click="startOver()">Start Over</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
             </div>
+
           </div>
         </div>
-                      </div>
-      
-      <div class="generated-contract-form mt-4" ng-repeat="v in contract.verifiedContracts">
-        <div class="row align-items-center">
-  <div class="col-lg-12">
-    <div class="form-group">
-  <label for="contractName" class="fw5">ContractName</label>
-  <input type="text" class="form-control" id="contractName" readonly> {{v.name}}
-</div>
-  </div>
-
-  <div class="col-lg-12">
-    <div class="form-group">
-  <label for="contractBytecode" class="fw5">ContractBytecode</label>
-  <textarea class="form-control" id="contractBytecode" readonly>{{v.bytecode}}</textarea>
-</div>
-  </div>
-
-<div class="col-lg-12">
-    <div class="form-group">
-  <label for="contractABI" class="fw5">ContractABI</label>
-  <textarea class="form-control" id="contractABI" rows="8" readonly>{{v.abi}}</textarea>
-</div>
-  </div>
-
-
-
-<div class="row">
-<div class="col-lg-12">
-<button type="button" class="btn btn-info" id="submitCodeBtn" ng-show="!contract.valid" ng-click="startOver()">Start Over</button>
-</div>
-</div>
-      </div>
-      
-      </div>
-      </div>
-                      
-                  </div>
-                  
-              </div>
-          </div>
-          <!-- end Verify & Publish -->
+        <!-- end Verify & Publish -->
 
       </div>
-  </div>
+    </div>
   </div>
 </section>
 <!-- end Block Details -->

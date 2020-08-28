@@ -20,15 +20,18 @@ exports.PatchTransferTokens = async function(ERC20ABI,contractData, listenOnComp
   // var event = exports.GetTransferEvent(ERC20ABI, contractData.address);
   // var transferEventFilter = event({}, {fromBlock: 0, toBlock: "latest"});
 
-  let transferEventLog = await TokenInstance.getPastEvents('Transfer', { fromBlock: 0, toBlock: 'latest' });
+  let transferEventLog = await TokenInstance.getPastEvents('allEvents', { fromBlock: 0, toBlock: 'latest' });
   var endBlockNum = 0;
-        var tokenTransferObj = {"transactionHash": "", "blockNumber": 0, "amount": 0, "contractAdd":"", "to": "", "from": "", "timestamp":0};
+        var tokenTransferObj = { "transactionHash": "", "methodName": "",  "blockNumber": 0, "amount": 0, "contractAdd":"", "to": "", "from": "", "timestamp":0};
+                
+        // console.log(transferEventLog)
         for (var l in transferEventLog) {
           try {
             tokenTransferObj.transactionHash= transferEventLog[l].transactionHash;
+            tokenTransferObj.methodName= transferEventLog[l].event;
             tokenTransferObj.blockNumber= transferEventLog[l].blockNumber;
-            tokenTransferObj.amount= transferEventLog[l].returnValues.tokens;
-            tokenTransferObj.contractAdd= transferEventLog[l].address;
+            tokenTransferObj.amount= transferEventLog[l].returnValues.value;
+            tokenTransferObj.contractAdd= transferEventLog[l].address.toLowerCase();
             tokenTransferObj.to= transferEventLog[l].returnValues.to;
             tokenTransferObj.from= transferEventLog[l].returnValues.from;
             
@@ -36,9 +39,31 @@ exports.PatchTransferTokens = async function(ERC20ABI,contractData, listenOnComp
             console.error(e);
             continue;
           }
+          if(tokenTransferObj.methodName =='Burn')
+          {
+            tokenTransferObj.from= transferEventLog[l].returnValues.burner;
+            tokenTransferObj.to= tokenTransferObj.methodName;
+            tokenTransferObj.amount= transferEventLog[l].returnValues.amount;
+
+          }
+
+          if(tokenTransferObj.methodName =='MinterConfigured')
+          {
+            tokenTransferObj.to= tokenTransferObj.methodName;
+            tokenTransferObj.from= transferEventLog[l].returnValues.minter;
+            tokenTransferObj.amount= transferEventLog[l].returnValues.minterAllowedAmount;
+
+          }
+          if(tokenTransferObj.methodName =='Mint')
+          {
+            tokenTransferObj.from= transferEventLog[l].returnValues.minter;
+            tokenTransferObj.amount= transferEventLog[l].returnValues.amount;
+
+          }
+          
           endBlockNum = transferEventLog[l].blockNumber;
           try {
-            var block = eth.getBlock(transferEventLog[l].blockNumber);
+            var block = await eth.getBlock(transferEventLog[l].blockNumber);
             tokenTransferObj.timestamp = block.timestamp;
           } catch (e) {
             console.error(e);
