@@ -7,6 +7,8 @@ var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var compression = require('compression')
+
 
 var config = {};
 try {
@@ -23,6 +25,7 @@ try {
 
 var app = express();
 app.set('port', process.env.PORT || 3000);
+app.use(compression())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
