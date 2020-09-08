@@ -53,7 +53,7 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "xdc0000000000000000000000000000000000000088";
 var burntAddress = "xdc0000000000000000000000000000000000000000";
-let resignMNCount = 13;
+let resignMNCount = 14;
 let epochRewards = 4500;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
@@ -209,7 +209,7 @@ module.exports = function (app) {
   app.post('/eventLog', eventLog);
   app.post('/tokenrelay', Token);
   app.post('/web3relay', web3relay.data);
-  app.post('/compile', compile);
+  // app.post('/compile', compile);
   app.post('/publicAPI', publicAPI);//all public APIs
 
   app.post('/fiat', fiat);
