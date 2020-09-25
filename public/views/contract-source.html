@@ -14,7 +14,7 @@
         <div class="row align-items-center">
             <div class="col-md-4 fw6 mb-1">Verify</div>
             <div class="col-md-8">
-                <div class="pl-small eth-stat-text">
+                <div class="eth-stat-text">
                     <a href="/contract/{{addrHash}}">
                         <span class="label label_sm label_info label_rounded ml-0"><i class="fas fa-shield-alt mr-1"></i>Click here</span>
                     </a>
@@ -113,10 +113,16 @@
 
     <div class="row" ng-show="contract.valid">
         <div class="col-md-12 mt-4">
-            <h4 class="card-header-title">Contract Source Code <i class="fa fa-code"></i></h4>
+            <div class="d-flex align-items-center justify-content-between">
+            	<h4 class="card-header-title"><i class="fa fa-code light-icon"></i> Contract Source Code</h4>
+                <div class="copy-to-clipboard"><a href="" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-copy btn-icon__inner"></i></a></div>
+            </div>
             <pre class="code-js language-markup scrollable" ng-model="contract.sourceCode">{{contract.sourceCode}}</pre>
             <br />
-            <h4 class="card-header-title">Contract ABI <i class="fa fa-tasks"></i></h4>
+            <div class="d-flex align-items-center justify-content-between">
+            	<h4 class="card-header-title"><i class="fa fa-tasks light-icon"></i> Contract ABI</h4>
+                <div class="copy-to-clipboard"><a href="" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-copy btn-icon__inner"></i></a></div>
+            </div>
             <pre class="code-js language-markup scrollable" ng-model="contract.abi">{{contract.abi}}</pre>
             <br />
         </div>
@@ -124,7 +130,10 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h4 class="card-header-title">Contract Bytecode <i class="fa fa-file-code"></i></h4>
+            <div class="d-flex align-items-center justify-content-between">
+            	<h4 class="card-header-title"><i class="fa fa-file-code light-icon"></i> Contract Bytecode</h4>
+                <div class="copy-to-clipboard"><a href="" data-copytarget="#code-bytecode" class="btn btn-sm btn-icon btn-secondary"><i class="far fa-copy btn-icon__inner"></i></a></div>
+            </div>
             <pre class="code-bytecode language-markup scrollable" ng-class="{verified: contract.valid}">{{addr.bytecode}}</pre>
         </div>
     </div>

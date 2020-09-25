@@ -1,5 +1,5 @@
 {
-    "nodeAddr":     "localhost",
+    "nodeAddr":     "109.169.40.128",
     "gethPort":     8545,
     "gethWSPort":   8555,
     "epoch":900,
@@ -7,7 +7,7 @@
     "mnRewards":4500,
     "rewards":5000,
     "xdce_id":2634,
-    "MONGO_URI":"mongodb://localhost/XDCScanDB",
+    "MONGO_URI":"mongodb://109.169.40.122/XDCScanApothem",
     "startBlock":   0,
     "endBlock":     "latest",
     "quiet":        true,
@@ -15,7 +15,7 @@
     "patch":        true,
     "patchBlocks":  100,
     "bulkSize":     100,
-    "CMC_API_KEY":  "",
+    "CMC_API_KEY":  "540739a4-9b42-4a15-88b6-158be57ee839",
     "wss":          "ws://localhost:8555",
     "settings": {
         "useRichList": true,
