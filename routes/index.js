@@ -435,7 +435,7 @@ var todayRewards = async function (req, res) {
   if (masterNodeContract) {
     let mnCount = await masterNodeContract.methods.getCandidates().call()
     mnCount = mnCount.length - resignMNCount
-    let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+    let mnDailyRewards = ((epochRewards / 108) * epochInDay).toFixed(0)
     res.write(String(mnDailyRewards));
   }
   res.end();
@@ -526,7 +526,7 @@ var sendBlocks = async function (lim, res) {
 
   let mnCount = await masterNodeContract.methods.getCandidates().call()
   mnCount = mnCount.length - resignMNCount
-  let mnDailyRewards = ((epochRewards / mnCount) * epochInDay).toFixed(0)
+  let mnDailyRewards = ((epochRewards / 108) * epochInDay).toFixed(0)
   let totalXDCBurntValue = await web3relay.eth.getBalance(burntAddress) / Math.pow(10, 18)
   let totalXDCStakedValue = await web3relay.eth.getBalance(contractAddress) / Math.pow(10, 18)
   let totalXDCSupply = ((37500000000 + 5.55 * blockHeight) - totalXDCBurntValue).toFixed();
@@ -590,7 +590,7 @@ const getXinFinStats = async function (lim, res) {
   if (masterNodeContract) {
     mnCandidateCnt = await masterNodeContract.methods.getCandidates().call()
     totalMasterNodesVal = (String(mnCandidateCnt.length - resignMNCount));
-    mnDailyRewards = ((epochRewards / totalMasterNodesVal) * epochInDay).toFixed()
+    mnDailyRewards = ((epochRewards / 108) * epochInDay).toFixed()
 
   }
   totalBlockNum = await eth.getBlockNumber();
