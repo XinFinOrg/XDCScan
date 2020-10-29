@@ -19,9 +19,7 @@
                   <div class="card-header d-flex justify-content-between align-items-center">
                       <h2 class="card-header-title">Overview</h2>
                   </div>
-
                   <div id="block-overview" class="card-body">
-
                       <div class="row align-items-center">
                           <div class="col-md-3 fw6 mb-1">
                               Balance
@@ -36,35 +34,25 @@
                       <hr class="hr-space">
                       
                       <div class="row align-items-center">
-                            <div class="col-md-3 fw6 mb-1">
-                              XDC Value
-                            </div>
+                          <div class="col-md-3 fw6 mb-1">XDC Value</div>
                           <div class="col-md-9">
-                                <div class="pl-small">
-                                  ${{ balanceUSD | number: 6 }}
-                                <span class="usd_value fw4">(@ ${{ quoteUSD | number: 6 }}/XDC) </span>
+                                <div class="pl-small">${{ balanceUSD | number: 6 }}
+                                	<span class="usd_value fw4">(@ ${{ quoteUSD | number: 6 }}/XDC)</span>
                                 </div>
                           </div>
                       </div>
                       <hr class="hr-space">
                       <div class="row align-items-center">
-                          <div class="col-md-3 fw6 mb-1">
-                              Transactions
-						  </div>
-                          <div class="col-md-3">
-                              <div class="pl-small">{{ count }}</div>
-                          </div>
+                          <div class="col-md-3 fw6 mb-1">Transactions</div>
+                          <div class="col-md-3"><div class="pl-small">{{ count }}</div></div>
                       </div>
                       <div ng-show="isContract">
-                          
                         <hr class="hr-space">
-
                         <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract name </span> <a href="/token/{{token.address}}">{{token.name}}</a></div> -->
                         <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract verified √</span></div> -->
                         <!-- <div class="col-md-3 fw6 mb-1" ng-show="!token.isVerified"><span class="eth-stat-text">not verified  <a href="/verifycontract/{{token.address}}">[go for verifying]</a> -->
                         <div class="row align-items-center" ng-show="token.isVerified">
-                                <div class="col-md-3 fw6 mb-1">
-                                    Contract name </div>
+                                <div class="col-md-3 fw6 mb-1">Contract name </div>
                                 <div class="col-md-9">
                                     <div class="pl-small">
                                         <span class="ml-0 mr-2"><a href="/token/{{token.address}}">{{token.name}}</a></span> <span class="eth-stat-text">Contract verified √</span></div>

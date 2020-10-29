@@ -11,81 +11,163 @@
                           <h3 class="blockDetails-header-title text-break text-center text-md-left"><i class="far mr-1"><img src="img/tokens/1.png"></i> Token <span class="text-secondary">  {{ token.name }}  ({{ token.symbol }})</span></h3>
                       </div>
                   </div>
-
+                  
+                  
+                  
                   <!-- start Overview -->
-                  <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
+                  <div class="col-lg-12 mb-4 mb-lg-0 safari-float-left">
                       <div class="card">
                           <div class="card-header d-flex justify-content-between align-items-center">
-                              <h2 class="card-header-title">Overview</h2>
+                              <h2 class="card-header-title">{{ token.name }}</h2>
                           </div>
-
                           <div id="block-overview" class="card-body">
-
-                              <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Token Name </div>
-                                  <div class="col-md-8">
-                                      <div>
-                                              {{ token.name }}  ({{ token.symbol }}) </div>
+                              <div class="row">
+                                  <div class="col-lg-6">
+                                      <div class="information-header fw6">Overview</div>
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Token Name:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.name }} ({{ token.symbol }})</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Decimals:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.decimals }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Total Supply:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.totalSupply }} {{ token.symbol }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Circulating Supply:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.circulatingSupply }} {{ token.symbol }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Holders:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenHolders }} Address</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Transfers:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenTransfrs }} Txns</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Price:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Market Cap/Fully MC:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenMarketCap }} / {{ token.tokenFullyMc }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Reputation:</div>
+                                          <div class="col-md-8 col-sm-8"><div>OK</div></div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                      <div class="information-header mt5 fw6">More</div>                                      
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Contract:</div>
+                                  	      <div class="col-md-8 col-sm-8"><div class="text-truncate d-block"><a href="/addr/{{token.address}}">{{token.address }}</a></div></div>
+                                      </div>
+                                      <hr class="hr-space">                                      
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Token ID:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.ID }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Precision:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrecision }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Issuing Time:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{token.datetime | date:'yyyy-MM-dd HH:mm:ss Z' }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Issuer:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenIssuer }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Official Website:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenOfficialWebsite }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">White Paper:</div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
+                                      </div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Social Profiles:</div>
+                                          <div class="col-md-8 col-sm-8">
+                                          	<div>
+                                                <ul class="social-sharing">
+                                                    <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                                    <li><a href="#" class="icoLinkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+                                                </ul>
+                                            </div>
+                                      	  </div>
+                                      </div>
                                   </div>
                               </div>
-                              <hr class="hr-space">
-                              <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Decimals </div>
-                                  <div class="col-md-8">
-                                      <div>
-                                          {{ token.decimals }} </div>
-                                  </div>
-                              </div>
-                              <!-- <hr class="hr-space">
-                              <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Price </div>
-                                  <div class="col-md-8">
-                                      <div>
-                                          $441.9752 </div>
-                                  </div>
-                              </div> -->
-                              <hr class="hr-space">
-                              <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Total Supply </div>
-                                  <div class="col-md-8">
-                                      <div>
-                                          {{ token.totalSupply}} {{ token.symbol }}  </div>
-                                  </div>
-                              </div>
-                           
                           </div>
                       </div>
                   </div>
                   <!-- end Overview -->
                   
-                  <!-- start Token Summary-->
+                  
+
+                  <!-- start Overview 
+                  <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
+                      <div class="card">
+                          <div class="card-header d-flex justify-content-between align-items-center">
+                              <h2 class="card-header-title">Overview</h2>
+                          </div>
+                          <div id="block-overview" class="card-body">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">Token Name</div>
+                                  <div class="col-md-8"><div>{{ token.name }}  ({{ token.symbol }})</div></div>
+                              </div>
+                              <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">Decimals</div>
+                                  <div class="col-md-8"><div>{{ token.decimals }}</div></div>
+                              </div>
+                              <hr class="hr-space">
+                              <div class="row align-items-center">
+                                  <div class="col-md-4 fw6 mb-1">Total Supply</div>
+                                  <div class="col-md-8"><div>{{ token.totalSupply}} {{ token.symbol }}</div></div>
+                              </div>                           
+                          </div>
+                      </div>
+                  </div>
+                  <!-- end Overview -->
+                  
+                  <!-- start Token Summary 
                   <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
                       <div class="card">
                           <div class="card-header d-flex justify-content-between align-items-center">
                               <h2 class="card-header-title">Profile Summary</h2>
                           </div>
-
                           <div id="block-overview" class="card-body">
-
                               <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Contract </div>
-                                  <div class="col-md-8">
-                                      <div class="text-truncate d-block">
-                                              <a href="/addr/{{token.address}}">{{token.address }}</a> </div>
-                                  </div>
+                                  <div class="col-md-4 fw6 mb-1">Contract</div>
+                                  <div class="col-md-8"><div class="text-truncate d-block"><a href="/addr/{{token.address}}">{{token.address }}</a></div></div>
                               </div>
                               <hr class="hr-space">
-
                               <div class="margin-top-20" ng-show="!acc">
-                                      <span class="eth-stat-text"> <span class="help-block"><b>Enter Your Address </b></span> to Get {{ token.name }}  Balance ↓</span>
-                                      <div class="row">
-                                      <form class="col-md-12 center" name="form.tokens">
-                                          
+                              		<span class="eth-stat-text"> <span class="help-block"><b>Enter Your Address </b></span> to Get {{ token.name }}  Balance ↓</span>
+                                    	<div class="row">
+                                        <form class="col-md-12 center" name="form.tokens">                                          
                                           <div class="input-group">
                                               <input type="text" class="form-control" name="addrInput" placeholder="{{token.address}}" ng-model="form.addrInput" ng-keyup="$event.keyCode == 13 ? getBalance(form.addrInput) : null">
                                               <span class="input-group-btn">
@@ -95,30 +177,22 @@
                                           <span class="help-block font-red-mint">{{errors.address}}</span>
                                       </form>
                                       </div>
-                                      <div class="row" ng-show="showTokens">
-                                      <div class="col-md-10">
-                                          <h4>You have {{ token.symbol }}  tokens <span class="eth-stat-title font-blue-madison">{{userTokens}}</span></h4>
-                                      </div>
-                                      </div>
-                                  </div>
+                                    <div class="row" ng-show="showTokens">
+                                      	<div class="col-md-10">
+                                        	<h4>You have {{ token.symbol }}  tokens <span class="eth-stat-title font-blue-madison">{{userTokens}}</span></h4>
+                                    	</div>
+                              		</div>
+                              </div>
                               <!-- <hr class="hr-space">
                               <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Decimals </div>
-                                  <div class="col-md-8">
-                                      <div>
-                                          {{ token.decimals }} </div>
-                                  </div>
+                                  <div class="col-md-4 fw6 mb-1">Decimals</div>
+                                  <div class="col-md-8"><div>{{ token.decimals }}</div></div>
                               </div>
                               <hr class="hr-space">
                               <div class="row align-items-center">
-                                  <div class="col-md-4 fw6 mb-1">
-                                      Transactions </div>
-                                  <div class="col-md-8">
-                                      <div>
-                                          3 </div>
-                                  </div>
-                              </div> -->
+                                  <div class="col-md-4 fw6 mb-1">Transactions</div>
+                                  <div class="col-md-8"><div>3</div></div>
+                              </div>
                           </div>
                       </div>
                   </div>
@@ -140,6 +214,7 @@
                               <!-- Nav tabs -->
                               <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
                                   <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link active" href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
+                                  <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders" role="tab" data-toggle="tab">Token Holders</a></li>
                                   <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link" href="#internalTransactions" role="tab" data-toggle="tab">Contract Transactions</a></li>
                                   <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab" data-toggle="tab">Contract Source</a></li>
                               </ul>
@@ -178,8 +253,34 @@
                                       </tbody>
                                   </table>
                               </div>
-                          </transfer-tokens>
-                                  </div>
+                          	</transfer-tokens>
+                            </div>
+                            
+                            
+                            
+                            <div class="tab-pane fade" id="tokenHolders">
+                            	<div class="table-responsive">
+                                  <table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
+                                      <thead>
+                                          <tr>
+                                              <th>Rank</th>
+                                              <th>Address</th>
+                                              <th>Quantity</th>
+                                              <th>Percentage</th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <tr>
+                                              <td>1</td>
+                                              <td class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}" class="hash-tag text-truncate">xdc0764ba3a6cf11f057f9a6fcd4c454c7c082896e4</a></td>                                    
+                                              <td>5,172,604.267</td>
+                                              <td>51.726043%</td>
+                                          </tr>
+                                      </tbody>
+                                  </table>
+                            	</div>
+                            </div>
+                                  
 
                                   <div class="tab-pane fade" id="internalTransactions">
                                       <div class="table-responsive">

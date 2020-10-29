@@ -26,7 +26,7 @@
                           </div>
                           <div class="col-md-9">
                               <div class="pl-small fw6">
-                                  <tr ><td><a class="btn btn-info" ng-show="block.number > 0 && blockNum == block.number" href="/block/{{block.number - 1}}">&lt;Prev</a> {{block.number | number}} <a class="btn btn-info" ng-show="blockNum == block.number" href="/block/{{block.number + 1}}">Next&gt;</a></td></tr>
+                                  <a class="btn btn-icon btn-xs btn-soft-info" ng-show="block.number > 0 && blockNum == block.number" href="/block/{{block.number - 1}}"><i class="fa fa-chevron-left btn-icon_inner"></i></a><span class="pl-2 pr-2">{{block.number | number}}</span><a class="btn btn-icon btn-xs btn-soft-info" ng-show="blockNum == block.number" href="/block/{{block.number + 1}}"><i class="fa fa-chevron-right btn-icon_inner"></i></a>
                               </div>
                           </div>
                       </div>

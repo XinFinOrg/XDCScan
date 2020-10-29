@@ -25,12 +25,12 @@ small[text-size-1] {
 	/* make the cells output their value */
 	small[text-size-1]:after {
 	content: attr(text-size-1);
-	color: green;
+	color: #08d20e;
 	}
 
 	/* make debit amounts show up in red */
 	small[text-size-1^="-"]:after {
-	color: red;
+	color: #ff0000;
 	}
 
 

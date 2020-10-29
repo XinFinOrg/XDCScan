@@ -11,7 +11,7 @@ const getQuote = async () => {
     const options = {
         timeout: 10000
     }
-    const URL = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${config.settings.symbolCmC}&CMC_PRO_API_KEY=${config.CMC_API_KEY}`;
+    const URL = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${config.settings.symbol}&CMC_PRO_API_KEY=${config.CMC_API_KEY}`;
 
     try {
         let requestUSD = await fetch(URL);
@@ -21,12 +21,12 @@ const getQuote = async () => {
         quoteObject = {
             symbol: config.settings.symbol,
             timestamp: Math.round(new Date(quoteUSD.status.timestamp).getTime() / 1000),
-            quoteBTC: quoteBTC.data.XDCE.quote.BTC.price,
-            quoteUSD: quoteUSD.data.XDCE.quote.USD.price,
-            volume_24h:quoteUSD.data.XDCE.quote.USD.volume_24h,
-            percent_change_24h: quoteUSD.data.XDCE.quote.USD.percent_change_24h,
+            quoteBTC: quoteBTC.data.XDC.quote.BTC.price,
+            quoteUSD: quoteUSD.data.XDC.quote.USD.price,
+            volume_24h:quoteUSD.data.XDC.quote.USD.volume_24h,
+            percent_change_24h: quoteUSD.data.XDC.quote.USD.percent_change_24h,
         }
-
+        // console.log(URL)
         new Market(quoteObject).save( ( err, market, count ) => {
             // console.log(quoteUSD.data.XDCE.quote.USD.percent_change_24h)
             if ( typeof err !== 'undefined' && err ) {
