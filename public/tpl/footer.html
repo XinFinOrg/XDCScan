@@ -5,11 +5,19 @@
 		  
 			<div class="col-12 col-lg-2 col-md-3 col-sm-6 col-xs-6 mb-2 mb-lg-0 order-lg-1 order-md-4 order-2">
 				<div class="d-flex h-100 flex-column">
-                        <div class="d-flex align-items-center mb-3">
-                            <img width="60" src="/img/xdc-logo-footer.png" alt="XinFin Logo">
-                        </div>
-                        <p>XinFinScan is a Block Explorer and Analytics Platform for XDC, a decentralized smart contracts platform.</p>
+                	<div class="d-flex align-items-center mb-3">
+                    	<img width="60" src="/img/xdc-logo-footer.png" alt="XinFin Logo">
                     </div>
+                    <p>XinFinScan is a Block Explorer and Analytics Platform for XDC, a decentralized smart contracts platform.</p>
+
+                    <div class="select-option cyptocurrency input-group-append">
+                    	<select class="select2-icon" name="icon">
+                            <option value="USD" data-image="/img/currency-icon/USD.svg">USD</option>
+                            <option value="EUR" data-image="/img/currency-icon/EUR.svg">EURO</option>
+                        	<option value="INR" data-image="/img/currency-icon/INR.svg">INR</option>
+                        </select>
+                    </div>
+            	</div>
 			</div>
 			<div class="col-12 col-lg-2 col-md-3 col-sm-6 col-xs-6 mb-4 pl-2 order-lg-2 order-md-2">
 				<h4 class="text-white heading-border">Community</h4>
@@ -75,3 +83,9 @@
         </div>
     </footer>
 	<!-- end Footer -->
+    
+    
+    
+<!-- Currency selector js starts -->
+<script src="js/select2/select2.min.js"></script>
+<!-- Currency selector js ends -->
