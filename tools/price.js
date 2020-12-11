@@ -9,19 +9,22 @@ const quoteInterval = 10 * 60 * 1000;
 
 const getQuote = async () => {
     const options = {
-        timeout: 10000
+        timeout: 1000
     }
     const URL = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${config.settings.symbol}&CMC_PRO_API_KEY=${config.CMC_API_KEY}`;
 
     try {
         let requestUSD = await fetch(URL);
         let requestBTC = await fetch(URL + '&convert=BTC');
+        let requestINR = await fetch(URL + '&convert=INR');
         let quoteUSD = await requestUSD.json();
         let quoteBTC = await requestBTC.json();
+        let quoteINR = await requestINR.json();
         quoteObject = {
             symbol: config.settings.symbol,
             timestamp: Math.round(new Date(quoteUSD.status.timestamp).getTime() / 1000),
             quoteBTC: quoteBTC.data.XDC.quote.BTC.price,
+            quoteINR: quoteINR.data.XDC.quote.INR.price,
             quoteUSD: quoteUSD.data.XDC.quote.USD.price,
             volume_24h:quoteUSD.data.XDC.quote.USD.volume_24h,
             percent_change_24h: quoteUSD.data.XDC.quote.USD.percent_change_24h,

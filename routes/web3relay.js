@@ -135,6 +135,7 @@ exports.data = async (req, res) => {
 
       if (latestPrice) {
         quoteUSD = latestPrice.quoteUSD;
+        quoteINR = latestPrice.quoteINR;
       }
 
       const latestBlock = await Block.find().sort({number:-1}).limit(1);
@@ -143,12 +144,13 @@ exports.data = async (req, res) => {
       if (!transactionResponse.status) {
         transactionResponse.confirmations = 0;
       }
-
       transactionResponse.gasPriceGwei = web3.utils.fromWei(transactionResponse.gasPrice, 'Gwei');
       transactionResponse.gasPrice = web3.utils.fromWei(transactionResponse.gasPrice, 'ether');
       transactionResponse.transactionFee =  (new Number(transactionResponse.gasPrice * transactionResponse.gasUsed)).toFixed(20);
       transactionResponse.transactionFeeUSD = (new Number(transactionResponse.transactionFee * quoteUSD)).toFixed(20);
+      transactionResponse.transactionFeeINR = (new Number(transactionResponse.transactionFee * quoteINR)).toFixed(20);
       transactionResponse.valueUSD = transactionResponse.value * quoteUSD;
+      transactionResponse.valueINR = transactionResponse.value * quoteINR;
       transactionResponse.gasUsedPercent = (transactionResponse.gasUsed / transactionResponse.gas) * 100;
       
       if (transactionResponse.to === treasuryAddress || transactionResponse.from === treasuryAddress) {
