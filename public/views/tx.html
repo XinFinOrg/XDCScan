@@ -155,7 +155,7 @@
                                                     <div class="col-md-9">
                                                         <div class="pl-small fw6">
                                                             <!-- <img src="/img/mini-logo.svg" alt="mini-logo" class="mini-logo"/>  -->
-                                                            {{tx.value | number: 8}} {{ settings.symbol }} ({{ tx.valueUSD | currency : "USD $" : 2 }})
+                                                            {{tx.value | number: 8}} {{ settings.symbol }} <span class="fw4">({{ tx.valueUSD | currency : "$" : 2 }} — {{ tx.valueINR | currency : "₹" : 2 }})</span>
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>
                                                     </div>
@@ -166,8 +166,9 @@
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Transaction fee: </div>
                                                     <div class="col-md-9">
                                                         <div class="pl-small fw6">
-                                                            {{tx.transactionFee | number : 11}} {{ settings.symbol }} ({{ tx.transactionFeeUSD | currency :
-                                                                "$" : 14 }})
+                                                            {{tx.transactionFee | number : 11}} {{ settings.symbol }} <span class="fw4">({{ tx.transactionFeeUSD | currency :
+                                                                "$" : 14 }} — {{ tx.transactionFeeINR | currency :
+                                                                "₹" : 14 }})</span>
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>
                                                     </div>

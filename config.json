@@ -1,5 +1,5 @@
 {
-    "nodeAddr":     "localhost",
+    "nodeAddr":     "109.169.40.128",
     "gethPort":     8545,
     "gethWSPort":   8555,
     "epoch":900,
@@ -16,7 +16,7 @@
     "patchBlocks":  100,
     "bulkSize":     100,
     "CMC_API_KEY":  "",
-    "wss":          "ws://localhost:8555",
+    "wss":          "ws://109.169.40.128:8555",
     "settings": {
         "useRichList": true,
         "useFiat": true,
