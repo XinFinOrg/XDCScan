@@ -64,49 +64,68 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
     $("#address-transaction").DataTable({
       processing: true,
       serverSide: true,
+      autoWidth: true,
       paging: true,
       ajax: {
         url: '/addr',
         type: 'POST',
         data: { "addr": $scope.addrHash, "count": count, "totalTX":$scope.count}
       },
-      "lengthMenu": [
-                  [10, 20, 50, 100, 150, -1],
-                  [10, 20, 50, 100, 150, "All"] // change per page values here
-              ],
-      "pageLength": 10, 
-      "order": [
-          [6, "desc"]
+      lengthMenu: [
+        [20, 50, 100, 150, -1],
+        [20, 50, 100, 150, "All"] // change per page values here
       ],
-      "language": {
-        "lengthMenu": "_MENU_ transactions",
-        "zeroRecords": "No transactions found",
-        "infoEmpty": "No transactions found",
-        "infoFiltered": "(filtered from _MAX_ total txs)"
+      pageLength: 20,
+      order: [
+        [6, "desc"]
+      ],
+      language: {
+        lengthMenu: "_MENU_ accounts",
+        zeroRecords: "No accounts found",
+        infoEmpty: "",
+        infoFiltered: "(filtered from _MAX_ total accounts)"
       },
-      "columnDefs": [ 
-        { "targets": [ 5 ], "visible": false, "searchable": false },
-        {"type": "date", "targets": 6},
-        {"orderable": false, "targets": [0,2,3]},
-        { "render": function(data, type, row) {
-                      if (data != $scope.addrHash)
-                        return '<a href="/addr/'+data+'">'+data +   '</a>'
-                      else
-                        return data
-                    }, "targets": [2,3]},
-        { "render": function(data, type, row) {
-                      return '<a href="/block/'+data+'">'+data+'</a>'
-                    }, "targets": [1]},
-        { "render": function(data, type, row) {
-                      if(row[7]==0)
-                        return '<span ng-show="false"  alt="transaction fail"><image src="img/FAIL.png"/></span>'+'<a href="/tx/'+data+'">'+data.substr(0,21)+'...</a>'
-                      else
-                        return '<a href="/tx/'+data+'">'+data.substr(0,21)+'...</a>'
-                    }, "targets": [0]},
-        { "render": function(data, type, row) {
-                      return getDuration(data).toString();
-                    }, "targets": [6]},
-        ]
+      columnDefs: [
+        { orderable: false, "targets": [0,2,3] },
+        {type: "date", "targets": 6},
+
+        {
+          render:
+            function(data, type, row) {
+              // return '<a href="/addr/' + data +'">' + data + '</a>'
+              if (data != $scope.addrHash)
+                return '<a href="/addr/'+data+'">'+data +   '</a>'
+              else
+                return data
+            },
+          targets: [2,3]
+        },
+        {
+          render:
+            function(data, type, row) {
+              return '<a href="/block/'+data+'">'+data+'</a>'
+            },
+          targets: [1]
+        },
+        {
+          render:
+            function(data, type, row) {
+              if(row[7]==0)
+              return '<span ng-show="false"  alt="transaction fail"><image src="img/FAIL.png"/></span>'+'<a href="/tx/'+data+'">'+data.substr(0,21)+'...</a>'
+            else
+              return '<a href="/tx/'+data+'">'+data.substr(0,21)+'...</a>'
+            },
+          targets: [0]
+        },
+        {
+          render:
+            function(data, type, row) {
+              return getDuration(data).toString();
+
+            },
+          targets: [6]
+        }
+      ]
     });
   }
   
