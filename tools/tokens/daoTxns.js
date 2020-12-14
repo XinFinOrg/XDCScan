@@ -34,12 +34,12 @@ try {
     }
 }
 
-console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
+console.log('Connecting ' + config.RPCURL + '...');
 
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
 } else {
-  web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.nodeAddr + ':' + config.gethPort.toString()));
+  web3 = new Web3(new Web3.providers.HttpProvider(config.RPCURL));
 }
 
 if (web3.isConnected()) 

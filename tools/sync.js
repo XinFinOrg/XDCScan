@@ -526,7 +526,7 @@ var checkBlockDBExistsThenWrite = function(config, patchData, flush) {
  * bulkSize: size of array in block to use bulk operation
  */
 // load config.json
-var config = { nodeAddr: '109.169.40.128', gethPort: 8545, bulkSize: 100 };
+var config = { nodeAddr: 'localhost', gethPort: 8545, bulkSize: 100 };
 try {
     var local = require('../config.json');
     _.extend(config, local);
@@ -542,11 +542,11 @@ try {
     }
 }
 
-console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
+console.log('Connecting ' + config.RPCURL + '...');
 
 // Sets address for RPC WEB3 to connect to, usually your node IP address defaults ot localhost
 //var web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.nodeAddr + ':' + config.gethPort.toString()));
-var web3 = new Web3(new Web3.providers.WebsocketProvider('ws://' + config.nodeAddr + ':' + config.gethWSPort));
+var web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 
 // patch missing blocks
 if (config.patch === true){

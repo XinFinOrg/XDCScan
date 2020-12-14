@@ -212,7 +212,7 @@ try {
     }
 }
 
-console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
-var web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.nodeAddr + ':' + config.gethPort.toString()));
+console.log('Connecting ' + config.RPCURL + '...');
+var web3 = new Web3(new Web3.providers.HttpProvider(config.RPCURL));
 
 patchBlocks(config);

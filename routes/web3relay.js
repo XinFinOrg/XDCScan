@@ -66,13 +66,13 @@ const KnownTokens = KnownTokenList.map((token)=> {
   KnownTokenDecimalDivisors[key] = new BigNumber(10).pow(token.decimal);
   return token.address;
 });
-
+console.log(config.WSURL,"WSURL")
 //Create Web3 connection
-console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
+console.log('Connecting ' + config.RPCURL +'...');
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
 } else {
-  web3 = new Web3(new Web3.providers.WebsocketProvider('ws://' + config.nodeAddr + ':' + config.gethWSPort));
+  web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 }
 
 web3Addr = new Web3(new Web3.providers.HttpProvider('https://rpc.xinfin.network'));

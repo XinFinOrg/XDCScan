@@ -49,9 +49,9 @@ try {
 //config.quiet = false;
 //mongoose.set('debug', true);
 
-console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
+console.log('Connecting ' + config.RPCURL + '...');
 
-var web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.nodeAddr + ':' + config.gethPort.toString()));
+var web3 = new Web3(new Web3.providers.HttpProvider(config.RPCURL));
 
 var useParity = false;
 // if (web3.version.node.split('/')[0].toLowerCase().includes('parity')) {
