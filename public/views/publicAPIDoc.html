@@ -292,7 +292,7 @@
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-2"><strong>Get ERC20-Token TotalSupply by ContractAddress</strong></p>
-                                    <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&apikey=YourApiKeyToken</a></pre>
+                                    <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
                                 </div>
                             </div>
                         </div>
@@ -306,10 +306,6 @@
                                     <p class="mb-2"><strong>Get Total Supply of XDC </strong></p>
                                     <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken</a></pre>
                                     <p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)</p>
-                                </div>
-                                <div class="mb-4">
-                                    <p class="mb-2"><strong>Get XDC LastPrice Price</strong></p>
-                                    <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethprice&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethprice&apikey=YourApiKeyToken</a></pre>
                                 </div>
                             </div>
                         </div>
@@ -409,9 +405,9 @@
                                 <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken</a></pre>
                             </div>
                             <div class="mb-4">
-                                <p class="mb-0"><strong>eth_sendRawTransaction</strong></p>
+                                <p class="mb-0"><strong>eth_sendSignedTransaction</strong></p>
                                 <p class="mb-2">Creates new message call transaction or a contract creation for signed transactions</p>
-                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken</a></pre>
+                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=proxy&action=sendSignedTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken</a></pre>
                                 <p>(Replace the hex value with your raw hex encoded transaction that you want to send.
                                     <br>Send as a POST request, if your hex code is particularly long)</p>
                             </div>
@@ -459,7 +455,7 @@
                             </div>
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get XDC Balance for a single Address</strong></p>
-                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=account&action=balance&address=xdc0000000000000000000000000000000000000000&tag=latest&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=account&action=balance&address=xdc0000000000000000000000000000000000000000&tag=latest&apikey=YourApiKeyToken</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get XDC Balance for multiple Addresses in a single call</strong></p>
@@ -502,7 +498,7 @@
                                 <p class="mb-2"><strong>Get Contract ABI for <a href="verifycontract">Verified Contract Source Codes</a></strong></p>
                                 <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken</a></pre>
                                 <p class="mt-4">A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract</p>
-                                <pre>var Web3 = require("xdc3-old");;
+                                <pre>var Web3 = require("xdc3");;
     var web3 = new Web3(new Web3.providers.HttpProvider());
     var version = web3.version.api;
 
@@ -583,7 +579,7 @@
                         <div class="card-body">
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get ERC20-Token TotalSupply by ContractAddress</strong></p>
-                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=0xf30d911f189c17635c3047538f98a1fedb8875ff&apikey=YourApiKeyToken</a></pre>
+                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
                             </div>
                         </div>
                     </div>
@@ -595,12 +591,8 @@
                         <div class="card-body">
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get Total Supply of XDC </strong></p>
-                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken</a></pre>
+                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken</a></pre>
                                 <p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)</p>
-                            </div>
-                            <div class="mb-4">
-                                <p class="mb-2"><strong>Get XDC LastPrice Price</strong></p>
-                                <pre class="text-break-all"><a href="http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethprice&apikey=YourApiKeyToken">http://explorerapi.xinfin.network/publicAPI?module=stats&action=ethprice&apikey=YourApiKeyToken</a></pre>
                             </div>
                         </div>
                     </div>
