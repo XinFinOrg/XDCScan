@@ -19,6 +19,7 @@ var getsourcecode = "getsourcecode";
 
 var getstatus = "getstatus";
 var gettxreceiptstatus = "gettxreceiptstatus";
+var gettxdetails = "gettxdetails";
 
 var getblockreward = "getblockreward";
 
@@ -184,7 +185,7 @@ module.exports = async function(req, res){
           break;
         case getstatus:
           txhash = requestParam(req, "txhash");
-          txr = eth.getTransactionReceipt(txhash);
+          txr = await eth.getTransactionReceipt(txhash);
           if(txr){
             var data;
             if(txr.status == "0x0")
@@ -210,13 +211,23 @@ module.exports = async function(req, res){
             responseFail(res, respData, "not exist");
           }
           break;
+        case gettxdetails:
+          txhash = requestParam(req, "txhash");
+          txr = await eth.getTransaction(txhash);
+          if(txr){
+            var data = txr;
+            sendData(res, respData, data);
+          }else{
+            responseFail(res, respData, "not exist");
+          }
+          break;
         case getblockreward:
           blockno = Number(requestParam(req, "blockno"));
           if(isNaN(blockno)){
             respData.result = "";
             responseFail(res, respData, "not exist");
           }else{
-            blockData = eth.getBlock(blockno);
+            blockData = await eth.getBlock(blockno);
             if(blockData){
               var resultObj = {"blockReward":0.3375, "blockNumber":blockData.number, "timeStamp":blockData.timestamp ,"blockMiner":blockData.miner};
               sendData(res, respData, resultObj);
