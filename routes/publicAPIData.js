@@ -88,7 +88,7 @@ module.exports = async function(req, res){
           break;
         case balance:
           address = requestParam(req, "address");
-          sendData(res, respData, await eth.getBalance(address).toString());
+          sendData(res, respData, await eth.getBalance(address));
           break;
         case balancemulti:
           addresses = requestParam(req, "address");
@@ -98,7 +98,7 @@ module.exports = async function(req, res){
           var arr = [];
           for(var i=0; i<addresses.length; i++){
             balanceObj = {"account":addresses[i],"balance":0};
-            balanceObj.balance = await eth.getBalance(addresses[i]).toString();
+            balanceObj.balance = await eth.getBalance(addresses[i]);
             arr.push(balanceObj);
           }
           sendData(res, respData, arr);
