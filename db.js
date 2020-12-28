@@ -1,30 +1,32 @@
-var mongoose = require( 'mongoose' );
+const mongoose = require('mongoose');
 let config = require('./config.json')
 
-var Schema   = mongoose.Schema;
 
-var Block = new Schema(
-{
-    "number": {type: Number, index: {unique: true}},
-    "hash": String,
-    "parentHash": String,
-    "nonce": String,
-    "sha3Uncles": String,
-    "logsBloom": String,
-    "transactionsRoot": String,
-    "stateRoot": String,
-    "receiptRoot": String,
-    "miner": {type: String, lowercase: true},
-    "difficulty": String,
-    "totalDifficulty": String,
-    "size": Number,
-    "extraData": String,
-    "gasLimit": Number,
-    "gasUsed": Number,
-    "timestamp": Number,
-    "blockTime": Number,
-    "txs": [String],//same with transactions
-});
+const { Schema } = mongoose;
+
+const Block = new Schema(
+  {
+    'number': { type: Number, index: { unique: true } },
+    'hash': String,
+    'parentHash': String,
+    'nonce': String,
+    'sha3Uncles': String,
+    'logsBloom': String,
+    'transactionsRoot': String,
+    'stateRoot': String,
+    'receiptRoot': String,
+    'miner': { type: String, lowercase: true },
+    'difficulty': String,
+    'totalDifficulty': String,
+    'size': Number,
+    'extraData': String,
+    'gasLimit': Number,
+    'gasUsed': Number,
+    'timestamp': Number,
+    'blockTime': Number,
+    'uncles': [String],
+  }, { collection: 'Block' },
+);
 //master node Info
 var Witness = new Schema(
     {
@@ -40,84 +42,91 @@ var Witness = new Schema(
 
     });
 
-var Contract = new Schema(
-{
-    "address": {type: String, index: {unique: true}},
-    "blockNumber": Number,
-    "ERC":{type: Number, index: true},//0:normal contract 2:ERC20, 3:ERC223
-    "creationTransaction": String,
-    "contractName": String,
-    "tokenName": String,
-    "symbol": String,
-    "owner": String,
-    "decimals": Number,
-    "totalSupply": Number,
-    "balance": Number,
-    "compilerVersion": String,
-    "optimization": Boolean,
-    "sourceCode": String,
-    "abi": String,
-    "byteCode": String
-}, {collection: "Contract"});
+const Contract = new Schema(
+  {
+    'address': { type: String, index: { unique: true } },
+    'blockNumber': Number,
+    'ERC': { type: Number, index: true }, //0:normal contract, 2:ERC20, 3:ERC223
+    'creationTransaction': String,
+    'contractName': String,
+    'tokenName': String,
+    'symbol': String,
+    'owner': String,
+    'decimals': Number,
+    'totalSupply': Number,
+    'compilerVersion': String,
+    'optimization': Boolean,
+    'sourceCode': String,
+    'abi': String,
+    'byteCode': String,
+  }, { collection: 'Contract' },
+);
 
-var Account = new Schema(
+const Account = new Schema(
     {
-        "address": {type: String, index: {unique: true}},
-        "balance": Number,
-        "blockNumber": Number,
-        "type": Number // address: 0x0, contract: 0x1
-    });
-var Transaction = new Schema(
-{
-    "hash": {type: String, index: {unique: true}, lowercase: true},
-    "nonce": Number,
-    "blockHash": String,
-    "blockNumber": {type: Number, index: true},
-    "transactionIndex": Number,
-    "status":Number,
-    "from": {type: String, lowercase: true},
-    "to": {type: String, lowercase: true},
-    "creates": {type: String, lowercase: true},
-    "value": String,
-    "gas": Number,
-    "gasUsed": Number,
-    "contractAddress":String,
-    "gasPrice": String,
-    "timestamp": Number,
-    "input": String,
-    "status": Number
-}, {collection: "Transaction"});
+      'address': { type: String, index: { unique: true } },
+      'balance': Number,
+      'blockNumber': Number,
+      'type': { type: Number, default: 0 }, // address: 0x0, contract: 0x1
+    }, { collection: 'Account' },
+  );
+
+const Transaction = new Schema(
+  {
+    'hash': { type: String, index: { unique: true }, lowercase: true },
+    'nonce': Number,
+    'blockHash': String,
+    'blockNumber': Number,
+    'transactionIndex': Number,
+    'status': Number,
+    'from': { type: String, lowercase: true },
+    'to': { type: String, lowercase: true },
+    'creates': { type: String, lowercase: true },
+    'value': String,
+    'gas': Number,
+    'gasUsed': Number,
+    'gasPrice': String,
+    'timestamp': Number,
+    'input': String,
+  }, { collection: 'Transaction' },
+);
+
+const TokenTransfer = new Schema(
+  {
+    'hash': { type: String, index: { unique: true }, lowercase: true },
+    'blockNumber': Number,
+    'method': String,
+    'from': { type: String, lowercase: true },
+    'to': { type: String, lowercase: true },
+    'contract': { type: String, lowercase: true },
+    'value': String,
+    'timestamp': Number,
+  }, { collection: 'TokenTransfer' },
+);
 
 
-var TokenTransfer = new Schema(
-    {
-        "transactionHash": {type: String, index: {unique: true}},
-        "blockNumber": Number,
-        "methodName": String,
-        "amount": Number,
-        "contractAdd": String,
-        "to": String,
-        "from": String,
-        "timestamp": Number
-    });
-    mongoose.model('TokenTransfer', TokenTransfer);
-    var TokenTransferClass = mongoose.model('TokenTransfer');
+const BlockStat = new Schema(
+  {
+    'number': { type: Number, index: { unique: true } },
+    'timestamp': Number,
+    'difficulty': String,
+    'hashrate': String,
+    'txCount': Number,
+    'gasUsed': Number,
+    'gasLimit': Number,
+    'miner': String,
+    'blockTime': Number,
+    'uncleCount': Number,
+  }, { collection: 'BlockStat' },
+);
+var ActiveAddressesStat = new Schema({
+    "blockNumber": String,
+    "count": Number
+})
 
-var BlockStat = new Schema(
-{
-    "number": {type: Number, index: {unique: true}},
-    "timestamp": Number,
-    "difficulty": String,
-    "hashrate": String,
-    "txCount": Number,
-    "gasUsed": Number,
-    "gasLimit": Number,
-    "miner": String,
-    "blockTime": Number,
-    "uncleCount": Number
-});
 
-var Market = new Schema({
+const Market = new Schema(
+  {
     "symbol": String,
     "timestamp": Number,
     "quoteBTC": Number,
@@ -125,12 +134,8 @@ var Market = new Schema({
     "quoteINR": Number,
     "percent_change_24h": Number,
     "volume_24h":Number
-})
-
-var ActiveAddressesStat = new Schema({
-    "blockNumber": String,
-    "count": Number
-})
+  }, { collection: 'Market' },
+);
 
 var LogEvent = new Schema(
     {
@@ -158,20 +163,23 @@ var Address = new Schema(
     });
 mongoose.model('Address', Address);
 // create indexes
-Transaction.index({timestamp: -1});
-Transaction.index({blockNumber: -1});
-Transaction.index({from: 1, blockNumber: -1});
-Transaction.index({to: 1, blockNumber: -1});
-Transaction.index({creates: 1, blockNumber: -1});
-Account.index({balance: -1});
-Account.index({balance: -1, blockNumber: -1});
-Block.index({miner: -1});
-Block.index({hash: -1});
-Block.index({number: -1});
-Market.index({timestamp: -1})
+Transaction.index({ blockNumber: -1 });
+Transaction.index({ from: 1, blockNumber: -1 });
+Transaction.index({ to: 1, blockNumber: -1 });
+Transaction.index({ creates: 1, blockNumber: -1 });
+Account.index({ balance: -1 });
+Account.index({ balance: -1, blockNumber: -1 });
+Account.index({ type: -1, balance: -1 });
+Block.index({ miner: 1 });
+Block.index({ miner: 1, blockNumber: -1 });
+Block.index({ hash: 1, number: -1 });
+Market.index({ timestamp: -1 });
+TokenTransfer.index({ blockNumber: -1 });
+TokenTransfer.index({ from: 1, blockNumber: -1 });
+TokenTransfer.index({ to: 1, blockNumber: -1 });
+TokenTransfer.index({ contract: 1, blockNumber: -1 });
 ActiveAddressesStat.index({blockNumber: -1});
-BlockStat.index({timestamp: 1});
-BlockStat.index({number: -1});
+
 
 mongoose.model('BlockStat', BlockStat);
 mongoose.model('Block', Block);
@@ -179,20 +187,30 @@ mongoose.model('Account', Account);
 mongoose.model('Contract', Contract);
 mongoose.model('Transaction', Transaction);
 mongoose.model('Market', Market);
+mongoose.model('TokenTransfer', TokenTransfer);
 mongoose.model('ActiveAddressesStat', ActiveAddressesStat);
 mongoose.model('Witness', Witness);
 module.exports.BlockStat = mongoose.model('BlockStat');
 module.exports.Block = mongoose.model('Block');
 module.exports.Contract = mongoose.model('Contract');
 module.exports.Transaction = mongoose.model('Transaction');
-module.exports.TokenTransfer = TokenTransferClass;
 module.exports.Witness = Witness;
 module.exports.LogEvent = mongoose.model('LogEvent');
 module.exports.Address = mongoose.model('Address');
 
 module.exports.Account = mongoose.model('Account');
 module.exports.Market = mongoose.model('Market');
+module.exports.TokenTransfer = mongoose.model('TokenTransfer');
 module.exports.ActiveAddressesStat = mongoose.model('ActiveAddressesStat');
 
-mongoose.connect( process.env.MONGO_URI || config.MONGO_URI || 'mongodb://localhost/BlockScanDB' );
-mongoose.set('debug', false);
+
+mongoose.Promise = global.Promise;
+mongoose.connect(process.env.MONGO_URI || config.MONGO_URI || 'mongodb://localhost/BlockScanDB', {
+  useMongoClient: true
+  // poolSize: 5,
+  // rs_name: 'myReplicaSetName',
+  // user: 'explorer',
+  // pass: 'yourdbpasscode'
+});
+
+// mongoose.set('debug', true);
