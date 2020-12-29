@@ -32,7 +32,7 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
     data: {"address": $scope.addrHash}
   }).then(function(resp) {
     $scope.count = resp.data.count;
-    fetchTxs(1);
+    fetchTxs(resp.data.count);
   });
 
   //try to get contract info
