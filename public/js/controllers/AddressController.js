@@ -21,6 +21,7 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
     $scope.addrBalance = resp.data.balance;
     $scope.balanceUSD = resp.data.balanceUSD;
     $scope.quoteUSD = resp.data.quoteUSD;
+    $scope.hackedTag = resp.data.hackedTag;
 
   });
 

@@ -455,7 +455,10 @@ exports.data = async (req, res) => {
   } else if ("addr" in req.body) {
     var addr = req.body.addr.toLowerCase();
     var options = req.body.options;
-
+    let hackedTag ="";
+    if(addr==="xdc6d6f33467529ac73804aad77ef8d8cfe16520ba3"){
+      hackedTag="Hacker's Account"
+    }
     var addrData = {};
 
     if (options.indexOf("balance") > -1) {
@@ -522,6 +525,7 @@ exports.data = async (req, res) => {
     }
     addrData["balanceUSD"] = addrData.balance * quoteUSD;
     addrData["quoteUSD"] = quoteUSD;
+    addrData["hackedTag"] = hackedTag;
 
 
     res.write(JSON.stringify(addrData));
