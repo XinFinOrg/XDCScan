@@ -9,10 +9,9 @@
                     	<img width="60" src="/img/xdc-logo-footer.png" alt="XinFin Logo">
                     </div>
                     <p>XinFinScan is a Block Explorer and Analytics Platform for XDC, a decentralized smart contracts platform.</p>
-
                     <div class="select-option cyptocurrency input-group-append">
-                    	<select class="select2-icon" name="icon">
-                            <option value="USD" data-image="/img/currency-icon/USD.svg">USD</option>
+                    	<select class="select2-icon" name="icon" ng-change="changeCurrency(selCurrency)" ng-model="selCurrency">
+                            <option value="USD" selected data-image="/img/currency-icon/USD.svg">USD</option>
                             <option value="EUR" data-image="/img/currency-icon/EUR.svg">EURO</option>
                         	<option value="INR" data-image="/img/currency-icon/INR.svg">INR</option>
                         </select>

@@ -522,7 +522,10 @@ exports.data = async (req, res) => {
 
     if (latestPrice) {
       quoteUSD = latestPrice.quoteUSD;
+      quoteINR = latestPrice.quoteINR;
     }
+    addrData["balanceINR"] = addrData.balance * quoteINR;
+    addrData["quoteINR"] = quoteINR;
     addrData["balanceUSD"] = addrData.balance * quoteUSD;
     addrData["quoteUSD"] = quoteUSD;
     addrData["hackedTag"] = hackedTag;
@@ -612,9 +615,10 @@ exports.data = async (req, res) => {
       const activeAddressesStat = await ActiveAddressesStat.find().sort({blockNumber: -1}).limit(1);
       const latestPrice = await Market.findOne().sort({timestamp: -1})
       let quoteUSD = 0;
-
+      let quoteINR = 0;
       if (latestPrice) {
         quoteUSD = latestPrice.quoteUSD;
+        quoteINR = latestPrice.quoteINR;
       }
 
       let activeAddresses = 0;
@@ -638,7 +642,8 @@ exports.data = async (req, res) => {
               "hashrate": hashrate,
               activeAddresses: activeAddresses,
               cloTransferredAmount: cloTransferredAmount,
-              quoteUSD: quoteUSD
+              quoteUSD: quoteUSD,
+              quoteINR: quoteINR
             }));
       } else {
         res.write(JSON.stringify(

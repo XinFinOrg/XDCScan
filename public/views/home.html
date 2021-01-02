@@ -112,7 +112,8 @@
                                         <div class="media-body">
                                             <a href="https://coinmarketcap.com/currencies/xinfin-network/" target="_blank" class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">XDC Price</h2>
-                                            $ {{quoteUSD | number: 6 }} 
+                                            <span ng-if="$selectedCurrency == 'USD' ">$ {{quoteUSD | number: 6 }}</span>
+                                            <span ng-if="$selectedCurrency == 'INR' ">₹ {{quoteINR | number: 6 }}</span>
                                              </a>
                                              <small text-size-1={{CMCPrice_change24h}}%> </small>
                                             </a>

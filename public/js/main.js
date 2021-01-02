@@ -87,10 +87,15 @@ BlocksApp.controller('PageHeadController', ['$scope', function($scope) {
     });
 }]);
 /* Setup Layout Part - Footer */
-BlocksApp.controller('FooterController', ['$scope', function($scope) {
+BlocksApp.controller('FooterController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
     });
+    $scope.selCurrency = 'USD';
+    $rootScope.$selectedCurrency = 'USD';
+    $scope.changeCurrency = function(cur) {
+        $rootScope.$selectedCurrency = cur;
+    };
 }]);
 /* Setup Rounting For All Pages */
 BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
