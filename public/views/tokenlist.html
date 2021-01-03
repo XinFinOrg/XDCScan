@@ -10,8 +10,8 @@
                   <h3 class="blockDetails-header-title text-break text-center text-md-left">Token Tracker</h3>
                   <div class="input-group row">
                       <div class="col-md-8"></div>
-                    <input type="text" class="col-md-4 form-control search-filter-input" ng-model="form.searchTokenInput" ng-keyup="$event.keyCode == 13 ? getInfoList(1,form.searchTokenInput) : null">
-                    <span class="input-group-append"><button type="button" class="btn btn-primary" ng-click="getInfoList(1,form.searchTokenInput)"><i class="fa fa-search"></i></button></span>
+                    <input type="text" class="col-md-4 form-control search-filter-input" ng-model="form.searchTokenInput" ng-keyup="$event.keyCode == 13 ? getInfoList(0,form.searchTokenInput) : null">
+                    <span class="input-group-append"><button type="button" class="btn btn-primary" ng-click="getInfoList(0,form.searchTokenInput)"><i class="fa fa-search"></i></button></span>
                 </div>
               </div>
           </div>

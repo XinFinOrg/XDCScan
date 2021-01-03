@@ -520,6 +520,7 @@ var sendBlocks = async function (lim, res) {
   if (latestPrice) {
     quoteUSD = latestPrice.quoteUSD;
     quoteINR = latestPrice.quoteINR;
+    quoteEUR = latestPrice.quoteEUR;
 
   }
 
@@ -561,6 +562,7 @@ var sendBlocks = async function (lim, res) {
       }
       result.quoteUSD = quoteUSD;
       result.quoteINR = quoteINR;
+      result.quoteEUR = quoteEUR;
       result.accountsCount = accountsCount;
       result.transactionCount = transactionCount;
       result.percent_change_24h = latestPrice.percent_change_24h;

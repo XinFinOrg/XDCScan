@@ -98,7 +98,9 @@
                                         </div>
                                         <div class="media-body text-right">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0"> Market Cap</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCXDCCirculatingSupplyinUSD | number }} </a>
+                                            <a ng-if="$selectedCurrency == 'USD' " class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCXDCCirculatingSupplyinUSD | number }} </a>
+                                            <a ng-if="$selectedCurrency == 'INR' "class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">₹ {{totalXDCXDCCirculatingSupplyinINR | number }} </a>
+                                            <a ng-if="$selectedCurrency == 'EUR' "class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">€ {{totalXDCXDCCirculatingSupplyinEUR | number }} </a>
                                         </div>
                                     </div>
                                     <hr class="d-block d-md-none hr-space-lg">
@@ -114,6 +116,7 @@
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">XDC Price</h2>
                                             <span ng-if="$selectedCurrency == 'USD' ">$ {{quoteUSD | number: 6 }}</span>
                                             <span ng-if="$selectedCurrency == 'INR' ">₹ {{quoteINR | number: 6 }}</span>
+                                            <span ng-if="$selectedCurrency == 'EUR' ">€ {{quoteEUR | number: 6 }}</span>
                                              </a>
                                              <small text-size-1={{CMCPrice_change24h}}%> </small>
                                             </a>
@@ -126,7 +129,9 @@
                                         </figure>
                                         <div class="media-body text-left">
                                             <h2 class="font-size-1 text-uppercase text-secondary mb-0">Fully Diluted Market Cap</h2>
-                                            <a class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD | number }} </a>
+                                            <a ng-if="$selectedCurrency == 'USD' " class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">$ {{totalXDCinUSD | number }} </a>
+                                            <a ng-if="$selectedCurrency == 'INR' " class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">₹ {{totalXDCinINR | number }} </a>
+                                            <a ng-if="$selectedCurrency == 'EUR' " class="text-size-1 text-link counter" data-toggle="tooltip" data-placement="right" data-original-title="" title="">€ {{totalXDCinEUR | number }} </a>
                                         </div>
                                     </div>
                                     <hr class="hr-space-lg">

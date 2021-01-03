@@ -157,7 +157,8 @@
                                                             <!-- <img src="/img/mini-logo.svg" alt="mini-logo" class="mini-logo"/>  -->
                                                             {{tx.value | number: 8}} {{ settings.symbol }} <span class="fw4">(
                                                                 <span ng-if="$selectedCurrency == 'USD' ">{{ tx.valueUSD | currency : "$" : 2 }}</span>
-                                                                <span ng-if="$selectedCurrency == 'INR' ">{{ tx.valueINR | currency : "₹" : 2 }}</span>)
+                                                                <span ng-if="$selectedCurrency == 'INR' ">{{ tx.valueINR | currency : "₹" : 2 }}</span>
+                                                                <span ng-if="$selectedCurrency == 'EUR' ">{{ tx.valueEUR | currency : "€" : 2 }}</span>)
                                                             </span>
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>
@@ -171,7 +172,8 @@
                                                         <div class="pl-small fw6">
                                                             {{tx.transactionFee | number : 11}} {{ settings.symbol }}<span class="fw4">(
                                                                 <span ng-if="$selectedCurrency == 'USD' ">{{ tx.transactionFeeUSD | currency : "$" : 14 }}</span>
-                                                                <span ng-if="$selectedCurrency == 'INR' ">{{ tx.transactionFeeINR | currency : "₹" : 14 }}</span>)
+                                                                <span ng-if="$selectedCurrency == 'INR' ">{{ tx.transactionFeeINR | currency : "₹" : 14 }}</span>
+                                                                <span ng-if="$selectedCurrency == 'EUR' ">{{ tx.transactionFeequoteEUR | currency : "€" : 14 }}</span>)
                                                             </span>
                                                             <!-- <span class="usd_value fw4">($ {{tx.value}})</span> -->
 														</div>

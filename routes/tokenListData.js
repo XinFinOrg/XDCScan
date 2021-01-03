@@ -47,10 +47,21 @@ module.exports = function(req, res){
 };
 
 function getList(res){
-  contractFind = Contract.find({ERC:{$gt:0},$or: [
-    { 'symbol': `/${searchStr}/` },
-    { 'tokenName': `/${searchStr}/` }
-  ]}, "tokenName address").skip(page*pageSize).limit(pageSize).lean(true);
+    if (searchStr) {
+        searchStr = new RegExp(searchStr, 'i')
+        var searchCondition = {
+            $or: [
+                { 'symbol': searchStr },
+                { 'tokenName': searchStr }
+            ]
+        };
+    } else {
+        var searchCondition = {};
+    }
+  contractFind = Contract.find({$and: [
+    {ERC:{$gt:0}},
+    searchCondition
+    ]}, "tokenName address").skip(page*pageSize).limit(pageSize).lean(true);
   contractFind.exec(function (err, docs) {
     if(err){
       console.log("tokenlist getList err: ", err);

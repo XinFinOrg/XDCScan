@@ -43,6 +43,9 @@
                                 <div ng-if="$selectedCurrency == 'INR' " class="pl-small">₹{{ balanceINR | number: 2 }}
                                 	<span class="usd_value fw4">(@ ₹{{ quoteINR | number: 6 }}/XDC)</span>
                                 </div>
+                                <div ng-if="$selectedCurrency == 'EUR' " class="pl-small">€{{ balanceEUR | number: 2 }}
+                                	<span class="usd_value fw4">(@ €{{ quoteEUR | number: 6 }}/XDC)</span>
+                                </div>
                           </div>
                       </div>
                       <hr class="hr-space">
