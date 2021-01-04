@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 module.exports = function(req, res){
   var page = req.body.page;
+  searchStr = req.body.searchStr || '';
   if(page<0 || page==undefined)
         page = 0;
   var resultData={"totalPage":0, "list":null, "page":page};
@@ -21,7 +22,21 @@ module.exports = function(req, res){
             resultData.page = 0;
             page=0;
           }
-          contractFind = Contract.find(findCondition, "contractName tokenName ERC address").skip(page*pageSize).limit(pageSize).lean(true);
+          if (searchStr) {
+            searchStr = new RegExp(searchStr, 'i')
+            var searchCondition = {
+                $or: [
+                    { 'symbol': searchStr },
+                    { 'tokenName': searchStr }
+                ]
+            };
+        } else {
+            var searchCondition = {};
+        }
+          contractFind = Contract.find({$and: [
+            findCondition,
+            searchCondition
+            ]}, "contractName tokenName ERC address").skip(page*pageSize).limit(pageSize).lean(true);
           contractFind.exec(function (err, docs) {
             resultData.list=docs;
             respData = JSON.stringify(resultData);

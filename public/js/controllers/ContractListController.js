@@ -4,6 +4,7 @@ angular.module('BlocksApp').controller('ContractListController', function($state
       App.initAjax();
   });
 
+  $scope.searchTokenInput = $stateParams.token ? $stateParams.token : undefined;
   
 
   $scope.page = 0;
@@ -11,7 +12,7 @@ angular.module('BlocksApp').controller('ContractListController', function($state
     $http({
         method: 'POST',
         url: '/contractListData',
-        data: {"ERC": -1, "page":page}
+        data: {"ERC": -1, "page":page,searchStr:$scope.searchTokenInput}
     }).then(function(repData) {
       $scope.page = repData.data.page;
       var pages = [];

@@ -76,6 +76,10 @@ BlocksApp.controller('HeaderController', ['$scope', '$location', function($scope
             $location.path("/tx/" + search);
         else if (!isNaN(search))
             $location.path("/block/" + search);
+        else if(search.length<10)//contractlist search
+            $location.path("/contractlist/" + search);
+        else if(search.length<14)//tokenlist search
+            $location.path("/tokenlist/" + search);
         else
             $scope.form.searchInput = search;
     }
@@ -258,7 +262,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
         })
         
         .state('tokenlist', {
-            url: "/tokenlist",
+            url: "/tokenlist/{token}?",
             templateUrl: "views/tokenlist.html",
             data: {pageTitle: 'Tokens'},
             controller: "TokenListController",
@@ -275,7 +279,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
             }
         })
         .state('contractlist', {
-            url: "/contractlist",
+            url: "/contractlist/{token}?",
             templateUrl: "views/contractlist.html",
             data: {pageTitle: 'contractlist'},
             controller: "ContractListController",
