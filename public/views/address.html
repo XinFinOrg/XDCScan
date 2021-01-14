@@ -26,7 +26,8 @@
 						  </div>
                           <div class="col-md-9">
                               	<div class="pl-small fw6">
-                                    {{ addrBalance | number: 10 }} XDC
+                                    {{ addrBalance | number: 10 }} XDC 
+                                    <b style="color:red">{{ hackedTag }}</b>
                                     <!-- <span class="usd_value fw4">($ {{ balanceUSD | number: 6 }})</span> -->
 						  		</div>
                           </div>
@@ -36,8 +37,14 @@
                       <div class="row align-items-center">
                           <div class="col-md-3 fw6 mb-1">XDC Value</div>
                           <div class="col-md-9">
-                                <div class="pl-small">${{ balanceUSD | number: 2 }}
+                                <div ng-if="$selectedCurrency == 'USD' " class="pl-small">${{ balanceUSD | number: 2 }}
                                 	<span class="usd_value fw4">(@ ${{ quoteUSD | number: 6 }}/XDC)</span>
+                                </div>
+                                <div ng-if="$selectedCurrency == 'INR' " class="pl-small">₹{{ balanceINR | number: 2 }}
+                                	<span class="usd_value fw4">(@ ₹{{ quoteINR | number: 6 }}/XDC)</span>
+                                </div>
+                                <div ng-if="$selectedCurrency == 'EUR' " class="pl-small">€{{ balanceEUR | number: 2 }}
+                                	<span class="usd_value fw4">(@ €{{ quoteEUR | number: 6 }}/XDC)</span>
                                 </div>
                           </div>
                       </div>

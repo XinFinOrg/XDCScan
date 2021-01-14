@@ -130,6 +130,7 @@ const Market = new Schema(
     "symbol": String,
     "timestamp": Number,
     "quoteBTC": Number,
+    "quoteEUR": Number,
     "quoteUSD": Number,
     "quoteINR": Number,
     "percent_change_24h": Number,

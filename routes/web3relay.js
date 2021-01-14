@@ -136,6 +136,7 @@ exports.data = async (req, res) => {
       if (latestPrice) {
         quoteUSD = latestPrice.quoteUSD;
         quoteINR = latestPrice.quoteINR;
+        quoteEUR = latestPrice.quoteEUR;
       }
 
       const latestBlock = await Block.find().sort({number:-1}).limit(1);
@@ -149,8 +150,10 @@ exports.data = async (req, res) => {
       transactionResponse.transactionFee =  (new Number(transactionResponse.gasPrice * transactionResponse.gasUsed)).toFixed(20);
       transactionResponse.transactionFeeUSD = (new Number(transactionResponse.transactionFee * quoteUSD)).toFixed(20);
       transactionResponse.transactionFeeINR = (new Number(transactionResponse.transactionFee * quoteINR)).toFixed(20);
+      transactionResponse.transactionFeequoteEUR = (new Number(transactionResponse.transactionFee * quoteEUR)).toFixed(20);
       transactionResponse.valueUSD = transactionResponse.value * quoteUSD;
       transactionResponse.valueINR = transactionResponse.value * quoteINR;
+      transactionResponse.valueEUR = transactionResponse.value * quoteEUR;
       transactionResponse.gasUsedPercent = (transactionResponse.gasUsed / transactionResponse.gas) * 100;
       
       if (transactionResponse.to === treasuryAddress || transactionResponse.from === treasuryAddress) {
@@ -455,7 +458,10 @@ exports.data = async (req, res) => {
   } else if ("addr" in req.body) {
     var addr = req.body.addr.toLowerCase();
     var options = req.body.options;
-
+    let hackedTag ="";
+    if(addr==="xdc6d6f33467529ac73804aad77ef8d8cfe16520ba3"){
+      hackedTag="Hacker's Account"
+    }
     var addrData = {};
 
     if (options.indexOf("balance") > -1) {
@@ -519,9 +525,16 @@ exports.data = async (req, res) => {
 
     if (latestPrice) {
       quoteUSD = latestPrice.quoteUSD;
+      quoteINR = latestPrice.quoteINR;
+      quoteEUR = latestPrice.quoteEUR;
     }
+    addrData["balanceEUR"] = addrData.balance * quoteEUR;
+    addrData["quoteEUR"] = quoteEUR;
+    addrData["balanceINR"] = addrData.balance * quoteINR;
+    addrData["quoteINR"] = quoteINR;
     addrData["balanceUSD"] = addrData.balance * quoteUSD;
     addrData["quoteUSD"] = quoteUSD;
+    addrData["hackedTag"] = hackedTag;
 
 
     res.write(JSON.stringify(addrData));
@@ -608,9 +621,12 @@ exports.data = async (req, res) => {
       const activeAddressesStat = await ActiveAddressesStat.find().sort({blockNumber: -1}).limit(1);
       const latestPrice = await Market.findOne().sort({timestamp: -1})
       let quoteUSD = 0;
-
+      let quoteINR = 0;
+      let quoteEUR = 0;
       if (latestPrice) {
         quoteUSD = latestPrice.quoteUSD;
+        quoteINR = latestPrice.quoteINR;
+        quoteEUR = latestPrice.quoteEUR;
       }
 
       let activeAddresses = 0;
@@ -634,7 +650,9 @@ exports.data = async (req, res) => {
               "hashrate": hashrate,
               activeAddresses: activeAddresses,
               cloTransferredAmount: cloTransferredAmount,
-              quoteUSD: quoteUSD
+              quoteUSD: quoteUSD,
+              quoteINR: quoteINR,
+              quoteEUR: quoteEUR,
             }));
       } else {
         res.write(JSON.stringify(

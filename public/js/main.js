@@ -76,6 +76,10 @@ BlocksApp.controller('HeaderController', ['$scope', '$location', function($scope
             $location.path("/tx/" + search);
         else if (!isNaN(search))
             $location.path("/block/" + search);
+        else if(search.length<10)//contractlist search
+            $location.path("/contractlist/" + search);
+        else if(search.length<14)//tokenlist search
+            $location.path("/tokenlist/" + search);
         else
             $scope.form.searchInput = search;
     }
@@ -87,10 +91,15 @@ BlocksApp.controller('PageHeadController', ['$scope', function($scope) {
     });
 }]);
 /* Setup Layout Part - Footer */
-BlocksApp.controller('FooterController', ['$scope', function($scope) {
+BlocksApp.controller('FooterController', ['$scope', '$rootScope', function($scope, $rootScope) {
     $scope.$on('$includeContentLoaded', function() {
         Layout.initFooter(); // init footer
     });
+    $scope.selCurrency = 'USD';
+    $rootScope.$selectedCurrency = 'USD';
+    $scope.changeCurrency = function(cur) {
+        $rootScope.$selectedCurrency = cur;
+    };
 }]);
 /* Setup Rounting For All Pages */
 BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
@@ -253,7 +262,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
         })
         
         .state('tokenlist', {
-            url: "/tokenlist",
+            url: "/tokenlist/{token}?",
             templateUrl: "views/tokenlist.html",
             data: {pageTitle: 'Tokens'},
             controller: "TokenListController",
@@ -270,7 +279,7 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
             }
         })
         .state('contractlist', {
-            url: "/contractlist",
+            url: "/contractlist/{token}?",
             templateUrl: "views/contractlist.html",
             data: {pageTitle: 'contractlist'},
             controller: "ContractListController",
