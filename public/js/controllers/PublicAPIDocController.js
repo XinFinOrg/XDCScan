@@ -1,4 +1,11 @@
-angular.module('BlocksApp').controller('PublicAPIController', function($stateParams, $rootScope, $scope, $http) {
+angular.module('BlocksApp').controller('PublicAPIDocController', function($stateParams, $rootScope, $scope, $http,$location,$window) {
+    $scope.$on('$viewContentLoaded', function() {   
+        // initialize core components
+        App.initAjax();
+        $scope.baseUrl = new $window.URL($location.absUrl()).origin;
+        // $scope.baseUrl = $browser.baseHref();
+        // $scope.currentUrl ='ff';
+    });
     // $scope.$on('$viewContentLoaded', function() {   
     //     // initialize core components
     //     App.initAjax();
