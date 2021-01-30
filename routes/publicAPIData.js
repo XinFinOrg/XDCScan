@@ -452,14 +452,14 @@ function responseFail(res, respData, msg){
 
 module.exports.getTotalXDC = async function(req, res){
   totalBlockNum = await eth.getBlockNumber();
-  respData = (37500000000+5.55*totalBlockNum).toFixed();
+  respData = (37500000000+5.55*totalBlockNum).toFixed(8);
   res.write(String(respData));
   res.end();
 }
 
 module.exports.getCirculatingSupply= async function(req, res){
   totalBlockNum = await eth.getBlockNumber();
-  respData = (12100000000+5.55*totalBlockNum).toFixed();
+  respData = (12100000000+5.55*totalBlockNum).toFixed(8);
   res.write(String(respData));
   res.end();
 }
