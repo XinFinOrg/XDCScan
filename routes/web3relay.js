@@ -20,6 +20,7 @@ const Contract = mongoose.model( 'Contract' );
 const Transaction = mongoose.model( 'Transaction' );
 const Market = mongoose.model( 'Market' );
 const ActiveAddressesStat = mongoose.model( 'ActiveAddressesStat' );
+const TokenTransfer = mongoose.model('TokenTransfer');
 
 
 var getLatestBlocks = require('./index').getLatestBlocks;
@@ -130,6 +131,21 @@ exports.data = async (req, res) => {
         transactionResponse = doc;
       }
 
+        let tokensTrasferred = ``;
+        let transfer = await TokenTransfer.findOne({ hash: txHash });
+        if (transfer) {
+            let contractDetail = await Contract.findOne({ $or: [{ 'address': transfer.contract.toLowerCase() }, { 'address': transfer.contract }] }, { symbol: 1, tokenName: 1, address: 1 }).lean();
+            //   tokensTrasferred = `From ${transfer.from} To ${transfer.to} For ${transfer.value} ${contractDetail.tokenName} (${contractDetail.symbol})`;
+            tokensTrasferred = {
+                from: transfer.from,
+                to: transfer.to,
+                value: transfer.value,
+                tokenName: contractDetail.tokenName,
+                symbol: contractDetail.symbol,
+                address: contractDetail.address,
+            }
+        }
+
       const latestPrice = await Market.findOne().sort({timestamp: -1})
       let quoteUSD = 0;
 
@@ -155,6 +171,7 @@ exports.data = async (req, res) => {
       transactionResponse.valueINR = transactionResponse.value * quoteINR;
       transactionResponse.valueEUR = transactionResponse.value * quoteEUR;
       transactionResponse.gasUsedPercent = (transactionResponse.gasUsed / transactionResponse.gas) * 100;
+      transactionResponse.tokensTrasferred = tokensTrasferred;
       
       if (transactionResponse.to === treasuryAddress || transactionResponse.from === treasuryAddress) {
         transactionResponse.inputAscii = web3.utils.hexToAscii(transactionResponse.input);
