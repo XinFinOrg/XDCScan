@@ -136,10 +136,11 @@ exports.data = async (req, res) => {
         if (transfer) {
             let contractDetail = await Contract.findOne({ $or: [{ 'address': transfer.contract.toLowerCase() }, { 'address': transfer.contract }] }, { symbol: 1, tokenName: 1, address: 1 }).lean();
             //   tokensTrasferred = `From ${transfer.from} To ${transfer.to} For ${transfer.value} ${contractDetail.tokenName} (${contractDetail.symbol})`;
+            let value = etherUnits.toEther( new BigNumber(transfer.value), "wei");
             tokensTrasferred = {
                 from: transfer.from,
                 to: transfer.to,
-                value: transfer.value,
+                value: value,
                 tokenName: contractDetail.tokenName,
                 symbol: contractDetail.symbol,
                 address: contractDetail.address,
