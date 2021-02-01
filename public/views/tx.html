@@ -153,6 +153,29 @@
                                                 <div class="row align-items-center" ng-show="tx.tokensTrasferred">
                                                     <hr class="hr-space">
                                                     <div class="col-md-3 fw6 mb-1">
+                                                        <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Interacted With (To)</div>
+                                                        <div class="col-md-9">
+                                                            <div class="pl-small">
+                                                                Contract
+                                                                <a href="/token/{{tx.tokensTrasferred.address}}" id="contractAddress" class="contractAddress">
+                                                                    {{tx.tokensTrasferred.address}} 
+                                                                </a>
+                                                               ({{tx.tokensTrasferred.symbol}}: {{tx.tokensTrasferred.tokenName}})
+                                                               <span  class="text-success">
+                                                                   <i class="fa fa-check-circle mr-1"></i>
+                                                                </span>
+                                                               <!-- <div class="copy-to-clipboard">
+                                                                   <a href="" data-copytarget="#contractAddress" class="btn btn-sm btn-icon btn-secondary">
+                                                                        <i class="far fa-copy btn-icon__inner"></i>
+                                                                    </a>
+                                                                </div> -->
+                                                            </div>
+                                                        </div>
+                                                </div>                                                
+                                                <hr class="hr-space">                                                
+                                                <div class="row align-items-center" ng-show="tx.tokensTrasferred">
+                                                    <hr class="hr-space">
+                                                    <div class="col-md-3 fw6 mb-1">
                                                         <i class="far fa-question-circle text-light mr-1" data-container="body" data-toggle="tooltip" data-placement="top" title="The value being transacted in XDC and fiat value. Note: You can click the fiat value (if available) to see historical value at the time of transaction."></i>Token Transfer: </div>
                                                         <div class="col-md-9">
                                                             <div class="pl-small">From <a href="/addr/{{tx.tokensTrasferred.from}}">{{tx.tokensTrasferred.from.substr(0,24)}}...</a>  </div>
