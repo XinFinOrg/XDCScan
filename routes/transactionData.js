@@ -1,11 +1,11 @@
 #!/usr/bin/env node
-// var etherUnits = require("../lib/etherUnits.js");
-// var BigNumber = require('bignumber.js');
+var etherUnits = require("../lib/etherUnits.js");
+var BigNumber = require('bignumber.js');
 var web3relay = require('./web3relay');
 
 const transferMethodFlag = "0xa9059cbb000000000000000000000000";
 const waiting = "wait for browser grabbing";
-module.exports = function(req, res){
+module.exports = async function(req, res){
   var respData = "";
     try{
       //console.log("respone tokenlist");
@@ -36,6 +36,29 @@ module.exports = function(req, res){
         res.write(espData);
         res.end();
         });
+      } else if (action == "countTX") {
+          let tokenTransfrs = await Transaction.aggregate([
+              { $match: { $or: [{ "to": address }, { "from": address }], input: { $ne: "0x" } } },
+              {
+                  "$lookup": {
+                      "from": "TokenTransfer",
+                      "localField": "blockNumber",
+                      "foreignField": "blockNumber",
+                      "as": "resultingTransferArray"
+                  }
+              },
+              { "$unwind": "$resultingTransferArray" },
+          ]);
+          let transfer = 0;
+          for (let itm of tokenTransfrs) {
+              if (itm.resultingTransferArray && itm.resultingTransferArray.value) {
+                  let temp = etherUnits.toEther(new BigNumber(itm.resultingTransferArray.value), "wei");
+                  transfer += Number(temp);
+              }
+          }
+          espData = JSON.stringify({transfervalue:transfer});
+          res.write(espData);
+          res.end();
       }else{//some tx
         var txHash = req.body.tx;
         if(txHash && txHash.indexOf('0x')!=0)
