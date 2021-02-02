@@ -31,12 +31,14 @@
                           <tr>
                             <th> TokenName </th>
                             <th> Address </th>
+                            <th> Status </th>
                           </tr>
                                             </thead>
                         <tbody>
                                   <tr ng-repeat="t in contracts track by $index">
                                       <td> <a class="font-green" href="/token/{{t.address}}">{{t.tokenName}} </a></td>
                                       <td> <a href="/token/{{t.address}}">{{t.address}}</a> </td>
+                                      <td>{{(t.sourceCode)?'Verified':'Unverified'}}</td>
                                   </tr>
                               </tbody>
                           </table>

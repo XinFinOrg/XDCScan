@@ -61,7 +61,7 @@ function getList(res){
   contractFind = Contract.find({$and: [
     {ERC:{$gt:0}},
     searchCondition
-    ]}, "tokenName address").skip(page*pageSize).limit(pageSize).lean(true);
+    ]}, "tokenName address sourceCode").skip(page*pageSize).limit(pageSize).sort({sourceCode:-1}).lean(true);
   contractFind.exec(function (err, docs) {
     if(err){
       console.log("tokenlist getList err: ", err);
