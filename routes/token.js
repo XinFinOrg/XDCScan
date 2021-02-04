@@ -97,6 +97,12 @@ module.exports = function (req, res) {
                 { "$group": { _id: { from: "from", to: "$to" } } },
             ]);
             tokenData.tokenHolders = (tokenHoldersCount.length * 2);
+
+            var eth = require('./web3relay').eth;
+            var Token = new eth.Contract(ABI, contractAddress);
+            let totalSupply = await Token.methods.totalSupply().call();
+            tokenData.totalSupply = Number(etherUnits.toEther(totalSupply, 'wei'));
+
           if (fromAccount) {
             var eth = require('./web3relay').eth;
             var TokenInst = new eth.Contract(ABI, contractAddress);
