@@ -90,8 +90,13 @@ module.exports = function (req, res) {
           
             var mongoose = require('mongoose');
             var Transaction = mongoose.model('Transaction');
-            let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
-            tokenData.tokenHolders = tokenHolders;
+            let TokenTransfer = mongoose.model('TokenTransfer');
+            // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
+            let tokenHoldersCount = await TokenTransfer.aggregate([
+                { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
+                { "$group": { _id: { from: "from", to: "$to" } } },
+            ]);
+            tokenData.tokenHolders = (tokenHoldersCount.length * 2);
           if (fromAccount) {
             var eth = require('./web3relay').eth;
             var TokenInst = new eth.Contract(ABI, contractAddress);
