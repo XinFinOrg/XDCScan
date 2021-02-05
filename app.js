@@ -101,8 +101,6 @@ var RESPONSE = require('./helpers/RESPONSE.js');
 // // axios.get(`${process.env.APP_URL}/masternode/test`);
 // axios.get(`http://localhost:3000/masternode/updatemndetails`);
 
-// const masterNodeController = require('./controller/masterNodeController');
-// masterNodeController.updateMNDetails();
 
 // function startWatch() {
 //     const masterNodeHelper = require('./helpers/masterNodeHelper');
