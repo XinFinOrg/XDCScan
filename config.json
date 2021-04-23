@@ -1,8 +1,8 @@
 {
-    "nodeAddr":     "109.169.40.128",
+    "nodeAddr":     "ws.apothem.network",
     "gethPort":     8545,
-    "gethWSPort":   8555,
-    "WSURL": "ws://109.169.40.128:8555",
+    "gethWSPort":   443,
+    "WSURL": "wss://ws.apothem.network",
     "RPCURL": "https://rpc.apothem.network",
     "epoch":900,
     "fRewards":500,
