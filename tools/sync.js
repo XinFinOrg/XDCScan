@@ -166,11 +166,11 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           contractdb.owner = txData.from;
           contractdb.blockNumber = blockData.number;
           contractdb.creationTransaction = txData.hash;
-          console.log(contractdb,"contractdb")
+          //console.log(contractdb,"contractdb")
 
           try {
             const call = await web3.eth.call({ to: contractAddress, data: web3.utils.sha3('totalSupply()') });
-            console.log(contractdb,"contractdb")
+            // console.log(contractdb,"contractdb")
 
             if (call === '0x') {
               isTokenContract = false;
@@ -181,11 +181,11 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
                 contractdb.decimals = await Token.methods.decimals().call();
                 contractdb.symbol = await Token.methods.symbol().call();
                 contractdb.totalSupply = await Token.methods.totalSupply().call();
-                console.log(contractdb,"contractdb")
+                // console.log(contractdb,"contractdb")
               } catch (err) {
                 isTokenContract = false;
               }
-              console.log(contractdb,"contractdb")
+              // console.log(contractdb,"contractdb")
             }
           } catch (err) {
             isTokenContract = false;
