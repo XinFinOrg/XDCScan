@@ -4,6 +4,46 @@ let config = require('./config.json')
 
 const { Schema } = mongoose;
 
+
+/***
+ * Author: Luke.Nguyen
+ * Company: sotatek
+ * Country: Vietnam
+ * PhoneNumber: +84 386743836
+ * 
+ * Patch date: 04/05/2021
+ * 
+ * Newly addded schema:
+ * 
+ * TokenHolder - Schema for checking token balance of each address that has the token in it
+ * 
+ * 
+ * Newly updated schema:
+ * 
+ *
+ * 
+ * 
+ * **/
+const TokenHolder = new Schema(
+  {
+    'address': { type: String, lowercase: true},
+    'tokenContract': {type: String, lowercase: true},
+    'tokenName': {type: String},
+    'symbol': {type: String},
+    'balance': {type: String},
+  }, { collection: 'TokenHolder' },
+);
+TokenHolder.index({ "address": 1, "tokenContract": 1} , {unique: true});
+TokenHolder.index({ "address": 1})
+TokenHolder.index({"tokenContract": 1})
+mongoose.model('TokenHolder', TokenHolder);
+module.exports.TokenHolder = mongoose.model('TokenHolder');
+
+/**
+ * End patching
+ * 
+ * **/
+
 const Block = new Schema(
   {
     'number': { type: Number, index: { unique: true } },

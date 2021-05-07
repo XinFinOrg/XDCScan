@@ -34,7 +34,8 @@ const getQuote = async () => {
         }
         // console.log(URL)
         new Market(quoteObject).save( ( err, market, count ) => {
-            // console.log(quoteUSD.data.XDCE.quote.USD.percent_change_24h)
+            console.log('Data get from market');
+            console.log(quoteObject)
             if ( typeof err !== 'undefined' && err ) {
                process.exit(9);
             } else {
