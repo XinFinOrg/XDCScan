@@ -239,18 +239,18 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
               // Token transfer transaction
               transfer.from = txData.from;
-              transfer.to = `xdc${txData.input.substring(34, 74)}`;
-              transfer.value = Number(`0x${txData.input.substring(74)}`);
+              transfer.to = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
+              transfer.value = Number(`0x${txData.input.substring(74).toLowerCase()}`);
             } else {
               // transferFrom
-              transfer.from = `xdc${txData.input.substring(34, 74)}`;
-              transfer.to = `xdc${txData.input.substring(74, 114)}`;
+              transfer.from = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
+              transfer.to = `xdc${txData.input.substring(74, 114).toLowerCase()}`;
               transfer.value = Number(`0x${txData.input.substring(114)}`);
             }
             transfer.method = ERC20_METHOD_DIC[methodCode];
             transfer.hash = txData.hash;
             transfer.blockNumber = blockData.number;
-            transfer.contract = txData.to;
+            transfer.contract = txData.to.toLowerCase();
             transfer.timestamp = blockData.timestamp;
 
             /***

@@ -58,7 +58,17 @@ async function updateTokenHolder(item, config, i, len, j) {
     item.tokenName =await contract_object.methods.name().call();
     item.symbol =await contract_object.methods.symbol().call();
     item.balance = (await contract_object.methods.balanceOf(item.address).call()).toString();
+
     
+
+    if(item.tokenContract.localeCompare("xdc63e879f0312256d550821c493e9d11915643afc8") == 0){
+      
+      console.log("in herer");
+      console.log(item);
+      console.log("in herer2");
+      process.exit(1);
+    }
+      
     TokenHolder.update(
       { address: item.address, tokenContract: item.tokenContract},
       { $setOnInsert: item },
@@ -160,8 +170,6 @@ data.exec(async function (err, docs) {
                 }
                 
             }
-
-            // process.exit(1);
 
             
         }
