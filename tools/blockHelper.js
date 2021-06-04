@@ -191,9 +191,9 @@ try {
     }
 }
 
-console.log('Connecting ' + config.nodeAddr + ':' + config.gethPort + '...');
+console.log('Connecting ' + config.RPCURL + '...');
 
-var web3 = new Web3(new Web3.providers.HttpProvider('http://' + config.nodeAddr + ':' + config.gethPort.toString()));
+var web3 = new Web3(new Web3.providers.HttpProvider(config.RPCURL));
 
 // set the default blocks if it's not provided
 if (!('blocks' in config) || !(Array.isArray(config.blocks))) {

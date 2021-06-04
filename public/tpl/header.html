@@ -21,6 +21,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/img/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">  
+    
 <!-- BEGIN HEADER TOP -->
 <div class="page-header-top">
     <div class="container">
@@ -72,8 +73,8 @@
                             <a id="contractsMegaMenu" class="nav-link header_nav-link header_nav-link-toggle" href="javascript:;" aria-haspopup="true" aria-expanded="false" aria-labelledby="contractsSubMenu">Contracts</a>
 
                             <ul id="contractsSubMenu" class="hs-sub-menu header_sub-menu header_sub-menu-spacer" aria-labelledby="contractsMegaMenu" style="min-width: 230px;">
-                                <li><a href="/tokenlist" class="nav-link header_sub-menu-nav-link">Tokens</a></li>
-                                <li><a href="/contractlist" class="nav-link header_sub-menu-nav-link">Contracts</a></li>
+                                <li><a href="/tokenlist/" class="nav-link header_sub-menu-nav-link">Tokens</a></li>
+                                <li><a href="/contractlist/" class="nav-link header_sub-menu-nav-link">Contracts</a></li>
                                 <li><a href="/verifycontract/" class="nav-link header_sub-menu-nav-link">Verify Contract</a></li>
 
                             </ul>
@@ -112,6 +113,14 @@
 										</ul>
 									</div>
 									<div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
+										<span class="header_sub-menu-title">Supported Wallets</span>
+										<ul class="header_sub-menu-nav-group mb-3">
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://guarda.com/" target="_blank"><i class="fa fa-angle-right small mr-1"></i>Guarda Wallet</a></li>
+											<li><a class="nav-link header_sub-menu-nav-link" href="https://dcentwallet.com/MobileApp" target="_blank"><i class="fa fa-angle-right small mr-1"></i>D'CENT Wallet</a></li>
+                                            <li><a class="nav-link header_sub-menu-nav-link" href="https://dcentwallet.com/products/BiometricWallet" target="_blank"><i class="fa fa-angle-right small mr-1"></i>D'CENT Hardware Wallet</a></li>
+										</ul>
+									</div>
+                                    <div class="col-sm-6 col-md-4 col-lg mb-1 mb-lg-0">
 										<span class="header_sub-menu-title">More</span>
 										<ul class="header_sub-menu-nav-group mb-3">
 											<li><a class="nav-link header_sub-menu-nav-link" href="https://chrome.google.com/webstore/detail/xinpay/bocpokimicclpaiekenaeelehdjllofo" target="_blank"><i class="fa fa-angle-right small mr-1"></i>XinPay</a></li>
@@ -194,17 +203,78 @@
                                 </div>
                         	</div>
                         </div>
-                        <!-- <p class="avertisement text-white-70 mb-0" style="min-height:22px">Add liquidity to the XDCE pool with an equal value of XDCE and BNT and receive <a href="https://app.bancor.network/eth/pool/0xd1BB51fECC950c7b1e4197D8d13A1d2A60795D2C" target="_blank"><b>XDCEBNT Pool Tokens (ERC20)</b></a></p> -->
+                        <p class="avertisement text-white-70 mb-0" style="min-height:22px"><b>TradeFinex:</b> A Blockchain Network for Trade Finance Originators to Distribute Trade Assets. <a href="https://tradefinex.org/" target="_blank"><b>Join The Network</b></a></p>
                     </div>
                     <div class="col-12 col-lg-5">
-                        <div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">
-                            <a class="d-inline-block d-sm-none position-relative text-dark" target="_blank" href="https://mycontract.co/">
-                            <img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.png" alt="Ads"></a>
-                            <a class="d-none d-sm-inline-block d-lg-none position-relative text-dark" target="_blank" href="https://mycontract.co/">
-                            <img class="img-fluid rounded-7" src="/img/extraimg/mycontract_730X90.png" alt="Ads"></a>
-                            <a class="d-none d-lg-inline-block position-relative text-dark" target="_blank" href="https://mycontract.co/">
-                            <img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.png" alt="Ads"></a>
+                        <!--<div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">
+                            <a class="d-inline-block d-sm-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            	<img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip">
+                            </a>
+                            <a class="d-none d-sm-inline-block d-lg-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            	<img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_730X90.jpg" alt="XcelTrip">
+                            </a>
+                            <a class="d-none d-lg-inline-block position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            	<img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip">
+                            </a>
+                        </div>-->
+                        
+                        
+                        <div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">                        
+                            <div id="slider">
+                                <figure>
+                                    <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                    <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                    <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                    <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                    <a href="https://blockdegree.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/blockdegree_321x101.jpg" alt="Blockcdegree"></a>
+                                    <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                </figure>
+                            </div>
+                            
+                            <!--<div id="imageSliderTop">
+                                <ul>
+                                    <li><a href="https://blockdegree.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/blockdegree_321x101.jpg" alt="Blockdegree"></a></li>
+                                    <li><a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a></li>
+                                    <li><a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a></li>
+                                    <li><a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a></li>
+                                    <li><a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a></li>
+                                </ul>
+                            </div>
+                        </div>-->
+                        
+                        <!--<div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">                        
+                        <div id="slider" class="rounded-7">                        
+                            <figure>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                            </figure>
                         </div>
+                        </div>-->
+
+                        <!-- splide 
+                        <div class="extraimg-banners d-none d-lg-block text-center pl-lg-4 pl-xll-5">                            
+                            <div id="splide">    
+                                <div class="splide__track" id="splide-track">
+                                    <ul class="splide__list">
+                                        <li class="splide__slide">
+                                            <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
+                                        </li>                      
+                                        <li class="splide__slide">
+                                            <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                        </li>                            
+                                        <li class="splide__slide">
+                                            <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                        </li>
+                                        <li class="splide__slide">
+                                            <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div><!-- /.splide -->
                     </div>
                 </div>
             </div>
@@ -216,9 +286,6 @@
     <!--</div>-->
 </div>
 <!-- END HEADER INNER -->
-
-
-
 
 
 
@@ -271,3 +338,6 @@ function (t) {
    });
 //});
 </script>
+
+
+

@@ -19,6 +19,7 @@ var getsourcecode = "getsourcecode";
 
 var getstatus = "getstatus";
 var gettxreceiptstatus = "gettxreceiptstatus";
+var gettxdetails = "gettxdetails";
 
 var getblockreward = "getblockreward";
 
@@ -33,7 +34,7 @@ var eth_getBlockTransactionCountByNumber = "eth_getBlockTransactionCountByNumber
 var eth_getTransactionByHash = "eth_getTransactionByHash";
 var eth_getTransactionByBlockNumberAndIndex = "eth_getTransactionByBlockNumberAndIndex";
 var eth_getTransactionCount = "eth_getTransactionCount";
-var eth_sendRawTransaction = "eth_sendRawTransaction";
+var eth_sendRawTransaction = "eth_sendSignedTransaction";
 var eth_getTransactionReceipt = "eth_getTransactionReceipt";
 var eth_call = "eth_call";
 var eth_getCode = "eth_getCode";
@@ -88,7 +89,7 @@ module.exports = async function(req, res){
           break;
         case balance:
           address = requestParam(req, "address");
-          sendData(res, respData, eth.getBalance(address).toString());
+          sendData(res, respData, await eth.getBalance(address));
           break;
         case balancemulti:
           addresses = requestParam(req, "address");
@@ -96,9 +97,9 @@ module.exports = async function(req, res){
           if(addresses.length>20)
             addresses.length = 20;
           var arr = [];
-          for(var i=0; i<addresses; i++){
+          for(var i=0; i<addresses.length; i++){
             balanceObj = {"account":addresses[i],"balance":0};
-            balanceObj.balance = eth.getBalance(addresses[i]).toString();
+            balanceObj.balance = await eth.getBalance(addresses[i]);
             arr.push(balanceObj);
           }
           sendData(res, respData, arr);
@@ -184,7 +185,7 @@ module.exports = async function(req, res){
           break;
         case getstatus:
           txhash = requestParam(req, "txhash");
-          txr = eth.getTransactionReceipt(txhash);
+          txr = await eth.getTransactionReceipt(txhash);
           if(txr){
             var data;
             if(txr.status == "0x0")
@@ -198,13 +199,23 @@ module.exports = async function(req, res){
           break;
         case gettxreceiptstatus:
           txhash = requestParam(req, "txhash");
-          txr = eth.getTransactionReceipt(txhash);
+          txr = await eth.getTransactionReceipt(txhash);
           if(txr){
             var data;
-            if(txr.status == "0x0")
-              data = {"status":"0"};
+            if(txr.status)
+              data = txr;
             else
               data = {"isError":"1"};
+            sendData(res, respData, data);
+          }else{
+            responseFail(res, respData, "not exist");
+          }
+          break;
+        case gettxdetails:
+          txhash = requestParam(req, "txhash");
+          txr = await eth.getTransaction(txhash);
+          if(txr){
+            var data = txr;
             sendData(res, respData, data);
           }else{
             responseFail(res, respData, "not exist");
@@ -216,7 +227,7 @@ module.exports = async function(req, res){
             respData.result = "";
             responseFail(res, respData, "not exist");
           }else{
-            blockData = eth.getBlock(blockno);
+            blockData = await eth.getBlock(blockno);
             if(blockData){
               var resultObj = {"blockReward":0.3375, "blockNumber":blockData.number, "timeStamp":blockData.timestamp ,"blockMiner":blockData.miner};
               sendData(res, respData, resultObj);
@@ -286,52 +297,52 @@ module.exports = async function(req, res){
               blockNumber = totalBlockNum;
             else
               blockNumber = Number(blockNumber);
-            sendData(res, respData, eth.getBlock(blockNumber));
+            sendData(res, respData, await eth.getBlock(blockNumber));
             break;
           case eth_getBlockTransactionCountByNumber:
             blockNumber = requestParam(req, "blockNumber");
-            sendData(res, respData, eth.getBlockTransactionCount(blockNumber));
+            sendData(res, respData, await eth.getBlockTransactionCount(blockNumber));
             break;
           case eth_getTransactionByHash:
             txhash = requestParam(req, "txhash");
-            sendData(res, respData, eth.getTransaction(txhash));
+            sendData(res, respData, await eth.getTransaction(txhash));
             break;
           case eth_getTransactionByBlockNumberAndIndex:
             blockNumber = requestParam(req, "blockNumber");
             index = requestParam(req, "index");
-            sendData(res, respData, eth.getTransactionFromBlock(blockNumber, index));
+            sendData(res, respData, await eth.getTransactionFromBlock(blockNumber, index));
             break;
           case eth_getTransactionCount:
             address = requestParam(req, "address");
-            sendData(res, respData, eth.getTransactionCount(address));
+            sendData(res, respData, await eth.getTransactionCount(address));
             break;
           case eth_sendRawTransaction:
             hex = requestParam(req, "hex");
-            sendData(res, respData, eth.sendRawTransaction(hex));
+            sendData(res, respData, await eth.sendSignedTransaction(hex));
             break;
           case eth_getTransactionReceipt:
             txhash = requestParam(req, "txhash");
-            sendData(res, respData, eth.getTransactionReceipt(txhash));
+            sendData(res, respData, await eth.getTransactionReceipt(txhash));
             break;
           case eth_call:
             to = requestParam(req, "to");
             data = requestParam(req, "data");
             blockNumber = requestParam(req, "blockNumber");
-            sendData(res, respData, eth.call({"to" : to, "data" : data}));
+            sendData(res, respData, await eth.call({"to" : to, "data" : data}));
             break;
           case eth_getCode:
             address = requestParam(req, "address");
             blockNumber = requestParam(req, "blockNumber");
-            sendData(res, respData, eth.getCode(address, blockNumber));
+            sendData(res, respData, await eth.getCode(address, blockNumber));
             break;
           case eth_getStorageAt:
             address = requestParam(req, "address");
             position = requestParam(req, "position");
             blockNumber = requestParam(req, "blockNumber");
-            sendData(res, respData, eth.getStorageAt(address, position, blockNumber));
+            sendData(res, respData, await eth.getStorageAt(address, position, blockNumber));
             break;
           case eth_gasPrice:
-            sendData(res, respData, eth.gasPrice);
+            sendData(res, respData, await eth.gasPrice);
             break;
           case eth_estimateGas:
             var obj = {};
@@ -345,7 +356,7 @@ module.exports = async function(req, res){
             if(data)
               obj.data = data;
 
-            sendData(res, respData, eth.estimateGas(obj));
+            sendData(res, respData, await eth.estimateGas(obj));
             break;
           
           case tokensupply:
@@ -441,14 +452,14 @@ function responseFail(res, respData, msg){
 
 module.exports.getTotalXDC = async function(req, res){
   totalBlockNum = await eth.getBlockNumber();
-  respData = (37500000000+5.55*totalBlockNum).toFixed();
+  respData = (37500000000+5.55*totalBlockNum).toFixed(8);
   res.write(String(respData));
   res.end();
 }
 
 module.exports.getCirculatingSupply= async function(req, res){
   totalBlockNum = await eth.getBlockNumber();
-  respData = (12100000000+5.55*totalBlockNum).toFixed();
+  respData = (12100000000+5.55*totalBlockNum).toFixed(8);
   res.write(String(respData));
   res.end();
 }

@@ -108,6 +108,15 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
       $scope.internalDatas = resp.data;
     });
   }
+  $scope.tokenTransfrs = {transfervalue:0};
+  $scope.internalTransaction(0);
+  $http({
+    method: 'POST',
+    url: '/transactionRelay',
+    data: {"action": "countTX", "address": address, 'fromAccount':$scope.acc}
+  }).then(function(resp) {
+    $scope.tokenTransfrs = resp.data;
+  });
   
   // $scope.transactionPage = 0;
   // $scope.contractTransaction=function(transactionPage) {

@@ -18,6 +18,9 @@
     <!-- skin -->
     <link rel="stylesheet" href="/css/default.css">
     <link rel="icon" type="image/png" href="/favicon.ico">
+	
+	<link href="/css/splide/splide.min.css" rel="stylesheet" type="text/css" />
+	
   </head>
    
   <body>
@@ -263,5 +266,31 @@ $("#tx_btn").click(function getresponse(e){
   <script src="/js/jquery.appear.js"></script>
   <script src="/js/validate.js"></script>
   <script src="/js/main.js"></script>
+  
+  
+  
+  
+  
+  
+<!-- plidejs -->
+<script src="/css/splide/splide.min.js"></script>
+<script>
+"use strict";
+document.addEventListener('DOMContentLoaded', function () {
+  var splide = new Splide('#splide', {
+    type         : 'fade',
+	rewind       : true,
+    perPage      : 1,
+    autoplay     : true,
+    interval     : 5000,
+    pauseOnHover : true,
+    pauseOnFocus : true,
+    resetProgress: false
+  }).mount();
+});
+</script>
+<!-- plidejs -->
+
+
   </body>
 </html>

@@ -87,14 +87,6 @@ module.exports = function (app) {
 
   app.get('/totalXDCSupply', getTotalXDCSupply);
 
-  //masternode routes
-  const masterNodeController = require('../controller/masterNodeController');
-  // var masternodeRouter = require('./masterNode');
-  app.get('/masternode/list', masterNodeController.list);
-  app.get('/masternode/savemndetails', masterNodeController.saveMNDetails);
-  app.get('/masternode/updatemndetails', masterNodeController.updateMNDetails);
-  app.post('/masternode/rewards', masterNodeController.rewards);
-
   //app.post('/daorelay', DAO);
   app.post('/addressListData', addressListData);
   app.get('/addressListData', addressListData);
@@ -516,8 +508,11 @@ var sendBlocks = async function (lim, res) {
 
   var blockHeight = await web3relay.eth.getBlockNumber();
   const latestPrice = await Market.findOne().sort({ timestamp: -1 })
+  let quoteINR = 0;
   if (latestPrice) {
     quoteUSD = latestPrice.quoteUSD;
+    quoteINR = latestPrice.quoteINR;
+    quoteEUR = latestPrice.quoteEUR;
 
   }
 
@@ -558,6 +553,8 @@ var sendBlocks = async function (lim, res) {
           totalTXs += docs[i].txs.length;
       }
       result.quoteUSD = quoteUSD;
+      result.quoteINR = quoteINR;
+      result.quoteEUR = quoteEUR;
       result.accountsCount = accountsCount;
       result.transactionCount = transactionCount;
       result.percent_change_24h = latestPrice.percent_change_24h;

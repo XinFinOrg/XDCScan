@@ -1188,7 +1188,7 @@ small[text-size-1] {
 		box-shadow: 0 8px 20px rgba(52, 152, 219, .075)
 	}
 	.navbar-expand-md .header_navbar-nav .header_sub-menu-nav-link {
-		padding-right: 1.75rem;
+		padding-right: 0.75rem;
 		padding-left: 1.75rem
 	}
 	.navbar-expand-md .header_navbar-nav .header_sub-menu-nav-group .header_sub-menu-nav-link {

@@ -4,6 +4,7 @@ angular.module('BlocksApp').controller('TokenListController', function($statePar
         App.initAjax();
     });
     $scope.settings = $rootScope.setup;
+    $scope.searchTokenInput = $stateParams.token ? $stateParams.token : undefined;
 
     var tokenList = '/' + ($scope.settings.tokenList || 'tokens.json');
     $http.get(tokenList)
@@ -21,7 +22,7 @@ angular.module('BlocksApp').controller('TokenListController', function($statePar
         $http({
           method: 'POST',
           url: '/tokenListData',
-          data: {"ERC": 0, "page":page, "totalPage":totalPage}
+          data: {"ERC": 0, "page":page, "totalPage":totalPage,searchStr:$scope.searchTokenInput}
         }).then(function(resp) {
           $scope.page = resp.data.page;
           var pages = [];

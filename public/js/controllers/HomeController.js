@@ -31,12 +31,18 @@ angular.module('BlocksApp').controller('HomeController', function($rootScope, $s
       $scope.blockTime = resp.data.blockTime;
       $scope.TPS = resp.data.TPS;
       $scope.quoteUSD = resp.data.quoteUSD;
+      $scope.quoteINR = resp.data.quoteINR;
+      $scope.quoteEUR = resp.data.quoteEUR;
       $scope.todayDailyRewards = resp.data.todayRewards;
       $scope.totalXDC = resp.data.totalXDCSupply;
       $scope.totalNodes = resp.data.totalMNCount;
       $scope.XDCCirculatingSupply = resp.data.XDCCirculatingSupply;
       $scope.totalXDCinUSD = (resp.data.totalXDCSupply * parseFloat($scope.quoteUSD)).toFixed();
+      $scope.totalXDCinINR = (resp.data.totalXDCSupply * parseFloat($scope.quoteINR)).toFixed();
+      $scope.totalXDCinEUR = (resp.data.totalXDCSupply * parseFloat($scope.quoteEUR)).toFixed();
       $scope.totalXDCXDCCirculatingSupplyinUSD = (resp.data.XDCCirculatingSupply * parseFloat($scope.quoteUSD)).toFixed();
+      $scope.totalXDCXDCCirculatingSupplyinINR = (resp.data.XDCCirculatingSupply * parseFloat($scope.quoteINR)).toFixed();
+      $scope.totalXDCXDCCirculatingSupplyinEUR = (resp.data.XDCCirculatingSupply * parseFloat($scope.quoteEUR)).toFixed();
       $scope.accountsCount = resp.data.accountsCount;
       $scope.transactionCount = resp.data.transactionCount;
       $scope.totalBurntValue = resp.data.totalXDCBurntValue.toFixed();
@@ -175,6 +181,8 @@ return {
         scope.stats.activeAddresses = res.data.activeAddresses;
         scope.stats.cloTransferredAmount = res.data.cloTransferredAmount;
         scope.stats.quoteUSD = res.data.quoteUSD;
+        scope.stats.quoteINR = res.data.quoteINR;
+        scope.stats.quoteEUR = res.data.quoteEUR;
         //console.log(res);
 });
     }

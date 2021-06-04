@@ -8,7 +8,7 @@
 
                   <div class="col-lg-12 safari-float-left">
                       <div class="block-header d-flex justify-content-between align-items-center">
-                          <h3 class="blockDetails-header-title text-break text-center text-md-left"><i class="far mr-1"><img src="img/tokens/1.png"></i> Token <span class="text-secondary">  {{ token.name }}  ({{ token.symbol }})</span></h3>
+                          <h3 class="blockDetails-header-title text-break text-center text-md-left"><i class="far mr-1"></i> Token <span class="text-secondary">  {{ token.name }}  ({{ token.symbol }})</span></h3>
                       </div>
                   </div>
                   
@@ -38,12 +38,12 @@
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Total Supply:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.totalSupply }} {{ token.symbol }}</div></div>
                                       </div>
-                                      <hr class="hr-space">
+                                      <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Circulating Supply:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.circulatingSupply }} {{ token.symbol }}</div></div>
-                                      </div>
-                                      <hr class="hr-space">
+                                      </div> -->
+                                      <!-- <hr class="hr-space"> -->
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Holders:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenHolders }} Address</div></div>
@@ -51,14 +51,14 @@
                                       <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Transfers:</div>
-                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenTransfrs }} Txns</div></div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ tokenTransfrs.transfervalue }}</div></div>
                                       </div>
-                                      <hr class="hr-space">
+                                      <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Price:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
-                                      </div>
-                                      <hr class="hr-space">
+                                      </div> -->
+                                      <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Market Cap/Fully MC:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenMarketCap }} / {{ token.tokenFullyMc }}</div></div>
@@ -67,7 +67,7 @@
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Reputation:</div>
                                           <div class="col-md-8 col-sm-8"><div>OK</div></div>
-                                      </div>
+                                      </div> -->
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="information-header mt5 fw6">More</div>                                      
@@ -75,17 +75,17 @@
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Contract:</div>
                                   	      <div class="col-md-8 col-sm-8"><div class="text-truncate d-block"><a href="/addr/{{token.address}}">{{token.address }}</a></div></div>
                                       </div>
-                                      <hr class="hr-space">                                      
-                                      <div class="row align-items-center">
+                                      <!-- <hr class="hr-space">                                       -->
+                                      <!-- <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Token ID:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.ID }}</div></div>
-                                      </div>
-                                      <hr class="hr-space">
-                                      <div class="row align-items-center">
+                                      </div> -->
+                                      <!-- <hr class="hr-space"> -->
+                                      <!-- <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Precision:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrecision }}</div></div>
-                                      </div>
-                                      <hr class="hr-space">
+                                      </div> -->
+                                      <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Issuing Time:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{token.datetime | date:'yyyy-MM-dd HH:mm:ss Z' }}</div></div>
@@ -104,7 +104,7 @@
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">White Paper:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
-                                      </div>
+                                      </div> -->
                                       <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Social Profiles:</div>
@@ -213,9 +213,9 @@
                           <div class="card-header d-flex justify-content-between align-items-center p-0">
                               <!-- Nav tabs -->
                               <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
-                                  <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link active" href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
-                                  <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders" role="tab" data-toggle="tab">Token Holders</a></li>
-                                  <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link" href="#internalTransactions" role="tab" data-toggle="tab">Contract Transactions</a></li>
+                                <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link active" href="#internalTransactions" role="tab" data-toggle="tab">Contract Transactions</a></li>
+                                  <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link" href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
+                                  <!-- <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders" role="tab" data-toggle="tab">Token Holders</a></li> -->
                                   <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab" data-toggle="tab">Contract Source</a></li>
                               </ul>
                               <!-- Nav tabs -->
@@ -224,7 +224,7 @@
                           <div id="block-overview" class="card-body">
 
                               <div class="tab-content">
-                                  <div class="tab-pane fade active show" id="tokenTransfers">
+                                  <div class="tab-pane fade" id="tokenTransfers">
                                       <transfer-tokens>
                                       <div class="table-responsive">
                                   <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
@@ -282,7 +282,7 @@
                             </div>
                                   
 
-                                  <div class="tab-pane fade" id="internalTransactions">
+                                  <div class="tab-pane fade active show" id="internalTransactions">
                                       <div class="table-responsive">
                                   <table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
                                       <thead>

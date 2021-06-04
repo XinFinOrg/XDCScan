@@ -4,10 +4,12 @@ var Contract = mongoose.model('Contract');
 var pageSize = 10;
 var page = 0;
 var totalPage = 0;
+var searchStr = '';
 var resultData={"totalPage":0, "list":null, "page":0};
 
 module.exports = function(req, res){
   page = req.body.page;
+  searchStr = req.body.searchStr || '';
   if(isNaN(page) || page<0)
     page = 0;
   
@@ -45,7 +47,21 @@ module.exports = function(req, res){
 };
 
 function getList(res){
-  contractFind = Contract.find({ERC:{$gt:0}}, "tokenName address").skip(page*pageSize).limit(pageSize).lean(true);
+    if (searchStr) {
+        searchStr = new RegExp(searchStr, 'i')
+        var searchCondition = {
+            $or: [
+                { 'symbol': searchStr },
+                { 'tokenName': searchStr }
+            ]
+        };
+    } else {
+        var searchCondition = {};
+    }
+  contractFind = Contract.find({$and: [
+    {ERC:{$gt:0}},
+    searchCondition
+    ]}, "tokenName address sourceCode").skip(page*pageSize).limit(pageSize).sort({sourceCode:-1}).lean(true);
   contractFind.exec(function (err, docs) {
     if(err){
       console.log("tokenlist getList err: ", err);
