@@ -1,7 +1,7 @@
 {
     "nodeAddr":     "ws.apothem.network",
     "gethPort":     8545,
-    "WSURL": "wss://ws.apothem.network",
+    "WSURL": "",
     "RPCURL": "https://rpc.apothem.network",
     "epoch":900,
     "fRewards":500,
@@ -17,7 +17,7 @@
     "patchBlocks":  100,
     "bulkSize":     100,
     "CMC_API_KEY":  "",
-    "wss":          "wss://ws.apothem.network",
+    "wss":          "",
     "settings": {
         "useRichList": true,
         "useFiat": true,

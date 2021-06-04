@@ -24,6 +24,8 @@ const Transaction = mongoose.model('Transaction');
 const Account = mongoose.model('Account');
 const Contract = mongoose.model('Contract');
 const TokenTransfer = mongoose.model('TokenTransfer');
+const TokenHolder = mongoose.model('TokenHolder');
+
 
 const ERC20_METHOD_DIC = { '0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom' };
 
@@ -53,7 +55,7 @@ try {
 }
 
 console.log(`Connecting ${config.nodeAddr}:${config.wsPort}...`);
-// Sets address for RPC WEB3 to connect to, usually your node IP address defaults ot localhost
+// Sets address for RPC WEB3 to connect to, usually your node IP address defaults or localhost
 const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 
 const normalizeTX = async (txData, receipt, blockData) => {
@@ -133,6 +135,15 @@ var writeBlockToDB = function (config, blockData, flush) {
   Break transactions out of blocks and write to DB
 **/
 const writeTransactionsToDB = async (config, blockData, flush) => {
+  // console.log(blockData)
+  // console.log("------------------")
+  // console.log("------------------")
+  // console.log("------------------")
+  // console.log("------------------")
+  // console.log("------------------")
+  // console.log("------------------")
+  // console.log("------------------")
+
   const self = writeTransactionsToDB;
   if (!self.bulkOps) {
     self.bulkOps = [];
@@ -210,28 +221,114 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             },
           );
         } else {
+          //'0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom'
           // Internal transaction  . write to doc of InternalTx
           const transfer = {
             'hash': '', 'blockNumber': 0, 'from': '', 'to': '', 'contract': '', 'value': 0, 'timestamp': 0,
           };
           const methodCode = txData.input.substr(0, 10);
           if (ERC20_METHOD_DIC[methodCode] === 'transfer' || ERC20_METHOD_DIC[methodCode] === 'transferFrom') {
+            console.log(blockData)
+            console.log("------------------")
+            console.log("------------------")
+            console.log("------------------")
+            console.log("------------------")
+            console.log("------------------")
+            console.log("------------------")
+            console.log("------------------")
             if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
               // Token transfer transaction
               transfer.from = txData.from;
-              transfer.to = `xdc${txData.input.substring(34, 74)}`;
-              transfer.value = Number(`0x${txData.input.substring(74)}`);
+              transfer.to = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
+              transfer.value = Number(`0x${txData.input.substring(74).toLowerCase()}`);
             } else {
               // transferFrom
-              transfer.from = `xdc${txData.input.substring(34, 74)}`;
-              transfer.to = `xdc${txData.input.substring(74, 114)}`;
+              transfer.from = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
+              transfer.to = `xdc${txData.input.substring(74, 114).toLowerCase()}`;
               transfer.value = Number(`0x${txData.input.substring(114)}`);
             }
             transfer.method = ERC20_METHOD_DIC[methodCode];
             transfer.hash = txData.hash;
             transfer.blockNumber = blockData.number;
-            transfer.contract = txData.to;
+            transfer.contract = txData.to.toLowerCase();
             transfer.timestamp = blockData.timestamp;
+
+            /***
+             * Author: Luke.Nguyen
+             * Company: sotatek
+             * Country: Vietnam
+             * PhoneNumber: +84 386743836
+             * 
+             * Patch date: 04/05/2021
+             * 
+             * Newly updated code
+             * 
+             *
+             * 
+             * 
+             * **/
+
+            const insertdata = {
+                "address": "",
+                "tokenContract": "",
+                "tokenName": "",
+                "symbol": "",
+                "balance": 0
+            };
+            
+            const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
+            const contract_object = new web3.eth.Contract(ERC20ABI, transfer.contract);
+            insertdata.tokenName = await contract_object.methods.name().call();
+            insertdata.symbol = await contract_object.methods.symbol().call();
+            const balanceFrom = Number(await contract_object.methods.balanceOf(transfer.from).call());
+            const balanceTo = Number(await contract_object.methods.balanceOf(transfer.to).call());
+            
+            insertdata.tokenContract = transfer.contract.toLowerCase();
+            insertdata.address = transfer.from.toLowerCase();
+            insertdata.balance = balanceFrom;
+
+            TokenHolder.update(
+              { address: insertdata.address, tokenContract: insertdata.tokenContract},
+              { $setOnInsert: insertdata },
+              { upsert: true },
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                }
+                else{
+                  console.log(data,"asasas",insertdata)
+                }
+              },
+            );
+
+            insertdata.address = transfer.to;
+            insertdata.balance = balanceTo;
+            TokenHolder.update(
+              { address: insertdata.address, tokenContract: insertdata.tokenContract},
+              { $setOnInsert: insertdata },
+              { upsert: true },
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                }
+                else{
+                  console.log(data,"asasas",insertdata)
+                }
+              },
+            );
+
+            /***
+             * Author: Luke.Nguyen
+             * Company: sotatek
+             * Country: Vietnam
+             * PhoneNumber: +84 386743836
+             * 
+             * End updating code
+             * 
+             *
+             * 
+             * 
+             * **/
             // Write transfer transaction into db
             TokenTransfer.update(
               { hash: transfer.hash },
