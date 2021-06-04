@@ -352,9 +352,6 @@
                     <a class="list-group-item list-group-item-action" id="list-SC-list" data-toggle="list" href="#stats" role="tab">
                         <h5>Stats</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-SC-list" data-toggle="list" href="#marketprice" role="tab">
-                        <h5>Market Price</h5>
-                    </a>
                 </div>
             </div>
             <div class="col-lg-9 col-md-8">
@@ -595,62 +592,9 @@
                             <h5 class="mt-0 mb-0">Token Info</h5>
                         </div>
                         <div class="card-body">
-
-                            <div class="mb-4">
-                                <p class="mb-2"><strong>Get ERC20-Token info by ContractAddress</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI??module=stats&action=tokeninfo&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI??module=stats&action=tokeninfo&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
-                            
-                                <pre class="text-break-all">
-                                    <p>Output example:</p>
-                                    <p>{"status":1,"message":"OK","result":{"_id":"6086a5b8897f6bc3e3ba9aee","address":"xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f","ERC":2,"blockNumber":12596201,"creationTransaction":"0xafadddc207fc08e13a9d96e6da1462ac52297c35e570c5ba2db0057eefd6c0ab","decimals":18,"owner":"xdc7F158c293701dC6C3097E6A9A547FcD07701A508","symbol":"DYC","tokenName":"DYCLUDE","totalSupply":1e+24}}</p>
-                                </pre>
-                            
-                            </div>
-
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get ERC20-Token TotalSupply by ContractAddress</strong></p>
                                 <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
-                                <pre class="text-break-all">
-                                    <p>Output example:</p>
-                                    <p>{"status":1,"message":"OK","result":1e+24}</p>
-                                </pre>
-                            
-                            </div>
-
-                            <div class="mb-4">
-                                <p class="mb-2"><strong>Get ERC20-Token total holders by ContractAddress</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=total_tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=total_tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
-                            
-                                <pre class="text-break-all">
-                                    <p>Output example:</p>
-                                    <p>{"status":1,"message":"OK","result":5}</p>
-                                </pre>
-                            
-                            </div>
-
-                            <div class="mb-4">
-                                <p class="mb-2"><strong>Get ERC20-Token holders with limit or without limit</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&limit=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&limit=10&apikey=YourApiKeyToken</a></pre>
-                                
-                                <pre class="text-break-all">
-
-                                    <p>Output example:</p>
-                                    <p>{"status":1,"message":"OK","result":[{"_id":"6094c0e57d2c7f7d83fc2d47","address":"xdc49114597ef077b8ddfa8c2be2dd35a1fe5c586c3","balance":"966000000000000000000"},{"_id":"6094c0e67d2c7f7d83fc2d78","address":"xdc14004d5b7b32c7693e4be353b60d7fccb4669ea2","balance":"497044000000000000000000"}]}</p>
-    
-                                </pre>
-                            
-                            </div>
-
-                            <div class="mb-4">
-                                <p class="mb-2"><strong>Get ERC20-Token transfers with limit or without limit</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokentransfers&contractaddress=xdcd18fF933268b05eb7ff6107e9DC169cBF783632c&apikey=YourApiKeyToken&limit=2">{{baseUrl}}/publicAPI?module=stats&action=tokentransfers&contractaddress=xdcd18fF933268b05eb7ff6107e9DC169cBF783632c&apikey=YourApiKeyToken&limit=2</a></pre>
-                                
-                                <pre class="text-break-all">
-
-                                    <p>Output example:</p>
-                                    <p>{"status":1,"message":"OK","result":[{"_id":"60926942acec5ba90c6d59cd","hash":"0xdb2ee6294c103174b6148f51ec0169866ab37622167976573b2b861db2356e56","__v":0,"blockNumber":18284748,"contract":"xdcd18fF933268b05Eb7ff6107e9DC169cBF783632c","from":"xdc49114597EF077B8ddFA8c2Be2dD35a1fE5C586C3","method":"transfer","timestamp":1620207937,"to":"xdc14004d5b7b32c7693e4be353b60d7fccb4669ea2","value":"0"},{"_id":"609268dcacec5ba90c6d318a","hash":"0xcd5aec0b60cc293492f515ba9ab2108057bb4a8c840f8b8fd75db88b7a21f042","__v":0,"blockNumber":18284701,"contract":"xdcd18fF933268b05Eb7ff6107e9DC169cBF783632c","from":"xdc49114597EF077B8ddFA8c2Be2dD35a1fE5C586C3","method":"transfer","timestamp":1620207835,"to":"xdc14004d5b7b32c7693e4be353b60d7fccb4669ea2","value":"1000000000000000000"}]}</p>    
-                                </pre>
-                            
                             </div>
                         </div>
                     </div>
@@ -664,20 +608,6 @@
                                 <p class="mb-2"><strong>Get Total Supply of XDC </strong></p>
                                 <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken</a></pre>
                                 <p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card tab-pane fade show" id="marketprice" role="tabpanel" aria-labelledby="list-marketprice-list">
-                        <div class="card-header">
-                            <h5 class="mt-0 mb-0">Market Prices</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-4">
-                                <p class="mb-2"><strong>Get the current market price of XDC</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?action=xdc_marketprice&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?action=xdc_marketprice&apikey=YourApiKeyToken</a></pre>
-                                <p>Output example:</p>
-                                <p>{"status":1,"message":"OK","result":{"_id":"608a8586a74a3eb3578caeba","symbol":"XDC","timestamp":1619690885,"quoteBTC":0.0000016566890292881833,"quoteEUR":0.07472439637427136,"quoteINR":6.708495465180236,"quoteUSD":0.09057052482758,"volume_24h":7398681.45624277,"percent_change_24h":-2.11184134}}</p>
                             </div>
                         </div>
                     </div>

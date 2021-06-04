@@ -46,18 +46,18 @@
                                       <!-- <hr class="hr-space"> -->
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Holders:</div>
-                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenHolders }} Address(es)</div></div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenHolders }} Address</div></div>
                                       </div>
                                       <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Transfers:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ tokenTransfrs.transfervalue }}</div></div>
                                       </div>
-                                      <hr class="hr-space">
+                                      <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Price:</div>
-                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}$</div></div>
-                                      </div>
+                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
+                                      </div> -->
                                       <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Market Cap/Fully MC:</div>
@@ -215,7 +215,7 @@
                               <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
                                 <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link active" href="#internalTransactions" role="tab" data-toggle="tab">Contract Transactions</a></li>
                                   <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link" href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
-                                  <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders" role="tab" data-toggle="tab">Token Holders</a></li>
+                                  <!-- <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders" role="tab" data-toggle="tab">Token Holders</a></li> -->
                                   <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab" data-toggle="tab">Contract Source</a></li>
                               </ul>
                               <!-- Nav tabs -->
@@ -267,21 +267,15 @@
                                               <th>Address</th>
                                               <th>Quantity</th>
                                               <th>Percentage</th>
-                                              <th>Value</th>
-                                              <th>Analytics</th>
-                                              
                                           </tr>
                                       </thead>
                                       <tbody>
-                                            <tr ng-repeat="t in token_holders track by $index">
-                                                <td>{{t.rank}}</td>
-                                                <td><a href="/addr/{{t.address}}">{{t.address}}</td>
-                                                <td>{{t.quantity}}</td>
-                                                <td>{{t.percentage}} %</td>
-                                                <td>{{t.value}}$</td>
-                                                <td></td>
-                                                
-                                            </tr>
+                                          <tr>
+                                              <td>1</td>
+                                              <td class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.from}}" class="hash-tag text-truncate">xdc0764ba3a6cf11f057f9a6fcd4c454c7c082896e4</a></td>                                    
+                                              <td>5,172,604.267</td>
+                                              <td>51.726043%</td>
+                                          </tr>
                                       </tbody>
                                   </table>
                             	</div>
