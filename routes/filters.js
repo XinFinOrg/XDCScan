@@ -1,5 +1,5 @@
 'use strict';
-var etherUnits = require("../lib/etherUnits.js")
+var etherUnits = require(__lib + "etherUnits.js")
 var BigNumber = require('bignumber.js');
 var RLP = require('rlp');
 
