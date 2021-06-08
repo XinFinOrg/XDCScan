@@ -88,25 +88,32 @@ module.exports = function (req, res) {
             "address": contractAddress
           }
           
-            var mongoose = require('mongoose');
-            var Transaction = mongoose.model('Transaction');
-            let TokenTransfer = mongoose.model('TokenTransfer');
-            // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
-            let tokenHoldersCount = await TokenTransfer.aggregate([
-                { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
-                { "$group": { _id: { from: "from", to: "$to" } } },
-            ]);
-            tokenData.tokenHolders = (tokenHoldersCount.length * 2);
+          var mongoose = require('mongoose');
+          var Transaction = mongoose.model('Transaction');
+          let TokenTransfer = mongoose.model('TokenTransfer');
+          let TokenMetadata = mongoose.model('TokenMetadata');
+          // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
+          let tokenHoldersCount = await TokenTransfer.aggregate([
+              { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
+              { "$group": { _id: { from: "from", to: "$to" } } },
+          ]);
+          tokenData.tokenHolders = (tokenHoldersCount.length * 2);
 
-            var eth = require('./web3relay').eth;
-            var Token = new eth.Contract(ABI, contractAddress);
-            let totalSupply = await Token.methods.totalSupply().call();
-            tokenData.totalSupply = Number(etherUnits.toEther(totalSupply, 'wei'));
+          var eth = require('./web3relay').eth;
+          var Token = new eth.Contract(ABI, contractAddress);
+          let totalSupply = await Token.methods.totalSupply().call();
+          tokenData.totalSupply = Number(etherUnits.toEther(totalSupply, 'wei'));
 
           if (fromAccount) {
             var eth = require('./web3relay').eth;
             var TokenInst = new eth.Contract(ABI, contractAddress);
             tokenData.tokenNum = TokenInst.methods.balanceOf(fromAccount).call();
+          }
+
+          let tokenMetadata = await TokenMetadata.findOne({ address: contractAddress }).lean(true);
+          if (tokenMetadata) {
+            tokenData.tokenOfficialWebsite = tokenMetadata.officialWebsite;
+            tokenData.tokenSocialLinks = tokenMetadata.socialLinks;
           }
           res.write(JSON.stringify(tokenData));
           res.end();
