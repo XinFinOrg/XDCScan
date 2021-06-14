@@ -82,18 +82,111 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
     $scope.transferPage = 0;
     $scope.transferTokens=function(transferPage) {
       console.log("【request】 tokenTransfer");
+      
       $http({
         method: 'POST',
         url: '/tokenrelay',
         data: {"action": "tokenTransfer", "address": address, "transferPage":transferPage, 'fromAccount':$scope.acc}
       }).then(function(resp) {
+
+        
+
         resp.data.forEach(function(record){
-          record.amount = record.amount/10**parseInt($scope.token.decimals);
+
+          /***
+             * Author: Luke.Nguyen
+             * Company: sotatek
+             * Country: Vietnam
+             * PhoneNumber: +84 386743836
+             * 
+             * Patch date: 18/05/2021
+             * 
+             * Newly updated for transfer_tokens pages
+             * 
+             *
+             * 
+             * 
+             * **/
+
+          record.value = record.value/parseFloat(10**parseInt($scope.token.decimals));
+
+          record.amount = record.value;
+          
+          record.methodName = record.method;
+          record.transactionHash = record.hash;
+          
+          /**
+           * end update
+           * 
+           * **/
+
         })
         $scope.transferPage = transferPage;
         $scope.transfer_tokens = resp.data;
+
       });
     }
+
+    /***
+     * Author: Luke.Nguyen
+     * Company: sotatek
+     * Country: Vietnam
+     * PhoneNumber: +84 386743836
+     * 
+     * Patch date: 18/05/2021
+     * 
+     * Newly updated for token_holders pages
+     * 
+     *
+     * 
+     * 
+     * **/
+    $scope.holderPage = 0;
+    $scope.tokenHolders=function(holderPage) {
+      console.log("【request】 tokenHolder");
+      
+      $http({
+        method: 'POST',
+        url: '/tokenrelay',
+        data: {"action": "tokenHolder", "address": address}
+      }).then(function(resp) {
+
+        console.log("【request】 tokenHolder " + address);
+        var rank = 1;
+        var total = 0;
+        resp.data.forEach(function(record){
+
+          /**
+           * newly implemented logic here
+           * 
+           */
+
+           record.rank = rank;
+
+ 
+           record.quantity = record.balance/parseFloat(10**parseInt($scope.token.decimals));
+           record.value = record.quantity * parseFloat($scope.token.tokenPrice);
+           rank ++;
+           console.log(rank)
+           total += record.quantity;
+        })
+
+        resp.data.forEach(function(record){
+           record.percentage = record.quantity*100/total;
+        })
+        console.log(resp);
+        $scope.holderPage = holderPage;
+        $scope.token_holders = resp.data;
+
+      });
+    }
+
+    /**
+     * end update token_holders
+     * 
+     * **/
+
+
     $scope.internalPage = 0;
   $scope.internalTransaction=function(internalPage) {
     $http({
@@ -181,5 +274,37 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
       scope.getTransferTokens = getTransferTokens;
       getTransferTokens();
     }
+  }
+})
+
+/***
+     * Author: Luke.Nguyen
+     * Company: sotatek
+     * Country: Vietnam
+     * PhoneNumber: +84 386743836
+     * 
+     * Patch date: 18/05/2021
+     * 
+     * Newly updated for token_holders pages
+     * 
+     *
+     * 
+     * 
+     * **/
+.directive('tokenHolders', function($http) {
+  return {
+    restrict: 'E',
+    templateUrl: '/views/token-holders.html',
+    scope: false,
+    link: function(scope, elem, attrs){
+        //fetch contract stuff
+        $http({
+          method: 'POST',
+          url: '/compile',
+          data: {"addr": scope.addrHash, "action": "find"}
+        }).then(function(resp) {
+          scope.contract = resp.data;
+        });
+      }
   }
 })
