@@ -1,0 +1,119 @@
+try {
+
+      // createZeroTokenInstance();
+      var tokenData;
+      var Token = new eth.Contract(ABI, contractAddress);
+      let totalSupply = await Token.methods.totalSupply().call();
+      tokenData.totalSupply = Number(etherUnits.toEther(totalSupply, 'wei'));
+
+      res.write(JSON.stringify(tokenData));
+      res.end();
+        
+
+
+
+
+
+
+      // createZeroTokenInstance();
+      var tokenData;
+      var contractFind = Contract.findOne({ address: contractAddress }).lean(true);
+      contractFind.exec(async function (err, doc) {
+        if (!err && doc) {
+          var dbToken = doc;
+          tokenData = {
+            "balance": dbToken.balance,
+            "totalSupply": dbToken.totalSupply / 10 ** dbToken.decimals,//dbToken.totalSupply.toEther(actualBalance, 'wei');
+            "tokenHolders": 2,//tt fix, wait to dev
+            "name": dbToken.tokenName,
+            "ERC": dbToken.ERC,
+            "symbol": dbToken.symbol,
+            "bytecode": dbToken.byteCode,
+            "transaction": dbToken.creationTransaction,
+            "creator": dbToken.owner,
+            "decimals": dbToken.decimals,
+            "isVerified": dbToken.sourceCode != null,
+            "address": contractAddress
+          }
+          
+            var mongoose = require('mongoose');
+            var Transaction = mongoose.model('Transaction');
+            let TokenTransfer = mongoose.model('TokenTransfer');
+            // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
+            let tokenHoldersCount = await TokenTransfer.aggregate([
+                { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
+                { "$group": { _id: { from: "from", to: "$to" } } },
+            ]);
+            tokenData.tokenHolders = (tokenHoldersCount.length * 2);
+
+            var eth = require('./web3relay').eth;
+            var Token = new eth.Contract(ABI, contractAddress);
+            let totalSupply = await Token.methods.totalSupply().call();
+            tokenData.totalSupply = Number(etherUnits.toEther(totalSupply, 'wei'));
+            
+
+            console.log("heree");
+            console.log("heree");
+
+            console.log("123");
+            console.log("heree");
+            console.log("heree");
+            console.log("312");
+            
+            
+
+
+
+          if (fromAccount) {
+            var eth = require('./web3relay').eth;
+            var TokenInst = new eth.Contract(ABI, contractAddress);
+            tokenData.tokenNum = TokenInst.methods.balanceOf(fromAccount).call();
+          }
+          res.write(JSON.stringify(tokenData));
+          res.end();
+        } else {//find from blockChain
+          res.write("");
+          res.end();
+
+
+
+
+
+
+
+
+          // var data ={};
+          // var eth = require('./web3relay').eth;
+          // var bytecode;
+          // try{
+          //   data.balance = eth.getBalance(contractAddress);
+          //   bytecode = eth.getCode(contractAddress);
+          // }catch(err){
+          //   console.log(err);
+          // }
+          // data.byteCode = bytecode;
+          // var txFind = Transaction.findOne({'to':null, 'contractAddress':contractAddress}).lean(true);
+          // txFind.exec(function (err, doc) {
+          //   if(!err && doc){
+          //     data.creationTransaction = doc.hash;
+          //     data.owner = doc.from;
+          //   }
+          //   tokenData = {
+          //     "balance": data.balance,
+          //     "tokenHolders": 2,//tt fix, wait to dev
+          //     "count": count,
+          //     "transaction": data.creationTransaction,
+          //     "creator": data.owner,
+          //     "isVerified":false,
+          //     "address":contractAddress
+          //   }
+          //   res.write(JSON.stringify(tokenData));
+          //   res.end();
+          // })
+        }
+      });
+    } catch (e) {
+      console.error(e);
+      res.write("");
+      res.end();
+    }

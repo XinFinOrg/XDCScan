@@ -55,7 +55,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-4 col-sm-4 fw6 mb-1">Holders:</div>
                                         <div class="col-md-8 col-sm-8">
-                                            <div>{{ token.tokenHolders }} Address</div>
+                                            <div>{{ token.tokenHolders }} Address(es)</div>
                                         </div>
                                     </div>
                                     <hr class="hr-space">
@@ -65,11 +65,13 @@
                                             <div>{{ tokenTransfrs.transfervalue }}</div>
                                         </div>
                                     </div>
-                                    <!-- <hr class="hr-space">
-                                      <div class="row align-items-center">
-                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Price:</div>
-                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
-                                      </div> -->
+                                    <hr class="hr-space">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4 col-sm-4 fw6 mb-1">Price:</div>
+                                        <div class="col-md-8 col-sm-8">
+                                            <div>{{ token.tokenPrice }}$</div>
+                                        </div>
+                                    </div>
                                     <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Market Cap/Fully MC:</div>
@@ -110,42 +112,60 @@
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Issuer:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenIssuer }}</div></div>
                                       </div> -->
-                                      <hr ng-show="token.tokenOfficialWebsite" class="hr-space">
-                                      <div ng-show="token.tokenOfficialWebsite" class="row align-items-center">
-                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Official Website:</div>
-                                          <div class="col-md-8 col-sm-8"><div><a href="{{token.tokenOfficialWebsite}}" target="_blank">{{ token.tokenOfficialWebsite }}<i class="fa fa-external-link-alt ml-1"></i></a></div></div>
-                                      </div>
-                                      <!-- <hr class="hr-space">
+                                    <hr ng-show="token.tokenOfficialWebsite" class="hr-space">
+                                    <div ng-show="token.tokenOfficialWebsite" class="row align-items-center">
+                                        <div class="col-md-4 col-sm-4 fw6 mb-1">Official Website:</div>
+                                        <div class="col-md-8 col-sm-8">
+                                            <div><a href="{{token.tokenOfficialWebsite}}"
+                                                    target="_blank">{{ token.tokenOfficialWebsite }}<i
+                                                        class="fa fa-external-link-alt ml-1"></i></a></div>
+                                        </div>
+                                    </div>
+                                    <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">White Paper:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
                                       </div> -->
-                                      <hr class="hr-space">
-                                      <div class="row align-items-center">
-                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Social Profiles:</div>
-                                          <div class="col-md-8 col-sm-8">
-                                          	<div ng-show="token.tokenSocialLinks">
+                                    <hr class="hr-space">
+                                    <div class="row align-items-center">
+                                        <div class="col-md-4 col-sm-4 fw6 mb-1">Social Profiles:</div>
+                                        <div class="col-md-8 col-sm-8">
+                                            <div ng-show="token.tokenSocialLinks">
                                                 <ul class="social-sharing">
-                                                    <li ng-show="token.tokenSocialLinks.emailUrl"><a href="mailto:{{ token.tokenSocialLinks.emailUrl }}" title="Email" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                                                    <li ng-show="token.tokenSocialLinks.githubUrl"><a href="{{ token.tokenSocialLinks.githubUrl }}" title="Github" target="_blank"><i class="fab fa-github"></i></a></li>
-                                                    <li ng-show="token.tokenSocialLinks.facebookUrl"><a href="{{ token.tokenSocialLinks.facebookUrl }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
-                                                    <li ng-show="token.tokenSocialLinks.twitterUrl"><a href="{{ token.tokenSocialLinks.twitterUrl }}" title="Twitter" target="_blank"><i class="fab fa-twitter"></i></a></li>
-                                                    <li ng-show="token.tokenSocialLinks.linkedInUrl"><a href="{{ token.tokenSocialLinks.linkedInUrl }}" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.emailUrl"><a
+                                                            href="mailto:{{ token.tokenSocialLinks.emailUrl }}"
+                                                            title="Email" target="_blank"><i
+                                                                class="fa fa-envelope"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.githubUrl"><a
+                                                            href="{{ token.tokenSocialLinks.githubUrl }}" title="Github"
+                                                            target="_blank"><i class="fab fa-github"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.facebookUrl"><a
+                                                            href="{{ token.tokenSocialLinks.facebookUrl }}"
+                                                            title="Facebook" target="_blank"><i
+                                                                class="fab fa-facebook-f"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.twitterUrl"><a
+                                                            href="{{ token.tokenSocialLinks.twitterUrl }}"
+                                                            title="Twitter" target="_blank"><i
+                                                                class="fab fa-twitter"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.linkedInUrl"><a
+                                                            href="{{ token.tokenSocialLinks.linkedInUrl }}"
+                                                            title="LinkedIn" target="_blank"><i
+                                                                class="fab fa-linkedin-in"></i></a></li>
                                                 </ul>
                                             </div>
                                             <div ng-show="!token.tokenSocialLinks">
                                                 Not Available
                                             </div>
-                                      	  </div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <!-- end Overview -->
-                  
-                  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- end Overview -->
+
+
 
 
 
@@ -241,7 +261,8 @@
                                         Transactions</a></li>
                                 <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link"
                                         href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
-                                <!-- <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders" role="tab" data-toggle="tab">Token Holders</a></li> -->
+                                <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders"
+                                        role="tab" data-toggle="tab">Token Holders</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab"
                                         data-toggle="tab">Contract Source</a></li>
                             </ul>
@@ -295,11 +316,6 @@
                                             </table>
                                         </div>
                                     </transfer-tokens>
-                                    <div class="row my-4">
-                                        <div class="col text-right">
-                                            <span class="float-right" data-toggle="tooltip" title="" data-original-title="Export records in CSV format"><font size="1">[ Download <a href="/exportData?type=tokentxns&amp;contract={{addrHash}}&amp;a=&amp;decimals={{token.decimals}}" target="_blank"><b> CSV Export</b></a>&nbsp;<span class="fas fa-download text-secondary"></span> ]</font>&nbsp;</span>
-                                        </div>
-                                    </div>
                                 </div>
 
 
@@ -314,22 +330,26 @@
                                                     <th>Address</th>
                                                     <th>Quantity</th>
                                                     <th>Percentage</th>
+                                                    <th>Value</th>
+                                                    <th>Analytics</th>
+
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td class="truncate-addrhash"> <a
-                                                            href="/tokenAcc/{{token.address}}{{t.from}}"
-                                                            class="hash-tag text-truncate">xdc0764ba3a6cf11f057f9a6fcd4c454c7c082896e4</a>
-                                                    </td>
-                                                    <td>5,172,604.267</td>
-                                                    <td>51.726043%</td>
+                                                <tr ng-repeat="t in token_holders track by $index">
+                                                    <td>{{t.rank}}</td>
+                                                    <td><a href="/addr/{{t.address}}">{{t.address}}</td>
+                                                    <td>{{t.quantity}}</td>
+                                                    <td>{{t.percentage}} %</td>
+                                                    <td>{{t.value}}$</td>
+                                                    <td></td>
+
                                                 </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
+
 
 
                                 <div class="tab-pane fade active show" id="internalTransactions">
@@ -372,7 +392,13 @@
                                     </div>
                                     <div class="row my-4">
                                         <div class="col text-right">
-                                            <span class="float-right" data-toggle="tooltip" title="" data-original-title="Export records in CSV format"><font size="1">[ Download <a href="/exportData?type=address&amp;a={{addrHash}}" target="_blank"><b> CSV Export</b></a>&nbsp;<span class="fas fa-download text-secondary"></span> ]</font>&nbsp;</span>
+                                            <span class="float-right" data-toggle="tooltip" title=""
+                                                data-original-title="Export records in CSV format">
+                                                <font size="1">[ Download <a
+                                                        href="/exportData?type=address&amp;a={{addrHash}}"
+                                                        target="_blank"><b> CSV Export</b></a>&nbsp;<span
+                                                        class="fas fa-download text-secondary"></span> ]</font>&nbsp;
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
