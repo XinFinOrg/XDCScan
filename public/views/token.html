@@ -109,37 +109,43 @@
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Issuer:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenIssuer }}</div></div>
-                                      </div>
-                                      <hr class="hr-space">
-                                      <div class="row align-items-center">
+                                      </div> -->
+                                      <hr ng-show="token.tokenOfficialWebsite" class="hr-space">
+                                      <div ng-show="token.tokenOfficialWebsite" class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">Official Website:</div>
-                                          <div class="col-md-8 col-sm-8"><div>{{ token.tokenOfficialWebsite }}</div></div>
+                                          <div class="col-md-8 col-sm-8"><div><a href="{{token.tokenOfficialWebsite}}" target="_blank">{{ token.tokenOfficialWebsite }}<i class="fa fa-external-link-alt ml-1"></i></a></div></div>
                                       </div>
-                                      <hr class="hr-space">
+                                      <!-- <hr class="hr-space">
                                       <div class="row align-items-center">
                                           <div class="col-md-4 col-sm-4 fw6 mb-1">White Paper:</div>
                                           <div class="col-md-8 col-sm-8"><div>{{ token.tokenPrice }}</div></div>
                                       </div> -->
-                                    <hr class="hr-space">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4 col-sm-4 fw6 mb-1">Social Profiles:</div>
-                                        <div class="col-md-8 col-sm-8">
-                                            <div>
+                                      <hr class="hr-space">
+                                      <div class="row align-items-center">
+                                          <div class="col-md-4 col-sm-4 fw6 mb-1">Social Profiles:</div>
+                                          <div class="col-md-8 col-sm-8">
+                                          	<div ng-show="token.tokenSocialLinks">
                                                 <ul class="social-sharing">
-                                                    <li><a href="#" class="icoTwitter" title="Twitter"><i
-                                                                class="fab fa-twitter"></i></a></li>
-                                                    <li><a href="#" class="icoLinkedin" title="LinkedIn"><i
-                                                                class="fab fa-linkedin-in"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.emailUrl"><a href="mailto:{{ token.tokenSocialLinks.emailUrl }}" title="Email" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.githubUrl"><a href="{{ token.tokenSocialLinks.githubUrl }}" title="Github" target="_blank"><i class="fab fa-github"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.facebookUrl"><a href="{{ token.tokenSocialLinks.facebookUrl }}" title="Facebook" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.twitterUrl"><a href="{{ token.tokenSocialLinks.twitterUrl }}" title="Twitter" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                                                    <li ng-show="token.tokenSocialLinks.linkedInUrl"><a href="{{ token.tokenSocialLinks.linkedInUrl }}" title="LinkedIn" target="_blank"><i class="fab fa-linkedin-in"></i></a></li>
                                                 </ul>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- end Overview -->
+                                            <div ng-show="!token.tokenSocialLinks">
+                                                Not Available
+                                            </div>
+                                      	  </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <!-- end Overview -->
+                  
+                  
 
 
 

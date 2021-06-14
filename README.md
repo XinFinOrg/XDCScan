@@ -23,3 +23,7 @@ The below will start both the web-gui and sync.js (which populates MongoDB with 
 You can leave sync.js running without app.js and it will sync and grab blocks based on config.json parameters
 `node ./tools/sync.js`
 
+First you have to run the following to update the current database:
+`node ./tools/fill_token_holders.js`
+`node ./tools/sync_all_contract_from_token_transfer.js`
+
