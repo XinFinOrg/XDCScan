@@ -269,8 +269,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
              * **/
 
             const insertdata = {
-                "address": "",
-                "tokenContract": "",
+
                 "tokenName": "",
                 "symbol": "",
                 "balance": 0
@@ -283,36 +282,35 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             const balanceFrom = Number(await contract_object.methods.balanceOf(transfer.from).call());
             const balanceTo = Number(await contract_object.methods.balanceOf(transfer.to).call());
             
-            insertdata.tokenContract = transfer.contract.toLowerCase();
-            insertdata.address = transfer.from.toLowerCase();
+            // insertdata.tokenContract = transfer.contract.toLowerCase();
+            // insertdata.address = transfer.from.toLowerCase();
             insertdata.balance = balanceFrom;
 
             TokenHolder.update(
-              { address: insertdata.address, tokenContract: insertdata.tokenContract},
-              { $setOnInsert: insertdata },
+              { address: transfer.from.toLowerCase(), tokenContract: transfer.contract.toLowerCase()},
+              { $set: insertdata },
               { upsert: true },
               (err, data) => {
                 if (err) {
                   console.log(err);
                 }
                 else{
-                  console.log(data,"asasas",insertdata)
+                  console.log(data,"upsert token holder from",balanceFrom)
                 }
               },
             );
 
-            insertdata.address = transfer.to;
             insertdata.balance = balanceTo;
             TokenHolder.update(
-              { address: insertdata.address, tokenContract: insertdata.tokenContract},
-              { $setOnInsert: insertdata },
+              { address: transfer.to.toLowerCase(), tokenContract: transfer.contract.toLowerCase()},
+              { $set: insertdata },
               { upsert: true },
               (err, data) => {
                 if (err) {
                   console.log(err);
                 }
                 else{
-                  console.log(data,"asasas",insertdata)
+                  console.log(data,"upsert token holder to",balanceTo)
                 }
               },
             );
@@ -333,13 +331,13 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             TokenTransfer.update(
               { hash: transfer.hash },
               { $setOnInsert: transfer },
-              { upsert: true },
+              { upsert: true },	
               (err, data) => {
                 if (err) {
                   console.log(err);
                 }
                 else{
-                  console.log(data,"asasas",transfer)
+                  console.log(data,"Insert token transfer",transfer)
                 }
               },
             );
@@ -521,46 +519,19 @@ var syncChain = function (config, nextBlock) {
 **/
 const prepareSync = async (config, callback) => {
   let blockNumber = null;
-  const oldBlockFind = Block.find({}, 'number').lean(true).sort('number').limit(1);
+  const oldBlockFind = Block.find({}, 'number').sort({"number": 1}).limit(1);
   oldBlockFind.exec(async (err, docs) => {
     if (err || !docs || docs.length < 1) {
-      // not found in db. sync from config.endBlock or 'latest'
-      if (web3.eth.net.isListening()) {
-        const currentBlock = await web3.eth.getBlockNumber();
-        const latestBlock = config.endBlock || currentBlock || 'latest';
-        if (latestBlock === 'latest') {
-          web3.eth.getBlock(latestBlock, true, (error, blockData) => {
-            if (error) {
-              console.log(`Warning (prepareSync): error on getting block with hash/number: ${latestBlock}: ${error}`);
-            } else if (blockData === null) {
-              console.log(`Warning: null block data received from the block with hash/number: ${latestBlock}`);
-            } else {
-              console.log(`Starting block number = ${blockData.number}`);
-              if ('quiet' in config && config.quiet === true) {
-                console.log('Quiet mode enabled');
-              }
-              blockNumber = blockData.number - 1;
-              callback(null, blockNumber);
-            }
-          });
-        } else {
-          console.log(`Starting block number = ${latestBlock}`);
-          if ('quiet' in config && config.quiet === true) {
-            console.log('Quiet mode enabled');
-          }
-          blockNumber = latestBlock - 1;
-          callback(null, blockNumber);
-        }
-      } else {
-        console.log('Error: Web3 connection error');
-        callback(err, null);
-      }
+      blockNumber = 0;
+	console.log("blocknumber in if");
+      callback(null, blockNumber);
     } else {
       blockNumber = docs[0].number - 1;
       console.log(`Old block found. Starting block number = ${blockNumber}`);
       if ('quiet' in config && config.quiet === true) {
         console.log('Quiet mode enabled');
       }
+	console.log("blocknumber in else " + blockNumber);
       callback(null, blockNumber);
     }
   });
@@ -569,28 +540,7 @@ const prepareSync = async (config, callback) => {
   Block Patcher(experimental)
 **/
 const runPatcher = async (config, startBlock, endBlock) => {
-  if (!web3 || !web3.eth.net.isListening()) {
-    console.log('Error: Web3 is not connected. Retrying connection shortly...');
-    setTimeout(() => { runPatcher(config); }, 3000);
-    return;
-  }
-
-  if (typeof startBlock === 'undefined' || typeof endBlock === 'undefined') {
-    // get the last saved block
-    const blockFind = Block.find({}, 'number').lean(true).sort('-number').limit(1);
-    blockFind.exec(async (err, docs) => {
-      if (err || !docs || docs.length < 1) {
-        // no blocks found. terminate runPatcher()
-        console.log('No need to patch blocks.');
-        return;
-      }
-
-      const lastMissingBlock = docs[0].number + 1;
-      const currentBlock = await web3.eth.getBlockNumber();
-      runPatcher(config, currentBlock - 10000, currentBlock - 1);
-    });
-    return;
-  }
+console.log("begin run patcher");  
 
   const missingBlocks = endBlock - startBlock + 1;
   if (missingBlocks > 0) {
