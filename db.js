@@ -102,6 +102,15 @@ const Contract = new Schema(
   }, { collection: 'Contract' },
 );
 
+const TokenMetadata = new Schema(
+  {
+    'address': { type: String, index: { unique: true } },
+    'officialWebsite': String,
+    'socialLinks': Object,
+  },
+  { collection: 'TokenMetadata' },
+)
+
 const Account = new Schema(
     {
       'address': { type: String, index: { unique: true } },
@@ -226,6 +235,7 @@ mongoose.model('BlockStat', BlockStat);
 mongoose.model('Block', Block);
 mongoose.model('Account', Account);
 mongoose.model('Contract', Contract);
+mongoose.model('TokenMetadata', TokenMetadata);
 mongoose.model('Transaction', Transaction);
 mongoose.model('Market', Market);
 mongoose.model('TokenTransfer', TokenTransfer);
@@ -234,6 +244,7 @@ mongoose.model('Witness', Witness);
 module.exports.BlockStat = mongoose.model('BlockStat');
 module.exports.Block = mongoose.model('Block');
 module.exports.Contract = mongoose.model('Contract');
+module.exports.TokenMetadata = mongoose.model('TokenMetadata');
 module.exports.Transaction = mongoose.model('Transaction');
 module.exports.Witness = Witness;
 module.exports.LogEvent = mongoose.model('LogEvent');
