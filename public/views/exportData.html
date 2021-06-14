@@ -1,0 +1,55 @@
+<section id="transactionDetails" class="mb-4 ng-scope">
+  <div class="d-flex flex-column container space-2">
+    <div class="col-md-9 col-lg-6 text-center mx-md-auto px-0 pb-3">
+      <h1 class="h3">Download Data</h1>
+      <p>The information you requested can be downloaded from this page. But before continuing <strong>please verify that you are not a robot by</strong> completing the captcha below.</p>
+      <div ng-show="!!error" class="alert alert-danger text-left rounded-left rounded-right">
+        <span>{{ error }}</span>
+      </div>
+      <div ng-show="!!exporting" class="alert alert-success text-left rounded-left rounded-right">
+        <span>Your download is being processed.</span>
+      </div>
+    </div>
+    <div class="card col-md-9 col-lg-6 mx-md-auto">
+      <form>
+        <div class="d-flex flex-column card-body p-4">
+          <span class="mb-4">
+            <label>Export the earliest 5000 records starting from</label>
+          </span>
+          <div class="d-flex justify-content-around">
+            <div class="d-flex">
+              <span class="input-group-text font-size-base">
+                <i class="far fa-calendar-alt"></i>
+              </span>
+              <div class="d-flex align-items-center border border-left-0 rounded-right px-2">
+                <datepicker date-format="MM/dd/yyyy">
+                  <input ng-model="dateRangeStart" type="text" class="border-0" style="cursor: pointer;" readonly="readonly"/>
+                </datepicker>
+              </div>
+            </div>
+            <div class="d-flex col-md-1 align-items-center">To</div>
+            <div class="d-flex">
+              <span class="input-group-text font-size-base">
+                <i class="far fa-calendar-alt"></i>
+              </span>
+              <div class="d-flex align-items-center border border-left-0 rounded-right px-2">
+                <datepicker date-format="MM/dd/yyyy">
+                  <input ng-model="dateRangeEnd" type="text" class="border-0" style="cursor: pointer;" readonly="readonly"/>
+                </datepicker>
+              </div>
+            </div>  
+          </div>
+          <div class="d-flex justify-content-center my-4">
+            <div vc-recaptcha key="'6LcOCiQbAAAAAD4ZpX2NDKqxpVBSW533jH6qeaX5'" ng-model="gRecaptchaResponse"></div>
+          </div>
+          <div ng-show="!exporting" class="text-center">
+            <input type="button" name="submitExportBtn" id="submitExportBtn" value="Download" class="btn btn-sm btn-primary" ng-click="submitExportCSV()">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="text-center">
+      <p>Tip: To avoid the 30 secs timeout, please select a small Date range</p>
+    </div>
+  </div>
+</section>

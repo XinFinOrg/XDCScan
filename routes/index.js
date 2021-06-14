@@ -68,6 +68,7 @@ module.exports = function (app) {
   var tokenTransfer = require('./tokenTransfer');
   var witnessData = require('./witnessData');
   var witnessListData = require('./witnessListData');
+  var exportData = require('./exportData');
   var compile = require('./compiler');
   var fiat = require('./fiat');
   var stats = require('./stats');
@@ -222,6 +223,8 @@ module.exports = function (app) {
       res.status(500).json({ error: "server error" });
     })
   });
+
+  app.post('/exportData', exportData);
 
 }
 
