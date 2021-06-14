@@ -2,7 +2,9 @@ var BlocksApp = angular.module("BlocksApp", [
     "ui.router",
     "ui.bootstrap",
     "oc.lazyLoad",
-    "ngSanitize"
+    "ngSanitize",
+    "vcRecaptcha",
+    "720kb.datepicker",
 ]);
 BlocksApp.constant('_', window._); // loadsh
 BlocksApp.config(['$ocLazyLoadProvider',  '$locationProvider',
@@ -395,6 +397,23 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                         insertBefore: '#ng_load_plugins_before',
                         files: [
                              '/js/controllers/DAOController.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('exportData', {
+            url: "/exportData",
+            templateUrl: "views/exportData.html",
+            data: {pageTitle: 'Export CSV Data'},
+            controller: "ExportDataController",
+            resolve: {
+                deps: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        name: 'BlocksApp',
+                        insertBefore: '#ng_load_plugins_before',
+                        files: [
+                             '/js/controllers/ExportDataController.js'
                         ]
                     });
                 }]
