@@ -3,11 +3,10 @@
 /*
     Endpoint for client interface with ERC-20 tokens
 */
-const getQuote = require( './coinMarketPrice.js' ).getQuote;
+
 var mongoose = require('mongoose');
 var Transaction = mongoose.model('Transaction');
 var Contract = mongoose.model('Contract');
-
 
 var BigNumber = require('bignumber.js');
 var etherUnits = require(__lib + "etherUnits.js")
@@ -58,60 +57,7 @@ function createZeroTokenInstance() {
   return zeroTokenInstance;
 }
 
-/***
- * Author: Luke.Nguyen
- * Company: sotatek
- * Country: Vietnam
- * PhoneNumber: +84 386743836
- * 
- * Patch date: 18/05/2021
- * 
- * Newly updated for TokenPage
- * 
- * This implemented function belows is for getting the info about the Token Contract
- * Also if the Contract is not on the database then proceed to update it if existed
- * 
- * 
- * **/
- async function tokenInfo(address){
-
-  var contractFind = Contract.findOne({ address: contractAddress }).lean(true);
-  contractFind.exec(
-    async function(err, doc){
-
-    }
-
-  );
-
-  try {
-    const call = await web3.eth.call({ to: contractAddress, data: web3.utils.sha3('totalSupply()') });
-    // console.log(contractdb,"contractdb")
-
-    if (call === '0x') {
-      isTokenContract = false;
-    } else {
-      try {
-        // ERC20 & ERC223 Token Standard compatible format
-        contractdb.tokenName = await Token.methods.name().call();
-        contractdb.decimals = await Token.methods.decimals().call();
-        contractdb.symbol = await Token.methods.symbol().call();
-        contractdb.totalSupply = await Token.methods.totalSupply().call();
-        // console.log(contractdb,"contractdb")
-      } catch (err) {
-        isTokenContract = false;
-      }
-      // console.log(contractdb,"contractdb")
-    }
-  } catch (err) {
-    isTokenContract = false;
-  }
-  
-
-
-
-}
-
-module.exports = async function (req, res) {
+module.exports = function (req, res) {
   // console.log(req.body)
   var contractAddress = req.body.address;
   var fromAccount = req.body.fromAccount;
@@ -121,16 +67,11 @@ module.exports = async function (req, res) {
     res.end();
   } else if (req.body.action == "info") {
     try {
-
       // createZeroTokenInstance();
       var tokenData;
       var contractFind = Contract.findOne({ address: contractAddress }).lean(true);
-
       contractFind.exec(async function (err, doc) {
         if (!err && doc) {
-
-          console.log(doc)
-
           var dbToken = doc;
           tokenData = {
             "balance": dbToken.balance,
@@ -144,43 +85,70 @@ module.exports = async function (req, res) {
             "creator": dbToken.owner,
             "decimals": dbToken.decimals,
             "isVerified": dbToken.sourceCode != null,
-            "address": contractAddress,
-            "tokenPrice": 0
+            "address": contractAddress
           }
           
-            var mongoose = require('mongoose');
-            var Transaction = mongoose.model('Transaction');
-            let TokenTransfer = mongoose.model('TokenTransfer');
-            // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
-            let tokenHoldersCount = await TokenTransfer.aggregate([
-                { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
-                { "$group": { _id: { from: "from", to: "$to" } } },
-            ]);
-            tokenData.tokenHolders = (tokenHoldersCount.length * 2);
+          var mongoose = require('mongoose');
+          var Transaction = mongoose.model('Transaction');
+          let TokenTransfer = mongoose.model('TokenTransfer');
+          let TokenMetadata = mongoose.model('TokenMetadata');
+          // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
+          let tokenHoldersCount = await TokenTransfer.aggregate([
+              { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
+              { "$group": { _id: { from: "from", to: "$to" } } },
+          ]);
+          tokenData.tokenHolders = (tokenHoldersCount.length * 2);
 
+          var eth = require('./web3relay').eth;
+          var Token = new eth.Contract(ABI, contractAddress);
+          let totalSupply = await Token.methods.totalSupply().call();
+          tokenData.totalSupply = Number(etherUnits.toEther(totalSupply, 'wei'));
+
+          if (fromAccount) {
             var eth = require('./web3relay').eth;
-            var config = require('./web3relay').config;
-            
-            data = await getQuote(tokenData.symbol, config.CMC_API_KEY);
-            
+            var TokenInst = new eth.Contract(ABI, contractAddress);
+            tokenData.tokenNum = TokenInst.methods.balanceOf(fromAccount).call();
+          }
 
-            if(data === null){
-              tokenData.tokenPrice = 0;
-            }else{
-              tokenData.tokenPrice = data.quoteUSD;
-            }
-
-
-            var Token = new eth.Contract(ABI, contractAddress);
-            let totalSupply = await Token.methods.totalSupply().call();
-            tokenData.totalSupply = totalSupply/10 ** dbToken.decimals;
-        
+          let tokenMetadata = await TokenMetadata.findOne({ address: contractAddress }).lean(true);
+          if (tokenMetadata) {
+            tokenData.tokenOfficialWebsite = tokenMetadata.officialWebsite;
+            tokenData.tokenSocialLinks = tokenMetadata.socialLinks;
+          }
           res.write(JSON.stringify(tokenData));
           res.end();
         } else {//find from blockChain
           res.write("");
           res.end();
 
+          // var data ={};
+          // var eth = require('./web3relay').eth;
+          // var bytecode;
+          // try{
+          //   data.balance = eth.getBalance(contractAddress);
+          //   bytecode = eth.getCode(contractAddress);
+          // }catch(err){
+          //   console.log(err);
+          // }
+          // data.byteCode = bytecode;
+          // var txFind = Transaction.findOne({'to':null, 'contractAddress':contractAddress}).lean(true);
+          // txFind.exec(function (err, doc) {
+          //   if(!err && doc){
+          //     data.creationTransaction = doc.hash;
+          //     data.owner = doc.from;
+          //   }
+          //   tokenData = {
+          //     "balance": data.balance,
+          //     "tokenHolders": 2,//tt fix, wait to dev
+          //     "count": count,
+          //     "transaction": data.creationTransaction,
+          //     "creator": data.owner,
+          //     "isVerified":false,
+          //     "address":contractAddress
+          //   }
+          //   res.write(JSON.stringify(tokenData));
+          //   res.end();
+          // })
         }
       });
     } catch (e) {
@@ -188,8 +156,6 @@ module.exports = async function (req, res) {
       res.write("");
       res.end();
     }
-
-
 
   } else if (req.body.action == "balanceOf") {
     var eth = require('./web3relay').eth;
@@ -246,27 +212,17 @@ module.exports = async function (req, res) {
       var TokenTransfer = mongoose.model('TokenTransfer');
       var findCond;
       if (fromAccount) {
-        findCond = { 'contract': req.body.address, $or: [{ "to": fromAccount }, { "from": fromAccount }] };
+        findCond = { contractAdd: req.body.address, $or: [{ "to": fromAccount }, { "from": fromAccount }] };
       } else {
-        findCond = { 'contract': req.body.address };
+        findCond = { contractAdd: req.body.address };
       }
-
-      // fix code 
-      // findCond = { 'contract': 'xdcd18ff933268b05eb7ff6107e9dc169cbf783632c'};
-
       if (transferPage < 0)
         transferPage = 0;
-        tokenTransferFind = TokenTransfer.find(findCond).skip(transferPage * 50).limit(50).lean(true);
-        tokenTransferFind.exec(function (err, docs) {
+      tokenTransferFind = TokenTransfer.find(findCond).skip(transferPage * 50).limit(50).lean(true);
+      tokenTransferFind.exec(function (err, docs) {
         // console.log(docs)
         respData = JSON.stringify(docs);
         res.write(respData);
-        
-        
-        // console.log(respData);
-        
-        
-        //res.write({"error": "shiet"});
         res.end();
 
       });
@@ -274,42 +230,7 @@ module.exports = async function (req, res) {
       console.error(e);
     }
 
-  }
-  else if (req.body.action == "tokenHolder") {
-    let addr
-    var respData = "";
-    try {
-      var transferPage = req.body.transferPage;
-      var mongoose = require('mongoose');
-      var TokenHolder = mongoose.model('TokenHolder');
-      var findCond;
-      
-      // fix code 
-      findCond = { 'tokenContract': req.body.address};
-      console.log(findCond);
-      if (transferPage < 0)
-        transferPage = 0;
-        tokenHolderFind = TokenHolder.find(findCond).sort({"balance": -1}).skip(transferPage * 50).limit(50).lean(true);
-        tokenHolderFind.exec(function (err, docs) {
-        // console.log(docs)
-        respData = JSON.stringify(docs);
-        res.write(respData);
-              
-        console.log(docs);
-        
-        
-        //res.write({"error": "shiet"});
-        res.end();
-
-      });
-    } catch (e) {
-      console.error(e);
-    }
-    
-
-  }
-  
-  else {
+  } else {
     res.write("");
     res.end();
   }

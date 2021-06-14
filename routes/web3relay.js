@@ -9,19 +9,19 @@ var web3;
 
 var _ = require('lodash');
 var BigNumber = require('bignumber.js');
-var etherUnits = require("../lib/etherUnits.js")
+var etherUnits = require(__lib + "etherUnits.js")
 var asyncL = require('async');
 var abiDecoder = require('abi-decoder');
 
 require( '../db.js' );
-const mongoose = require( 'mongoose' );``
+const mongoose = require( 'mongoose' );
 const Block     = mongoose.model( 'Block' );
 const Contract = mongoose.model( 'Contract' );
 const Transaction = mongoose.model( 'Transaction' );
 const Market = mongoose.model( 'Market' );
 const ActiveAddressesStat = mongoose.model( 'ActiveAddressesStat' );
 const TokenTransfer = mongoose.model('TokenTransfer');
-const TokenHolder = mongoose.model('TokenHolder')
+
 
 var getLatestBlocks = require('./index').getLatestBlocks;
 var filterBlocks = require('./filters').filterBlocks;
@@ -564,46 +564,27 @@ exports.data = async (req, res) => {
     } else {
         blockNumOrHash = parseInt(req.body.block);
     }
+    Block.find({$or: [{hash: blockNumOrHash}, {number: blockNumOrHash}]}).lean(true).exec(function(err, doc) {
+      if (err || doc.length === 0) {
+        web3.eth.getBlock(blockNumOrHash, function(err, block) {
+          if(err || !block) {
+            console.error("BlockWeb3 error :" + err)
+            res.write(JSON.stringify({"error": true}));
+          } else {
+            res.write(JSON.stringify(filterBlocks(block)));
+          }
+          res.end();
+        });
+      } else {
+        doc = doc[0];
+        Transaction.find({blockNumber: doc.number}).distinct("hash", (err, txs) => {
+          doc["transactions"] = txs;
+          res.write(JSON.stringify(filterBlocks(doc)));
+          res.end();
+        });
+      }
+    });
 
-    
-    /***
-     * Author: Luke.Nguyen
-     * Company: sotatek
-     * Country: Vietnam
-     * PhoneNumber: +84 386743836
-     * 
-     * Patch date: 18/05/2021
-     * 
-     * Fixing the 404 error (NaN or Undefinded)
-     * 
-     *
-     * 
-     * 
-     * **/
-    if(isNaN(blockNumOrHash) || blockNumOrHash == null){
-      res.write(JSON.stringify({"error": true}));
-    }else{
-      Block.find({$or: [{hash: blockNumOrHash}, {number: blockNumOrHash}]}).lean(true).exec(function(err, doc) {
-        if (err || doc.length === 0) {
-          web3.eth.getBlock(blockNumOrHash, function(err, block) {
-            if(err || !block) {
-              console.error("BlockWeb3 error :" + err)
-              res.write(JSON.stringify({"error": true}));
-            } else {
-              res.write(JSON.stringify(filterBlocks(block)));
-            }
-            res.end();
-          });
-        } else {
-          doc = doc[0];
-          Transaction.find({blockNumber: doc.number}).distinct("hash", (err, txs) => {
-            doc["transactions"] = txs;
-            res.write(JSON.stringify(filterBlocks(doc)));
-            res.end();
-          });
-        }
-      });
-    }
     /*
     / TODO: Refactor, "block" / "uncle" determinations should likely come later
     / Can parse out the request once and then determine the path.
@@ -723,4 +704,3 @@ exports.data = async (req, res) => {
 const MAX_ENTRIES = 50;
 exports.web3 = web3;
 exports.eth = web3.eth;
-exports.config = config;

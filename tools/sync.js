@@ -24,8 +24,6 @@ const Transaction = mongoose.model('Transaction');
 const Account = mongoose.model('Account');
 const Contract = mongoose.model('Contract');
 const TokenTransfer = mongoose.model('TokenTransfer');
-const TokenHolder = mongoose.model('TokenHolder');
-
 
 const ERC20_METHOD_DIC = { '0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom' };
 
@@ -55,7 +53,7 @@ try {
 }
 
 console.log(`Connecting ${config.nodeAddr}:${config.wsPort}...`);
-// Sets address for RPC WEB3 to connect to, usually your node IP address defaults or localhost
+// Sets address for RPC WEB3 to connect to, usually your node IP address defaults ot localhost
 const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 
 const normalizeTX = async (txData, receipt, blockData) => {
@@ -135,15 +133,6 @@ var writeBlockToDB = function (config, blockData, flush) {
   Break transactions out of blocks and write to DB
 **/
 const writeTransactionsToDB = async (config, blockData, flush) => {
-  // console.log(blockData)
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-
   const self = writeTransactionsToDB;
   if (!self.bulkOps) {
     self.bulkOps = [];
@@ -221,38 +210,28 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             },
           );
         } else {
-          //'0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom'
           // Internal transaction  . write to doc of InternalTx
           const transfer = {
             'hash': '', 'blockNumber': 0, 'from': '', 'to': '', 'contract': '', 'value': 0, 'timestamp': 0,
           };
           const methodCode = txData.input.substr(0, 10);
           if (ERC20_METHOD_DIC[methodCode] === 'transfer' || ERC20_METHOD_DIC[methodCode] === 'transferFrom') {
-            console.log(blockData)
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
             if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
               // Token transfer transaction
               transfer.from = txData.from;
-              transfer.to = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
-              transfer.value = Number(`0x${txData.input.substring(74).toLowerCase()}`);
+              transfer.to = `xdc${txData.input.substring(34, 74)}`;
+              transfer.value = Number(`0x${txData.input.substring(74)}`);
             } else {
               // transferFrom
-              transfer.from = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
-              transfer.to = `xdc${txData.input.substring(74, 114).toLowerCase()}`;
+              transfer.from = `xdc${txData.input.substring(34, 74)}`;
+              transfer.to = `xdc${txData.input.substring(74, 114)}`;
               transfer.value = Number(`0x${txData.input.substring(114)}`);
             }
             transfer.method = ERC20_METHOD_DIC[methodCode];
             transfer.hash = txData.hash;
             transfer.blockNumber = blockData.number;
-            transfer.contract = txData.to.toLowerCase();
+            transfer.contract = txData.to;
             transfer.timestamp = blockData.timestamp;
-
             /***
              * Author: Luke.Nguyen
              * Company: sotatek

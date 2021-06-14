@@ -4,46 +4,6 @@ let config = require('./config.json')
 
 const { Schema } = mongoose;
 
-
-/***
- * Author: Luke.Nguyen
- * Company: sotatek
- * Country: Vietnam
- * PhoneNumber: +84 386743836
- * 
- * Patch date: 04/05/2021
- * 
- * Newly addded schema:
- * 
- * TokenHolder - Schema for checking token balance of each address that has the token in it
- * 
- * 
- * Newly updated schema:
- * 
- *
- * 
- * 
- * **/
-const TokenHolder = new Schema(
-  {
-    'address': { type: String, lowercase: true},
-    'tokenContract': {type: String, lowercase: true},
-    'tokenName': {type: String},
-    'symbol': {type: String},
-    'balance': {type: String},
-  }, { collection: 'TokenHolder' },
-);
-TokenHolder.index({ "address": 1, "tokenContract": 1} , {unique: true});
-TokenHolder.index({ "address": 1})
-TokenHolder.index({"tokenContract": 1})
-mongoose.model('TokenHolder', TokenHolder);
-module.exports.TokenHolder = mongoose.model('TokenHolder');
-
-/**
- * End patching
- * 
- * **/
-
 const Block = new Schema(
   {
     'number': { type: Number, index: { unique: true } },
@@ -101,6 +61,15 @@ const Contract = new Schema(
     'byteCode': String,
   }, { collection: 'Contract' },
 );
+
+const TokenMetadata = new Schema(
+  {
+    'address': { type: String, index: { unique: true } },
+    'officialWebsite': String,
+    'socialLinks': Object,
+  },
+  { collection: 'TokenMetadata' },
+)
 
 const Account = new Schema(
     {
@@ -226,6 +195,7 @@ mongoose.model('BlockStat', BlockStat);
 mongoose.model('Block', Block);
 mongoose.model('Account', Account);
 mongoose.model('Contract', Contract);
+mongoose.model('TokenMetadata', TokenMetadata);
 mongoose.model('Transaction', Transaction);
 mongoose.model('Market', Market);
 mongoose.model('TokenTransfer', TokenTransfer);
@@ -234,6 +204,7 @@ mongoose.model('Witness', Witness);
 module.exports.BlockStat = mongoose.model('BlockStat');
 module.exports.Block = mongoose.model('Block');
 module.exports.Contract = mongoose.model('Contract');
+module.exports.TokenMetadata = mongoose.model('TokenMetadata');
 module.exports.Transaction = mongoose.model('Transaction');
 module.exports.Witness = Witness;
 module.exports.LogEvent = mongoose.model('LogEvent');

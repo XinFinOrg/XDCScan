@@ -26,3 +26,4 @@ You can leave sync.js running without app.js and it will sync and grab blocks ba
 First you have to run the following to update the current database:
 `node ./tools/fill_token_holders.js`
 `node ./tools/sync_all_contract_from_token_transfer.js`
+
