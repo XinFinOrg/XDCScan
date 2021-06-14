@@ -1,7 +1,7 @@
 {
     "nodeAddr":     "ws.apothem.network",
     "gethPort":     8545,
-    "WSURL": "ws://149.28.167.190:8555",
+    "WSURL": "wss://ws.apothem.network",
     "RPCURL": "https://rpc.apothem.network",
     "epoch":900,
     "fRewards":500,
@@ -16,8 +16,8 @@
     "patch":        true,
     "patchBlocks":  100,
     "bulkSize":     100,
-    "CMC_API_KEY":  "50eb3abe-6bff-4243-87f9-36c6dcd29f2f",
-    "wss":          "ws://149.28.167.190:8555",
+    "CMC_API_KEY":  "",
+    "wss":          "wss://ws.apothem.network",
     "settings": {
         "useRichList": true,
         "useFiat": true,
