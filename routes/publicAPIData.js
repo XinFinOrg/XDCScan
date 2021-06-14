@@ -44,11 +44,38 @@ var eth_estimateGas = "eth_estimateGas";
 
 var tokensupply = "tokensupply";
 
+
+/**
+ * Begin adding APIs
+ * Author Luke
+ * 
+ * 
+ * **/
+var xdc_marketprice =  "xdc_marketprice";
+
+var total_tokenholder =  "total_tokenholders";
+
+var tokenholders = "tokenholders";
+
+var tokeninfo = "tokeninfo";
+
+var tokentransfers = "tokentransfers";
+/**
+ * End adding APIs
+ * Author Luke
+ * 
+ * 
+ * **/
+
 var mongoose = require( 'mongoose' );
 var Block = mongoose.model('Block');
 var Transaction = mongoose.model('Transaction');
 var Contract = mongoose.model('Contract');
 var LogEvent = mongoose.model('LogEvent');
+var Market = mongoose.model('Market');
+var TokenHolder = mongoose.model("TokenHolder");
+var TokenTransfer = mongoose.model("TokenTransfer")
+
 
 var requestParam = function(req, param){
   var p = req.query[param];
@@ -67,6 +94,117 @@ module.exports = async function(req, res){
         methodName = req.query.action;
       
       switch(methodName){
+        /**
+         * begin adding new APIs's code
+         * Author: Luke
+         * 
+         * 
+         */
+         // Get current xdc_marketprice
+         case xdc_marketprice:
+            marketprice = Market.findOne({}, ["symbol", "timestamp", "quoteBTC", "quoteEUR", "quoteINR", "quoteUSD", "volume_24h", "percent_change_24h"]).sort({"timestamp":-1}).limit(1);
+            marketprice.exec(function (err, docs) {
+              if(err)
+                responseFail(res, respData, err.toString());
+              else{
+                sendData(res, respData, docs);
+              }
+            });
+            break;
+         
+          // Get current total contract holder that have balance > 0
+          case total_tokenholder:
+            var tokencontract = requestParam(req, "contractaddress");
+
+            total = TokenHolder.find(
+                                      {
+                                        "tokenContract": tokencontract.toString().toLowerCase(),
+                                        "balance":{$ne: "0"}  
+                                      }
+                                    ).count();
+
+            total.exec(function(err, docs){
+              if(err){
+                responseFail(res, respData, err.toString());
+              }else{
+                sendData(res, respData, docs);
+              }
+
+            });
+
+            break
+          
+
+          // Get all contract holder address that have balance > 0 with limit
+          case tokenholders:
+            var tokencontract = requestParam(req, "contractaddress");
+            var limit = Number(requestParam(req, "limit"));
+            holders = TokenHolder.find(
+                                      {
+                                        "tokenContract": tokencontract.toString().toLowerCase(),
+                                        "balance":{$ne: "0"}  
+                                      },
+                                      ["address", "balance"]
+                                    ).limit(limit);
+
+            holders.exec(function(err, docs){
+              if(err){
+                responseFail(res, respData, err.toString());
+              }else{
+                sendData(res, respData, docs);
+              }
+
+            });
+
+            break;
+          
+          
+          // get the token info of the address
+          case tokeninfo:
+            contractaddress=requestParam(req, "contractaddress");
+            Contract.findOne(
+                      {'address':contractaddress},
+                      ["address", "ERC", "blockNumber", "creationTransaction", "owner", "decimals", "symbol", "tokenName", "totalSupply"]
+                   ).exec(function(err, doc){
+              if(err){
+                responseFail(res, respData, err.toString());
+              }else if(doc==null){
+                respData.result = "";
+                responseFail(res, respData, "not exist");
+              }else{
+
+                sendData(res, respData, doc);
+                // sendData(res, respData, doc.creationTransaction);
+              }
+            });
+            break;
+
+          // get all transfers of the token contract address
+          case tokentransfers:
+            var tokencontract = requestParam(req, "contractaddress");
+            var limit = Number(requestParam(req, "limit"));
+            transfers = TokenTransfer.find(
+                                      {
+                                        "contract": {$regex: tokencontract.toString().toLowerCase(), $options: "i"}
+                                      }
+                                    ).limit(limit);
+
+            transfers.exec(function(err, docs){
+              if(err){
+                responseFail(res, respData, err.toString());
+              }else{
+                sendData(res, respData, docs);
+              }
+
+            });
+
+            break;
+        /**
+         * End adding new APIs's code
+         * Author: Luke
+         * 
+         * 
+         */
         case totalXDC:
           onlyValue = requestParam(req, "onlyValue");
           value = (37500000000+5.55*totalBlockNum).toFixed();
@@ -87,6 +225,7 @@ module.exports = async function(req, res){
             sendData(res, respData, value);
           }
           break;
+
         case balance:
           address = requestParam(req, "address");
           sendData(res, respData, await eth.getBalance(address));
@@ -104,6 +243,7 @@ module.exports = async function(req, res){
           }
           sendData(res, respData, arr);
           break;
+
         case txlist:
           address = requestParam(req, "address");
           var pageSize = Number(requestParam(req, "pageSize"));
@@ -121,6 +261,7 @@ module.exports = async function(req, res){
             }
           });
           break;
+
         case txlistinternal:
           address = requestParam(req, "address");
           var transactionPage = requestParam(req, "page");
@@ -368,11 +509,13 @@ module.exports = async function(req, res){
                 respData.result = "";
                 responseFail(res, respData, "not exist");
               }else{
+                
                 sendData(res, respData, doc.totalSupply);
+                // sendData(res, respData, doc.creationTransaction);
               }
             });
             break;
-            beak;
+
           case masterNodeVer:
             var blockFind = Block.find( { "timestamp":{$gt:1535731200}}).lean(true);
             blockFind.exec(function (err, docs) {

@@ -555,23 +555,17 @@ ul.social-sharing li a {
     -webkit-border-radius: 50%!important;
     border-radius: 50%!important;
     text-align: center;
-    width: 14px;
-    height: 14px;
+    width: 28px;
+    height: 28px;
     font-size: 12px;
     color: #FFFFFF;
 	line-height: 28px;
 }
 ul.social-sharing li i {
-    color: #77838f;
     margin: 0;
     line-height: 40px;
     text-align: center;
 }
-
-ul.social-sharing li i:hover {
-    color: #3498db;
-}
-
 .icoTwitter {background-color:rgba(0,172,238,0.9)}
 .icoLinkedin {background-color:rgba(14,118,168,0.9)}
 .icoFacebook {background-color:rgba(68,102,153,0.9)}
