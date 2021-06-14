@@ -23,6 +23,7 @@ module.exports = function (req, res) {
   }
 
   if (req.body.action == "compile") {
+    // console.log(req.body);
     compileSolc(req, res);
   } else if (req.body.action == "find") {
     Contract.findContract(req.body.addr, res);
@@ -70,6 +71,13 @@ var compileSolc = async function (req, res) {
   }
 
   var targetSolc = soliCompCache[version];
+
+  console.log("targetSolc");
+  console.log("targetSolc");
+  console.log(targetSolc);
+  console.log("targetSolc");
+  console.log("targetSolc");
+
   if (!targetSolc) {
     try {
       // latest version doesn't need to be loaded remotely
