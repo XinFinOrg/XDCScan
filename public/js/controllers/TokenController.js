@@ -154,6 +154,7 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
         console.log("【request】 tokenHolder " + address);
         var rank = 1;
         var total = 0;
+        
         resp.data.forEach(function(record){
 
           /**
@@ -161,23 +162,32 @@ angular.module('BlocksApp').controller('TokenController', function($stateParams,
            * 
            */
 
-           record.rank = rank;
-
  
-           record.quantity = record.balance/parseFloat(10**parseInt($scope.token.decimals));
+           record.quantity = Number(record.balance)/parseFloat(10**parseInt($scope.token.decimals));
            record.value = record.quantity * parseFloat($scope.token.tokenPrice);
-           rank ++;
-           console.log(rank)
            total += record.quantity;
         })
+        
+        
+
+        
+        resp.data.sort(function(a, b) {
+          return  b.quantity - a.quantity;
+        });
 
         resp.data.forEach(function(record){
-           record.percentage = record.quantity*100/total;
-        })
+          record.rank = rank;
+          record.percentage = record.quantity*100/total;
+          rank += 1
+       })
+
+        
         console.log(resp);
         $scope.holderPage = holderPage;
         $scope.token_holders = resp.data;
 
+
+        
       });
     }
 

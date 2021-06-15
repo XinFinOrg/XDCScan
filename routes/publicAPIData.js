@@ -55,7 +55,7 @@ var xdc_marketprice =  "xdc_marketprice";
 
 var total_tokenholder =  "total_tokenholders";
 
-var tokenholders = "tokenholders";
+var tokenholders = "tokenholder";
 
 var tokeninfo = "tokeninfo";
 
@@ -139,13 +139,9 @@ module.exports = async function(req, res){
           case tokenholders:
             var tokencontract = requestParam(req, "contractaddress");
             var limit = Number(requestParam(req, "limit"));
-            holders = TokenHolder.find(
-                                      {
-                                        "tokenContract": tokencontract.toString().toLowerCase(),
-                                        "balance":{$ne: "0"}  
-                                      },
-                                      ["address", "balance"]
-                                    ).limit(limit);
+            holders = TokenHolder.find({"tokenContract": { $regex: new RegExp(contractAddress, "i") },
+                                         "balance": {$nin: ["0", 0]}}
+                                      ).limit(limit);
 
             holders.exec(function(err, docs){
               if(err){

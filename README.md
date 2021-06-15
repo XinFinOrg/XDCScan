@@ -24,5 +24,8 @@ You can leave sync.js running without app.js and it will sync and grab blocks ba
 `node ./tools/sync.js`
 
 First you have to run the following to update the current database:
+fill_token_holders is for update holders to DB when it partially synced and does not want to delete data and resync 
 `node ./tools/fill_token_holders.js`
-`node ./tools/get_balance_of_ERC20_token.js`
+
+sync_all_contract_from_token_transfer is for update contracts that not synced yet for better experience and it will be writting some additional infomation when sync or patcher run to specific block 
+`node ./tools/sync_all_contract_from_token_transfer.js`

@@ -61,17 +61,10 @@ async function updateTokenHolder(item, config, i, len, j) {
 
     
 
-    if(item.tokenContract.localeCompare("xdc63e879f0312256d550821c493e9d11915643afc8") == 0){
-      
-      console.log("in herer");
-      console.log(item);
-      console.log("in herer2");
-      process.exit(1);
-    }
-      
+  
     TokenHolder.update(
       { address: item.address, tokenContract: item.tokenContract},
-      { $setOnInsert: item },
+      { $set: item },
       { upsert: true },
       (err, data) => {
         if (err) {
@@ -98,14 +91,14 @@ data.exec(async function (err, docs) {
                 {
                     "address": docs[i].from.toLowerCase(),
                     "tokenContract": docs[i].contract.toLowerCase(),
-                    "tokenName": "NOT ERC20",
+                    "tokenName": "",
                     "symbol": "ERR",
                     "balance": "0"
                 },
                 {
                     "address": docs[i].to.toLowerCase(),
                     "tokenContract": docs[i].contract.toLowerCase(),
-                    "tokenName": "NOT ERC20",
+                    "tokenName": "",
                     "symbol": "ERR",
                     "balance": "0"
                 }
@@ -147,7 +140,7 @@ data.exec(async function (err, docs) {
 
                         TokenHolder.update(
                             { address: pairs[j].address, tokenContract: pairs[j].tokenContract},
-                            { $setOnInsert: pairs[j] },
+                            { $set: pairs[j] },
                             { upsert: true },
                             (err, data) => {
                               if (err) {
