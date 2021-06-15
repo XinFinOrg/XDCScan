@@ -1,5 +1,8 @@
+const axios = require("axios");
 const json2csv = require('json2csv');
 const mongoose = require('mongoose');
+const FormData = require('form-data');
+const config = require('./config');
 
 const Transaction = mongoose.model('Transaction');
 const TokenTransfer = mongoose.model('TokenTransfer');
@@ -8,11 +11,27 @@ module.exports = async function(req, res){
   console.log('==============================');
   console.log('API export CSV data');
   console.log('req.body', req.body);
-  const type = req.body.type;
+  const gRecaptchaResponse = req.headers['g-recaptcha-response'] || null;
+  if (!gRecaptchaResponse) {
+    return res.status(400).send({ errorCode: 400, message: 'Error! Invalid captcha response.' });
+  }
 
-  let respData;
-  let fields;
-  let fileName;
+  const gFormData = new FormData();
+  gFormData.append('secret', config.GOOGLE_RECAPTCHA_RESPONSE);
+  gFormData.append('response', gRecaptchaResponse);
+  const gRecaptchaConfig = {
+    method: 'post',
+    url: 'https://www.google.com/recaptcha/api/siteverify',
+    headers: { 
+      ...gFormData.getHeaders()
+    },
+    data: gFormData,
+  };
+  const gRecaptchaVerifiedResp = await axios(gRecaptchaConfig);
+
+  if (!gRecaptchaVerifiedResp.data.success) {
+    return res.status(400).send({ errorCode: 400, message: 'Error! Invalid captcha response.', description: gRecaptchaVerifiedResp.data['error-codes'] });
+  }
 
   const dtFormat = new Intl.DateTimeFormat('en-GB', {
     year: 'numeric', month: 'numeric', day: 'numeric',
@@ -20,6 +39,8 @@ module.exports = async function(req, res){
     hour12: false,
     timeZone: 'UTC',
   });
+
+  const type = req.body.type;
   const startAt = req.body.startDate || null;
   const endAt = req.body.endDate || null;
 
@@ -27,6 +48,9 @@ module.exports = async function(req, res){
     return res.status(400).send({ errorCode: 400, message: 'Date filter range is invalid.' });
   }
 
+  let respData;
+  let fields;
+  let fileName;
   if (type === 'address') {
     const address = req.body.address || null;
 

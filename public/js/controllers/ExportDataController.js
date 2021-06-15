@@ -42,6 +42,9 @@ angular.module('BlocksApp').controller('ExportDataController', function($statePa
     $http({
       method: 'POST',
       url: '/exportData',
+      headers: {
+        'g-recaptcha-response': $scope.gRecaptchaResponse,
+      },
       data: {
         type,
         contract,
