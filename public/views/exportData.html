@@ -16,31 +16,51 @@
           <span class="mb-4">
             <label>Export the earliest 5000 records starting from</label>
           </span>
-          <div class="d-flex justify-content-around">
+          <div class="d-flex flex-column flex-md-row justify-content-around">
             <div class="d-flex">
               <span class="input-group-text font-size-base">
                 <i class="far fa-calendar-alt"></i>
               </span>
-              <div class="d-flex align-items-center border border-left-0 rounded-right px-2">
-                <datepicker date-format="MM/dd/yyyy">
-                  <input ng-model="dateRangeStart" type="text" class="border-0" style="cursor: pointer;" readonly="readonly"/>
-                </datepicker>
+              <div class="date-container d-flex flex-grow-1 align-items-center border border-left-0 rounded-right px-2">
+                <div class="datepicker" ng-click="dtOpen('start')">
+                  <input
+                    ng-model="dateRangeStart"
+                    type="text"
+                    class="border-0"
+                    style="cursor: pointer;"
+                    readonly="readonly"
+                    uib-datepicker-popup="MM/dd/yyyy"
+                    is-open="opened.start"
+                    show-weeks="false"
+                    show-button-bar="false"
+                  />
+                </div>
               </div>
             </div>
-            <div class="d-flex col-md-1 align-items-center">To</div>
-            <div class="d-flex">
+            <div class="d-flex col-md-1 align-items-center justify-content-center my-2">To</div>
+            <div class="d-flex w-100">
               <span class="input-group-text font-size-base">
                 <i class="far fa-calendar-alt"></i>
               </span>
-              <div class="d-flex align-items-center border border-left-0 rounded-right px-2">
-                <datepicker date-format="MM/dd/yyyy">
-                  <input ng-model="dateRangeEnd" type="text" class="border-0" style="cursor: pointer;" readonly="readonly"/>
-                </datepicker>
+              <div class="date-container d-flex flex-grow-1 align-items-center border border-left-0 rounded-right px-2">
+                <div class="datepicker" ng-click="dtOpen('end')">
+                  <input
+                    ng-model="dateRangeEnd"
+                    type="text"
+                    class="border-0"
+                    style="cursor: pointer;"
+                    readonly="readonly"
+                    uib-datepicker-popup="MM/dd/yyyy"
+                    is-open="opened.end"
+                    show-weeks="false"
+                    show-button-bar="false"
+                  />
+                </div>
               </div>
-            </div>  
+            </div>
           </div>
           <div class="d-flex justify-content-center my-4">
-            <div vc-recaptcha key="'6LcOCiQbAAAAAD4ZpX2NDKqxpVBSW533jH6qeaX5'" ng-model="gRecaptchaResponse"></div>
+            <div vc-recaptcha key="'6LetmDMbAAAAADyhQJ1K9lxsstNPMVpJMGPC53OS'" ng-model="gRecaptchaResponse"></div>
           </div>
           <div ng-show="!exporting" class="text-center">
             <input type="button" name="submitExportBtn" id="submitExportBtn" value="Download" class="btn btn-sm btn-primary" ng-click="submitExportCSV()">

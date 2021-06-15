@@ -8,6 +8,16 @@ angular.module('BlocksApp').controller('ExportDataController', function($statePa
   $scope.dateRangeStart = $filter('date')(new Date(now.getFullYear(), now.getMonth(), 1), 'MM/dd/yyyy');
   $scope.dateRangeEnd = $filter('date')(new Date(now.getFullYear(), now.getMonth() +1, 0), 'MM/dd/yyyy');
 
+  $scope.opened = {};
+
+  $scope.dtOpen = function(range) {
+    if (range === 'start') {
+      $scope.opened.start = true
+    } else if (range = 'end') {
+      $scope.opened.end = true
+    }
+  }
+
   $scope.submitExportCSV = function () {
     if (!$scope.gRecaptchaResponse) {
       $scope.error = 'Error! Invalid captcha response.';
@@ -23,7 +33,6 @@ angular.module('BlocksApp').controller('ExportDataController', function($statePa
 
     console.log('starting export data...');
     $scope.exporting = true;
-    $("#submitExportBtn").button("loading");
 
     const type = $location.search().type;
     const contract = $location.search().contract;
@@ -42,7 +51,6 @@ angular.module('BlocksApp').controller('ExportDataController', function($statePa
         endDate: Math.round(new Date($scope.dateRangeEnd).getTime() / 1000),
       }
     }).then(function(resp) {
-      $("#submitCodeBtn").button("reset");
       const element = document.createElement('a');
       element.href = 'data:attachment/csv,' + encodeURI(resp.data);
       element.target = '_blank';
