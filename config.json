@@ -18,6 +18,7 @@
     "bulkSize":     100,
     "CMC_API_KEY":  "",
     "wss":          "wss://ws.apothem.network",
+    "GOOGLE_RECAPTCHA_RESPONSE": "6Lfk2DQbAAAAAA3UK787oSPlpJ6odlqwqCOjW2pV",
     "settings": {
         "useRichList": true,
         "useFiat": true,
