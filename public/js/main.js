@@ -4,7 +4,6 @@ var BlocksApp = angular.module("BlocksApp", [
     "oc.lazyLoad",
     "ngSanitize",
     "vcRecaptcha",
-    "720kb.datepicker",
 ]);
 BlocksApp.constant('_', window._); // loadsh
 BlocksApp.config(['$ocLazyLoadProvider',  '$locationProvider',

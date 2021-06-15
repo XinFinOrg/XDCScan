@@ -590,6 +590,24 @@ ul.social-sharing li i:hover {
 
 .contract-verified-heading {font-size:16px;font-weight:400;}
 
+.date-container .datepicker .dropdown-menu li {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.date-container .datepicker .dropdown-menu li .btn-info.active {
+    background-color: #19a0ff;
+    border-color: #19a0ff;
+}
+
+.date-container .datepicker .dropdown-menu li .btn-info.active .text-info {
+    color: #ffffff !important;
+}
+
+.date-container .datepicker .dropdown-menu li:last-child {
+    margin-bottom: 10px;
+}
+
 #submitCodeBtn {position: relative;}
 #submitCodeBtn.spinning {
     background-color: @base;
