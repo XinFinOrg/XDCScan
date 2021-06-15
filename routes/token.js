@@ -152,12 +152,14 @@ module.exports = async function (req, res) {
           var Transaction = mongoose.model('Transaction');
           let TokenTransfer = mongoose.model('TokenTransfer');
           let TokenMetadata = mongoose.model('TokenMetadata');
+          let TokenHolder = mongoose.model('TokenHolder');
+          //TokenHolder.find({"tokenContract": "xdcd18ff933268b05eb7ff6107e9dc169cbf783632c", "balance": {$nin: ["0", 0]}}).count()
           // let tokenHolders = await Transaction.find({ $or: [{ "to": contractAddress }, { "from": contractAddress }], input: { $ne: "0x" } }).distinct("from").count();
-          let tokenHoldersCount = await TokenTransfer.aggregate([
-              { "$match": { "contract": { $regex: new RegExp(contractAddress, "i") } } },
-              { "$group": { _id: { from: "from", to: "$to" } } },
-          ]);
-          tokenData.tokenHolders = (tokenHoldersCount.length * 2);
+
+          let tokenHoldersCount = await TokenHolder.find({"tokenContract": { $regex: new RegExp(contractAddress, "i") }, "balance": {$nin: ["0", 0]}}).count();
+        
+
+          tokenData.tokenHolders = tokenHoldersCount;
 
           var eth = require('./web3relay').eth;
           var config = require('./web3relay').config;
@@ -292,7 +294,7 @@ module.exports = async function (req, res) {
       var findCond;
       
       // fix code 
-      findCond = { 'tokenContract': req.body.address};
+      findCond = {"tokenContract": { $regex: new RegExp(req.body.address, "i") }, "balance": {$nin: ["0", 0]}};
       console.log(findCond);
       if (transferPage < 0)
         transferPage = 0;
