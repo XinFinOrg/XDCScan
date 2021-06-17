@@ -69,7 +69,7 @@
                                     <div class="row align-items-center">
                                         <div class="col-md-4 col-sm-4 fw6 mb-1">Price:</div>
                                         <div class="col-md-8 col-sm-8">
-                                            <div>{{ token.tokenPrice | currency:2 }}</div>
+                                            <div>{{ token.tokenPrice | currency:"$":2 }}</div>
                                         </div>
                                     </div>
                                     <!-- <hr class="hr-space">
@@ -356,7 +356,7 @@
                                                     <td><a href="/addr/{{t.address}}">{{t.address}}</td>
                                                     <td>{{ t.quantity | number }}</td>
                                                     <td>{{ t.percentage | percentage:6 }}</td>
-                                                    <td>${{ t.value | currency:2 }}</td>
+                                                    <td>{{ t.value | currency:"$":2 }}</td>
                                                     <td></td>
 
                                                 </tr>
