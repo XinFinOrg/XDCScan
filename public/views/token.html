@@ -256,12 +256,14 @@
                         <div class="card-header d-flex justify-content-between align-items-center p-0">
                             <!-- Nav tabs -->
                             <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
-                                <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link active"
+                                <!-- <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link active"
                                         href="#internalTransactions" role="tab" data-toggle="tab">Contract
-                                        Transactions</a></li>
+                                        Transactions</a></li> -->
                                 <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link"
-                                        href="#tokenTransfers" role="tab" data-toggle="tab">Transfers</a></li>
-                                <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link" href="#tokenHolders"
+                                        ng-class="{ 'active': activeTab === 'tokenTransfers' }" href="#tokenTransfers"
+                                        role="tab" data-toggle="tab">Transfers</a></li>
+                                <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link"
+                                        ng-class="{ 'active': activeTab === 'tokenHolders' }" href="#tokenHolders"
                                         role="tab" data-toggle="tab">Token Holders</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#contractSource" role="tab"
                                         data-toggle="tab">Contract Source</a></li>
@@ -272,7 +274,8 @@
                         <div id="block-overview" class="card-body">
 
                             <div class="tab-content">
-                                <div class="tab-pane fade" id="tokenTransfers">
+                                <div class="tab-pane fade" ng-class="{ 'active show': activeTab === 'tokenTransfers' }"
+                                    id="tokenTransfers">
                                     <transfer-tokens>
                                         <div class="table-responsive">
                                             <table id="address-transaction" class="table table-hover nowrap"
@@ -316,11 +319,23 @@
                                             </table>
                                         </div>
                                     </transfer-tokens>
+                                    <div class="row my-4">
+                                        <div class="col text-right">
+                                            <span class="float-right" data-toggle="tooltip" title=""
+                                                data-original-title="Export records in CSV format">
+                                                <font size="1">[ Download <a
+                                                        href="/exportData?type=tokentxns&amp;contract={{addrHash}}&amp;a=&amp;decimals={{token.decimals}}"
+                                                        target="_blank"><b> CSV Export</b></a>&nbsp;<span
+                                                        class="fas fa-download text-secondary"></span> ]</font>&nbsp;
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
 
 
 
-                                <div class="tab-pane fade" id="tokenHolders">
+                                <div class="tab-pane fade" ng-class="{ 'active show': activeTab === 'tokenHolders' }"
+                                    id="tokenHolders">
                                     <div class="table-responsive">
                                         <table id="internal-transaction" class="table table-hover nowrap"
                                             style="width:100%">
@@ -339,9 +354,9 @@
                                                 <tr ng-repeat="t in token_holders track by $index">
                                                     <td>{{t.rank}}</td>
                                                     <td><a href="/addr/{{t.address}}">{{t.address}}</td>
-                                                    <td>{{t.quantity}}</td>
-                                                    <td>{{t.percentage}} %</td>
-                                                    <td>{{t.value}}$</td>
+                                                    <td>{{ t.quantity | number }}</td>
+                                                    <td>{{ t.percentage | percentage:6 }}</td>
+                                                    <td>${{ t.value | currency:2 }}</td>
                                                     <td></td>
 
                                                 </tr>
@@ -352,7 +367,7 @@
 
 
 
-                                <div class="tab-pane fade active show" id="internalTransactions">
+                                <!-- <div class="tab-pane fade active show" id="internalTransactions">
                                     <div class="table-responsive">
                                         <table id="internal-transaction" class="table table-hover nowrap"
                                             style="width:100%">
@@ -384,8 +399,8 @@
                                                             href="/tokenAcc/{{token.address}}{{t.to}}"
                                                             class="hash-tag text-truncate">{{t.to}}</a> </td>
                                                     <td>{{t.value}}</td>
-                                                    <!--td style="text-align:right"> {{t.amount}} </td>
-                                              <td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
+                                                    <td style="text-align:right"> {{t.amount}} </td>
+                                                    <td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -401,7 +416,7 @@
                                             </span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="tab-pane fade" id="contractSource">
                                     <contract-source></contract-source>

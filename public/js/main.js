@@ -437,12 +437,12 @@ BlocksApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
             }
         })
 }]);
+
 BlocksApp.filter('timeDuration', function() {
   return function(timestamp) {
     return getDuration(timestamp).toString();
   };
 })
-
 
 .filter('teraHashes', function() {
     return function(hashes) {
@@ -450,6 +450,13 @@ BlocksApp.filter('timeDuration', function() {
         return parseInt(result);
   }
 })
+
+.filter('percentage', ['$filter', function($filter) {
+    return function(input, decimals) {
+        return $filter('number')(input*100, decimals)+'%';
+    };
+}]);
+
 /* Init global settings and run the app */
 BlocksApp.run(["$rootScope", "settings", "$state", "setupObj", function($rootScope, settings, $state, setupObj) {
     $rootScope.$state = $state; // state to be accessed from view
