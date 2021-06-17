@@ -5,8 +5,9 @@ angular.module('BlocksApp').controller('ExportDataController', function($statePa
   });
 
   const now = new Date();
+  $scope.maxDate = new Date();
   $scope.dateRangeStart = $filter('date')(new Date(now.getFullYear(), now.getMonth(), 1), 'MM/dd/yyyy');
-  $scope.dateRangeEnd = $filter('date')(new Date(now.getFullYear(), now.getMonth() +1, 0), 'MM/dd/yyyy');
+  $scope.dateRangeEnd = $filter('date')(new Date(), 'MM/dd/yyyy');
 
   $scope.opened = {};
 
