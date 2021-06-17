@@ -144,7 +144,7 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
     }).then(function(repData) {
       repData.data.forEach(function(record){
         var decimals = parseInt($scope.token.decimals);
-        if(isNAN(decimals))
+        if(isNaN(decimals))
           record.amount = record.amount;
         else
           record.amount = record.amount/(10**decimals);
