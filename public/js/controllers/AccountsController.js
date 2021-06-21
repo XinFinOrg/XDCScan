@@ -20,10 +20,10 @@ angular.module('BlocksApp').controller('AccountsController', function($statePara
           $scope.totalAccounts = resp.data.recordsTotal;
 
           // fixup data to show percentages
-          var newdata = resp.data.data.map(function(item) {
+          var newData = resp.data.data.map(function(item) {
             return [item[0], item[1], item[2], item[3], (item[3] / $scope.totalSupply) * 100, item[4]];
           });
-          resp.data.data = newdata;
+          resp.data.data = newData;
           callback(resp.data);
         });
       },
@@ -36,7 +36,7 @@ angular.module('BlocksApp').controller('AccountsController', function($statePara
         [3, "desc"]
       ],
       language: {
-        lengthMenu: "_MENU_ accounts",
+        lengthMenu: "_MENU_ Accounts",
         zeroRecords: "No accounts found",
         infoEmpty: "",
         infoFiltered: "(filtered from _MAX_ total accounts)"
