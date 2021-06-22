@@ -85,7 +85,7 @@
                                                     </ng-pluralize>
                                                 </span>
                                                 <!-- <a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View previous block"><i class="fa fa-chevron-left"></i></a>
-															<a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View next block"><i class="fa fa-chevron-right"></i></a> -->
+                              <a class="btn btn-xs btn-icon btn-soft-info mt-1 mr-1" href="#" data-container="body" data-toggle="tooltip" data-placement="top" title="View next block"><i class="fa fa-chevron-right"></i></a> -->
                                             </div>
                                         </div>
                                     </div>
@@ -197,7 +197,7 @@
                                                             0 XDC </div>
                                                     </div> -->
                                     </div>
-                                    <hr class="hr-space">
+                                    <hr class="hr-space" ng-show="tx.tokensTrasferred">
 
                                     <div class="row align-items-center" ng-show="tx.tokensTrasferred">
                                         <hr class="hr-space">
@@ -227,7 +227,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <hr class="hr-space">
+                                    <hr class="hr-space" ng-show="tx.tokensTrasferred">
                                     <div class="row align-items-center" ng-show="tx.tokensTrasferred">
                                         <hr class="hr-space">
                                         <div class="col-md-3 fw6 mb-1">
@@ -445,26 +445,25 @@
 
 
     <!-- Mobileview Advertisement Banners Starts 
-<section id="advertisement-banners-mobileview">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="extraimg-banners d-block d-lg-none text-center pl-lg-4 pl-xll-5 mb-4">
-                    <a class="d-inline-block d-sm-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
-                        <img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip" />
-                    </a>
-                    <a class="d-none d-sm-inline-block d-lg-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
-                        <img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_730X90.jpg" alt="XcelTrip" />
-                    </a>
-                    <a class="d-none d-lg-inline-block position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
-                        <img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip" />
-                    </a>
+    <section id="advertisement-banners-mobileview">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="extraimg-banners d-block d-lg-none text-center pl-lg-4 pl-xll-5 mb-4">
+                        <a class="d-inline-block d-sm-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            <img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip" />
+                        </a>
+                        <a class="d-none d-sm-inline-block d-lg-none position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            <img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_730X90.jpg" alt="XcelTrip" />
+                        </a>
+                        <a class="d-none d-lg-inline-block position-relative text-dark" target="_blank" href="https://www.xceltrip.com/">
+                            <img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip" />
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
-<!-- Mobileview Advertisement Banners Ends -->
+    </section> Mobileview Advertisement Banners Ends -->
 
 
     <!-- Mobileview Advertisement Banners Starts -->
@@ -519,27 +518,26 @@
                             </div>
                         </div>
 
-                        <!-- splide 
-                    <div id="splide">    
-                        <div class="splide__track" id="splide-track">
-                            <ul class="splide__list">
-                                <li class="splide__slide">
-                                    <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/dcentWallet_730X90.jpg" alt="D'CENT Biometric Wallet"></a>
-                                </li>                      
-                                <li class="splide__slide">
-                                    <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_730X90.jpg" alt="XcelTrip"></a>
-                                </li>                            
-                                <li class="splide__slide">
-                                    <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/tradefinex_730X90.jpg" alt="TradeFinex"></a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="d-inline-block d-sm-none" href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
-                                    <a class="d-none d-sm-inline-block d-lg-none" href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_730X90.jpg" alt="MyContract"></a>
-                                    <a class="d-none d-lg-inline-block" href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
-                                </li>
-                            </ul>
-                        </div>
-                    </div> -->
+                        <!-- <div id="splide">    
+                            <div class="splide__track" id="splide-track">
+                                <ul class="splide__list">
+                                    <li class="splide__slide">
+                                        <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/dcentWallet_730X90.jpg" alt="D'CENT Biometric Wallet"></a>
+                                    </li>                      
+                                    <li class="splide__slide">
+                                        <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/xceltrip_730X90.jpg" alt="XcelTrip"></a>
+                                    </li>                            
+                                    <li class="splide__slide">
+                                        <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/tradefinex_730X90.jpg" alt="TradeFinex"></a>
+                                    </li>
+                                    <li class="splide__slide">
+                                        <a class="d-inline-block d-sm-none" href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                        <a class="d-none d-sm-inline-block d-lg-none" href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_730X90.jpg" alt="MyContract"></a>
+                                        <a class="d-none d-lg-inline-block" href="https://www.mycontract.co/" target="_blank"><img class="img-fluid rounded-7" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> -->
                     </div>
                 </div>
             </div>

@@ -59,6 +59,14 @@ console.log(`Connecting ${config.nodeAddr}:${config.wsPort}...`);
 const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 
 const normalizeTX = async (txData, receipt, blockData) => {
+  if (!txData || !receipt || !blockData) {
+    console.log('================================');
+    console.log('txData', txData);
+    console.log('receipt', receipt);
+    console.log('blockData', blockData);
+    console.log('================================');
+  }
+
   const tx = {
     blockHash: txData.blockHash,
     blockNumber: txData.blockNumber,
@@ -135,15 +143,6 @@ var writeBlockToDB = function (config, blockData, flush) {
   Break transactions out of blocks and write to DB
 **/
 const writeTransactionsToDB = async (config, blockData, flush) => {
-  // console.log(blockData)
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-
   const self = writeTransactionsToDB;
   if (!self.bulkOps) {
     self.bulkOps = [];
@@ -174,7 +173,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           const contractdb = {};
           let isTokenContract = true;
           const Token = new web3.eth.Contract(ERC20ABI, contractAddress);
-          contractdb.owner = txData.from.toLowerCase();
+          contractdb.owner = txData.from;
           contractdb.blockNumber = blockData.number;
           contractdb.creationTransaction = txData.hash;
           //console.log(contractdb,"contractdb")
@@ -228,17 +227,9 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           };
           const methodCode = txData.input.substr(0, 10);
           if (ERC20_METHOD_DIC[methodCode] === 'transfer' || ERC20_METHOD_DIC[methodCode] === 'transferFrom') {
-            console.log(blockData)
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
             if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
               // Token transfer transaction
-              transfer.from = txData.from.toLowerCase();
+              transfer.from = txData.from;
               transfer.to = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
               transfer.value = Number(`0x${txData.input.substring(74).toLowerCase()}`);
             } else {
@@ -268,7 +259,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
              * 
              * **/
 
-             const insertdata = {
+             const insertData = {
 
               "tokenName": "",
               "symbol": "",
@@ -277,18 +268,26 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           
           const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
           const contract_object = new web3.eth.Contract(ERC20ABI, transfer.contract);
-          insertdata.tokenName = await contract_object.methods.name().call();
-          insertdata.symbol = await contract_object.methods.symbol().call();
-          const balanceFrom = Number(await contract_object.methods.balanceOf(transfer.from).call());
-          const balanceTo = Number(await contract_object.methods.balanceOf(transfer.to).call());
+
+          let balanceFrom;
+          let balanceTo;
+          try {
+            insertData.tokenName = await contract_object.methods.name().call();
+            insertData.symbol = await contract_object.methods.symbol().call();
+            balanceFrom = Number(await contract_object.methods.balanceOf(transfer.from).call());
+            balanceTo = Number(await contract_object.methods.balanceOf(transfer.to).call());
+          } catch (error) {
+            console.warn(`Contract ${transfer.contract} does not match with ERC-20 interface. { error: ${error} }`);
+            return;
+          }
           
-          // insertdata.tokenContract = transfer.contract.toLowerCase();
-          // insertdata.address = transfer.from.toLowerCase();
-          insertdata.balance = balanceFrom;
+          // insertData.tokenContract = transfer.contract.toLowerCase();
+          // insertData.address = transfer.from.toLowerCase();
+          insertData.balance = balanceFrom;
 
           TokenHolder.update(
             { address: transfer.from.toLowerCase(), tokenContract: transfer.contract.toLowerCase()},
-            { $set: insertdata },
+            { $set: insertData },
             { upsert: true },
             (err, data) => {
               if (err) {
@@ -300,10 +299,10 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             },
           );
 
-          insertdata.balance = balanceTo;
+          insertData.balance = balanceTo;
           TokenHolder.update(
             { address: transfer.to.toLowerCase(), tokenContract: transfer.contract.toLowerCase()},
-            { $set: insertdata },
+            { $set: insertData },
             { upsert: true },
             (err, data) => {
               if (err) {
@@ -493,6 +492,7 @@ var syncChain = function (config, nextBlock) {
     }
 
     let count = config.bulkSize;
+    console.log(`Syncing chain from #${nextBlock} -> #${nextBlock - count}`);
     while (nextBlock >= config.startBlock && count > 0) {
       web3.eth.getBlock(nextBlock, true, (error, blockData) => {
         if (error) {
