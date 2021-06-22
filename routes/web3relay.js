@@ -301,7 +301,9 @@ exports.data = async (req, res) => {
       var txHash = req.body.tx.toLowerCase();
       const doc = await Transaction.findOne({ hash: txHash }).lean(true);
       if (!doc) {
+        console.warn(`Transaction ${txHash} not found in db. Fetching from network...`);
         const tx = await web3.eth.getTransaction(txHash);
+        const txReceipt = await web3.eth.getTransactionReceipt(txHash);
         if (!tx) {
           const block = await web3.eth.getBlock(txHash);
           if (!block) {
@@ -318,6 +320,7 @@ exports.data = async (req, res) => {
             ttx.timestamp = block.timestamp;
             ttx.isTrace = ttx.input != "0x";
             transactionResponse = ttx;
+            transactionResponse.status = txReceipt.status;
           }
         }
       } else {
@@ -345,9 +348,9 @@ exports.data = async (req, res) => {
           from: transfer.from,
           to: transfer.to,
           value: value,
-          tokenName: contractDetail.tokenName,
-          symbol: contractDetail.symbol,
-          address: contractDetail.address,
+          tokenName: contractDetail ? contractDetail.tokenName : '',
+          symbol: contractDetail ? contractDetail.symbol : '',
+          address: contractDetail ? contractDetail.address : transfer.contract.toLowerCase(),
         };
       }
 
