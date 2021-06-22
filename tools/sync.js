@@ -4,30 +4,32 @@ Version: .0.0.2
 This file will start syncing the blockchain from the node address you provide in the conf.json file.
 Please read the README in the root directory that explains the parameters of this code
 */
-require('../db.js');
-const BigNumber = require('bignumber.js');
-const _ = require('lodash');
+require("../db.js");
+const BigNumber = require("bignumber.js");
+const _ = require("lodash");
 
-const asyncL = require('async');
-const Web3 = require('xdc3');
+const asyncL = require("async");
+const Web3 = require("xdc3");
 
-let ERC20ABI = require('../contractTpl/contracts').ERC20ABI
+let ERC20ABI = require("../contractTpl/contracts").ERC20ABI;
 
-const fetch = require('node-fetch');
+const fetch = require("node-fetch");
 
-const mongoose = require('mongoose');
-const etherUnits = require('../lib/etherUnits.js');
-const { Market } = require('../db.js');
+const mongoose = require("mongoose");
+const etherUnits = require("../lib/etherUnits.js");
+const { Market } = require("../db.js");
 
-const Block = mongoose.model('Block');
-const Transaction = mongoose.model('Transaction');
-const Account = mongoose.model('Account');
-const Contract = mongoose.model('Contract');
-const TokenTransfer = mongoose.model('TokenTransfer');
-const TokenHolder = mongoose.model('TokenHolder');
+const Block = mongoose.model("Block");
+const Transaction = mongoose.model("Transaction");
+const Account = mongoose.model("Account");
+const Contract = mongoose.model("Contract");
+const TokenTransfer = mongoose.model("TokenTransfer");
+const TokenHolder = mongoose.model("TokenHolder");
 
-
-const ERC20_METHOD_DIC = { '0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom' };
+const ERC20_METHOD_DIC = {
+  "0xa9059cbb": "transfer",
+  "0xa978501e": "transferFrom",
+};
 
 /**
   Start config for node connection and sync
@@ -38,16 +40,18 @@ const ERC20_METHOD_DIC = { '0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom
  * bulkSize: size of array in block to use bulk operation
  */
 // load config.json
-const config = { nodeAddr: 'localhost', wsPort: 8555, bulkSize: 100 };
+const config = { nodeAddr: "localhost", wsPort: 8555, bulkSize: 100 };
 try {
-  var local = require('../config.json');
+  var local = require("../config.json");
   _.extend(config, local);
-  console.log('config.json found.');
+  console.log("config.json found.");
 } catch (error) {
-  if (error.code === 'MODULE_NOT_FOUND') {
-    var local = require('../config.example.json');
+  if (error.code === "MODULE_NOT_FOUND") {
+    var local = require("../config.example.json");
     _.extend(config, local);
-    console.log('No config file found. Using default configuration... (config.example.json)');
+    console.log(
+      "No config file found. Using default configuration... (config.example.json)"
+    );
   } else {
     throw error;
     process.exit(1);
@@ -60,11 +64,11 @@ const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
 
 const normalizeTX = async (txData, receipt, blockData) => {
   if (!txData || !receipt || !blockData) {
-    console.log('================================');
-    console.log('txData', txData);
-    console.log('receipt', receipt);
-    console.log('blockData', blockData);
-    console.log('================================');
+    console.log("================================");
+    console.log("txData", txData);
+    console.log("receipt", receipt);
+    console.log("blockData", blockData);
+    console.log("================================");
   }
 
   const tx = {
@@ -72,7 +76,7 @@ const normalizeTX = async (txData, receipt, blockData) => {
     blockNumber: txData.blockNumber,
     from: txData.from.toLowerCase(),
     hash: txData.hash.toLowerCase(),
-    value: etherUnits.toEther(new BigNumber(txData.value), 'wei'),
+    value: etherUnits.toEther(new BigNumber(txData.value), "wei"),
     nonce: txData.nonce,
     r: txData.r,
     s: txData.s,
@@ -111,20 +115,23 @@ var writeBlockToDB = function (config, blockData, flush) {
   }
   if (blockData && blockData.number >= 0) {
     self.bulkOps.push(new Block(blockData));
-    if (!('quiet' in config && config.quiet === true)) {
+    if (!("quiet" in config && config.quiet === true)) {
       console.log(`\t- block #${blockData.number.toString()} inserted.`);
     }
   }
 
-  if (flush && self.bulkOps.length > 0 || self.bulkOps.length >= config.bulkSize) {
+  if (
+    (flush && self.bulkOps.length > 0) ||
+    self.bulkOps.length >= config.bulkSize
+  ) {
     const bulk = self.bulkOps;
     self.bulkOps = [];
     if (bulk.length === 0) return;
 
     Block.collection.insert(bulk, (err, blocks) => {
-      if (typeof err !== 'undefined' && err) {
+      if (typeof err !== "undefined" && err) {
         if (err.code === 11000) {
-          if (!('quiet' in config && config.quiet === true)) {
+          if (!("quiet" in config && config.quiet === true)) {
             console.log(`Skip: Duplicate DB key : ${err}`);
           }
         } else {
@@ -132,7 +139,7 @@ var writeBlockToDB = function (config, blockData, flush) {
           process.exit(9);
         }
       } else {
-        if (!('quiet' in config && config.quiet === true)) {
+        if (!("quiet" in config && config.quiet === true)) {
           console.log(`* ${blocks.insertedCount} blocks successfully written.`);
         }
       }
@@ -153,7 +160,11 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     self.miners = [];
   }
   if (blockData) {
-    self.miners.push({ address: blockData.miner, blockNumber: blockData.number, type: 0 });
+    self.miners.push({
+      address: blockData.miner,
+      blockNumber: blockData.number,
+      type: 0,
+    });
   }
   if (blockData && blockData.transactions.length > 0) {
     for (d in blockData.transactions) {
@@ -179,10 +190,13 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           //console.log(contractdb,"contractdb")
 
           try {
-            const call = await web3.eth.call({ to: contractAddress, data: web3.utils.sha3('totalSupply()') });
+            const call = await web3.eth.call({
+              to: contractAddress,
+              data: web3.utils.sha3("totalSupply()"),
+            });
             // console.log(contractdb,"contractdb")
 
-            if (call === '0x') {
+            if (call === "0x") {
               isTokenContract = false;
             } else {
               try {
@@ -190,7 +204,9 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
                 contractdb.tokenName = await Token.methods.name().call();
                 contractdb.decimals = await Token.methods.decimals().call();
                 contractdb.symbol = await Token.methods.symbol().call();
-                contractdb.totalSupply = await Token.methods.totalSupply().call();
+                contractdb.totalSupply = await Token.methods
+                  .totalSupply()
+                  .call();
                 // console.log(contractdb,"contractdb")
               } catch (err) {
                 isTokenContract = false;
@@ -216,26 +232,42 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
               if (err) {
                 console.log(err);
               }
-    
-            },
+            }
           );
         } else {
           //'0xa9059cbb': 'transfer', '0xa978501e': 'transferFrom'
           // Internal transaction  . write to doc of InternalTx
           const transfer = {
-            'hash': '', 'blockNumber': 0, 'from': '', 'to': '', 'contract': '', 'value': 0, 'timestamp': 0,
+            hash: "",
+            blockNumber: 0,
+            from: "",
+            to: "",
+            contract: "",
+            value: 0,
+            timestamp: 0,
           };
           const methodCode = txData.input.substr(0, 10);
-          if (ERC20_METHOD_DIC[methodCode] === 'transfer' || ERC20_METHOD_DIC[methodCode] === 'transferFrom') {
-            if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
+          if (
+            ERC20_METHOD_DIC[methodCode] === "transfer" ||
+            ERC20_METHOD_DIC[methodCode] === "transferFrom"
+          ) {
+            if (ERC20_METHOD_DIC[methodCode] === "transfer") {
               // Token transfer transaction
               transfer.from = txData.from;
-              transfer.to = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
-              transfer.value = Number(`0x${txData.input.substring(74).toLowerCase()}`);
+              transfer.to = `xdc${txData.input
+                .substring(34, 74)
+                .toLowerCase()}`;
+              transfer.value = Number(
+                `0x${txData.input.substring(74).toLowerCase()}`
+              );
             } else {
               // transferFrom
-              transfer.from = `xdc${txData.input.substring(34, 74).toLowerCase()}`;
-              transfer.to = `xdc${txData.input.substring(74, 114).toLowerCase()}`;
+              transfer.from = `xdc${txData.input
+                .substring(34, 74)
+                .toLowerCase()}`;
+              transfer.to = `xdc${txData.input
+                .substring(74, 114)
+                .toLowerCase()}`;
               transfer.value = Number(`0x${txData.input.substring(114)}`);
             }
             transfer.method = ERC20_METHOD_DIC[methodCode];
@@ -249,82 +281,98 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
              * Company: sotatek
              * Country: Vietnam
              * PhoneNumber: +84 386743836
-             * 
-             * Patch date: 04/05/2021
-             * 
-             * Newly updated code
-             * 
              *
-             * 
-             * 
+             * Patch date: 04/05/2021
+             *
+             * Newly updated code
+             *
+             *
+             *
+             *
              * **/
 
-             const insertData = {
+            const insertData = {
+              tokenName: "",
+              symbol: "",
+              balance: 0,
+            };
 
-              "tokenName": "",
-              "symbol": "",
-              "balance": 0
-          };
-          
-          const web3 = new Web3(new Web3.providers.WebsocketProvider(config.WSURL));
-          const contract_object = new web3.eth.Contract(ERC20ABI, transfer.contract);
+            const web3 = new Web3(
+              new Web3.providers.WebsocketProvider(config.WSURL)
+            );
+            const contract_object = new web3.eth.Contract(
+              ERC20ABI,
+              transfer.contract
+            );
 
-          let balanceFrom;
-          let balanceTo;
-          try {
-            insertData.tokenName = await contract_object.methods.name().call();
-            insertData.symbol = await contract_object.methods.symbol().call();
-            balanceFrom = Number(await contract_object.methods.balanceOf(transfer.from).call());
-            balanceTo = Number(await contract_object.methods.balanceOf(transfer.to).call());
-          } catch (error) {
-            console.warn(`Contract ${transfer.contract} does not match with ERC-20 interface. { error: ${error} }`);
-            return;
-          }
-          
-          // insertData.tokenContract = transfer.contract.toLowerCase();
-          // insertData.address = transfer.from.toLowerCase();
-          insertData.balance = balanceFrom;
+            let balanceFrom;
+            let balanceTo;
+            try {
+              insertData.tokenName = await contract_object.methods
+                .name()
+                .call();
+              insertData.symbol = await contract_object.methods.symbol().call();
+              balanceFrom = Number(
+                await contract_object.methods.balanceOf(transfer.from).call()
+              );
+              balanceTo = Number(
+                await contract_object.methods.balanceOf(transfer.to).call()
+              );
+            } catch (error) {
+              console.warn(
+                `Contract ${transfer.contract} does not match with ERC-20 interface. { error: ${error} }`
+              );
+              return;
+            }
 
-          TokenHolder.update(
-            { address: transfer.from.toLowerCase(), tokenContract: transfer.contract.toLowerCase()},
-            { $set: insertData },
-            { upsert: true },
-            (err, data) => {
-              if (err) {
-                console.log(err);
-              }
-              else{
-                console.log(data,"upsert token holder from",balanceFrom)
-              }
-            },
-          );
+            // insertData.tokenContract = transfer.contract.toLowerCase();
+            // insertData.address = transfer.from.toLowerCase();
+            insertData.balance = balanceFrom;
 
-          insertData.balance = balanceTo;
-          TokenHolder.update(
-            { address: transfer.to.toLowerCase(), tokenContract: transfer.contract.toLowerCase()},
-            { $set: insertData },
-            { upsert: true },
-            (err, data) => {
-              if (err) {
-                console.log(err);
+            TokenHolder.update(
+              {
+                address: transfer.from.toLowerCase(),
+                tokenContract: transfer.contract.toLowerCase(),
+              },
+              { $set: insertData },
+              { upsert: true },
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(data, "upsert token holder from", balanceFrom);
+                }
               }
-              else{
-                console.log(data,"upsert token holder to",balanceTo)
+            );
+
+            insertData.balance = balanceTo;
+            TokenHolder.update(
+              {
+                address: transfer.to.toLowerCase(),
+                tokenContract: transfer.contract.toLowerCase(),
+              },
+              { $set: insertData },
+              { upsert: true },
+              (err, data) => {
+                if (err) {
+                  console.log(err);
+                } else {
+                  console.log(data, "upsert token holder to", balanceTo);
+                }
               }
-            },
-          );
+            );
 
             /***
              * Author: Luke.Nguyen
              * Company: sotatek
              * Country: Vietnam
              * PhoneNumber: +84 386743836
-             * 
-             * End updating code
-             * 
              *
-             * 
-             * 
+             * End updating code
+             *
+             *
+             *
+             *
              * **/
             // Write transfer transaction into db
             TokenTransfer.update(
@@ -334,11 +382,10 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
               (err, data) => {
                 if (err) {
                   console.log(err);
+                } else {
+                  console.log(data, "asasas", transfer);
                 }
-                else{
-                  console.log(data,"asasas",transfer)
-                }
-              },
+              }
             );
           }
         }
@@ -348,13 +395,15 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
       // }
       self.bulkOps.push(tx);
     }
-    if (!('quiet' in config && config.quiet === true)) {
-      console.log(`\t- block #${blockData.number.toString()}: ${blockData.transactions.length.toString()} transactions recorded.`);
+    if (!("quiet" in config && config.quiet === true)) {
+      console.log(
+        `\t- block #${blockData.number.toString()}: ${blockData.transactions.length.toString()} transactions recorded.`
+      );
     }
   }
   self.blocks++;
 
-  if (flush && self.blocks > 0 || self.blocks >= config.bulkSize) {
+  if ((flush && self.blocks > 0) || self.blocks >= config.bulkSize) {
     const bulk = self.bulkOps;
     self.bulkOps = [];
     self.blocks = 0;
@@ -364,7 +413,11 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
     // setup accounts
     const data = {};
     bulk.forEach((tx) => {
-      data[tx.from] = { address: tx.from, blockNumber: tx.blockNumber, type: 0 };
+      data[tx.from] = {
+        address: tx.from,
+        blockNumber: tx.blockNumber,
+        type: 0,
+      };
       if (tx.to) {
         data[tx.to] = { address: tx.to, blockNumber: tx.blockNumber, type: 0 };
       }
@@ -381,51 +434,65 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
 
     // update balances
     if (config.settings.useRichList && accounts.length > 0) {
-      asyncL.eachSeries(accounts, (account, eachCallback) => {
-        const { blockNumber } = data[account];
-        // get contract account type
-        web3.eth.getCode(account, (err, code) => {
-          if (err) {
-            console.log(`ERROR: fail to getCode(${account})`);
-            return eachCallback(err);
-          }
-          if (code.length > 2) {
-            data[account].type = 1; // contract type
-          }
-
-          web3.eth.getBalance(account, (err, balance) => {
+      asyncL.eachSeries(
+        accounts,
+        (account, eachCallback) => {
+          const { blockNumber } = data[account];
+          // get contract account type
+          web3.eth.getCode(account, (err, code) => {
             if (err) {
-              console.log(err);
-              console.log(`ERROR: fail to getBalance(${account})`);
+              console.log(`ERROR: fail to getCode(${account})`);
               return eachCallback(err);
             }
-
-            data[account].balance = parseFloat(web3.utils.fromWei(balance, 'ether'));
-            eachCallback();
-          });
-        });
-      }, (err) => {
-        let n = 0;
-        accounts.forEach((account) => {
-          n++;
-          if (!('quiet' in config && config.quiet === true)) {
-            if (n <= 5) {
-              console.log(` - upsert ${account} / balance = ${data[account].balance}`);
-            } else if (n === 6) {
-              console.log(`   (...) total ${accounts.length} accounts updated.`);
+            if (code.length > 2) {
+              data[account].type = 1; // contract type
             }
-          }
-          // upsert account
-          Account.collection.update({ address: account }, { $set: data[account] }, { upsert: true });
-        });
-      });
+
+            web3.eth.getBalance(account, (err, balance) => {
+              if (err) {
+                console.log(err);
+                console.log(`ERROR: fail to getBalance(${account})`);
+                return eachCallback(err);
+              }
+
+              data[account].balance = parseFloat(
+                web3.utils.fromWei(balance, "ether")
+              );
+              eachCallback();
+            });
+          });
+        },
+        (err) => {
+          let n = 0;
+          accounts.forEach((account) => {
+            n++;
+            if (!("quiet" in config && config.quiet === true)) {
+              if (n <= 5) {
+                console.log(
+                  ` - upsert ${account} / balance = ${data[account].balance}`
+                );
+              } else if (n === 6) {
+                console.log(
+                  `   (...) total ${accounts.length} accounts updated.`
+                );
+              }
+            }
+            // upsert account
+            Account.collection.update(
+              { address: account },
+              { $set: data[account] },
+              { upsert: true }
+            );
+          });
+        }
+      );
     }
 
     if (bulk.length > 0) {
       Transaction.collection.insert(bulk, (err, tx) => {
-        if (typeof err !== 'undefined' && err) {
+        if (typeof err !== "undefined" && err) {
           if (err.code === 11000) {
-            if (!('quiet' in config && config.quiet === true)) {
+            if (!("quiet" in config && config.quiet === true)) {
               console.log(`Skip: Duplicate transaction key ${err}`);
             }
           } else {
@@ -433,8 +500,10 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             process.exit(9);
           }
         } else {
-          if (!('quiet' in config && config.quiet === true)) {
-            console.log(`* ${tx.insertedCount} transactions successfully recorded.`);
+          if (!("quiet" in config && config.quiet === true)) {
+            console.log(
+              `* ${tx.insertedCount} transactions successfully recorded.`
+            );
           }
         }
       });
@@ -445,31 +514,32 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
   //Just listen for latest blocks and sync from the start of the app.
 **/
 const listenBlocks = function (config) {
-  const newBlocks = web3.eth.subscribe('newBlockHeaders', (error, result) => {
+  const newBlocks = web3.eth.subscribe("newBlockHeaders", (error, result) => {
     if (!error) {
       return;
     }
 
     console.error(error);
   });
-  newBlocks.on('data', (blockHeader) => {
+  newBlocks.on("data", (blockHeader) => {
     web3.eth.getBlock(blockHeader.hash, true, (error, blockData) => {
       if (blockHeader === null) {
-        console.log('Warning: null block hash');
+        console.log("Warning: null block hash");
       } else {
         writeBlockToDB(config, blockData, true);
         writeTransactionsToDB(config, blockData, true);
       }
     });
   });
-  newBlocks.on('error', console.error);``
+  newBlocks.on("error", console.error);
+  ``;
 };
 /**
   If full sync is checked this function will start syncing the block chain from lastSynced param see README
 **/
 var syncChain = function (config, nextBlock) {
   if (web3.eth.net.isListening()) {
-    if (typeof nextBlock === 'undefined') {
+    if (typeof nextBlock === "undefined") {
       prepareSync(config, (error, startBlock) => {
         if (error) {
           console.log(`ERROR: error: ${error}`);
@@ -481,12 +551,13 @@ var syncChain = function (config, nextBlock) {
     }
 
     if (nextBlock === null) {
-      console.log('nextBlock is null');
+      console.log("nextBlock is null");
       return;
-    } if (nextBlock < config.startBlock) {
+    }
+    if (nextBlock < config.startBlock) {
       writeBlockToDB(config, null, true);
       writeTransactionsToDB(config, null, true);
-      console.log('*** Sync Finsihed ***');
+      console.log("*** Sync Finsihed ***");
       config.syncAll = false;
       return;
     }
@@ -496,9 +567,13 @@ var syncChain = function (config, nextBlock) {
     while (nextBlock >= config.startBlock && count > 0) {
       web3.eth.getBlock(nextBlock, true, (error, blockData) => {
         if (error) {
-          console.log(`Warning (syncChain): error on getting block with hash/number: ${nextBlock}: ${error}`);
+          console.log(
+            `Warning (syncChain): error on getting block with hash/number: ${nextBlock}: ${error}`
+          );
         } else if (blockData === null) {
-          console.log(`Warning: null block data received from the block with hash/number: ${nextBlock}`);
+          console.log(
+            `Warning: null block data received from the block with hash/number: ${nextBlock}`
+          );
         } else {
           writeBlockToDB(config, blockData);
           writeTransactionsToDB(config, blockData);
@@ -508,9 +583,13 @@ var syncChain = function (config, nextBlock) {
       count--;
     }
 
-    setTimeout(() => { syncChain(config, nextBlock); }, 500);
+    setTimeout(() => {
+      syncChain(config, nextBlock);
+    }, 500);
   } else {
-    console.log(`Error: Web3 connection time out trying to get block ${nextBlock} retrying connection now`);
+    console.log(
+      `Error: Web3 connection time out trying to get block ${nextBlock} retrying connection now`
+    );
     syncChain(config, nextBlock);
   }
 };
@@ -520,23 +599,30 @@ var syncChain = function (config, nextBlock) {
 
 const prepareSync = async (config, callback) => {
   let blockNumber = null;
-  const oldBlockFind = Block.find({}, 'number').lean(true).sort('number').limit(1);
+  const oldBlockFind = Block.find({}, "number")
+    .lean(true)
+    .sort("number")
+    .limit(1);
   oldBlockFind.exec(async (err, docs) => {
     if (err || !docs || docs.length < 1) {
       // not found in db. sync from config.endBlock or 'latest'
       if (web3.eth.net.isListening()) {
         const currentBlock = await web3.eth.getBlockNumber();
-        const latestBlock = config.endBlock || currentBlock || 'latest';
-        if (latestBlock === 'latest') {
+        const latestBlock = config.endBlock || currentBlock || "latest";
+        if (latestBlock === "latest") {
           web3.eth.getBlock(latestBlock, true, (error, blockData) => {
             if (error) {
-              console.log(`Warning (prepareSync): error on getting block with hash/number: ${latestBlock}: ${error}`);
+              console.log(
+                `Warning (prepareSync): error on getting block with hash/number: ${latestBlock}: ${error}`
+              );
             } else if (blockData === null) {
-              console.log(`Warning: null block data received from the block with hash/number: ${latestBlock}`);
+              console.log(
+                `Warning: null block data received from the block with hash/number: ${latestBlock}`
+              );
             } else {
               console.log(`Starting block number = ${blockData.number}`);
-              if ('quiet' in config && config.quiet === true) {
-                console.log('Quiet mode enabled');
+              if ("quiet" in config && config.quiet === true) {
+                console.log("Quiet mode enabled");
               }
               blockNumber = blockData.number - 1;
               callback(null, blockNumber);
@@ -544,21 +630,21 @@ const prepareSync = async (config, callback) => {
           });
         } else {
           console.log(`Starting block number = ${latestBlock}`);
-          if ('quiet' in config && config.quiet === true) {
-            console.log('Quiet mode enabled');
+          if ("quiet" in config && config.quiet === true) {
+            console.log("Quiet mode enabled");
           }
           blockNumber = latestBlock - 1;
           callback(null, blockNumber);
         }
       } else {
-        console.log('Error: Web3 connection error');
+        console.log("Error: Web3 connection error");
         callback(err, null);
       }
     } else {
       blockNumber = docs[0].number - 1;
       console.log(`Old block found. Starting block number = ${blockNumber}`);
-      if ('quiet' in config && config.quiet === true) {
-        console.log('Quiet mode enabled');
+      if ("quiet" in config && config.quiet === true) {
+        console.log("Quiet mode enabled");
       }
       callback(null, blockNumber);
     }
@@ -569,45 +655,58 @@ const prepareSync = async (config, callback) => {
 **/
 const runPatcher = async (config, startBlock, endBlock) => {
   if (!web3 || !web3.eth.net.isListening()) {
-    console.log('Error: Web3 is not connected. Retrying connection shortly...');
-    setTimeout(() => { runPatcher(config); }, 3000);
+    console.log("Error: Web3 is not connected. Retrying connection shortly...");
+    setTimeout(() => {
+      runPatcher(config);
+    }, 3000);
     return;
   }
 
-  if (typeof startBlock === 'undefined' || typeof endBlock === 'undefined') {
+  if (typeof startBlock === "undefined" || typeof endBlock === "undefined") {
     // get the last saved block
-    const blockFind = Block.find({}, 'number').lean(true).sort('-number').limit(1);
+    const blockFind = Block.find({}, "number")
+      .lean(true)
+      .sort("-number")
+      .limit(1);
     blockFind.exec(async (err, docs) => {
       if (err || !docs || docs.length < 1) {
         // no blocks found. terminate runPatcher()
-        console.log('No need to patch blocks.');
+        console.log("No need to patch blocks.");
         return;
       }
 
       const lastMissingBlock = docs[0].number + 1;
       const currentBlock = await web3.eth.getBlockNumber();
-      runPatcher(config, lastMissingBlock || currentBlock - 10000, currentBlock - 1);
+      runPatcher(
+        config,
+        lastMissingBlock || currentBlock - 10000,
+        currentBlock - 1
+      );
     });
     return;
   }
 
   const missingBlocks = endBlock - startBlock + 1;
   if (missingBlocks > 0) {
-    console.log('Patching from #' + startBlock + ' to #' + endBlock);
-    if (!('quiet' in config && config.quiet === true)) {
+    console.log("Patching from #" + startBlock + " to #" + endBlock);
+    if (!("quiet" in config && config.quiet === true)) {
       console.log(`Patching from #${startBlock} to #${endBlock}`);
     }
     let patchBlock = startBlock;
     let count = 0;
     while (count < config.patchBlocks && patchBlock <= endBlock) {
-      if (!('quiet' in config && config.quiet === true)) {
+      if (!("quiet" in config && config.quiet === true)) {
         console.log(`Patching Block: ${patchBlock}`);
       }
       web3.eth.getBlock(patchBlock, true, (error, patchData) => {
         if (error) {
-          console.log(`Warning: error on getting block with hash/number: ${patchBlock}: ${error}`);
+          console.log(
+            `Warning: error on getting block with hash/number: ${patchBlock}: ${error}`
+          );
         } else if (patchData === null) {
-          console.log(`Warning: null block data received from the block with hash/number: ${patchBlock}`);
+          console.log(
+            `Warning: null block data received from the block with hash/number: ${patchBlock}`
+          );
         } else {
           checkBlockDBExistsThenWrite(config, patchData);
         }
@@ -619,14 +718,18 @@ const runPatcher = async (config, startBlock, endBlock) => {
     writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
 
-    setTimeout(() => { runPatcher(config, patchBlock, endBlock); }, 1000);
+    setTimeout(() => {
+      runPatcher(config, patchBlock, endBlock);
+    }, 1000);
   } else {
     // flush
     writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
     currentBlock = await web3.eth.getBlockNumber();
-    setTimeout(function() { runPatcher(config, currentBlock - 1000, currentBlock); }, 600000);
-    console.log('*** Block Patching Completed ***');
+    setTimeout(function () {
+      runPatcher(config, currentBlock - 1000, currentBlock);
+    }, 600000);
+    console.log("*** Block Patching Completed ***");
   }
 };
 /**
@@ -637,8 +740,10 @@ var checkBlockDBExistsThenWrite = function (config, patchData, flush) {
     if (!b.length) {
       writeBlockToDB(config, patchData, flush);
       writeTransactionsToDB(config, patchData, flush);
-    } else if (!('quiet' in config && config.quiet === true)) {
-      console.log(`Block number: ${patchData.number.toString()} already exists in DB.`);
+    } else if (!("quiet" in config && config.quiet === true)) {
+      console.log(
+        `Block number: ${patchData.number.toString()} already exists in DB.`
+      );
     }
   });
 };
@@ -664,16 +769,16 @@ const getQuote = async () => {
     };
 
     new Market(quoteObject).save((err, market, count) => {
-      if (typeof err !== 'undefined' && err) {
+      if (typeof err !== "undefined" && err) {
         process.exit(9);
       } else {
-        if (!('quiet' in config && config.quiet === true)) {
-          console.log('DB successfully written for market quote.');
+        if (!("quiet" in config && config.quiet === true)) {
+          console.log("DB successfully written for market quote.");
         }
       }
     });
   } catch (error) {
-    if (!('quiet' in config && config.quiet === true)) {
+    if (!("quiet" in config && config.quiet === true)) {
       console.log(error);
     }
   }
@@ -681,7 +786,7 @@ const getQuote = async () => {
 
 // patch missing blocks
 if (config.patch === true) {
-  console.log('Checking for missing blocks');
+  console.log("Checking for missing blocks");
   runPatcher(config);
 }
 
@@ -696,7 +801,7 @@ listenBlocks(config);
 
 // Starts full sync when set to true in config
 if (config.syncAll === true) {
-  console.log('Starting Full Sync');
+  console.log("Starting Full Sync");
   syncChain(config);
 }
 
