@@ -93,56 +93,11 @@ const normalizeTX = async (txData, receipt, blockData) => {
   }
 };
 
-/**
-  Write the whole block object to DB
-**/
-var writeBlockToDB = function (config, blockData, flush) {
-  const self = writeBlockToDB;
-  if (!self.bulkOps) {
-    self.bulkOps = [];
-  }
-  if (blockData && blockData.number >= 0) {
-    self.bulkOps.push(new Block(blockData));
-    if (!('quiet' in config && config.quiet === true)) {
-      console.log(`\t- block #${blockData.number.toString()} inserted.`);
-    }
-  }
 
-  if (flush && self.bulkOps.length > 0 || self.bulkOps.length >= config.bulkSize) {
-    const bulk = self.bulkOps;
-    self.bulkOps = [];
-    if (bulk.length === 0) return;
-
-    Block.collection.insert(bulk, (err, blocks) => {
-      if (typeof err !== 'undefined' && err) {
-        if (err.code === 11000) {
-          if (!('quiet' in config && config.quiet === true)) {
-            console.log(`Skip: Duplicate DB key : ${err}`);
-          }
-        } else {
-          console.log(`Error: Aborted due to error on DB: ${err}`);
-          process.exit(9);
-        }
-      } else {
-        if (!('quiet' in config && config.quiet === true)) {
-          console.log(`* ${blocks.insertedCount} blocks successfully written.`);
-        }
-      }
-    });
-  }
-};
 /**
   Break transactions out of blocks and write to DB
 **/
 const writeTransactionsToDB = async (config, blockData, flush) => {
-  // console.log(blockData)
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
-  // console.log("------------------")
 
   const self = writeTransactionsToDB;
   if (!self.bulkOps) {
@@ -228,14 +183,6 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           };
           const methodCode = txData.input.substr(0, 10);
           if (ERC20_METHOD_DIC[methodCode] === 'transfer' || ERC20_METHOD_DIC[methodCode] === 'transferFrom') {
-            console.log(blockData)
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
-            console.log("------------------")
             if (ERC20_METHOD_DIC[methodCode] === 'transfer') {
               // Token transfer transaction
               transfer.from = txData.from.toLowerCase();
@@ -330,7 +277,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
             // Write transfer transaction into db
             TokenTransfer.update(
               { hash: transfer.hash },
-              { $setOnInsert: transfer },
+              { $set: transfer },
               { upsert: true },
               (err, data) => {
                 if (err) {
@@ -465,131 +412,17 @@ const listenBlocks = function (config) {
   });
   newBlocks.on('error', console.error);``
 };
-/**
-  If full sync is checked this function will start syncing the block chain from lastSynced param see README
-**/
-var syncChain = function (config, nextBlock) {
-  if (web3.eth.net.isListening()) {
-    if (typeof nextBlock === 'undefined') {
-      prepareSync(config, (error, startBlock) => {
-        if (error) {
-          console.log(`ERROR: error: ${error}`);
-          return;
-        }
-        syncChain(config, startBlock);
-      });
-      return;
-    }
 
-    if (nextBlock === null) {
-      console.log('nextBlock is null');
-      return;
-    } if (nextBlock < config.startBlock) {
-      writeBlockToDB(config, null, true);
-      writeTransactionsToDB(config, null, true);
-      console.log('*** Sync Finsihed ***');
-      config.syncAll = false;
-      return;
-    }
-
-    let count = config.bulkSize;
-    while (nextBlock >= config.startBlock && count > 0) {
-      web3.eth.getBlock(nextBlock, true, (error, blockData) => {
-        if (error) {
-          console.log(`Warning (syncChain): error on getting block with hash/number: ${nextBlock}: ${error}`);
-        } else if (blockData === null) {
-          console.log(`Warning: null block data received from the block with hash/number: ${nextBlock}`);
-        } else {
-          writeBlockToDB(config, blockData);
-          writeTransactionsToDB(config, blockData);
-        }
-      });
-      nextBlock--;
-      count--;
-    }
-
-    setTimeout(() => { syncChain(config, nextBlock); }, 500);
-  } else {
-    console.log(`Error: Web3 connection time out trying to get block ${nextBlock} retrying connection now`);
-    syncChain(config, nextBlock);
-  }
-};
-/**
-  //check oldest block or starting block then callback
-**/
-
-const prepareSync = async (config, callback) => {
-  let blockNumber = null;
-  const oldBlockFind = Block.find({}, 'number').lean(true).sort('number').limit(1);
-  oldBlockFind.exec(async (err, docs) => {
-    if (err || !docs || docs.length < 1) {
-      // not found in db. sync from config.endBlock or 'latest'
-      if (web3.eth.net.isListening()) {
-        const currentBlock = await web3.eth.getBlockNumber();
-        const latestBlock = config.endBlock || currentBlock || 'latest';
-        if (latestBlock === 'latest') {
-          web3.eth.getBlock(latestBlock, true, (error, blockData) => {
-            if (error) {
-              console.log(`Warning (prepareSync): error on getting block with hash/number: ${latestBlock}: ${error}`);
-            } else if (blockData === null) {
-              console.log(`Warning: null block data received from the block with hash/number: ${latestBlock}`);
-            } else {
-              console.log(`Starting block number = ${blockData.number}`);
-              if ('quiet' in config && config.quiet === true) {
-                console.log('Quiet mode enabled');
-              }
-              blockNumber = blockData.number - 1;
-              callback(null, blockNumber);
-            }
-          });
-        } else {
-          console.log(`Starting block number = ${latestBlock}`);
-          if ('quiet' in config && config.quiet === true) {
-            console.log('Quiet mode enabled');
-          }
-          blockNumber = latestBlock - 1;
-          callback(null, blockNumber);
-        }
-      } else {
-        console.log('Error: Web3 connection error');
-        callback(err, null);
-      }
-    } else {
-      blockNumber = docs[0].number - 1;
-      console.log(`Old block found. Starting block number = ${blockNumber}`);
-      if ('quiet' in config && config.quiet === true) {
-        console.log('Quiet mode enabled');
-      }
-      callback(null, blockNumber);
-    }
-  });
-};
 /**
   Block Patcher(experimental)
 **/
 const runPatcher = async (config, startBlock, endBlock) => {
   if (!web3 || !web3.eth.net.isListening()) {
     console.log('Error: Web3 is not connected. Retrying connection shortly...');
-    setTimeout(() => { runPatcher(config); }, 3000);
+    setTimeout(() => { runPatcher(config, startBlock, endBlock); }, 3000);
     return;
   }
 
-  if (typeof startBlock === 'undefined' || typeof endBlock === 'undefined') {
-    // get the last saved block
-    const blockFind = Block.find({}, 'number').lean(true).sort('-number').limit(1);
-    blockFind.exec(async (err, docs) => {
-      if (err || !docs || docs.length < 1) {
-        // no blocks found. terminate runPatcher()
-        console.log('No need to patch blocks.');
-        return;
-      }
-
-      const lastMissingBlock = docs[0].number + 1;
-      const currentBlock = await web3.eth.getBlockNumber();
-      runPatcher(config, currentBlock - 10000, currentBlock - 1);
-    });
-    return;
-  }
 
   const missingBlocks = endBlock - startBlock + 1;
   if (missingBlocks > 0) {
@@ -616,13 +449,11 @@ const runPatcher = async (config, startBlock, endBlock) => {
       count++;
     }
     // flush
-    writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
 
     setTimeout(() => { runPatcher(config, patchBlock, endBlock); }, 1000);
   } else {
     // flush
-    writeBlockToDB(config, null, true);
     writeTransactionsToDB(config, null, true);
     currentBlock = await web3.eth.getBlockNumber();
     setTimeout(function() { runPatcher(config, currentBlock - 1000, currentBlock); }, 600000);
@@ -633,14 +464,7 @@ const runPatcher = async (config, startBlock, endBlock) => {
   This will be used for the patcher(experimental)
 **/
 var checkBlockDBExistsThenWrite = function (config, patchData, flush) {
-  Block.find({ number: patchData.number }, (err, b) => {
-    if (!b.length) {
-      writeBlockToDB(config, patchData, flush);
       writeTransactionsToDB(config, patchData, flush);
-    } else if (!('quiet' in config && config.quiet === true)) {
-      console.log(`Block number: ${patchData.number.toString()} already exists in DB.`);
-    }
-  });
 };
 /**
   Fetch market price from cryptocompare
@@ -648,63 +472,21 @@ var checkBlockDBExistsThenWrite = function (config, patchData, flush) {
 // 10 minutes
 const quoteInterval = 10 * 60 * 1000;
 
-const getQuote = async () => {
-  const options = {
-    timeout: 10000,
-  };
-  const URL = `https://min-api.cryptocompare.com/data/price?fsym=${config.settings.symbol}&tsyms=USD`;
 
-  try {
-    const requestUSD = await fetch(URL);
-    const quoteUSD = await requestUSD.json();
-
-    quoteObject = {
-      timestamp: Math.round(Date.now() / 1000),
-      quoteUSD: quoteUSD.USD,
-    };
-
-    new Market(quoteObject).save((err, market, count) => {
-      if (typeof err !== 'undefined' && err) {
-        process.exit(9);
-      } else {
-        if (!('quiet' in config && config.quiet === true)) {
-          console.log('DB successfully written for market quote.');
-        }
-      }
-    });
-  } catch (error) {
-    if (!('quiet' in config && config.quiet === true)) {
-      console.log(error);
-    }
-  }
-};
-
-// patch missing blocks
-if (config.patch === true) {
-  console.log('Checking for missing blocks');
-  runPatcher(config);
-}
-
-// check NORICHLIST env
-// you can use it like as 'NORICHLIST=1 node tools/sync.js' to disable balance updater temporary.
-if (process.env.NORICHLIST) {
-  config.settings.useRichList = false;
-}
-
-// Start listening for latest blocks
-listenBlocks(config);
-
-// Starts full sync when set to true in config
-if (config.syncAll === true) {
-  console.log('Starting Full Sync');
-  syncChain(config);
-}
-
-// Start price sync on DB
-// if (config.settings.useFiat) {
-//   getQuote();
-
-//   setInterval(() => {
-//     getQuote();
-//   }, quoteInterval);
+// // patch missing blocks at main net
+// if (config.patch === true) {
+//   console.log('Checking for missing blocks');
+//   runPatcher(config, 30899810, 31499775);
 // }
+const running = async()=>{
+  args = await process.argv;
+  console.log(args);
+  // patch missing blocks
+  if (config.patch === true) {
+      console.log('Checking for missing blocks');
+      runPatcher(config, parseInt(args[2]), parseInt(args[3]));
+    }
+  
+}
+
+running();
