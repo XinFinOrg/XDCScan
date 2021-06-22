@@ -85,10 +85,10 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
         [6, "desc"]
       ],
       language: {
-        lengthMenu: "_MENU_ accounts",
-        zeroRecords: "No accounts found",
+        lengthMenu: "_MENU_ transactions",
+        zeroRecords: "No transactions found",
         infoEmpty: "",
-        infoFiltered: "(filtered from _MAX_ total accounts)"
+        infoFiltered: "(filtered from _MAX_ total transactions)"
       },
       columnDefs: [
         { orderable: false, "targets": [0,2,3] },
