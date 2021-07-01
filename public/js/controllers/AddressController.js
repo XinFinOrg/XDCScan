@@ -99,9 +99,9 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
             function(data, type, row) {
               // return '<a href="/addr/' + data +'">' + data + '</a>'
               if (data != $scope.addrHash)
-                return '<a href="/addr/'+data+'">'+data +   '</a>'
+                return '<a href="/addr/'+data+'">'+data.substr(0,21)+'...</a>'
               else
-                return data
+                return `${data.substr(0,21)}...`;
             },
           targets: [2,3]
         },

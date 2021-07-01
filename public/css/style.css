@@ -3958,6 +3958,10 @@ ul.social-sharing li i:hover {
 	content: "\f054";
 }
 
+.table-responsive {
+	overflow: hidden !important;
+}
+
 #submitCodeBtn {
 	position: relative;
 }
