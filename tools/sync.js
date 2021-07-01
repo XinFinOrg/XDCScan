@@ -225,52 +225,52 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           } else {
             contractAddress = receipt.contractAddress.toLowerCase();
           }
-          const contractdb = {};
+          const contractData = {};
           let isTokenContract = true;
           const Token = new web3.eth.Contract(ERC20ABI, contractAddress);
-          contractdb.owner = txData.from;
-          contractdb.blockNumber = blockData.number;
-          contractdb.creationTransaction = txData.hash;
-          //console.log(contractdb,"contractdb")
+          contractData.owner = !!txData.from ? txData.from.toLowerCase() : '';
+          contractData.blockNumber = blockData.number;
+          contractData.creationTransaction = txData.hash;
+          //console.log(contractData,"contractData")
 
           try {
             const call = await web3.eth.call({
               to: contractAddress,
               data: web3.utils.sha3("totalSupply()"),
             });
-            // console.log(contractdb,"contractdb")
+            // console.log(contractData,"contractData")
 
             if (call === "0x") {
               isTokenContract = false;
             } else {
               try {
                 // ERC20 & ERC223 Token Standard compatible format
-                contractdb.tokenName = await Token.methods.name().call();
-                contractdb.decimals = await Token.methods.decimals().call();
-                contractdb.symbol = await Token.methods.symbol().call();
-                contractdb.totalSupply = await Token.methods
+                contractData.tokenName = await Token.methods.name().call();
+                contractData.decimals = await Token.methods.decimals().call();
+                contractData.symbol = await Token.methods.symbol().call();
+                contractData.totalSupply = await Token.methods
                   .totalSupply()
                   .call();
-                // console.log(contractdb,"contractdb")
+                // console.log(contractData,"contractData")
               } catch (err) {
                 isTokenContract = false;
               }
-              // console.log(contractdb,"contractdb")
+              // console.log(contractData,"contractData")
             }
           } catch (err) {
             isTokenContract = false;
           }
-          contractdb.byteCode = await web3.eth.getCode(contractAddress);
+          contractData.byteCode = await web3.eth.getCode(contractAddress);
           if (isTokenContract) {
-            contractdb.ERC = 2;
+            contractData.ERC = 2;
           } else {
             // Normal Contract
-            contractdb.ERC = 0;
+            contractData.ERC = 0;
           }
           // Write to db
           Contract.update(
             { address: contractAddress },
-            { $set: contractdb },
+            { $set: contractData },
             { upsert: true },
             (err, data) => {
               if (err) {
@@ -297,7 +297,7 @@ const writeTransactionsToDB = async (config, blockData, flush) => {
           ) {
             if (ERC20_METHOD_DIC[methodCode] === "transfer") {
               // Token transfer transaction
-              transfer.from = txData.from;
+              transfer.from = !!txData.from ? txData.from.toLowerCase() : '';
               transfer.to = `xdc${txData.input
                 .substring(34, 74)
                 .toLowerCase()}`;
