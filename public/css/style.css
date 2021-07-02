@@ -3962,6 +3962,10 @@ ul.social-sharing li i:hover {
 	overflow: hidden !important;
 }
 
+.table-responsive #token-txns_filter,#token-holders_filter {
+	display: none;
+}
+
 #submitCodeBtn {
 	position: relative;
 }

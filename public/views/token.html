@@ -193,7 +193,7 @@
                           </div>
                       </div>
                   </div>
-                  <!-- end Overview -->
+                  end Overview -->
 
                 <!-- start Token Summary 
                   <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
@@ -226,7 +226,7 @@
                                     	</div>
                               		</div>
                               </div>
-                              <!-- <hr class="hr-space">
+                              <hr class="hr-space">
                               <div class="row align-items-center">
                                   <div class="col-md-4 fw6 mb-1">Decimals</div>
                                   <div class="col-md-8"><div>{{ token.decimals }}</div></div>
@@ -239,7 +239,7 @@
                           </div>
                       </div>
                   </div>
-                  <!-- end Token Summary-->
+                  end Token Summary-->
             </div>
         </div>
     </section>
@@ -259,7 +259,7 @@
                                 <!-- <li ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link active"
                                         href="#internalTransactions" role="tab" data-toggle="tab">Contract
                                         Transactions</a></li> -->
-                                <li ng-click="transferTokens(0)" class="nav-item"><a class="nav-link"
+                                <li ng-click="transferTokens()" class="nav-item"><a class="nav-link"
                                         ng-class="{ 'active': activeTab === 'tokenTransfers' }" href="#tokenTransfers"
                                         role="tab" data-toggle="tab">Transfers</a></li>
                                 <li ng-click="tokenHolders(0)" class="nav-item"><a class="nav-link"
@@ -276,49 +276,24 @@
                             <div class="tab-content">
                                 <div class="tab-pane fade" ng-class="{ 'active show': activeTab === 'tokenTransfers' }"
                                     id="tokenTransfers">
-                                    <transfer-tokens>
-                                        <div class="table-responsive">
-                                            <table id="address-transaction" class="table table-hover nowrap"
-                                                style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Txn Hash</th>
-                                                        <th>Age</th>
-                                                        <th>Block</th>
-                                                        <th>From</th>
-                                                        <th>To</th>
-                                                        <th>Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr ng-repeat="t in transfer_tokens track by $index">
-                                                        <td><span ng-show="tx.status==0" alt="transaction fail">
-                                                                <image src="img/FAIL.png" /></span> <a
-                                                                href="/tx/{{t.transactionHash}}?isTransfer=true">{{t.transactionHash}}</a>
-                                                        </td>
-                                                        <td>{{t.timestamp | timeDuration}} ago</td>
-                                                        <td><a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</td>
-                                                        <td ng-show="acc==t.from" class="truncate-addrhash">{{t.from}}
-                                                        </td>
-                                                        <td ng-show="acc!=t.from" class="truncate-addrhash"> <a
-                                                                class="hash-tag text-truncate"
-                                                                href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a>
-                                                        </td>
-                                                        <td ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}}
-                                                        </td>
-                                                        <td ng-show="acc!=t.to" class="truncate-addrhash"> <a
-                                                                class="hash-tag text-truncate"
-                                                                href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}}</a>
-                                                        </td>
-                                                        <td style="text-align:right"> {{t.amount}} </td>
-                                                        <td style="text-align:center"><span
-                                                                class="label label-sm label-info"> {{t.methodName}}
-                                                            </span></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </transfer-tokens>
+                                    <!-- <transfer-tokens> -->
+                                    <div class="table-responsive">
+                                        <table id="token-txns" class="table table-hover nowrap" style="width:100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>Txn Hash</th>
+                                                    <th style="min-width: 180px;">Age</th>
+                                                    <th>Block</th>
+                                                    <th>From</th>
+                                                    <th>To</th>
+                                                    <th>Amount</th>
+                                                    <th>Type</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    <!-- </transfer-tokens> -->
                                     <div class="row my-4">
                                         <div class="col text-right">
                                             <span class="float-right" data-toggle="tooltip" title=""
@@ -337,7 +312,7 @@
                                 <div class="tab-pane fade" ng-class="{ 'active show': activeTab === 'tokenHolders' }"
                                     id="tokenHolders">
                                     <div class="table-responsive">
-                                        <table id="internal-transaction" class="table table-hover nowrap"
+                                        <table id="token-holders" class="table table-hover nowrap"
                                             style="width:100%">
                                             <thead>
                                                 <tr>
@@ -346,21 +321,10 @@
                                                     <th>Quantity</th>
                                                     <th>Percentage</th>
                                                     <th>Value</th>
-                                                    <th>Analytics</th>
-
+                                                    <!-- <th>Analytics</th> -->
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr ng-repeat="t in token_holders track by $index">
-                                                    <td>{{t.rank}}</td>
-                                                    <td><a href="/addr/{{t.address}}">{{t.address}}</td>
-                                                    <td>{{ t.quantity | number }}</td>
-                                                    <td>{{ t.percentage | percentage:6 }}</td>
-                                                    <td>{{ t.value | currency:"$":2 }}</td>
-                                                    <td></td>
-
-                                                </tr>
-                                            </tbody>
+                                            <tbody></tbody>
                                         </table>
                                     </div>
                                 </div>

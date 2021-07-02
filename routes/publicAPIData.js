@@ -627,7 +627,7 @@ function sendData(res, respData, result, format) {
   if (format === 'json') {
     responseObj = Object.assign({}, respData, { result });
   } else {
-    responseObj = JSON.parse(JSON.stringify(result));
+    responseObj = result;
   }
   res.write(JSON.stringify(responseObj));
   res.end();

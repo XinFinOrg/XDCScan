@@ -2,7 +2,7 @@ angular
   .module("BlocksApp")
   .controller(
     "TokenController",
-    function ($stateParams, $rootScope, $scope, $http, $location) {
+    function ($stateParams, $rootScope, $scope, $http, $location, $filter) {
       $scope.$on("$viewContentLoaded", function () {
         // initialize core components
         App.initAjax();
@@ -37,9 +37,9 @@ angular
           $rootScope.$state.current.data["pageTitle"] = resp.data.name;
 
         if ($scope.activeTab === "tokenTransfers") {
-          $scope.transferTokens(0);
+          $scope.transferTokens();
         } else if ($scope.activeTab === "tokenHolders") {
-          $scope.tokenHolders(0);
+          $scope.tokenHolders();
         }
       });
 
@@ -89,116 +89,196 @@ angular
             url: "/tokenrelay",
             data: { action: "balanceOf", user: addr, address: address },
           }).then(function (resp) {
-            console.log(resp, "resp");
-            console.log(resp.data);
             $scope.showTokens = true;
             $scope.userTokens = resp.data.tokens;
           });
         } else $scope.errors.address = "Invalid Address";
       };
-      $scope.transferPage = 0;
-      $scope.transferTokens = function (transferPage) {
+
+      let isInitializedTokenTxnsTbl = false;
+      $scope.transferTokens = function () {
         console.log("【request】 tokenTransfer");
+        if (!!isInitializedTokenTxnsTbl) {
+          return;
+        }
 
-        $http({
-          method: "POST",
-          url: "/tokenrelay",
-          data: {
-            action: "tokenTransfer",
-            address: address,
-            transferPage: transferPage,
-            fromAccount: $scope.acc,
+        isInitializedTokenTxnsTbl = true;
+
+        $("#token-txns").DataTable({
+          processing: true,
+          serverSide: true,
+          paging: true,
+          ajax: function (data, callback, settings) {
+            data.action = "tokenTransfer";
+            data.address = address;
+            data.fromAccount = $scope.acc;
+            data.page = Math.ceil(data.start / data.length);
+            data.pageSize = data.length;
+
+            $http.post("/tokenrelay", data).then(function (resp) {
+              const data = resp.data.list.map(function (t) {
+                t.amount =
+                  t.value / parseFloat(10 ** parseInt($scope.token.decimals));
+                return [
+                  t.hash,
+                  t.timestamp,
+                  t.blockNumber,
+                  t.from,
+                  t.to,
+                  t.amount,
+                  t.method,
+                ];
+              });
+              delete resp.data["list"];
+              resp.data.data = data;
+              callback(resp.data);
+            });
           },
-        }).then(function (resp) {
-          resp.data.forEach(function (record) {
-            /***
-             * Author: Luke.Nguyen
-             * Company: sotatek
-             * Country: Vietnam
-             * PhoneNumber: +84 386743836
-             *
-             * Patch date: 18/05/2021
-             *
-             * Newly updated for transfer_tokens pages
-             *
-             *
-             *
-             *
-             * **/
-
-            record.value =
-              record.value / parseFloat(10 ** parseInt($scope.token.decimals));
-
-            record.amount = record.value;
-
-            record.methodName = record.method;
-            record.transactionHash = record.hash;
-
-            /**
-             * end update
-             *
-             * **/
-          });
-          $scope.transferPage = transferPage;
-          $scope.transfer_tokens = resp.data;
-          console.log("$scope.transfer_tokens", $scope.transfer_tokens);
+          lengthMenu: [
+            [20, 50, 100],
+            [20, 50, 100], // change per page values here
+          ],
+          pageLength: 20,
+          language: {
+            lengthMenu: "_MENU_ Transactions",
+            zeroRecords: "No transactions found",
+            infoEmpty: "",
+            infoFiltered: "(filtered from _MAX_ total transactions)",
+          },
+          columnDefs: [
+            { orderable: false },
+            {
+              render: function (data, type, row) {
+                return `<a href="/tx/${data}?isTransfer=true">${data.substr(
+                  0,
+                  21
+                )}...</a>`;
+              },
+              targets: [0],
+            },
+            {
+              render: function (data, type, row) {
+                return `${$filter("timeDuration")(data)} ago`;
+              },
+              targets: [1],
+            },
+            {
+              render: function (data, type, row) {
+                return `<a href="/block/${data}">${data}</a>`;
+              },
+              targets: [2],
+            },
+            {
+              render: function (data, type, row) {
+                return `<a href="/addr/${data}">${data.substr(0, 21)}...</a>`;
+              },
+              targets: [3, 4],
+            },
+            {
+              render: function (data, type, row) {
+                return `<p style="width:100%; text-align:right">${data}</p>`;
+              },
+              targets: [5],
+            },
+            {
+              render: function (data, type, row) {
+                return `<span class="label label-sm label-info">${data}</span>`;
+              },
+              targets: [6],
+            },
+          ],
         });
       };
 
-      /***
-       * Author: Luke.Nguyen
-       * Company: sotatek
-       * Country: Vietnam
-       * PhoneNumber: +84 386743836
-       *
-       * Patch date: 18/05/2021
-       *
-       * Newly updated for token_holders pages
-       *
-       *
-       *
-       *
-       * **/
-      $scope.holderPage = 0;
-      $scope.tokenHolders = function (holderPage) {
+      let isInitializedTokenHolderTbl = false;
+      $scope.tokenHolders = function () {
         console.log("【request】 tokenHolder");
+        if (!!isInitializedTokenHolderTbl) {
+          return;
+        }
 
-        $http({
-          method: "POST",
-          url: "/tokenrelay",
-          data: { action: "tokenHolder", address: address },
-        }).then(function (resp) {
-          console.log("【request】 tokenHolder " + address);
-          var rank = 1;
-          var total = 0;
+        isInitializedTokenHolderTbl = true;
 
-          resp.data.forEach(function (record) {
-            /**
-             * newly implemented logic here
-             *
-             */
+        $("#token-holders").DataTable({
+          processing: true,
+          serverSide: true,
+          paging: true,
+          ajax: function (data, callback, settings) {
+            data.action = "tokenHolder";
+            data.address = address;
+            data.page = Math.ceil(data.start / data.length);
+            data.pageSize = data.length;
 
-            record.quantity =
-              Number(record.balance) /
-              parseFloat(10 ** parseInt($scope.token.decimals));
-            record.value =
-              record.quantity * parseFloat($scope.token.tokenPrice);
-            total += record.quantity;
-          });
+            $http.post("/tokenrelay", data).then(function (resp) {
+              let total = 0;
+              resp.data.list.map(function (t) {
+                t.quantity =
+                  Number(t.balance) /
+                  parseFloat(10 ** parseInt($scope.token.decimals));
+                t.value = t.quantity * parseFloat($scope.token.tokenPrice);
 
-          resp.data.sort(function (a, b) {
-            return b.quantity - a.quantity;
-          });
+                total += t.quantity;
+              });
 
-          resp.data.forEach(function (record) {
-            record.rank = rank;
-            record.percentage = record.quantity / total;
-            rank += 1;
-          });
+              resp.data.list.sort(function (a, b) {
+                return b.quantity - a.quantity;
+              });
 
-          console.log(resp);
-          $scope.holderPage = holderPage;
-          $scope.token_holders = resp.data;
+              const data = resp.data.list.map(function (t, index) {
+                t.percentage = t.quantity / total;
+
+                return [
+                  index + 1,
+                  t.address,
+                  t.quantity,
+                  t.percentage,
+                  t.value,
+                ];
+              });
+
+              delete resp.data["list"];
+              resp.data.data = data;
+              callback(resp.data);
+            });
+          },
+          lengthMenu: [
+            [20, 50, 100],
+            [20, 50, 100], // change per page values here
+          ],
+          pageLength: 20,
+          language: {
+            lengthMenu: "_MENU_ Holders",
+            zeroRecords: "No holders found",
+            infoEmpty: "",
+            infoFiltered: "(filtered from _MAX_ total holders)",
+          },
+          columnDefs: [
+            { orderable: false },
+            {
+              render: function (data, type, row) {
+                return `<a href="/addr/${data}">${data}</a>`;
+              },
+              targets: [1],
+            },
+            {
+              render: function (data, type, row) {
+                return `${$filter("number")(data)}`;
+              },
+              targets: [2],
+            },
+            {
+              render: function (data, type, row) {
+                return `${$filter("percentage")(data, 6)}`;
+              },
+              targets: [3],
+            },
+            {
+              render: function (data, type, row) {
+                return `${$filter("currency")(data, "$", 2)}`;
+              },
+              targets: [4],
+            },
+          ],
         });
       };
 
