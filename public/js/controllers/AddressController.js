@@ -81,17 +81,15 @@ angular.module('BlocksApp').controller('AddressController', function($stateParam
         [20, 50, 100, 150, "All"] // change per page values here
       ],
       pageLength: 20,
-      order: [
-        [6, "desc"]
-      ],
       language: {
         lengthMenu: "_MENU_ transactions",
         zeroRecords: "No transactions found",
         infoEmpty: "",
         infoFiltered: "(filtered from _MAX_ total transactions)"
       },
+      order: [],
       columnDefs: [
-        { orderable: false, "targets": [0,2,3] },
+        { orderable: false, targets: [0,1,2,3,4,5,6] },
         {type: "date", "targets": 6},
 
         {

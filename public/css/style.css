@@ -3962,7 +3962,7 @@ ul.social-sharing li i:hover {
 	overflow: hidden !important;
 }
 
-.table-responsive #token-txns_filter,#token-holders_filter {
+.table-responsive #token-txns_filter,#token-holders_filter,#address-transaction_filter {
 	display: none;
 }
 

@@ -145,8 +145,9 @@ angular
             infoEmpty: "",
             infoFiltered: "(filtered from _MAX_ total transactions)",
           },
+          order: [],
           columnDefs: [
-            { orderable: false },
+            { orderable: false, targets: [0,1,2,3,4,5,6] },
             {
               render: function (data, type, row) {
                 return `<a href="/tx/${data}?isTransfer=true">${data.substr(
@@ -252,8 +253,9 @@ angular
             infoEmpty: "",
             infoFiltered: "(filtered from _MAX_ total holders)",
           },
+          order: [],
           columnDefs: [
-            { orderable: false },
+            { orderable: false, targets: [0,1,2,3,4] },
             {
               render: function (data, type, row) {
                 return `<a href="/addr/${data}">${data}</a>`;

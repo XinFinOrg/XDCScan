@@ -49,8 +49,9 @@ angular.module("BlocksApp").controller("TokenListController", function ($statePa
         infoEmpty: "",
         infoFiltered: "(filtered from _MAX_ total tokens)"
       },
+      order: [],
       columnDefs: [
-        { orderable: false, "targets": [0,1,2] },
+        { orderable: false, targets: [0,1,2] },
         {
           render:
             function(data, type, row) {
