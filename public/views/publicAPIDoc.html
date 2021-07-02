@@ -4,7 +4,7 @@
         background: #fafafa;
         border: 1px solid #eee;
     }
-    
+
     .tab-v3 .tab-content {
         padding: 15px;
         background: #fafafa;
@@ -27,12 +27,12 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row mb-5">
             <div class="col-6 col-md-3 col-sm-6 mt-2 mb-3">
                 <div class="text-center">
-                	<figure class="mx-auto mb-3"><img src="/img/icons/access-blockchain-data-icon.png"></figure>
-                	<h3 class="h6 fw6">Access Blockchain Data</h3>
+                    <figure class="mx-auto mb-3"><img src="/img/icons/access-blockchain-data-icon.png"></figure>
+                    <h3 class="h6 fw6">Access Blockchain Data</h3>
                 </div>
             </div>
             <div class="col-6 col-md-3 col-sm-6 mt-2 mb-3">
@@ -66,113 +66,146 @@
             <div class="col-lg-12">
                 <div class="accordion js-accordion">
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Introduction <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Introduction <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <p>We will show all the Public APIs here.</p>
                                 <p>The APIs support GET/POST requests</p>
-                                <p>You can request by a rate limit of 3 requests/sec , otherwise you will be blocked.</p>
-                                <p class="mb-1">Each API return data in format like :{"status":1, "message":"OK", "result":""}.</p>
-                                <p class="mb-1">status: 1 mean Success , 0 mean Fail</p>
-                                <p class="mb-1">message: OK or fail reason</p>
-                                <p>result: json format data about the request result</p>
+                                <p>You can request by a rate limit of 3 requests/sec , otherwise you will be blocked.
+                                </p>
+                                <p>You can choose the response format like <strong>json</strong> or
+                                    <strong>raw</strong>. The default format is <strong>json</strong>.</p>
+                                <p class="mb-1">Each API return data in format like :{"status":1, "message":"OK",
+                                    "result":""}.</p>
+                                <p class="mb-1 ml-2">- status: 1 mean Success , 0 mean Fail</p>
+                                <p class="mb-1 ml-2">- message: OK or fail reason</p>
+                                <p class="ml-2">- result: json format data about the request result</p>
                                 <p>Both http and https are supported</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">XinFin Proxy APIs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">XinFin Proxy APIs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
-                                <p>The following are the limited list of supported Proxied APIs for XinFin available through xinfinScan. Parameters provided should be named like in the examples below. For compatibility with Parity, please prefix all hex strings with "xdc"</p>
+                                <p>The following are the limited list of supported Proxied APIs for XinFin available
+                                    through xinfinScan. Parameters provided should be named like in the examples below.
+                                    For compatibility with Parity, please prefix all hex strings with "xdc"</p>
                                 <hr class="hr-space">
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_blockNumber</strong></p>
                                     <p class="mb-2">Returns the number of most recent block</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getBlockByNumber</strong></p>
                                     <p class="mb-2">Returns information about a block by block number</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getBlockTransactionCountByNumber</strong></p>
-                                    <p class="mb-2">Returns the number of transactions in a block from a block matching the given block number</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken</a></pre>
+                                    <p class="mb-2">Returns the number of transactions in a block from a block matching
+                                        the given block number</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getTransactionByHash</strong></p>
-                                    <p class="mb-2">Returns the information about a transaction requested by transaction hash</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken</a></pre>
+                                    <p class="mb-2">Returns the information about a transaction requested by transaction
+                                        hash</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getTransactionByBlockNumberAndIndex</strong></p>
-                                    <p class="mb-2">Returns information about a transaction by block number and transaction index position</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken</a></pre>
+                                    <p class="mb-2">Returns information about a transaction by block number and
+                                        transaction index position</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getTransactionCount</strong></p>
                                     <p class="mb-2">Returns the number of transactions sent from an address</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_sendRawTransaction</strong></p>
-                                    <p class="mb-2">Creates new message call transaction or a contract creation for signed transactions</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken</a></pre>
-                                    <p>(Replace the hex value with your raw hex encoded transaction that you want to send.
+                                    <p class="mb-2">Creates new message call transaction or a contract creation for
+                                        signed transactions</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken&format=json</a></pre>
+                                    <p>(Replace the hex value with your raw hex encoded transaction that you want to
+                                        send.
                                         <br>Send as a POST request, if your hex code is particularly long)</p>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getTransactionReceipt</strong></p>
                                     <p class="mb-2">Returns the receipt of a transaction by transaction hash</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_call</strong></p>
-                                    <p class="mb-2">Executes a new message call immediately without creating a transaction on the block chain</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken</a></pre>
+                                    <p class="mb-2">Executes a new message call immediately without creating a
+                                        transaction on the block chain</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getCode</strong></p>
                                     <p class="mb-2">Returns code at a given address</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_getStorageAt</strong> (**experimental)</p>
                                     <p class="mb-2">Returns the value from a storage position at a given address</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_gasPrice</strong></p>
                                     <p class="mb-2">Returns the current price per gas in wei</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>eth_estimateGas</strong></p>
-                                    <p class="mb-2">Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used for estimating the used gas</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken</a></pre>
+                                    <p class="mb-2">Makes a call or transaction, which won't be added to the blockchain
+                                        and returns the used gas, which can be used for estimating the used gas</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Balance APIs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Balance APIs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-2"><strong>Get total XDC on block chain</strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-2"><strong>Get XDC Balance for a single Address</strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=balance&address=0xeb0e5b3c177c72235d07d8daa6e7ad8fe701e24a&tag=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
-                                    <p class="mb-2"><strong>Get XDC Balance for multiple Addresses in a single call</strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                    <p class="mb-2"><strong>Get XDC Balance for multiple Addresses in a single
+                                            call</strong></p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                     <p>Separate addresses by comma, up to a maxium of 20 accounts in a single batch</p>
                                 </div>
                             </div>
@@ -180,37 +213,46 @@
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Account APIs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Account APIs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>Get a list of 'Normal' Transactions By Address</strong></p>
                                     <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
-                                    <p class="mb-0"><strong>[BETA] Get a list of 'Internal' Transactions by Address</strong></p>
+                                    <p class="mb-0"><strong>[BETA] Get a list of 'Internal' Transactions by
+                                            Address</strong></p>
                                     <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>Get list of Blocks Mined by Address</strong></p>
                                     <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Contract APIs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Contract APIs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <p>Newly verified Contracts are synced to the API servers within 5 minutes or less</p>
                                 <div class="mb-4">
-                                    <p class="mb-2"><strong>Get Contract ABI for <a href="verifycontract">Verified Contract Source Codes</a></strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken</a></pre>
-                                    <p class="mt-4">A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract</p>
+                                    <p class="mb-2"><strong>Get Contract ABI for <a href="verifycontract">Verified
+                                                Contract Source Codes</a></strong></p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken&format=json</a></pre>
+                                    <p class="mt-4">A simple sample for retrieving the contractABI using Web3.js and
+                                        Jquery to interact with a contract</p>
                                     <pre>var Web3 = require("xdc3-old");;
     var web3 = new Web3(new Web3.providers.HttpProvider());
     var version = web3.version.api;
@@ -230,87 +272,107 @@
                                </pre>
                                 </div>
                                 <div class="mb-4">
-                                    <p class="mb-0"><strong>[Beta] Get Contract Source Code for <a href="verifycontract">Verified Contract Source Codes</a></strong></p>
+                                    <p class="mb-0"><strong>[Beta] Get Contract Source Code for <a
+                                                href="verifycontract">Verified Contract Source Codes</a></strong></p>
                                     <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Transaction APIs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Transaction APIs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>[BETA] Check Transaction Receipt Status</strong></p>
                                     <p class="mb-2">Note: status: 0 = Fail, 1 = Pass</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                                 <div class="mb-4">
                                     <p class="mb-0"><strong>[BETA] Check Transaction Receipt Status</strong></p>
                                     <p class="mb-2">Note: status: 0 = Fail, 1 = Pass</p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Blocks APIs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Blocks APIs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-2"><strong>[BETA] Get Block Rewards by BlockNo</strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Event Logs <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Event Logs <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
-                                <p>[Beta] The Event Log API was designed to provide an alternative to the native <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs" target="_blank">eth_getLogs</a>. Below are the list of supported filter parameters:</p>
+                                <p>[Beta] The Event Log API was designed to provide an alternative to the native <a
+                                        href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs"
+                                        target="_blank">eth_getLogs</a>. Below are the list of supported filter
+                                    parameters:</p>
                                 <ul>
                                     <li>param address: contract address</li>
                                     <li>param[option] fromBlock: logs in block is great than or equle fromBlock</li>
                                     <li>param[option] toBlock: logs in block is little than or equle toBlock</li>
                                     <li>param[option] topics: topics filter. multi topic separate with comma.
-                                        <br> such as: ...&amp;topics=value0,,value2&amp;... this exprission will fetch logs that topic0 is value0 and topic2 is value2.
+                                        <br> such as: ...&amp;topics=value0,,value2&amp;... this exprission will fetch
+                                        logs that topic0 is value0 and topic2 is value2.
                                         <br> each value's length is 66(contain:0x)</li>
                                     <li>param[option] data: log data(not index param data)</li>
-                                    <li>param[option] returnFilters: return partial data(full data as default). multi topic separate with comma.
+                                    <li>param[option] returnFilters: return partial data(full data as default). multi
+                                        topic separate with comma.
                                         <br> such as: ...&amp;returnFilters=address,timestamp,topics,data&amp;...
                                     </li>
                                 </ul>
-                                <p class="mb-2">fromBlock and toBlock accepts the blocknumber (integer, NOT hex) or 'latest' (earliest & pending is NOT supported yet)</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">fromBlock and toBlock accepts the blocknumber (integer, NOT hex) or
+                                    'latest' (earliest & pending is NOT supported yet)</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">Token Info <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">Token Info <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-2"><strong>Get ERC20-Token TotalSupply by ContractAddress</strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json</a></pre>
                                 </div>
                             </div>
                         </div>
                     </div>
 
                     <div class="accordion__item js-accordion-item">
-                        <div class="accordion-header js-accordion-header">General Stats <span><i class="fas fa-chevron-down"></i></span></div>
+                        <div class="accordion-header js-accordion-header">General Stats <span><i
+                                    class="fas fa-chevron-down"></i></span></div>
                         <div class="accordion-body js-accordion-body">
                             <div class="accordion-body__contents">
                                 <div class="mb-4">
                                     <p class="mb-2"><strong>Get Total Supply of XDC </strong></p>
-                                    <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken</a></pre>
-                                    <p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)</p>
+                                    <pre
+                                        class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=stats&action=ethsupply&apikey=YourApiKeyToken&format=json</a></pre>
+                                    <p>(Result returned in Wei, to get value in XDC divide
+                                        resultAbove/1000000000000000000)</p>
                                 </div>
                             </div>
                         </div>
@@ -322,44 +384,56 @@
         <div class="row desktop_view_faq mt-4">
             <div class="col-lg-3 col-md-4 col-12 mb-5">
                 <div class="list-group nav nav-pills nav-stacked" id="list-tab" role="tablist">
-                    <a class="list-group-item list-group-item-action active" id="list-intro-list" data-toggle="list" href="#intro" role="tab">
+                    <a class="list-group-item list-group-item-action active" id="list-intro-list" data-toggle="list"
+                        href="#intro" role="tab">
                         <h5>Introduction</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-proxy-list" data-toggle="list" href="#proxy" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-proxy-list" data-toggle="list"
+                        href="#proxy" role="tab">
                         <h5>XinFin Proxy</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-AA-list" data-toggle="list" href="#balance" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-AA-list" data-toggle="list"
+                        href="#balance" role="tab">
                         <h5>Balance</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-AS-list" data-toggle="list" href="#account" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-AS-list" data-toggle="list"
+                        href="#account" role="tab">
                         <h5>Account</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-V-list" data-toggle="list" href="#contracts" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-V-list" data-toggle="list"
+                        href="#contracts" role="tab">
                         <h5>Contracts</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-TF-list" data-toggle="list" href="#transaction" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-TF-list" data-toggle="list"
+                        href="#transaction" role="tab">
                         <h5>Transaction</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-API-list" data-toggle="list" href="#blocks" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-API-list" data-toggle="list"
+                        href="#blocks" role="tab">
                         <h5>Blocks</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-MA-list" data-toggle="list" href="#logs" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-MA-list" data-toggle="list" href="#logs"
+                        role="tab">
                         <h5>Event Logs</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-BR-list" data-toggle="list" href="#tokens" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-BR-list" data-toggle="list"
+                        href="#tokens" role="tab">
                         <h5>Tokens</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-SC-list" data-toggle="list" href="#stats" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-SC-list" data-toggle="list" href="#stats"
+                        role="tab">
                         <h5>Stats</h5>
                     </a>
-                    <a class="list-group-item list-group-item-action" id="list-SC-list" data-toggle="list" href="#marketprice" role="tab">
+                    <a class="list-group-item list-group-item-action" id="list-SC-list" data-toggle="list"
+                        href="#marketprice" role="tab">
                         <h5>Market Price</h5>
                     </a>
                 </div>
             </div>
             <div class="col-lg-9 col-md-8">
                 <div class="tab-content style-2" id="nav-tabContent">
-                    <div class="card tab-pane fade show active" id="intro" role="tabpanel" aria-labelledby="list-intro-list">
+                    <div class="card tab-pane fade show active" id="intro" role="tabpanel"
+                        aria-labelledby="list-intro-list">
                         <div class="card-header">
                             <h5 class="mt-0 mb-0">Introduction</h5>
                         </div>
@@ -367,10 +441,13 @@
                             <p>We will show all the Public APIs here.</p>
                             <p>The APIs support GET/POST requests</p>
                             <p>You can request by a rate limit of 3 requests/sec , otherwise you will be blocked.</p>
-                            <p class="mb-1">Each API return data in format like :{"status":1, "message":"OK", "result":""}.</p>
-                            <p class="mb-1">status: 1 mean Success , 0 mean Fail</p>
-                            <p class="mb-1">message: OK or fail reason</p>
-                            <p>result: json format data about the request result</p>
+                            <p>You can choose the response format like <strong>json</strong> or <strong>raw</strong>.
+                                The default format is <strong>json</strong>.</p>
+                            <p class="mb-1">Each API return data in format like :{"status":1, "message":"OK",
+                                "result":""}.</p>
+                            <p class="mb-1 ml-2">- status: 1 mean Success , 0 mean Fail</p>
+                            <p class="mb-1 ml-2">- message: OK or fail reason</p>
+                            <p class="ml-2">- result: json format data about the request result</p>
                             <p>Both http and https are supported</p>
                         </div>
                     </div>
@@ -380,100 +457,127 @@
                             <h5 class="mt-0 mb-0">XinFin Proxy APIs</h5>
                         </div>
                         <div class="card-body">
-                            <p>The following are the limited list of supported Proxied APIs for XinFin available through xinfinScan. Parameters provided should be named like in the examples below. For compatibility with Parity, please prefix all hex strings with "xdc"</p>
+                            <p>The following are the limited list of supported Proxied APIs for XinFin available through
+                                xinfinScan. Parameters provided should be named like in the examples below. For
+                                compatibility with Parity, please prefix all hex strings with "xdc"</p>
                             <hr class="hr-space">
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_blockNumber</strong></p>
                                 <p class="mb-2">Returns the number of most recent block</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getBlockByNumber</strong></p>
                                 <p class="mb-2">Returns information about a block by block number</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getBlockTransactionCountByNumber</strong></p>
-                                <p class="mb-2">Returns the number of transactions in a block from a block matching the given block number</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">Returns the number of transactions in a block from a block matching the
+                                    given block number</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getBlockTransactionCountByNumber&blockNumber=666&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getTransactionByHash</strong></p>
-                                <p class="mb-2">Returns the information about a transaction requested by transaction hash</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">Returns the information about a transaction requested by transaction
+                                    hash</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByHash&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getTransactionByBlockNumberAndIndex</strong></p>
-                                <p class="mb-2">Returns information about a transaction by block number and transaction index position</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">Returns information about a transaction by block number and transaction
+                                    index position</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionByBlockNumberAndIndex&blockNumber=1267471&index=0x0&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getTransactionCount</strong></p>
                                 <p class="mb-2">Returns the number of transactions sent from an address</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionCount&address=0x2910543af39aba0cd09dbb2d50200b3e800a63d2&tag=latest&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_sendSignedTransaction</strong></p>
-                                <p class="mb-2">Creates new message call transaction or a contract creation for signed transactions</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=sendSignedTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">Creates new message call transaction or a contract creation for signed
+                                    transactions</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=sendSignedTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_sendRawTransaction&hex=0xf904808000831cfde080&apikey=YourApiKeyToken&format=json</a></pre>
                                 <p>(Replace the hex value with your raw hex encoded transaction that you want to send.
                                     <br>Send as a POST request, if your hex code is particularly long)</p>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getTransactionReceipt</strong></p>
                                 <p class="mb-2">Returns the receipt of a transaction by transaction hash</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getTransactionReceipt&txhash=0x1e2910a262b1008d0616a0beb24c1a491d78771baa54a33e66065e03b1f46bc1&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_call</strong></p>
-                                <p class="mb-2">Executes a new message call immediately without creating a transaction on the block chain</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">Executes a new message call immediately without creating a transaction
+                                    on the block chain</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_call&to=xdcAEEF46DB4855E25702F8237E8f403FddcaF931C0&data=0x70a08231000000000000000000000000e16359506c028e51f16be38986ec5746251e9724&blockNumber=latest&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getCode</strong></p>
                                 <p class="mb-2">Returns code at a given address</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getCode&address=xdcf75e354c5edc8efed9b59ee9f67a80845ade7d0c&vs=latest&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_getStorageAt</strong> (**experimental)</p>
                                 <p class="mb-2">Returns the value from a storage position at a given address</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_getStorageAt&address=xdc6e03d9cce9d60f3e9f2597e13cd4c54c55330cfd&position=0x0&blockNumber=latest&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_gasPrice</strong></p>
                                 <p class="mb-2">Returns the current price per gas in wei</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_gasPrice&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>eth_estimateGas</strong></p>
-                                <p class="mb-2">Makes a call or transaction, which won't be added to the blockchain and returns the used gas, which can be used for estimating the used gas</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2">Makes a call or transaction, which won't be added to the blockchain and
+                                    returns the used gas, which can be used for estimating the used gas</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=proxy&action=eth_estimateGas&to=0xf0160428a8552ac9bb7e050d90eeade4ddd52843&value=0xff22&gasPrice=0x051da038cc&gas=0xffffff&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card tab-pane fade show" id="balance" role="tabpanel" aria-labelledby="list-balance-list">
+                    <div class="card tab-pane fade show" id="balance" role="tabpanel"
+                        aria-labelledby="list-balance-list">
                         <div class="card-header">
                             <h5 class="mt-0 mb-0">Balance APIs</h5>
                         </div>
                         <div class="card-body">
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get total XDC on block chain</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get XDC Balance for a single Address</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balance&address=xdc0000000000000000000000000000000000000000&tag=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=balance&address=xdc0000000000000000000000000000000000000000&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balance&address=xdc0000000000000000000000000000000000000000&tag=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=balance&address=xdc0000000000000000000000000000000000000000&tag=latest&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
-                                <p class="mb-2"><strong>Get XDC Balance for multiple Addresses in a single call</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken</a></pre>
+                                <p class="mb-2"><strong>Get XDC Balance for multiple Addresses in a single call</strong>
+                                </p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=balancemulti&address=0xddbd2b932c763ba5b1b7ae3b362eac3e8d40121a,0x63a9975ba31b0b9626b34300f7f627147df1f526,0x198ef1ec325a96cc354c7266a038be8b5c558f67&tag=latest&apikey=YourApiKeyToken&format=json</a></pre>
                                 <p>Separate addresses by comma, up to a maxium of 20 accounts in a single batch</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card tab-pane fade show" id="account" role="tabpanel" aria-labelledby="list-account-list">
+                    <div class="card tab-pane fade show" id="account" role="tabpanel"
+                        aria-labelledby="list-account-list">
                         <div class="card-header">
                             <h5 class="mt-0 mb-0">Account APIs</h5>
                         </div>
@@ -481,31 +585,39 @@
                             <div class="mb-4">
                                 <p class="mb-0"><strong>Get a list of 'Normal' Transactions By Address</strong></p>
                                 <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=txlist&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
-                                <p class="mb-0"><strong>[BETA] Get a list of 'Internal' Transactions by Address</strong></p>
+                                <p class="mb-0"><strong>[BETA] Get a list of 'Internal' Transactions by Address</strong>
+                                </p>
                                 <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=txlistinternal&address=xdc2f87d25d77ec213ac061e8724501284a91eaa9fe&page=1&pageSize=10&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>Get list of Blocks Mined by Address</strong></p>
                                 <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=account&action=getminedblocks&address=xdc2e402e5d2eb91c6d464ef5ccd92986d282035b17&page=1&pageSize=10&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card tab-pane fade show" id="contracts" role="tabpanel" aria-labelledby="list-contracts-list">
+                    <div class="card tab-pane fade show" id="contracts" role="tabpanel"
+                        aria-labelledby="list-contracts-list">
                         <div class="card-header">
                             <h5 class="mt-0 mb-0">Contract APIs</h5>
                         </div>
                         <div class="card-body">
                             <p>Newly verified Contracts are synced to the API servers within 5 minutes or less</p>
                             <div class="mb-4">
-                                <p class="mb-2"><strong>Get Contract ABI for <a href="verifycontract">Verified Contract Source Codes</a></strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken</a></pre>
-                                <p class="mt-4">A simple sample for retrieving the contractABI using Web3.js and Jquery to interact with a contract</p>
+                                <p class="mb-2"><strong>Get Contract ABI for <a href="verifycontract">Verified Contract
+                                            Source Codes</a></strong></p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=contract&action=getabi&address=xdcc01fbdf458041359a8eeaf03d9991dd8fd8dbd6f&apikey=YourApiKeyToken&format=json</a></pre>
+                                <p class="mt-4">A simple sample for retrieving the contractABI using Web3.js and Jquery
+                                    to interact with a contract</p>
                                 <pre>var Web3 = require("xdc3");;
     var web3 = new Web3(new Web3.providers.HttpProvider());
     var version = web3.version.api;
@@ -525,32 +637,39 @@
                                </pre>
                             </div>
                             <div class="mb-4">
-                                <p class="mb-0"><strong>[Beta] Get Contract Source Code for <a href="verifycontract">Verified Contract Source Codes</a></strong></p>
+                                <p class="mb-0"><strong>[Beta] Get Contract Source Code for <a
+                                            href="verifycontract">Verified Contract Source Codes</a></strong></p>
                                 <p class="mb-2">[Optional Parameters] pageSize: 1 - 100</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=contract&action=getsourcecode&address=xdcBB9bc244D798123fDe783fCc1C72d3Bb8C189413&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card tab-pane fade show" id="transaction" role="tabpanel" aria-labelledby="list-transaction-list">
+                    <div class="card tab-pane fade show" id="transaction" role="tabpanel"
+                        aria-labelledby="list-transaction-list">
                         <div class="card-header">
                             <h5 class="mt-0 mb-0">Transaction APIs</h5>
                         </div>
                         <div class="card-body">
                             <div class="mb-4">
-                                <p class="mb-0"><strong>Check Contract Execution Status (if there was an error during contract execution)                                </strong></p>
+                                <p class="mb-0"><strong>Check Contract Execution Status (if there was an error during
+                                        contract execution) </strong></p>
                                 <p class="mb-2">Note: status: 0 = Fail, 1 = Pass</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=getstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=transaction&action=getstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=getstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=transaction&action=getstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>Check Transaction Receipt Status </strong></p>
                                 <p class="mb-2">Note: status: 0 = Fail, 1 = Pass</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=transaction&action=gettxreceiptstatus&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                             <div class="mb-4">
                                 <p class="mb-0"><strong>Check Transaction Details</strong></p>
                                 <p class="mb-2">Note: status: 0 = Fail, 1 = Pass</p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxdetails&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=transaction&action=gettxdetails&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=transaction&action=gettxdetails&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=transaction&action=gettxdetails&txhash=0x513c1ba0bebf66436b5fed86ab668452b7805593c05073eb2d51d3a52f480a76&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                         </div>
                     </div>
@@ -562,7 +681,8 @@
                         <div class="card-body">
                             <div class="mb-4">
                                 <p class="mb-2"><strong>[BETA] Get Block Rewards by BlockNo</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken&format=json</a></pre>
                             </div>
                         </div>
                     </div>
@@ -572,21 +692,28 @@
                             <h5 class="mt-0 mb-0">Event Logs</h5>
                         </div>
                         <div class="card-body">
-                            <p>[Beta] The Event Log API was designed to provide an alternative to the native <a href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs" target="_blank">eth_getLogs</a>. Below are the list of supported filter parameters:</p>
+                            <p>[Beta] The Event Log API was designed to provide an alternative to the native <a
+                                    href="https://github.com/ethereum/wiki/wiki/JSON-RPC#eth_getlogs"
+                                    target="_blank">eth_getLogs</a>. Below are the list of supported filter parameters:
+                            </p>
                             <ul>
                                 <li>param address: contract address</li>
                                 <li>param[option] fromBlock: logs in block is great than or equle fromBlock</li>
                                 <li>param[option] toBlock: logs in block is little than or equle toBlock</li>
                                 <li>param[option] topics: topics filter. multi topic separate with comma.
-                                    <br> such as: ...&amp;topics=value0,,value2&amp;... this exprission will fetch logs that topic0 is value0 and topic2 is value2.
+                                    <br> such as: ...&amp;topics=value0,,value2&amp;... this exprission will fetch logs
+                                    that topic0 is value0 and topic2 is value2.
                                     <br> each value's length is 66(contain:0x)</li>
                                 <li>param[option] data: log data(not index param data)</li>
-                                <li>param[option] returnFilters: return partial data(full data as default). multi topic separate with comma.
+                                <li>param[option] returnFilters: return partial data(full data as default). multi topic
+                                    separate with comma.
                                     <br> such as: ...&amp;returnFilters=address,timestamp,topics,data&amp;...
                                 </li>
                             </ul>
-                            <p class="mb-2">fromBlock and toBlock accepts the blocknumber (integer, NOT hex) or 'latest' (earliest & pending is NOT supported yet)</p>
-                            <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken</a></pre>
+                            <p class="mb-2">fromBlock and toBlock accepts the blocknumber (integer, NOT hex) or 'latest'
+                                (earliest & pending is NOT supported yet)</p>
+                            <pre
+                                class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=logs&action=getLogs&address=0x866171faf25577a8ba61645d31ffae70047f73f6&topics=0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef,,0x000000000000000000000000259b357e09f55698030b30f5b9fc5990916b9a5c&returnFilters=timestamp,topics,-_id&apikey=YourApiKeyToken&format=json</a></pre>
                         </div>
                     </div>
 
@@ -598,59 +725,65 @@
 
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get ERC20-Token info by ContractAddress</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI??module=stats&action=tokeninfo&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI??module=stats&action=tokeninfo&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
-                            
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI??module=stats&action=tokeninfo&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI??module=stats&action=tokeninfo&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json</a></pre>
+
                                 <pre class="text-break-all">
                                     <p>Output example:</p>
                                     <p>{"status":1,"message":"OK","result":{"_id":"6086a5b8897f6bc3e3ba9aee","address":"xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f","ERC":2,"blockNumber":12596201,"creationTransaction":"0xafadddc207fc08e13a9d96e6da1462ac52297c35e570c5ba2db0057eefd6c0ab","decimals":18,"owner":"xdc7F158c293701dC6C3097E6A9A547FcD07701A508","symbol":"DYC","tokenName":"DYCLUDE","totalSupply":1e+24}}</p>
                                 </pre>
-                            
+
                             </div>
 
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get ERC20-Token TotalSupply by ContractAddress</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=stats&action=tokensupply&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json</a></pre>
                                 <pre class="text-break-all">
                                     <p>Output example:</p>
                                     <p>{"status":1,"message":"OK","result":1e+24}</p>
                                 </pre>
-                            
+
                             </div>
 
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get ERC20-Token total holders by ContractAddress</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=total_tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=total_tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken</a></pre>
-                            
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=total_tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=stats&action=total_tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&apikey=YourApiKeyToken&format=json</a></pre>
+
                                 <pre class="text-break-all">
                                     <p>Output example:</p>
                                     <p>{"status":1,"message":"OK","result":5}</p>
                                 </pre>
-                            
+
                             </div>
 
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get ERC20-Token holders with limit or without limit</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&limit=10&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=stats&action=tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&limit=10&apikey=YourApiKeyToken</a></pre>
-                                
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&limit=10&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=stats&action=tokenholders&contractaddress=xdcbbd1ed816280f20aa9df90207544d2ac2f397a1f&limit=10&apikey=YourApiKeyToken&format=json</a></pre>
+
                                 <pre class="text-break-all">
 
                                     <p>Output example:</p>
                                     <p>{"status":1,"message":"OK","result":[{"_id":"6094c0e57d2c7f7d83fc2d47","address":"xdc49114597ef077b8ddfa8c2be2dd35a1fe5c586c3","balance":"966000000000000000000"},{"_id":"6094c0e67d2c7f7d83fc2d78","address":"xdc14004d5b7b32c7693e4be353b60d7fccb4669ea2","balance":"497044000000000000000000"}]}</p>
     
                                 </pre>
-                            
+
                             </div>
 
                             <div class="mb-4">
-                                <p class="mb-2"><strong>Get ERC20-Token transfers with limit or without limit</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokentransfers&contractaddress=xdcd18fF933268b05eb7ff6107e9DC169cBF783632c&apikey=YourApiKeyToken&limit=2">{{baseUrl}}/publicAPI?module=stats&action=tokentransfers&contractaddress=xdcd18fF933268b05eb7ff6107e9DC169cBF783632c&apikey=YourApiKeyToken&limit=2</a></pre>
-                                
+                                <p class="mb-2"><strong>Get ERC20-Token transfers with limit or without limit</strong>
+                                </p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=stats&action=tokentransfers&contractaddress=xdcd18fF933268b05eb7ff6107e9DC169cBF783632c&apikey=YourApiKeyToken&format=json&limit=2">{{baseUrl}}/publicAPI?module=stats&action=tokentransfers&contractaddress=xdcd18fF933268b05eb7ff6107e9DC169cBF783632c&apikey=YourApiKeyToken&format=json&limit=2</a></pre>
+
                                 <pre class="text-break-all">
 
                                     <p>Output example:</p>
                                     <p>{"status":1,"message":"OK","result":[{"_id":"60926942acec5ba90c6d59cd","hash":"0xdb2ee6294c103174b6148f51ec0169866ab37622167976573b2b861db2356e56","__v":0,"blockNumber":18284748,"contract":"xdcd18fF933268b05Eb7ff6107e9DC169cBF783632c","from":"xdc49114597EF077B8ddFA8c2Be2dD35a1fE5C586C3","method":"transfer","timestamp":1620207937,"to":"xdc14004d5b7b32c7693e4be353b60d7fccb4669ea2","value":"0"},{"_id":"609268dcacec5ba90c6d318a","hash":"0xcd5aec0b60cc293492f515ba9ab2108057bb4a8c840f8b8fd75db88b7a21f042","__v":0,"blockNumber":18284701,"contract":"xdcd18fF933268b05Eb7ff6107e9DC169cBF783632c","from":"xdc49114597EF077B8ddFA8c2Be2dD35a1fE5C586C3","method":"transfer","timestamp":1620207835,"to":"xdc14004d5b7b32c7693e4be353b60d7fccb4669ea2","value":"1000000000000000000"}]}</p>    
                                 </pre>
-                            
+
                             </div>
                         </div>
                     </div>
@@ -662,22 +795,27 @@
                         <div class="card-body">
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get Total Supply of XDC </strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken</a></pre>
-                                <p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)</p>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?module=balance&action=totalXDC&apikey=YourApiKeyToken&format=json</a></pre>
+                                <p>(Result returned in Wei, to get value in XDC divide resultAbove/1000000000000000000)
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="card tab-pane fade show" id="marketprice" role="tabpanel" aria-labelledby="list-marketprice-list">
+                    <div class="card tab-pane fade show" id="marketprice" role="tabpanel"
+                        aria-labelledby="list-marketprice-list">
                         <div class="card-header">
                             <h5 class="mt-0 mb-0">Market Prices</h5>
                         </div>
                         <div class="card-body">
                             <div class="mb-4">
                                 <p class="mb-2"><strong>Get the current market price of XDC</strong></p>
-                                <pre class="text-break-all"><a href="{{baseUrl}}/publicAPI?action=xdc_marketprice&apikey=YourApiKeyToken">{{baseUrl}}/publicAPI?action=xdc_marketprice&apikey=YourApiKeyToken</a></pre>
+                                <pre
+                                    class="text-break-all"><a href="{{baseUrl}}/publicAPI?action=xdc_marketprice&apikey=YourApiKeyToken&format=json">{{baseUrl}}/publicAPI?action=xdc_marketprice&apikey=YourApiKeyToken&format=json</a></pre>
                                 <p>Output example:</p>
-                                <p>{"status":1,"message":"OK","result":{"_id":"608a8586a74a3eb3578caeba","symbol":"XDC","timestamp":1619690885,"quoteBTC":0.0000016566890292881833,"quoteEUR":0.07472439637427136,"quoteINR":6.708495465180236,"quoteUSD":0.09057052482758,"volume_24h":7398681.45624277,"percent_change_24h":-2.11184134}}</p>
+                                <p>{"status":1,"message":"OK","result":{"_id":"608a8586a74a3eb3578caeba","symbol":"XDC","timestamp":1619690885,"quoteBTC":0.0000016566890292881833,"quoteEUR":0.07472439637427136,"quoteINR":6.708495465180236,"quoteUSD":0.09057052482758,"volume_24h":7398681.45624277,"percent_change_24h":-2.11184134}}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -694,7 +832,7 @@
 
 <script type="text/javascript">
     var hash = window.location.hash.substring(1);
-    $(document).ready(function() {
+    $(document).ready(function () {
         if (hash != '') {
             activaTab(hash);
         }
@@ -716,7 +854,7 @@
 
 <!-- Mobile view Accordion -->
 <script>
-    var accordion = (function() {
+    var accordion = (function () {
         var $accordion = $('.js-accordion');
         var $accordion_header = $accordion.find('.js-accordion-header');
         var $accordion_item = $('.js-accordion-item');
@@ -729,8 +867,8 @@
         };
         return {
             // pass configurable object literal
-            init: function($settings) {
-                $accordion_header.on('click', function() {
+            init: function ($settings) {
+                $accordion_header.on('click', function () {
                     accordion.toggle($(this));
                 });
                 $.extend(settings, $settings);
@@ -741,8 +879,9 @@
                 // reveal the active accordion bodies
                 $('.js-accordion-item.active').find('> .js-accordion-body').show();
             },
-            toggle: function($this) {
-                if (settings.oneOpen && $this[0] != $this.closest('.js-accordion').find('> .js-accordion-item.active > .js-accordion-header')[0]) {
+            toggle: function ($this) {
+                if (settings.oneOpen && $this[0] != $this.closest('.js-accordion').find(
+                        '> .js-accordion-item.active > .js-accordion-header')[0]) {
                     $this.closest('.js-accordion')
                         .find('> .js-accordion-item')
                         .removeClass('active')
@@ -755,7 +894,7 @@
             }
         }
     })();
-    $(document).ready(function() {
+    $(document).ready(function () {
         accordion.init({
             speed: 300,
             oneOpen: true
