@@ -3962,8 +3962,12 @@ ul.social-sharing li i:hover {
 	overflow: hidden !important;
 }
 
-.table-responsive #token-txns_filter,#token-holders_filter,#address-transaction_filter {
+.table-responsive #token-txns_filter,#token-holders_filter,#address-transaction_filter,#address-internal-txns_filter {
 	display: none;
+}
+
+.dataTables_wrapper .row:nth-child(2) {
+	overflow-x: auto;
 }
 
 #submitCodeBtn {
