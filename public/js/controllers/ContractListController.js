@@ -10,6 +10,7 @@ angular.module('BlocksApp').controller('ContractListController', function($state
     $('#contracts-address').DataTable({
       processing: true,
       serverSide: true,
+      autoWidth: true,
       paging: true,
       ajax: function(data, callback, settings) {
         data.ERC = -1;
@@ -36,8 +37,9 @@ angular.module('BlocksApp').controller('ContractListController', function($state
         infoEmpty: "",
         infoFiltered: "(filtered from _MAX_ total contracts)"
       },
+      order: [],
       columnDefs: [
-        { orderable: false, "targets": [0,1,2] },
+        { orderable: false, targets: [0,1,2,3] },
         {
           render:
             function(data, type, row) {

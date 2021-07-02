@@ -1,113 +1,121 @@
+<!-- start Wrapper -->
+<!-- <div class="wrapper"> -->
 
-    <!-- start Wrapper -->
-    <!-- <div class="wrapper"> -->
- 
- <!-- start Address Details -->
- <section id="blockDetails" class="mb-4">
-  <div class="container">
-      <div class="row">
+<!-- start Address Details -->
+<section id="blockDetails" class="mb-4">
+    <div class="container">
+        <div class="row">
 
-          <div class="col-lg-12 safari-float-left">
-              <div class="block-header d-flex justify-content-between align-items-center">
-                  <h3 class="blockDetails-header-title text-break text-md-left"><i class="far mr-1"><img src="img/address-icon.png"></i> Address <span class="text-secondary"> {{ addrHash }}</span></h3>
-              </div>
-          </div>
+            <div class="col-lg-12 safari-float-left">
+                <div class="block-header d-flex justify-content-between align-items-center">
+                    <h3 class="blockDetails-header-title text-break text-md-left"><i class="far mr-1"><img
+                                src="img/address-icon.png"></i> Address <span class="text-secondary">
+                            {{ addrHash }}</span></h3>
+                </div>
+            </div>
 
-          <!-- start Overview -->
-          <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
-              <div class="card">
-                  <div class="card-header d-flex justify-content-between align-items-center">
-                      <h2 class="card-header-title">Overview</h2>
-                  </div>
-                  <div id="block-overview" class="card-body">
-                      <div class="row align-items-center">
-                          <div class="col-md-3 fw6 mb-1">
-                              Balance
-						  </div>
-                          <div class="col-md-9">
-                              	<div class="pl-small fw6">
-                                    {{ addrBalance | number: 10 }} XDC 
+            <!-- start Overview -->
+            <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h2 class="card-header-title">Overview</h2>
+                    </div>
+                    <div id="block-overview" class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 fw6 mb-1">
+                                Balance
+                            </div>
+                            <div class="col-md-9">
+                                <div class="pl-small fw6">
+                                    {{ addrBalance | number: 10 }} XDC
                                     <b style="color:red">{{ hackedTag }}</b>
                                     <!-- <span class="usd_value fw4">($ {{ balanceUSD | number: 6 }})</span> -->
-						  		</div>
-                          </div>
-                      </div>
-                      <hr class="hr-space">
-                      
-                      <div class="row align-items-center">
-                          <div class="col-md-3 fw6 mb-1">XDC Value</div>
-                          <div class="col-md-9">
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="hr-space">
+
+                        <div class="row align-items-center">
+                            <div class="col-md-3 fw6 mb-1">XDC Value</div>
+                            <div class="col-md-9">
                                 <div ng-if="$selectedCurrency == 'USD' " class="pl-small">${{ balanceUSD | number: 2 }}
-                                	<span class="usd_value fw4">(@ ${{ quoteUSD | number: 6 }}/XDC)</span>
+                                    <span class="usd_value fw4">(@ ${{ quoteUSD | number: 6 }}/XDC)</span>
                                 </div>
                                 <div ng-if="$selectedCurrency == 'INR' " class="pl-small">₹{{ balanceINR | number: 2 }}
-                                	<span class="usd_value fw4">(@ ₹{{ quoteINR | number: 6 }}/XDC)</span>
+                                    <span class="usd_value fw4">(@ ₹{{ quoteINR | number: 6 }}/XDC)</span>
                                 </div>
                                 <div ng-if="$selectedCurrency == 'EUR' " class="pl-small">€{{ balanceEUR | number: 2 }}
-                                	<span class="usd_value fw4">(@ €{{ quoteEUR | number: 6 }}/XDC)</span>
+                                    <span class="usd_value fw4">(@ €{{ quoteEUR | number: 6 }}/XDC)</span>
                                 </div>
-                          </div>
-                      </div>
-                      <hr class="hr-space">
-                      <div class="row align-items-center">
-                          <div class="col-md-3 fw6 mb-1">Transactions</div>
-                          <div class="col-md-3"><div class="pl-small">{{ count }}</div></div>
-                      </div>
-                      <div ng-show="isContract">
+                            </div>
+                        </div>
                         <hr class="hr-space">
-                        <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract name </span> <a href="/token/{{token.address}}">{{token.name}}</a></div> -->
-                        <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract verified √</span></div> -->
-                        <!-- <div class="col-md-3 fw6 mb-1" ng-show="!token.isVerified"><span class="eth-stat-text">not verified  <a href="/verifycontract/{{token.address}}">[go for verifying]</a> -->
-                        <div class="row align-items-center" ng-show="token.isVerified">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 fw6 mb-1">Transactions</div>
+                            <div class="col-md-3">
+                                <div class="pl-small">{{ count }}</div>
+                            </div>
+                        </div>
+                        <div ng-show="isContract">
+                            <hr class="hr-space">
+                            <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract name </span> <a href="/token/{{token.address}}">{{token.name}}</a></div> -->
+                            <!-- <div class="col-md-3 fw6 mb-1" ng-show="token.isVerified"><span class="eth-stat-text">Contract verified √</span></div> -->
+                            <!-- <div class="col-md-3 fw6 mb-1" ng-show="!token.isVerified"><span class="eth-stat-text">not verified  <a href="/verifycontract/{{token.address}}">[go for verifying]</a> -->
+                            <div class="row align-items-center" ng-show="token.isVerified">
                                 <div class="col-md-3 fw6 mb-1">Contract name </div>
                                 <div class="col-md-9">
                                     <div class="pl-small">
-                                        <span class="ml-0 mr-2"><a href="/token/{{token.address}}">{{token.name}}</a></span> <span class="eth-stat-text">Contract verified √</span></div>
+                                        <span class="ml-0 mr-2"><a
+                                                href="/token/{{token.address}}">{{token.name}}</a></span> <span
+                                            class="eth-stat-text">Contract verified √</span></div>
                                 </div>
                             </div>
-                        <!-- </div>                             -->
+                            <!-- </div>                             -->
                             <div class="row align-items-center" ng-show="!token.isVerified">
-                                    <div class="col-md-3 fw6 mb-1">
-                                        Status </div>
-                                    <div class="col-md-9">
-                                        <div class="pl-small">
-                                            <span class="text-danger ml-0 mr-2">UNVERIFIED</span> <a href="/contract/{{addrHash}}"><span class="label label_sm label_info ml-0"><i class="fas fa-shield-alt mr-1"></i>Verify Now</span></a></div>
-                                    </div>
+                                <div class="col-md-3 fw6 mb-1">
+                                    Status </div>
+                                <div class="col-md-9">
+                                    <div class="pl-small">
+                                        <span class="text-danger ml-0 mr-2">UNVERIFIED</span> <a
+                                            href="/contract/{{addrHash}}"><span
+                                                class="label label_sm label_info ml-0"><i
+                                                    class="fas fa-shield-alt mr-1"></i>Verify Now</span></a></div>
                                 </div>
+                            </div>
                         </div>
-                            <div class="col-md-3 fw6 mb-1" ng-show="isContract">
-                              
-                      
-                  </div>
-                  
-              </div>
-              
-          </div>
-          
-          <!-- end Overview -->
-          
-      </div>
-      					<!-- start Token Summary-->
-                          <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left" ng-show="isContract">
-                                <div class="card">
-                                    <div class="card-header d-flex justify-content-between align-items-center">
-                                        <h2 class="card-header-title">Contract Summary</h2>
-                                    </div>
-        
-                                    <div id="block-overview" class="card-body">
-        
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4 fw6 mb-1">
-                                                Creator </div>
-                                            <div class="col-md-8">
-                                                <div class="text-truncate d-block">
-                                                        <a href="/addr/{{token.creator}}">{{ token.creator }}</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        
-                                        <!-- <hr class="hr-space">
+                        <div class="col-md-3 fw6 mb-1" ng-show="isContract">
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- end Overview -->
+
+            </div>
+            <!-- start Token Summary-->
+            <div class="col-lg-6 mb-4 mb-lg-0 safari-float-left" ng-show="isContract">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h2 class="card-header-title">Contract Summary</h2>
+                    </div>
+
+                    <div id="block-overview" class="card-body">
+
+                        <div class="row align-items-center">
+                            <div class="col-md-4 fw6 mb-1">
+                                Creator </div>
+                            <div class="col-md-8">
+                                <div class="text-truncate d-block">
+                                    <a href="/addr/{{token.creator}}">{{ token.creator }}</a>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- <hr class="hr-space">
                                         <div class="row align-items-center">
                                             <div class="col-md-4 fw6 mb-1">
                                                 Contract
@@ -118,22 +126,22 @@
 												</div>
                                             </div>
                                         </div> -->
-                                        <hr class="hr-space">
-                                        <div class="row align-items-center">
-                                            <div class="col-md-4 fw6 mb-2">
-                                                Transaction </div>
-                                            <div class="col-md-8">
-                                                <div class="text-truncate d-block">
-                                                	<a href="/tx/{{token.transaction}}">{{ token.transaction.substr(0,41) }}...</a>
-												</div>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <hr class="hr-space">
+                        <div class="row align-items-center">
+                            <div class="col-md-4 fw6 mb-2">
+                                Transaction </div>
+                            <div class="col-md-8">
+                                <div class="text-truncate d-block">
+                                    <a href="/tx/{{token.transaction}}">{{ token.transaction.substr(0,41) }}...</a>
                                 </div>
                             </div>
-                            <!-- end Token Summary-->
-  </div>
-  </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end Token Summary-->
+        </div>
+    </div>
 </section>
 <!-- end Address Details -->
 
@@ -170,30 +178,46 @@
                 <div class="extraimg-banners d-block d-lg-none text-center pl-lg-4 pl-xll-5 mb-4">
                     <div class="d-none d-sm-block d-lg-none">
                         <div id="slider">
-                        	<figure>                                
-                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_730x90.jpg" alt="D'CENT Biometric Wallet"></a>
-                                <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_730x90.jpg" alt="XcelTrip"></a>
-                                <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_730x90.jpg" alt="TradeFinex"></a>
-                                <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_730x90.jpg" alt="MyContract"></a>
-                                <a href="https://blockdegree.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/blockdegree_730x90.jpg" alt="Blockcdegree"></a>
-                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_730x90.jpg" alt="D'CENT Biometric Wallet"></a>
-                        	</figure>
-                    	</div>
+                            <figure>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en"
+                                    target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_730x90.jpg"
+                                        alt="D'CENT Biometric Wallet"></a>
+                                <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/xceltrip_730x90.jpg" alt="XcelTrip"></a>
+                                <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/tradefinex_730x90.jpg" alt="TradeFinex"></a>
+                                <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/mycontract_730x90.jpg" alt="MyContract"></a>
+                                <a href="https://blockdegree.org/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/blockdegree_730x90.jpg" alt="Blockcdegree"></a>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en"
+                                    target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_730x90.jpg"
+                                        alt="D'CENT Biometric Wallet"></a>
+                            </figure>
+                        </div>
                     </div>
-                    
+
                     <div class="d-inline-block d-sm-none">
                         <div id="slider">
-                        	<figure>
-                            	<a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
-                                <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid" src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
-                                <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
-                                <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid" src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
-                                <a href="https://blockdegree.org/" target="_blank"><img class="img-fluid" src="/img/extraimg/blockdegree_321x101.jpg" alt="Blockcdegree"></a>
-                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en" target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg" alt="D'CENT Biometric Wallet"></a>
-                        	</figure>
-                    	</div>
+                            <figure>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en"
+                                    target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg"
+                                        alt="D'CENT Biometric Wallet"></a>
+                                <a href="https://www.xceltrip.com/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/xceltrip_321x101.jpg" alt="XcelTrip"></a>
+                                <a href="https://www.tradefinex.org/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/tradefinex_321x101.jpg" alt="TradeFinex"></a>
+                                <a href="https://www.mycontract.co/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/mycontract_321x101.jpg" alt="MyContract"></a>
+                                <a href="https://blockdegree.org/" target="_blank"><img class="img-fluid"
+                                        src="/img/extraimg/blockdegree_321x101.jpg" alt="Blockcdegree"></a>
+                                <a href="https://dcentwallet.com/Shop/detail/fcea8887cece407a8e433b0964de9d5f?utm_medium=affiliate&utm_source=XDCOfficial&utm_campaign=202101-XDCOfficial-Biometric-promo&lang=en"
+                                    target="_blank"><img class="img-fluid" src="/img/extraimg/dcentWallet_321x101.jpg"
+                                        alt="D'CENT Biometric Wallet"></a>
+                            </figure>
+                        </div>
                     </div>
-                        
+
                     <!-- splide 
                     <div id="splide">    
                         <div class="splide__track" id="splide-track">
@@ -215,7 +239,7 @@
                             </ul>
                         </div>
                     </div>
-                    <!-- /.splide -->
+                    /.splide -->
                 </div>
             </div>
         </div>
@@ -225,8 +249,8 @@
 
 
 
- <!-- start Transaction Details -->
- <section id="transactionDetails" class="mb-4">
+<!-- start Transaction Details -->
+<section id="transactionDetails" class="mb-4">
     <div class="container">
         <div class="row">
 
@@ -235,10 +259,18 @@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center p-0">
                         <!-- Nav tabs -->
-                        <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist" >
-                            <li ng-class="{active: activeTab == 'tab_addr_1' || !activeTab}" class="nav-item"><a class="nav-link active" href="#allTransactions" role="tab" data-toggle="tab">All Transactions</a></li>
-                            <li ng-class="{active: activeTab == 'tab_addr_2'}" ng-show="isContract" ng-click="internalTransaction(0)" class="nav-item"><a class="nav-link" href="#internalTransactions" role="tab" data-toggle="tab">Internal Transactions</a></li>
-                            <li ng-show="isContract" ng-class="{active: activeTab == 'tab_addr_3'}" class="nav-item"><a class="nav-link" href="#contractSource" role="tab" data-toggle="tab">Contract Source</a></li>
+                        <ul class="nav nav-custom nav-borderless nav_tabs1" id="nav_tabs" role="tablist">
+                            <li ng-click="fetchTxs()" class="nav-item"><a class="nav-link"
+                                    ng-class="{ 'active': activeTab === 'allTransactions' }" href="#allTransactions"
+                                    role="tab" data-toggle="tab">All Transactions</a></li>
+                            <li ng-show="isContract" ng-click="internalTransaction()" class="nav-item"><a class="nav-link"
+                                ng-class="{ 'active': activeTab === 'internalTransactions' }"
+                                    href="#internalTransactions" role="tab" data-toggle="tab">Internal Transactions</a>
+                            </li>
+                            <li ng-show="isContract" class="nav-item"><a class="nav-link"
+                                ng-class="{ 'active': activeTab === 'contractSource' }"
+                                    href="#contractSource" role="tab" data-toggle="tab">Contract
+                                    Source</a></li>
                         </ul>
                         <!-- Nav tabs -->
                     </div>
@@ -246,67 +278,63 @@
                     <div id="block-overview" class="card-body">
 
                         <div class="tab-content">
-                            <div class="tab-pane fade active show" id="allTransactions">
-                                <div class="table-responsive" ng-class="{active: activeTab == 'tab_addr_1' || !activeTab}" >
-									<table id="address-transaction" class="table table-hover nowrap" style="width:100%">
-										<thead>
-											<tr role="row" class="heading">
-												<th width="15%"> TxHash </th>
-												<th width="8%"> Block </th>
-												<th width="15%"> From </th>
-												<th width="15%"> To </th>
-												<th width="10%"> XDC </th>
-												<th width="0%"> Gas </th>
-												<th width="12%"> Age </th>
-											</tr>
-										</thead>
-										<tbody></tbody>
-									</table>
-                        		</div>
+                            <div class="tab-pane fade" ng-class="{ 'active show': activeTab === 'allTransactions' }"
+                                id="allTransactions">
+                                <div class="table-responsive">
+                                    <table id="address-transaction" class="table table-hover nowrap" style="width:100%">
+                                        <thead>
+                                            <tr role="row" class="heading">
+                                                <th width="15%"> TxHash </th>
+                                                <th width="8%"> Block </th>
+                                                <th width="15%"> From </th>
+                                                <th width="15%"> To </th>
+                                                <th width="10%"> XDC </th>
+                                                <th width="0%"> Gas </th>
+                                                <th width="12%"> Age </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
                                 <div class="row my-4">
                                     <div class="col text-right">
-                                        <span class="float-right" data-toggle="tooltip" title="" data-original-title="Export records in CSV format"><font size="1">[ Download <a href="/exportData?type=address&amp;a={{addrHash}}" target="_blank"><b> CSV Export</b></a>&nbsp;<span class="fas fa-download text-secondary"></span> ]</font>&nbsp;</span>
+                                        <span class="float-right" data-toggle="tooltip" title=""
+                                            data-original-title="Export records in CSV format">
+                                            <font size="1">[ Download <a
+                                                    href="/exportData?type=address&amp;a={{addrHash}}"
+                                                    target="_blank"><b> CSV Export</b></a>&nbsp;<span
+                                                    class="fas fa-download text-secondary"></span> ]</font>&nbsp;
+                                        </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="tab-pane fade" id="internalTransactions">
+                            <div ng-show="isContract" class="tab-pane fade"
+                                ng-class="{ 'active show': activeTab === 'internalTransactions' }" id="internalTransactions"
+                                id="internalTransactions">
                                 <div class="table-responsive">
-									<table id="internal-transaction" class="table table-hover nowrap" style="width:100%">
-										<thead>
-											<tr>
-												<th> TxHash </th>
-												<th> Block </th>
-												<th> From </th>
-												<th> To </th>
-												<th> XDC </th>
-												<th> Age </th>
-												<th style="text-align:right"> Amount </th>
-												<th>type</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr ng-repeat="t in internalDatas track by $index">
-												<td><span ng-show="tx.status==0" alt="transaction fail"><image src="img/FAIL.png"/></span> <a class="hash-tag text-truncate" href="/tx/{{t.hash}}?isTransfer=true">{{t.hash}}</a></td>
-												<td><a href="/block/{{t.blockNumber}}">{{t.blockNumber}}</a></td>
-												
-												<td><a class="hash-tag text-truncate" ng-show="acc==t.from" class="text-truncate">{{t.from}}</a></td>
-												<td><a class="hash-tag text-truncate" ng-show="acc!=t.from" class="text-truncate"> <a href="/tokenAcc/{{token.address}}{{t.from}}">{{t.from}}</a></td>
-												<td><a class="hash-tag text-truncate" ng-show="acc==t.to" class="truncate-addrhash"> {{t.to}} </a></td>
-												<td><a class="hash-tag text-truncate" ng-show="acc!=t.to" class="truncate-addrhash"> <a href="/tokenAcc/{{token.address}}{{t.to}}">{{t.to}} </a></td>
-												<td>{{t.value}}</td>
-												<td>{{t.timestamp | timeDuration}}</td>
-												<!--td style="text-align:right"> {{t.amount}} </td>
-												<td style="text-align:center"><span class="label label-sm label-info" ng-show="t.methodName=='Transfer'"> {{t.methodName}} </span><span  ng-show="t.methodName!='Transfer'"> {{t.methodName}} </span></td-->
-											</tr>									
-										</tbody>
-									</table>
-                        		</div>
+                                    <table id="address-internal-txns" class="table table-hover nowrap"
+                                        style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th> TxHash </th>
+                                                <th> Block </th>
+                                                <th> From </th>
+                                                <th> To </th>
+                                                <th> XDC </th>
+                                                <th> Age </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
                             </div>
-                            
-                            <div class="tab-pane fade" id="contractSource" ng-show="isContract" ng-class="{active: activeTab == 'tab_addr_3'}">
+
+                            <div ng-show="isContract" class="tab-pane fade"
+                                ng-class="{ 'active show': activeTab === 'contractSource' }" id="contractSource"
+                                id="contractSource">
                                 <contract-source></contract-source>
-                                
+
                             </div>
 
                         </div>

@@ -32,17 +32,15 @@ angular.module('BlocksApp').controller('AccountsController', function($statePara
         [20, 50, 100, 150, "All"] // change per page values here
       ],
       pageLength: 20,
-      order: [
-        [3, "desc"]
-      ],
       language: {
         lengthMenu: "_MENU_ Accounts",
         zeroRecords: "No accounts found",
         infoEmpty: "",
         infoFiltered: "(filtered from _MAX_ total accounts)"
       },
+      order: [],
       columnDefs: [
-        { orderable: false, "targets": [0,1,2,4] },
+        { orderable: false, targets: [0,1,2,3,4] },
         {
           render:
             function(data, type, row) {
