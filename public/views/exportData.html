@@ -33,6 +33,7 @@
                     is-open="opened.start"
                     show-weeks="false"
                     show-button-bar="false"
+                    min-date="minDate"
                     max-date="maxDate"
                   />
                 </div>
@@ -55,6 +56,7 @@
                     is-open="opened.end"
                     show-weeks="false"
                     show-button-bar="false"
+                    min-date="minDate"
                     max-date="maxDate"
                   />
                 </div>
@@ -62,7 +64,7 @@
             </div>
           </div>
           <div class="d-flex justify-content-center my-4">
-            <div vc-recaptcha key="'6LdM7jQbAAAAACSBN6MjPSGHVzaykCJ9xGibFRQP'" ng-model="gRecaptchaResponse"></div>
+            <div vc-recaptcha key="''" ng-model="gRecaptchaResponse"></div>
           </div>
           <div ng-show="!exporting" class="text-center">
             <input type="button" name="submitExportBtn" id="submitExportBtn" value="Download" class="btn btn-sm btn-primary" ng-click="submitExportCSV()">
