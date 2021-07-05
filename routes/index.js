@@ -53,7 +53,7 @@ var masterNodeContract;
 var web3relay;
 var contractAddress = "xdc0000000000000000000000000000000000000088";
 var burntAddress = "xdc0000000000000000000000000000000000000000";
-let resignMNCount = 14;
+let resignMNCount = 28;
 let epochRewards = 4500;
 let epochInDay = 48;
 let burntBalance, totalMasterNodesVal, totalStakedValueVal, mnDailyRewards, totalXDC, cmc_xdc_price;
