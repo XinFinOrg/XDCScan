@@ -15,28 +15,28 @@ var eth = require("./web3relay").eth;
 
 
 var async = require('async');
-const ws = new WebSocket("wss://wsapi.homiex.com/openapi/quote/ws/v1");
+// const ws = new WebSocket("wss://wsapi.homiex.com/openapi/quote/ws/v1");
 let homieExData;
 let BlockSigners = "xdc0000000000000000000000000000000000000089";
 let RandomizeSMC = "xdc0000000000000000000000000000000000000090";
 
 // module.exports = function(app){
 var web3relay = require('./web3relay');
-ws.on('open', function open() {
-  // console.log("[*] connected to the homiex wss")
-  ws.send(JSON.stringify({ "ping": Date.now() }));
-  setInterval(() => {
-    ws.send(JSON.stringify({ "ping": Date.now() }));
-  }, 120000);
-  ws.send(JSON.stringify({
-    "symbol": "XDCEUSDT",
-    "topic": "realtimes",
-    "event": "sub",
-    "params": {
-      "binary": false
-    }
-  }))
-});
+// ws.on('open', function open() {
+//   // console.log("[*] connected to the homiex wss")
+//   ws.send(JSON.stringify({ "ping": Date.now() }));
+//   setInterval(() => {
+//     ws.send(JSON.stringify({ "ping": Date.now() }));
+//   }, 120000);
+//   ws.send(JSON.stringify({
+//     "symbol": "XDCEUSDT",
+//     "topic": "realtimes",
+//     "event": "sub",
+//     "params": {
+//       "binary": false
+//     }
+//   }))
+// });
 
 
 // ws.on('message', function incoming(data) {
