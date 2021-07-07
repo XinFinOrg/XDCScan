@@ -4759,13 +4759,13 @@ div#slider {
 }
 
 div#slider figure img {
-	width: 16.6666%;
+	width: 12.50%;
 	float: left;
 }
 
 div#slider figure {
 	position: relative;
-	width: 600%;
+	width: 800%;
 	margin: 0;
 	left: 0;
 	text-align: left;
