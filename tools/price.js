@@ -5,11 +5,11 @@ const https = require('https');
 const Market = require( '../db.js' ).Market;
 
 // 10 minutes
-const quoteInterval = 10 * 60 * 1000;
+const quoteInterval = 30 * 60 * 1000;
 
 const getQuote = async () => {
     const options = {
-        timeout: 1000
+        timeout: 3000
     }
     const URL = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${config.settings.symbol}&CMC_PRO_API_KEY=${config.CMC_API_KEY}`;
 

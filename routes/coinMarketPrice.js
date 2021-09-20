@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 module.exports = {
     getQuote    : async function (symbol, cmc_api_key){
         const options = {
-            timeout: 1000
+            timeout: 3000
         }
         const URL = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/quotes/latest?symbol=${symbol}&CMC_PRO_API_KEY=${cmc_api_key}`;
 
