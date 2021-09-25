@@ -1,8 +1,8 @@
 {
-    "nodeAddr":     "ws.apothem.network",
-    "gethPort":     8545,
-    "WSURL": "wss://ws.apothem.network",
-    "RPCURL": "https://rpc.apothem.network",
+    "nodeAddr":     "localhost",
+    "gethPort":     8989,
+    "WSURL": "ws://localhost:8888",
+    "RPCURL": "http://localhost:8989",
     "epoch":900,
     "fRewards":500,
     "mnRewards":4500,
@@ -17,8 +17,8 @@
     "patchBlocks":  100,
     "bulkSize":     100,
     "CMC_API_KEY":  "",
-    "wss":          "wss://ws.apothem.network",
-    "GOOGLE_RECAPTCHA_RESPONSE": "",
+    "wss":          "ws://localhost:8888",
+    "GOOGLE_RECAPTCHA_RESPONSE": "6LdM7jQbAAAAABvHByxwA6_wwCJW6FF7VofIlWDZ",
     "settings": {
         "useRichList": true,
         "useFiat": true,
