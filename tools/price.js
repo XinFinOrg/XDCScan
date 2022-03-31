@@ -5,7 +5,7 @@ const https = require('https');
 const Market = require( '../db.js' ).Market;
 
 // 10 minutes
-const quoteInterval = 30 * 60 * 1000;
+const quoteInterval = 24 * 60 * 60 * 1000;
 
 const getQuote = async () => {
     const options = {
